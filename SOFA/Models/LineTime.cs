@@ -9,14 +9,12 @@ namespace SOFA.Models
     public class LineTime
     {
         [Key]
-        public int Id { get; set; }
-
-        public Timetable Timetable { get; set; }
-
-        public List<LineTime> LineTimes { get; set; }
+        public int Id { get; set; }           
 
         public Int32 Day { get; set; }
 
         public Int32 Time { get; set; }
+
+        public Line Line { get; set; }
     }
 }
