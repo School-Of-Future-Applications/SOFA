@@ -203,6 +203,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\_DashboardLayout.cshtml" />
     <Content Include="Views\Timetable\Create.cshtml" />
+    <Content Include="Views\Timetable\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

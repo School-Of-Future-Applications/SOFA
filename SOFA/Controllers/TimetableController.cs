@@ -15,7 +15,9 @@ namespace SOFA.Controllers
         // GET: /Timetable/
         public ActionResult Index()
         {
-            return View();
+            var timetables = db.Timetables.ToList();
+            
+            return View(timetables.OrderBy(t => t.ExpiryDate));
         }
 
         //
@@ -39,10 +41,15 @@ namespace SOFA.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-                db.Timetables.Add(t);
+                if (ModelState.IsValid)
+                {
+                    db.Timetables.Add(t);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+                return View();
      
-                return RedirectToAction("Index");
+                
             }
             catch
             {
