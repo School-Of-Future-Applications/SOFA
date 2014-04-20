@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Timetable Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -18,11 +18,12 @@
             @Html.DisplayNameFor(model => model.TimetableIdentifier)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ExpiryDate)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.ActiveDate)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </th>
+        
         <th></th>
     </tr>
 
@@ -35,11 +36,12 @@
             @Html.DisplayFor(modelItem => item.TimetableIdentifier)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.ActiveDate)
+        </td>       
+         <td>
             @Html.DisplayFor(modelItem => item.ExpiryDate)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ActiveDate)
-        </td>
+
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
             @Html.ActionLink("Details", "Details", new { id=item.Id }) |

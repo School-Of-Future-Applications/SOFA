@@ -17,15 +17,19 @@ namespace SOFA.Models
         [Display(Name="Name")]
         [Required]
         public String TimetableIdentifier { get; set; }
-
+        
+        [Display(Name="Active Date")]
+        [Required]
+        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime ActiveDate { get; set; }
+        
         [Display(Name="Expiry Date")]
         [Required]
+        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpiryDate { get; set; }
 
 
-        [Display(Name="Active Date")]
-        [Required]
-        public DateTime ActiveDate { get; set; }
+        
 
         public virtual ICollection<Line> Lines { get; set; }
     }
