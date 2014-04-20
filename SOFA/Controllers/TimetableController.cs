@@ -9,6 +9,8 @@ namespace SOFA.Controllers
 {
     public class TimetableController : Controller
     {
+        private DBContext db = new DBContext();
+
         //
         // GET: /Timetable/
         public ActionResult Index()
@@ -38,7 +40,8 @@ namespace SOFA.Controllers
             try
             {
                 // TODO: Add insert logic here
-
+                db.Timetables.Add(t);
+     
                 return RedirectToAction("Index");
             }
             catch
