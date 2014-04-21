@@ -20,12 +20,12 @@ namespace SOFA.Models
         
         [Display(Name="Active Date")]
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ActiveDate { get; set; }
         
         [Display(Name="Expiry Date")]
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = false, DataFormatString = "{0:dd/MM/yyyy}")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpiryDate { get; set; }
 
 
