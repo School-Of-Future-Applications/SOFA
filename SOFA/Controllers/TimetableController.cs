@@ -16,7 +16,7 @@ namespace SOFA.Controllers
         public ActionResult Index()
         {
             var timetables = db.Timetables.ToList();            
-            return View(timetables.OrderBy(t => t.ExpiryDate));
+            return View(timetables.OrderByDescending(t => t.ExpiryDate));
         }
 
         //
