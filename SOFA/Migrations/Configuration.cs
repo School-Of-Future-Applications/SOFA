@@ -12,6 +12,7 @@ namespace SOFA.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true; 
         }
 
         protected override void Seed(SOFA.Models.DBContext context)
