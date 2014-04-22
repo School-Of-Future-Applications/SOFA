@@ -18,5 +18,16 @@ namespace SOFA.Models.ViewModels
         [Required]
         [Display(Name="Year Level")]
         public String YearLevel { get; set; }
+
+        public ClassBase ToClassBase(Course course)
+        {
+            ClassBase classBase = new ClassBase();
+            classBase.Course = course;
+            classBase.Id = this.Id;
+            classBase.ClassBaseCode = this.ClassBaseCode;
+            classBase.YearLevel = this.YearLevel;
+
+            return classBase;
+        }
     }
 }
