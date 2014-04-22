@@ -4,11 +4,13 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
     public class ClassBaseController : Controller
     {
+        private DBContext db = new DBContext();
         //
         // GET: /ClassBase/
         public ActionResult Index()
@@ -26,27 +28,40 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Create
-        public ActionResult Create(int courseID)
+        public ActionResult Create(int courseID = 0) //default value for debugging only
         {
-            return View();
+            var viewModel = new ClassBaseViewModel();
+            viewModel.CourseID = courseID;
+            return View(viewModel);
         }
 
         //
         // POST: /ClassBase/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ClassBaseViewModel viewModel)
         {
-            try
+            var course = db.Courses.First(c => c.Id == viewModel.CourseID);
+            if (course == null) //Course hasn't been created. Redirect back to add page.
             {
-                // TODO: Add insert logic here
-
+                ViewBag.ErrorMessage = "Please create a course before adding a Class Base";
+                return View(viewModel);
+            }
+            if (ModelState.IsValid)
+            {
+                //Map the view model to the model and add it to the db
+                ClassBase classBase = new ClassBase();
+                classBase.Course = course;
+                classBase.Id = viewModel.Id;
+                classBase.ClassBaseCode = viewModel.ClassBaseCode;
+                classBase.YearLevel = viewModel.YearLevel;
+                db.ClassBases.Add(classBase);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(viewModel); //SS validation failed. Try again.
         }
+
+        
 
         //
         // GET: /ClassBase/Edit/5
