@@ -40,20 +40,21 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult Create(ClassBaseViewModel viewModel)
         {
-            var course = db.Courses.First(c => c.Id == viewModel.CourseID);
-            if (course == null) //Course hasn't been created. Redirect back to add page.
+            var courses = db.Courses;
+            Course course = null;
+            if (courses.Count() > 0) 
+            {
+                course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseID);                
+            }
+            if (course == null) //Course hasn't been created or course list empty. Redirect back to add page.
             {
                 ViewBag.ErrorMessage = "Please create a course before adding a Class Base";
                 return View(viewModel);
-            }
+            }            
             if (ModelState.IsValid)
             {
                 //Map the view model to the model and add it to the db
-                ClassBase classBase = new ClassBase();
-                classBase.Course = course;
-                classBase.Id = viewModel.Id;
-                classBase.ClassBaseCode = viewModel.ClassBaseCode;
-                classBase.YearLevel = viewModel.YearLevel;
+                ClassBase classBase = viewModel.ToClassBase(course);
                 db.ClassBases.Add(classBase);
                 db.SaveChanges();
                 return RedirectToAction("Index");
