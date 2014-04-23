@@ -1,0 +1,27 @@
+﻿
+@using SOFA.Models
+@model System.Collections.Generic.List<Department>
+
+@{
+}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-1 col-sm-offset-1 list-sidebar" >
+         <div class="nav nav-sidebar">
+            @foreach(Department d in Model)
+            {
+               <li><a href="#">@d.DepartmentName</a></li>
+            }
+         </div>
+      </div>
+   </div>
+</div> <!--Container Fluid-->
+
+<!--  <div class="btn-toolbar" role="toolbar">
+     <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+
+        </div>
+     </div>
+  </div>-->

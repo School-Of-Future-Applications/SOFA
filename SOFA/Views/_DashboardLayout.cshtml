@@ -1,4 +1,11 @@
 ﻿
+@{
+    if (ViewBag.NavItem == null)
+    {
+        ViewBag.NavItem = "";
+    }
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -17,7 +24,7 @@
 </head>
 <body>
     
-   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
          
          <div class="navbar-header">
@@ -42,16 +49,18 @@
 
    <div class="container-fluid">
       <div class="row">
-         <div class="col-sm-3 col-md-2 sidebar">
+         <div class="col-sm-1 col-md-1 sidebar">
             <ul class="nav nav-sidebar">
-               <li><a href="#">Department</a></li>
+               <li class="@(@ViewBag.NavItem.Equals("Department & Courses") ? "active" : "")">
+                <a href="~/Department">Department &amp; Courses</a>
+               </li>
             </ul> 
          </div>
+
+      @RenderBody()
       </div><!--Row-->
    </div><!--Container for sidebar-->
 
-   <div>
-      @RenderBody()
-   </div>
+ 
 </body>
 </html>
