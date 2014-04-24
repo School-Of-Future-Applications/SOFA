@@ -8,6 +8,11 @@
 {
     <script type="text/javascript">
 
+        $(document).ready(function () {
+            $("table a.addtime").click(function (event) {
+                event.preventDefault();
+            });
+        });
 
         $(document).ready(function () {
             $(function () {
@@ -90,7 +95,7 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Add Time", "AddLineTime", new { id = line.Id }) |
+                    @Html.ActionLink("Add Time", "AddLineTime", new { id = line.Id }, new { @class = "addtime" }) |
                     @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
                     @Html.ActionLink("Delete Line", "DeleteLine", new { sender = Model.Id, id = line.Id })
                 </td>
