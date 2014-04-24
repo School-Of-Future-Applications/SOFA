@@ -28,6 +28,5 @@ namespace SOFA.Models
 
         public DbSet<Department> Departments { get; set; }
 
-        public System.Data.Entity.DbSet<SOFA.Models.ViewModels.ClassBaseViewModel> ClassBaseViewModels { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model SOFA.Models.ViewModels.ClassBaseViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Create Class Base";
 }
 
 <h2>@Model.CourseName</h2>
@@ -42,7 +42,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
 </div>
 
 <div class="alert-warning"> 

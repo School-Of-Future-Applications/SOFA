@@ -94,7 +94,20 @@ namespace SOFA.Controllers
         // GET: /ClassBase/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            ClassBaseViewModel viewModel = new ClassBaseViewModel();
+            ClassBase classBase = db.ClassBases.FirstOrDefault(c => c.Id == id);
+            if (classBase != null)
+            {
+                viewModel.Id = classBase.Id;
+                viewModel.CourseID = classBase.Course.Id;
+                viewModel.CourseName = classBase.Course.CourseName;
+                viewModel.ClassBaseCode = classBase.ClassBaseCode;
+                viewModel.YearLevel = classBase.YearLevel;
+
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Index", new { id = classBase.Course.Id });
         }
 
         //
