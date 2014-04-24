@@ -56,6 +56,39 @@ namespace SOFA.Controllers
             }
         }
 
+        //
+        // GET: /Timetable/Build/5
+        public ActionResult Build(int id)
+        {
+            var timetable = db.Timetables.Where(t => t.Id == id).FirstOrDefault();
+            return View(timetable);
+        }
+
+        //
+        // GET: /Timetable/CreateLine
+        public ActionResult CreateLine(int id)
+        {
+            Line l = new Line();
+            db.Timetables.Where(t => t.Id == id).FirstOrDefault().Lines.Add(l);
+            l.Timetable = db.Timetables.Where(t => t.Id == id).FirstOrDefault();
+            db.Lines.Add(l);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = id });
+        }
+
+
+        //
+        // GET: /Timetable/CreateLine
+        public ActionResult DeleteLine(int sender, int id)
+        {
+            Line l = db.Lines.Where(x => x.Id == id).FirstOrDefault();
+            db.Lines.Remove(l);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = sender });
+        }
+
+
+
        
     }
 }
