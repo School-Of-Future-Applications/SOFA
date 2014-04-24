@@ -13,8 +13,26 @@ namespace SOFA.Controllers
         private DBContext db = new DBContext();
         //
         // GET: /ClassBase/
-        public ActionResult Index()
+        public ActionResult Index(int courseID = 1) //default value for debugging only
         {
+            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);
+            if (course != null)
+            {
+                var classBases = db.ClassBases.Where(c => c.Course.Id == course.Id);
+                List<ClassBaseViewModel> viewModels = new List<ClassBaseViewModel>();
+                foreach (ClassBase c in classBases)
+                {
+                    viewModels.Add(new ClassBaseViewModel
+                    {
+                        Id = c.Id,
+                        ClassBaseCode = c.ClassBaseCode,
+                        YearLevel = c.YearLevel
+                    });
+                }
+                ViewBag.CourseID = course.Id;
+                ViewBag.CourseName = course.CourseName;
+                return View(viewModels);
+            }
 
             return View();
         }
@@ -27,7 +45,7 @@ namespace SOFA.Controllers
         }
 
         //
-        // GET: /ClassBase/Create
+        // GET: /ClassBase/Create/5
         public ActionResult Create(int courseID = 1) //default value for debugging only
         {
             var viewModel = new ClassBaseViewModel();
@@ -39,7 +57,7 @@ namespace SOFA.Controllers
                 return View(viewModel);
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", new { courseID = courseID });
             
         }
 

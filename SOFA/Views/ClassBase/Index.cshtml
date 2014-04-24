@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SOFA.Models.ViewModels.ClassBaseViewModel>
+
+@{
+    ViewBag.Title = ViewBag.CourseName + " | Class Templates";
+}
+
+<h2>@ViewBag.CourseName | Class Templates</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", new { courseID = ViewBag.CourseID })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ClassBaseCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YearLevel)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ClassBaseCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YearLevel)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>
