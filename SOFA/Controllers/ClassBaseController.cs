@@ -38,13 +38,6 @@ namespace SOFA.Controllers
         }
 
         //
-        // GET: /ClassBase/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        //
         // GET: /ClassBase/Create/5
         public ActionResult Create(int courseID = 1) //default value for debugging only
         {
@@ -111,20 +104,24 @@ namespace SOFA.Controllers
         }
 
         //
-        // POST: /ClassBase/Edit/5
+        // POST: /ClassBase/Edit
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(ClassBaseViewModel viewModel)
         {
-            try
-            {
-                // TODO: Add update logic here
+           if (ModelState.IsValid)
+           {
+               Course course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseID);
+               ClassBase cb = viewModel.ToClassBase(course);
+               db.ClassBases.Attach(cb);
+               db.Entry(cb).State = System.Data.Entity.EntityState.Modified;
+               db.SaveChanges();
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+               return RedirectToAction("Index", new { id = viewModel.CourseID });
+           }
+           else
+           {
+               return View(viewModel); //Validation Failed. Try again.
+           }
         }
 
         //
