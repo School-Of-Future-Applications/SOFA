@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SOFA.Models.Timetable>
+
+@{
+    ViewBag.Title = "Timetables";
+}
+
+<h2>Timetables</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<h3>Current Timetables</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimetableCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimetableIdentifier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActiveDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </th>
+        
+        <th></th>
+    </tr>
+    @{
+        var first = Model.First();
+    } 
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => first.TimetableCode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => first.TimetableIdentifier)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => first.ActiveDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => first.ExpiryDate)
+        </td>
+
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = first.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = first.Id }) |
+            @Html.ActionLink("Build", "Build", new { id = first.Id })
+        </td>
+    </tr>
+</table>
+<br />
+<h3>Previous Timetables</h3>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TimetableCode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TimetableIdentifier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ActiveDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ExpiryDate)
+        </th>
+
+        <th></th>
+    </tr>
+    @foreach (var item in Model.SkipWhile(t => t == Model.First()))
+    { 
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimetableCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TimetableIdentifier)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActiveDate)
+            </td>       
+             <td>
+                @Html.DisplayFor(modelItem => item.ExpiryDate)
+            </td>
+            <td>
+                Edit |
+                @Html.ActionLink("Delete", "Delete", new { id = first.Id }) |
+                Build
+            </td>
+
+        </tr>    
+    }
+
+</table>
