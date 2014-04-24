@@ -28,11 +28,19 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Create
-        public ActionResult Create(int courseID = 0) //default value for debugging only
+        public ActionResult Create(int courseID = 1) //default value for debugging only
         {
             var viewModel = new ClassBaseViewModel();
-            viewModel.CourseID = courseID;
-            return View(viewModel);
+            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);                
+            if (course != null)
+            {
+                viewModel.CourseID = course.Id;
+                viewModel.CourseName = course.CourseName;
+                return View(viewModel);
+            }
+
+            return RedirectToAction("Index");
+            
         }
 
         //

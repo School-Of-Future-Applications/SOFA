@@ -12,6 +12,8 @@ namespace SOFA.Models.ViewModels
 
         public int CourseID { get; set; }
 
+        public String CourseName { get; set; }
+
         [Display(Name="Class Base Code")]
         public String ClassBaseCode { get; set; }
 
