@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -15,8 +16,9 @@ namespace SOFA.Controllers
         // GET: /Timetable/
         public ActionResult Index()
         {
-            var timetables = db.Timetables.ToList();            
-            return View(timetables.OrderByDescending(t => t.ExpiryDate));
+            var timetables = db.Timetables.ToList().OrderByDescending(t => t.ExpiryDate);
+            TimetableIndexViewModel splitNewAndOld = new TimetableIndexViewModel(timetables);
+            return View(splitNewAndOld);
         }
 
         //
