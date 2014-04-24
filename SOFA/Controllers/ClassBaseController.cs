@@ -31,7 +31,7 @@ namespace SOFA.Controllers
                 }
                 ViewBag.CourseID = course.Id;
                 ViewBag.CourseName = course.CourseName;
-                return View(viewModels);
+                return View(viewModels.OrderBy(v => v.YearLevel));
             }
 
             return View();
