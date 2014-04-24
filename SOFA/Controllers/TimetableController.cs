@@ -15,7 +15,7 @@ namespace SOFA.Controllers
         // GET: /Timetable/
         public ActionResult Index()
         {
-            var timetables = db.Timetables.ToList();            
+            var timetables = db.Timetables.ToList();
             return View(timetables.OrderByDescending(t => t.ExpiryDate));
         }
 
@@ -76,12 +76,35 @@ namespace SOFA.Controllers
             return RedirectToAction("Build", new { id = id });
         }
 
+        //
+        // GET: /Timetable/CreateLine
+        public ActionResult CreateLineTime(int id)
+        {
+            LineTime lt = new LineTime();
+            Line l = db.Lines.Where(x => x.Id == id).FirstOrDefault();
+            lt.Line = l;
+            return PartialView("LineTimeCreate",lt);
+        }
 
         //
         // GET: /Timetable/CreateLine
-        public ActionResult DeleteLine(int sender, int id)
+        [HttpPost]
+        public ActionResult CreateLineTime(LineTime lt)
+        {
+            db.LineTimes.Add(lt);
+            Line l = db.Lines.Where(x => x.Id == lt.Id).FirstOrDefault();
+            l.LineTimes.Add(lt);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = l.Timetable.Id });
+        }
+
+
+        //
+        // GET: /Timetable/DeleteLine/5
+        public ActionResult DeleteLine(int id)
         {
             Line l = db.Lines.Where(x => x.Id == id).FirstOrDefault();
+            var sender = l.Timetable.Id;
             db.Lines.Remove(l);
             db.SaveChanges();
             return RedirectToAction("Build", new { id = sender });

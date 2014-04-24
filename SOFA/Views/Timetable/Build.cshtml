@@ -9,8 +9,18 @@
     <script type="text/javascript">
 
         $(document).ready(function () {
+            $('#my-dialog').dialog({
+                autoOpen: false,
+                width: 400,
+                resizable: false,
+                modal: true
+            });
+
             $("table a.addtime").click(function (event) {
                 event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
             });
         });
 
@@ -84,7 +94,7 @@
         <h3>Lines</h3>
         <table class="table">
             @{
-    var timetable = Model;
+    var timetable = Model; ;
     var timetableLines = Model.Lines;
             }
             @foreach (var line in timetableLines)
@@ -95,15 +105,15 @@
                 </td>
 
                 <td>
-                    @Html.ActionLink("Add Time", "AddLineTime", new { id = line.Id }, new { @class = "addtime" }) |
+                    @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
                     @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
-                    @Html.ActionLink("Delete Line", "DeleteLine", new { sender = Model.Id, id = line.Id })
+                    @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
                 </td>
             </tr>
             }
         </table>
 
-
+        <div id="my-dialog"></div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

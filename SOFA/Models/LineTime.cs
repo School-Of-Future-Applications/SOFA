@@ -15,6 +15,6 @@ namespace SOFA.Models
 
         public Int32 Time { get; set; }
 
-        public Line Line { get; set; }
+        public virtual Line Line { get; set; }
     }
 }

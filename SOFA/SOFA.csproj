@@ -206,7 +206,7 @@
     <Content Include="Views\Timetable\Create.cshtml" />
     <Content Include="Views\Timetable\Index.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
-    <Content Include="Views\LineTime\LineTimeCreate.cshtml" />
+    <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -217,7 +217,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\CourseView\" />
-    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
