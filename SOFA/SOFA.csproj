@@ -178,6 +178,7 @@
     <Compile Include="Controllers\ClassBaseController.cs" />
     <Compile Include="Controllers\CourseViewController.cs" />
     <Compile Include="Controllers\DepartmentViewController.cs" />
+    <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,6 +211,10 @@
     <Content Include="Views\ClassBase\Create.cshtml" />
     <Content Include="Views\ClassBase\Edit.cshtml" />
     <Content Include="Views\ClassBase\Index.cshtml" />
+    <Content Include="Views\Timetable\Build.cshtml" />
+    <Content Include="Views\Shared\LineTimeCreate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CustomDoubleTimeOfDay.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -220,7 +225,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\CourseView\" />
-    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
