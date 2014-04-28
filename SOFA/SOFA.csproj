@@ -175,6 +175,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ClassBaseController.cs" />
     <Compile Include="Controllers\CourseViewController.cs" />
     <Compile Include="Controllers\DepartmentViewController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
@@ -192,6 +193,8 @@
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
+    <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -205,6 +208,9 @@
     <Content Include="Views\_DashboardLayout.cshtml" />
     <Content Include="Views\Timetable\Create.cshtml" />
     <Content Include="Views\Timetable\Index.cshtml" />
+    <Content Include="Views\ClassBase\Create.cshtml" />
+    <Content Include="Views\ClassBase\Edit.cshtml" />
+    <Content Include="Views\ClassBase\Index.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />

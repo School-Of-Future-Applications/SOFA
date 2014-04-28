@@ -11,11 +11,13 @@ namespace SOFA.Models
         [Key]
         public int Id { get; set; }
 
-        public Course Course { get; set; }
 
         public String ClassBaseCode { get; set; }
 
         public String YearLevel { get; set; }
+
+        public virtual Course Course { get; set; }
+
 
         public virtual List<TimetabledClass> TimetabledClasses{ get; set; }
 
