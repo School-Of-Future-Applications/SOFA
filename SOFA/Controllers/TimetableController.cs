@@ -87,6 +87,25 @@ namespace SOFA.Controllers
         }
 
         //
+        // GET: /Timetable/EditLineTime
+        public ActionResult EditTime(int id)
+        {
+            LineTime lt = db.LineTimes.Where(x => x.Id == id).FirstOrDefault();
+            return PartialView("LineTimeCreate", lt);
+        }
+
+        // GET: /Timetable/EditLineTime
+        [HttpPost]
+        public ActionResult EditTime(LineTime lt)
+        {
+            LineTime toUpdate = db.LineTimes.Where(x => x.Id == lt.Id).FirstOrDefault();
+            toUpdate.Time = lt.Time;
+            toUpdate.Day = lt.Day;
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
+        }
+
+        //
         // GET: /Timetable/CreateLine
         [HttpPost]
         public ActionResult CreateLineTime(LineTime lt)
