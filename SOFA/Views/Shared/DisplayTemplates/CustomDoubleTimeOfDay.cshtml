@@ -1,0 +1,24 @@
+﻿@model System.Double
+
+@{
+    var ampm = "";
+    var displaytimehour = 0;
+    var displaytimemin = 0;
+    if(Model < 12)
+    {
+        displaytimehour = (int)Model;
+        ampm = "am";
+    }
+    else if(Model < 13)
+    {
+        displaytimehour = (int)Model;
+        ampm = "pm";
+    }
+    else
+    {
+        displaytimehour = (int)Model - 12;
+        ampm = "pm";
+    }
+    displaytimemin = (int)Math.Round((Model - Math.Floor(Model)) * 60);
+    <text>@displaytimehour:@String.Format("{0:00}",displaytimemin) @ampm</text>
+}

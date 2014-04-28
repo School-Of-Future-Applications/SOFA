@@ -1,0 +1,145 @@
+﻿@model SOFA.Models.Timetable
+
+@{
+    ViewBag.Title = "Build";
+
+}
+@section datePicker
+{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $('#my-dialog').dialog({
+                autoOpen: false,
+                width: 400,
+                resizable: false,
+                modal: true
+            });
+
+            $("table a.addtime").click(function (event) {
+                event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $(function () {
+                $.validator.addMethod('date',
+                function (value, element) {
+                    if (this.optional(element)) {
+                        return true;
+                    }
+                    var ok = true;
+                    try {
+                        $.datepicker.parseDate('dd/mm/yy', value);
+                    }
+                    catch (err) {
+                        ok = false;
+                    }
+                    return ok;
+                })
+            });
+
+            $(".datepicker").datepicker({
+                dateFormat: "dd/mm/yy"
+            });
+        });
+    </script>
+}
+
+<h2>Build Timetable</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimetableCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimetableCode)
+                @Html.ValidationMessageFor(model => model.TimetableCode)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimetableIdentifier, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimetableIdentifier)
+                @Html.ValidationMessageFor(model => model.TimetableIdentifier)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.ActiveDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ActiveDate, new { @class = "datepicker" })
+                @Html.ValidationMessageFor(model => model.ActiveDate)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "datepicker" })
+                @Html.ValidationMessageFor(model => model.ExpiryDate)
+            </div>
+        </div>
+
+        <hr />
+
+        <h3>Lines</h3>
+        <table class="table">
+            @{
+    var timetable = Model; ;
+    var timetableLines = Model.Lines;
+            }
+            @foreach (var line in timetableLines)
+            { 
+            <tr>
+                <td>
+                    <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
+                </td>
+
+                <td>
+                    @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
+                    @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
+                    @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
+                </td>
+                <td></td>
+            </tr>
+                            foreach (var linetime in line.LineTimes)
+                            {
+                                <tr class="info">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.Time, "CustomDoubleTimeOfDay")</b>
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Edit Time", "EditTime", new { id = linetime.Id }, new { @class = "addtime" }) |
+                                        @Html.ActionLink("Delete Time", "DeleteTime", new { id = linetime.Id })
+                                    </td>
+                                </tr>
+                            }
+            }
+        </table>
+
+        <div id="my-dialog"></div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Build" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
