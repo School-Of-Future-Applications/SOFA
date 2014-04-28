@@ -27,5 +27,11 @@ namespace SOFA.Controllers
         {
             return View();
         }
+
+        public PartialViewResult Department(Department d)
+        {
+            return PartialView(d);
+        }
+
 	}
 }

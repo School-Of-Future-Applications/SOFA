@@ -3,20 +3,29 @@
 @model System.Collections.Generic.List<Department>
 
 @{
+   
 }
 
 <div class="container-fluid">
    <div class="row">
       <div class="col-sm-1 col-sm-offset-1 list-sidebar" >
-         <div class="nav nav-sidebar">
+         <div class="nav nav-sidebar ajaxLink">
             @foreach(Department d in Model)
             {
-               <li><a href="#">@d.DepartmentName</a></li>
+                <li>
+                    
+                    @Ajax.ActionLink(@d.DepartmentName, "Department", d
+                                    ,new AjaxOptions { UpdateTargetId = "departmentBody" })
+                </li>
             }
          </div>
       </div>
    </div>
 </div> <!--Container Fluid-->
+
+<div id="departmentBody" class="main">
+
+</div>
 
 <!--  <div class="btn-toolbar" role="toolbar">
      <div class="btn-group btn-group-justified">
