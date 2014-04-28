@@ -6,14 +6,23 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>LineTime</h4>
+        <h4>Line Time</h4>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Day, new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Day,new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Day)
+                @Html.DropDownListFor(model => model.Day, new SelectList(
+               new List<Object>{
+                new { value= 1, text = "Monday"},
+                new { value= 2, text = "Tuesday"},
+                new { value= 3, text = "Wednesday"},
+                new { value= 4, text = "Thursday"},
+                new { value= 5, text = "Friday"},
+                new { value= 6, text = "Saturday"},
+                new { value= 7, text = "Sunday"}
+               },"value","text"))
                 @Html.ValidationMessageFor(model => model.Day)
             </div>
         </div>
@@ -25,7 +34,7 @@
                 @Html.ValidationMessageFor(model => model.Time)
             </div>
         </div>
-        @Html.HiddenFor(model => model.Line);
+        @Html.HiddenFor(model => model.Line)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

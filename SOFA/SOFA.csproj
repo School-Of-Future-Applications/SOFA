@@ -207,6 +207,7 @@
     <Content Include="Views\Timetable\Index.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

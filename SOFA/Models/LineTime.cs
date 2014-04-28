@@ -13,7 +13,7 @@ namespace SOFA.Models
 
         public Int32 Day { get; set; }
 
-        public Int32 Time { get; set; }
+        public Double Time { get; set; }
 
         public virtual Line Line { get; set; }
     }

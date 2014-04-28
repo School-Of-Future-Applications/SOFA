@@ -109,7 +109,24 @@
                     @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
                     @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
                 </td>
+                <td></td>
             </tr>
+                            foreach (var linetime in line.LineTimes)
+                            {
+                                <tr class="info">
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.Time)</b>
+                                    </td>
+
+                                    <td>
+                                        @Html.ActionLink("Edit Time", "EditTime", new { id = linetime.Id }, new { @class = "addtime" }) |
+                                        @Html.ActionLink("Delete Time", "DeleteTime", new { id = linetime.Id })
+                                    </td>
+                                </tr>
+                            }
             }
         </table>
 
