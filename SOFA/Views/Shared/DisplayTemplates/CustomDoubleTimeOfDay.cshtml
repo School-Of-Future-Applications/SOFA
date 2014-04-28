@@ -9,6 +9,11 @@
         displaytimehour = (int)Model;
         ampm = "am";
     }
+    else if(Model < 13)
+    {
+        displaytimehour = (int)Model;
+        ampm = "pm";
+    }
     else
     {
         displaytimehour = (int)Model - 12;

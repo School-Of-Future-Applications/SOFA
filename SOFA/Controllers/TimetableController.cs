@@ -110,6 +110,17 @@ namespace SOFA.Controllers
             return RedirectToAction("Build", new { id = sender });
         }
 
+        //
+        // GET: /Timetable/DeleteLine/5
+        public ActionResult DeleteTime(int id)
+        {
+            LineTime l = db.LineTimes.Where(x => x.Id == id).FirstOrDefault();
+            var sender = l.Line.Timetable.Id;
+            db.LineTimes.Remove(l);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = sender });
+        }
+
 
 
        
