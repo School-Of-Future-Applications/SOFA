@@ -180,6 +180,7 @@
     <Compile Include="Controllers\DepartmentViewController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
+    <Compile Include="Controllers\TimetabledClassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -226,6 +227,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
+    <Folder Include="Views\TimetabledClass\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

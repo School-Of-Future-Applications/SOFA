@@ -4,35 +4,36 @@
     ViewBag.Title = "Create";
 
 }
-@section datePicker 
-{
-    <script type="text/javascript">
-        
-
-        $(document).ready(function () {
-            $(function () {
-                $.validator.addMethod('date',
-                function (value, element) {
-                    if (this.optional(element)) {
-                        return true;
-                    }
-                    var ok = true;
-                    try {
-                        $.datepicker.parseDate('dd/mm/yy', value);
-                    }
-                    catch (err) {
-                        ok = false;
-                    }
-                    return ok;
-                })
-            });
-
-            $(".datepicker").datepicker({
-                dateFormat: "dd/mm/yy"
-            });
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $.validator.addMethod('date',
+            function (value, element) {
+                if (this.optional(element)) {
+                    return true;
+                }
+                var ok = true;
+                try {
+                    $.datepicker.parseDate('dd/mm/yy', value);
+                }
+                catch (err) {
+                    ok = false;
+                }
+                return ok;
+            })
         });
-    </script>
-}
+
+        $(".datepicker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+    });
+</script>
+
+
+
+
+
+
 
 <h2>New Timetable</h2>
 @using (Html.BeginForm()) 
