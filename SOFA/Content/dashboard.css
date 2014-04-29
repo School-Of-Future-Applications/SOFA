@@ -29,7 +29,7 @@
   .list-sidebar {
      border-left-style: solid;
      border-left-width: thin;
-  }
+}
 }
 
 /* Sidebar navigation */
@@ -58,4 +58,8 @@
 }
 .main .page-header {
   margin-top: 0;
+}
+
+.body {
+    padding-top: 50px;
 }

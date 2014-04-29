@@ -27,5 +27,6 @@ namespace SOFA.Models
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
 
         public DbSet<Department> Departments { get; set; }
+
     }
 }
