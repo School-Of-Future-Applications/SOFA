@@ -6,8 +6,13 @@
 .sidebar {
   display: none;
 }
+
+.list-sidebar {
+   display: none;
+}
+
 @media (min-width: 768px) {
-  .sidebar {
+  .sidebar, .list-sidebar {
     position: fixed;
     top: 51px;
     bottom: 0;
@@ -20,6 +25,11 @@
     background-color: #f5f5f5;
     border-right: 1px solid #eee;
   }
+
+  .list-sidebar {
+     border-left-style: solid;
+     border-left-width: thin;
+}
 }
 
 /* Sidebar navigation */
@@ -35,6 +45,19 @@
 .nav-sidebar > .active > a {
   color: #fff;
   background-color: #428bca;
+}
+
+.main {
+  padding-top: 60px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 400px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
 }
 
 .body {

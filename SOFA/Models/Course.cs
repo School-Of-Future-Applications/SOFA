@@ -18,5 +18,7 @@ namespace SOFA.Models
         public String CourseName { get; set; }
 
         public virtual ICollection<ClassBase> ClassBases { get; set; }
+
+        public virtual Department Department { get; set; }
     }
 }

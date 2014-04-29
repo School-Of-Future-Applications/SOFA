@@ -7,13 +7,13 @@ using SOFA.Models;
 
 namespace SOFA.Controllers
 {
-    public class DepartmentViewController : Controller
+    public class DepartmentController : Controller
     {
         private DBContext db = new DBContext();
-        //
-        // GET: /DepartmentView/
+       
         public ActionResult Index()
         {
+            ViewBag.NavItem = "Department & Courses";
             return View(db.Departments.ToList());
         }
 
@@ -27,5 +27,12 @@ namespace SOFA.Controllers
         {
             return View();
         }
+
+        public PartialViewResult Department(int departmentId)
+        {
+            return PartialView(db.Departments.Where(x => x.id == departmentId)
+                               .FirstOrDefault());
+        }
+
 	}
 }

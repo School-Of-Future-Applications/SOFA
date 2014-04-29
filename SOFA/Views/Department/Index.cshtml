@@ -1,0 +1,35 @@
+﻿
+@using SOFA.Models
+@model System.Collections.Generic.List<Department>
+
+@{
+   
+}
+
+<div class="container-fluid">
+   <div class="row">
+      <div class="col-sm-1 col-sm-offset-1 list-sidebar" >
+         <div class="nav nav-sidebar ajaxLink">
+            @foreach(Department d in Model)
+            {
+                <li>
+                    @Ajax.ActionLink(@d.DepartmentName, "Department", new { departmentId = d.id }
+                                    ,new AjaxOptions { UpdateTargetId = "departmentBody" })
+                </li>
+            }
+         </div>
+      </div>
+   </div>
+</div> <!--Container Fluid-->
+
+<div id="departmentBody" class="main">
+
+</div>
+
+<!--  <div class="btn-toolbar" role="toolbar">
+     <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+
+        </div>
+     </div>
+  </div>-->
