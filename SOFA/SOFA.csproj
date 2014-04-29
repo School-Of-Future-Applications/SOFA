@@ -180,7 +180,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
     <Compile Include="Controllers\CourseViewController.cs" />
-    <Compile Include="Controllers\DepartmentViewController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
@@ -202,6 +201,7 @@
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
     <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
