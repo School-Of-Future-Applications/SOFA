@@ -28,9 +28,10 @@ namespace SOFA.Controllers
             return View();
         }
 
-        public PartialViewResult Department(Department d)
+        public PartialViewResult Department(int departmentId)
         {
-            return PartialView(d);
+            return PartialView(db.Departments.Where(x => x.id == departmentId)
+                               .FirstOrDefault());
         }
 
 	}

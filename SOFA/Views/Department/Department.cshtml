@@ -18,21 +18,18 @@
             </tr>
         </thead>
         <tbody >
-            @if(Model.Courses != null)
+            @foreach(Course c in Model.Courses)
             {
-                foreach(Course c in Model.Courses)
-                {
-                    <tr>
-                        <td>@c.CourseCode</td>
-                        <td>@c.CourseName</td>
-                        <td>@c.ClassBases.Count()</td>
-                    </tr>
-                }   
-            }
+                <tr>
+                    <td>@c.CourseCode</td>
+                    <td>@c.CourseName</td>
+                    <td>@c.ClassBases.Count()</td>
+                </tr>
+            }   
         </tbody>
     </table>
 
-    @if(Model.Courses == null || Model.Courses.Count == 0)
+    @if(Model.Courses.Count == 0)
     {
         <div class="jumbotron">
             <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>

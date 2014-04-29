@@ -13,8 +13,7 @@
             @foreach(Department d in Model)
             {
                 <li>
-                    
-                    @Ajax.ActionLink(@d.DepartmentName, "Department", d
+                    @Ajax.ActionLink(@d.DepartmentName, "Department", new { departmentId = d.id }
                                     ,new AjaxOptions { UpdateTargetId = "departmentBody" })
                 </li>
             }
