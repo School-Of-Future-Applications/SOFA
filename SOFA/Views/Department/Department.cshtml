@@ -3,38 +3,42 @@
 @model Department
 
 @{
-
 }
 
-<h1>@Model.DepartmentName</h1>
+<h2>@Model.DepartmentName</h2>
 
-<div class="container-fluid">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Course Code</th>
-                <th>Course Name</th>
-                <th>Class Count</th>
-            </tr>
-        </thead>
-        <tbody >
-            @foreach(Course c in Model.Courses)
-            {
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-hover">
+            <thead>
                 <tr>
-                    <td>@c.CourseCode</td>
-                    <td>@c.CourseName</td>
-                    <td>@c.ClassBases.Count()</td>
+                    <th>Course Code</th>
+                    <th>Course Name</th>
+                    <th>Class Count</th>
                 </tr>
-            }   
-        </tbody>
-    </table>
-
-    @if(Model.Courses.Count == 0)
-    {
-        <div class="jumbotron">
-            <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
-            <p class="text-center"><button type="button" class="btn btn-success btn-lg">Add Course</button></p>
-        </div>   
-    }
-
+            </thead>
+            <tbody>
+                @foreach (Course c in Model.Courses)
+                {
+                    <tr>
+                        <td>@c.CourseCode</td>
+                        <td>@c.CourseName</td>
+                        <td>@c.ClassBases.Count()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
+@if (Model.Courses.Count == 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
+                <p class="text-center"><button type="button" class="btn btn-success btn-lg">Add Course</button></p>
+            </div>
+        </div>
+    </div>
+}
