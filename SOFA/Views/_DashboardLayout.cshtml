@@ -1,29 +1,35 @@
 ﻿
+@{
+    if (ViewBag.NavItem == null)
+    {
+        ViewBag.NavItem = "";
+    }
+}
+
 <!DOCTYPE html>
 
 <html>
 <head>
-   <meta charset="utf-8" />
-   <meta name="viewport" content="width=device-width" />
-   <meta name="author" content="Terminal Coding" />
-    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Terminal Coding" />
+
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/dashboard.css" />
+    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    
-   <link rel="stylesheet" href="~/Content/bootstrap-theme.css" />
-   <link rel="stylesheet" href="~/Content/bootstrap.css" />
-   <link rel="stylesheet" href="~/Content/dashboard.css" />
-    <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
-   <script src="~/Scripts/bootstrap.min.js"></script>
-   
-   <script src="~/Scripts/jquery-ui-1.10.4.min.js" ></script>
-
-    
-<title>@ViewBag.Title</title>
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+   <title>@ViewBag.Title</title>
 </head>
 <body>
     
-   <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container-fluid">
          
          <div class="navbar-header">
@@ -48,17 +54,24 @@
 
    <div class="container-fluid">
       <div class="row">
-         <div class="col-sm-1 sidebar">
+         <div class="col-md-1 sidebar">
             <ul class="nav nav-sidebar">
-               <li><a href="#">Department</a></li>
+               <li class="@(@ViewBag.NavItem.Equals("Department & Courses") ? "active" : "")">
+                <a href="~/Department">Department &amp; Courses</a>
+               </li>
+                <li>
+                    <a href="~/Timetable">Timetabling</a>
+                </li>
             </ul> 
          </div>
+
+       <div class="main">
+            @RenderBody();
+       </div>
+       
       </div><!--Row-->
    </div><!--Container for sidebar-->
 
-   <div class="container body">
-      @RenderBody()
-   </div>
 </body>
 </html>
 @if (IsSectionDefined("datepicker"))
