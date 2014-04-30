@@ -49,50 +49,52 @@
     </script>
 }
 
-<h2>Build Timetable</h2>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="col-md-11 col-md-offset-1">
 
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true)
+    <h2>Build Timetable</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimetableCode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimetableCode)
-                @Html.ValidationMessageFor(model => model.TimetableCode)
-            </div>
-        </div>
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.TimetableIdentifier, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TimetableIdentifier)
-                @Html.ValidationMessageFor(model => model.TimetableIdentifier)
+            <div class="form-group">
+                @Html.LabelFor(model => model.TimetableCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TimetableCode)
+                    @Html.ValidationMessageFor(model => model.TimetableCode)
+                </div>
             </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.ActiveDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ActiveDate, new { @class = "datepicker" })
-                @Html.ValidationMessageFor(model => model.ActiveDate)
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "datepicker" })
-                @Html.ValidationMessageFor(model => model.ExpiryDate)
+            <div class="form-group">
+                @Html.LabelFor(model => model.TimetableIdentifier, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.TimetableIdentifier)
+                    @Html.ValidationMessageFor(model => model.TimetableIdentifier)
+                </div>
             </div>
-        </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.ActiveDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ActiveDate, new { @class = "datepicker" })
+                    @Html.ValidationMessageFor(model => model.ActiveDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "datepicker" })
+                    @Html.ValidationMessageFor(model => model.ExpiryDate)
+                </div>
+            </div>
         @{
     var timetable = Model; ;
     var timetableLines = Model.Lines;
         }
-        <hr />
+            <hr />
 
         <div align="left"><h3>Lines</h3> </div><div align="right">@Html.ActionLink("Add Line", "CreateLine", new { id = Model.Id })</div>
         <table class="table">
@@ -103,42 +105,42 @@
                     <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
                 </td>
 
-                <td>
-                    @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
-                    @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
-                    @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
-                </td>
-                <td></td>
-            </tr>
-                            foreach (var linetime in line.LineTimes)
-                            {
-                                <tr class="info">
-                                    <td>
+                        <td>
+                            @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
+                            @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
+                            @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
+                        </td>
+                        <td></td>
+                    </tr>
+                    foreach (var linetime in line.LineTimes)
+                    {
+                        <tr class="info">
+                            <td></td>
+                            <td>
+                                <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.Time, "CustomDoubleTimeOfDay")</b>
+                            </td>
 
-                                    </td>
-                                    <td>
-                                        <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.Time, "CustomDoubleTimeOfDay")</b>
-                                    </td>
+                            <td>
+                                @Html.ActionLink("Edit Time", "EditTime", new { id = linetime.Id }, new { @class = "addtime" }) |
+                                @Html.ActionLink("Delete Time", "DeleteTime", new { id = linetime.Id })
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
 
-                                    <td>
-                                        @Html.ActionLink("Edit Time", "EditTime", new { id = linetime.Id }, new { @class = "addtime" }) |
-                                        @Html.ActionLink("Delete Time", "DeleteTime", new { id = linetime.Id })
-                                    </td>
-                                </tr>
-                            }
-            }
-        </table>
+            <div id="my-dialog"></div>
 
-        <div id="my-dialog"></div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Build" class="btn btn-default" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Build" class="btn btn-default" />
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>
+
 </div>

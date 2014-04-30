@@ -161,9 +161,13 @@
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\jquery-1.9.1.js" />
-    <Content Include="Scripts\jquery-1.9.1.min.js" />
+    <None Include="Scripts\jquery-2.1.0.intellisense.js" />
+    <Content Include="Scripts\jquery-2.1.0.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.js" />
+    <Content Include="Scripts\jquery-2.1.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -178,7 +182,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
     <Compile Include="Controllers\CourseViewController.cs" />
-    <Compile Include="Controllers\DepartmentViewController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
+    <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
@@ -199,12 +204,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\web.config" />
-    <Content Include="packages.config">
+    <Content Include="Views\web.config">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="Scripts\jquery-1.9.1.min.map" />
-    <Content Include="Views\DepartmentView\Index.cshtml" />
+    <Content Include="packages.config" />
+    <Content Include="Views\Department\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\_DashboardLayout.cshtml" />
     <Content Include="Views\Timetable\Create.cshtml" />
@@ -216,6 +220,8 @@
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomDoubleTimeOfDay.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Department\Department.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
