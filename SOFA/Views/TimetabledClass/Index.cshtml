@@ -1,23 +1,24 @@
-﻿@using System.Collections;
-@model List<SelectListItem>
+﻿@using SOFA.Models.ViewModels
+@model SOFA.Models.ViewModels.TimetabledClassSelectViewModel
 
 <script type="text/javascript">
     $(document).ready(function ()
     {
-        $("#Select_Timetable").change(function () {
-            console.log($("#Select_Timetable option:selected").val());
+        $("#SelectedTimetable").change(function () {
+            $(this).parents("form").submit();
         });
     })
 </script>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Model.ClassTemplateName - Classes;
 }
 <div class="col-md-11 col-md-offset-1">
     <h2>Index</h2>
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm("ListIndex", new AjaxOptions { UpdateTargetId = "list", HttpMethod = "GET"}))
     {
-        @Html.DropDownList("Select Timetable", Model)
+        @Html.HiddenFor(x => Model.ClassTemplateID)
+        @Html.DropDownListFor(x => x.SelectedTimetable, Model.Timetables, "Select Timetable")
     }
 
     <div id="list"></div>

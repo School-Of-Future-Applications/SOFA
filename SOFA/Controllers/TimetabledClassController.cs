@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -28,10 +29,19 @@ namespace SOFA.Controllers
                     Text = t.TimetableIdentifier
                 }
             ));
-            
-            return View(timetableNames);
+            TimetabledClassSelectViewModel viewModel = new TimetabledClassSelectViewModel
+            {
+                ClassTemplateID = baseClassID,
+                ClassTemplateName = db.ClassBases.FirstOrDefault(c => c.Id == baseClassID).ClassBaseCode,
+                Timetables = timetableNames
+            };
+            return View(viewModel);
         }
 
+        public PartialViewResult ListIndex(TimetabledClassSelectViewModel vm)
+        {
+            return PartialView();
+        }
 
 	}
 }

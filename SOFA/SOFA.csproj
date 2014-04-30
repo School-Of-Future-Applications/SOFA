@@ -199,6 +199,7 @@
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\TimetabledClassSelectViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
