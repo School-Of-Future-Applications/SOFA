@@ -1,0 +1,24 @@
+﻿@using System.Collections;
+@model List<SelectListItem>
+
+<script type="text/javascript">
+    $(document).ready(function ()
+    {
+        $("#Select_Timetable").change(function () {
+            console.log($("#Select_Timetable option:selected").val());
+        });
+    })
+</script>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="col-md-11 col-md-offset-1">
+    <h2>Index</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.DropDownList("Select Timetable", Model)
+    }
+
+    <div id="list"></div>
+</div>

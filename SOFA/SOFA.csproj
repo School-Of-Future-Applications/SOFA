@@ -221,6 +221,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CustomDoubleTimeOfDay.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Department\Department.cshtml" />
+    <Content Include="Views\TimetabledClass\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -232,7 +233,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
-    <Folder Include="Views\TimetabledClass\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
