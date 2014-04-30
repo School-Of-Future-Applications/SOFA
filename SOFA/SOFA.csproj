@@ -184,6 +184,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
+    <Compile Include="Controllers\TimetabledClassController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
