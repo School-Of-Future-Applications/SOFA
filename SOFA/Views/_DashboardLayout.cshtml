@@ -54,15 +54,21 @@
 
    <div class="container-fluid">
       <div class="row">
-         <div class="col-sm-1 col-md-1 sidebar">
+         <div class="col-md-1 sidebar">
             <ul class="nav nav-sidebar">
                <li class="@(@ViewBag.NavItem.Equals("Department & Courses") ? "active" : "")">
                 <a href="~/Department">Department &amp; Courses</a>
                </li>
+                <li>
+                    <a href="~/Timetable">Timetabling</a>
+                </li>
             </ul> 
          </div>
 
-      @RenderBody()
+       <div class="main">
+            @RenderBody();
+       </div>
+       
       </div><!--Row-->
    </div><!--Container for sidebar-->
 
