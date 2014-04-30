@@ -88,15 +88,14 @@
                 @Html.ValidationMessageFor(model => model.ExpiryDate)
             </div>
         </div>
-
-        <hr />
-
-        <h3>Lines</h3>
-        <table class="table">
-            @{
+        @{
     var timetable = Model; ;
     var timetableLines = Model.Lines;
-            }
+        }
+        <hr />
+
+        <div align="left"><h3>Lines</h3> </div><div align="right">@Html.ActionLink("Add Line", "CreateLine", new { id = Model.Id })</div>
+        <table class="table">
             @foreach (var line in timetableLines)
             { 
             <tr>
