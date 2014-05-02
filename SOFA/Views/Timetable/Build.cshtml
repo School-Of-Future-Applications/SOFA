@@ -91,21 +91,20 @@
                     @Html.ValidationMessageFor(model => model.ExpiryDate)
                 </div>
             </div>
-
+        @{
+    var timetable = Model; ;
+    var timetableLines = Model.Lines;
+        }
             <hr />
 
-            <h3>Lines</h3>
-            <table class="table">
-                @{
-        var timetable = Model; ;
-        var timetableLines = Model.Lines;
-                }
-                @foreach (var line in timetableLines)
-                {
-                    <tr>
-                        <td>
-                            <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
-                        </td>
+        <div align="left"><h3>Lines</h3> </div><div align="right">@Html.ActionLink("Add Line", "CreateLine", new { id = Model.Id })</div>
+        <table class="table">
+            @foreach (var line in timetableLines)
+            { 
+            <tr>
+                <td>
+                    <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
+                </td>
 
                         <td>
                             @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
