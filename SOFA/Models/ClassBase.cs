@@ -10,8 +10,7 @@ namespace SOFA.Models
     {
         [Key]
         public int Id { get; set; }
-
-
+        
         public String ClassBaseCode { get; set; }
 
         public String YearLevel { get; set; }
