@@ -90,6 +90,19 @@ namespace SOFA.Controllers
         }
 
         //
+        // GET: /Timetable/CreateLine
+        public ActionResult CreateTimetabledClass(int id)
+        {
+            TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
+            TimetabledClass tclass = new TimetabledClass();
+            tclassmodel.TimetabledClass = tclass;
+            tclassmodel.ClassBases = db.ClassBases;
+            Line l = db.Lines.Where(x => x.Id == id).FirstOrDefault();
+            tclassmodel.LineID = l.Id;
+            return PartialView("TimetabledClassCreate", tclassmodel);
+        }
+
+        //
         // GET: /Timetable/EditLineTime
         public ActionResult EditTime(int id)
         {
@@ -106,6 +119,53 @@ namespace SOFA.Controllers
             toUpdate.Day = lt.Day;
             db.SaveChanges();
             return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
+        }
+
+        //
+        // GET: /Timetable/EditLineTime
+        public ActionResult EditTimetabledClass(int id)
+        {
+            TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
+            tclassmodel.TimetabledClass = db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
+            tclassmodel.LineID = tclassmodel.TimetabledClass.Line.Id;
+            tclassmodel.ClassBases = db.ClassBases;
+            return PartialView("TimetabledClassCreate", tclassmodel);
+        }
+
+        // GET: /Timetable/EditLineTime
+        [HttpPost]
+        public ActionResult EditTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
+        {
+            TimetabledClass toUpdate = db.TimetabledClasses.Where(x => x.Id == tclassmodel.TimetabledClass.Id).FirstOrDefault();
+            toUpdate.Capacity = tclassmodel.TimetabledClass.Capacity;
+            toUpdate.ClassBaseID = tclassmodel.TimetabledClass.ClassBaseID;
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
+        }
+
+        //
+        // GET: /Timetable/EditLineTime
+        public ActionResult DeleteTimetabledClass(int id)
+        {
+            TimetabledClass tc = db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
+            int timetableid = tc.Line.Timetable.Id;
+            db.TimetabledClasses.Remove(db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault());
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = timetableid });
+        }
+
+
+        //
+        // GET: /Timetable/CreateTimetabledClass
+        [HttpPost]
+        public ActionResult CreateTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
+        {
+            var tclass = tclassmodel.TimetabledClass;
+            db.TimetabledClasses.Add(tclass);
+            Line l = db.Lines.Where(x => x.Id == tclassmodel.LineID).FirstOrDefault();
+            l.TimetabledClasses.Add(tclass);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = l.Timetable.Id });
         }
 
         //

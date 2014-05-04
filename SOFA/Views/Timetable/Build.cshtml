@@ -12,12 +12,19 @@
         $(document).ready(function () {
             $('#my-dialog').dialog({
                 autoOpen: false,
-                width: 400,
-                resizable: false,
+                width: 600,
+                resizable: true,
                 modal: true
             });
 
             $("table a.addtime").click(function (event) {
+                event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
+            });
+
+            $("table a.addclass").click(function (event) {
                 event.preventDefault();
                 $('#my-dialog').load(this.href, function () {
                     $(this).dialog('open');
@@ -108,7 +115,7 @@
 
                         <td>
                             @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
-                            @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
+                            @Html.ActionLink("Add Class", "CreateTimetabledClass", new { id = line.Id }, new { @class = "addclass" }) |
                             @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
                         </td>
                         <td></td>
@@ -124,6 +131,21 @@
                             <td>
                                 @Html.ActionLink("Edit Time", "EditTime", new { id = linetime.Id }, new { @class = "addtime" }) |
                                 @Html.ActionLink("Delete Time", "DeleteTime", new { id = linetime.Id })
+                            </td>
+                        </tr>
+                    }
+                    
+                    foreach (var tclass in line.TimetabledClasses)
+                    {
+                        <tr class="success">
+                            <td></td>
+                            <td>
+                                <b>@Html.DisplayFor(modelItem => tclass.ClassBase.ClassBaseCode)</b>
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit Class", "EditTimetabledClass", new { id = tclass.Id }, new { @class = "addclass" }) |
+                                @Html.ActionLink("Delete Class", "DeleteTimetabledClass", new { id = tclass.Id })
                             </td>
                         </tr>
                     }

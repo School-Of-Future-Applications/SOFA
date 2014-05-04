@@ -14,6 +14,8 @@ namespace SOFA.Models
 
         public virtual ClassBase ClassBase { get; set; }
 
+        
+        public int? ClassBaseID { get; set; }
         public virtual Line Line { get; set; }
 
         public Int32 Capacity { get; set; }
