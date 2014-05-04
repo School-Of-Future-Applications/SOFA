@@ -1,0 +1,38 @@
+﻿
+@using SOFA.Models
+@model Department
+
+@{
+    string submitBtnTxt = (@Model == null ? "Add Department" : "Save Department");
+    string titleTxt = (@Model == null ? "New Department" : "Edit Department - @Model.DepartmentName");
+}
+
+<h2>@titleTxt</h2>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="row">
+            @Html.ValidationSummary()
+            @using (Html.BeginForm("CreateEdit", "Department", FormMethod.Post
+                                  , new { @class = "form-horizontal" }))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DepartmentName, "Department Name"
+                                  ,new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.DepartmentName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.DepartmentName)
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="col-sm-9 col-sm-offset-3">
+                        <input type="submit" class="btn btn-default" value="@submitBtnTxt" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

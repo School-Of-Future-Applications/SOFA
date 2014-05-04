@@ -14,18 +14,26 @@ namespace SOFA.Controllers
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View(db.Departments.ToList());
+            return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
-        public ActionResult CreateEdit(int id = 0)
+        
+        public PartialViewResult CreateEdit()
         {
-            return View();
+            return PartialView();
         }
 
         [HttpPost]
-        public ActionResult CreateEdit()
+        public ActionResult CreateEdit(Department dep)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                db.Departments.Add(dep);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return View();
         }
 
         public PartialViewResult Department(int departmentId)
