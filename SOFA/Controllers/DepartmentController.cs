@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,9 +18,12 @@ namespace SOFA.Controllers
             return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
-        
-        public PartialViewResult CreateEdit()
+        [HttpGet]
+        public PartialViewResult CreateEdit(int? departmentId)
         {
+            if (departmentId != null)
+                return PartialView(db.Departments.
+                                   Where(x => x.id == departmentId).FirstOrDefault());
             return PartialView();
         }
 
@@ -28,7 +32,13 @@ namespace SOFA.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Departments.Add(dep);
+                if (db.Departments.Any(x => x.id == dep.id))
+                {
+                    db.Departments.Attach(dep);
+                    db.Entry(dep).State = EntityState.Modified;
+                }
+                else
+                    db.Departments.Add(dep);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

@@ -4,7 +4,9 @@
 
 @{
     string submitBtnTxt = (@Model == null ? "Add Department" : "Save Department");
-    string titleTxt = (@Model == null ? "New Department" : "Edit Department - @Model.DepartmentName");
+    string titleTxt = (@Model == null ? "New Department"
+                                      : "Edit Department - "
+                                        + @Model.DepartmentName);
 }
 
 <h2>@titleTxt</h2>
@@ -15,6 +17,8 @@
     <div class="col-md-4 col-md-offset-4">
         <div class="row">
             @Html.ValidationSummary()
+            @Html.HiddenFor(model => model.id)
+
             @using (Html.BeginForm("CreateEdit", "Department", FormMethod.Post
                                   , new { @class = "form-horizontal" }))
             {
