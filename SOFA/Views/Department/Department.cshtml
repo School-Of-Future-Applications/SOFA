@@ -20,13 +20,13 @@
             </thead>
             <tbody>
                 @foreach (Course c in Model.Courses)
-                {
-                    <tr>
-                        <td>@c.CourseCode</td>
-                        <td>@c.CourseName</td>
-                        <td>@c.ClassBases.Count()</td>
-                    </tr>
-                }
+{
+                <tr class="clickableRow" onclick="location.href='@Url.Action("Index", "ClassBase", new { courseID = c.Id })'">
+                    <td>@c.CourseCode</td>
+                    <td>@c.CourseName</td>
+                    <td>@c.ClassBases.Count()</td>
+                </tr>
+}
             </tbody>
         </table>
     </div>
