@@ -226,7 +226,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Department\Department.cshtml" />
     <Content Include="Views\Shared\TimetabledClassCreate.cshtml" />
-    <Content Include="Views\Course\Create.cshtml" />
+    <Content Include="Views\Course\CreateEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

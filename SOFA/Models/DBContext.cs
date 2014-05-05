@@ -28,7 +28,6 @@ namespace SOFA.Models
 
         public DbSet<Department> Departments { get; set; }
 
-        public System.Data.Entity.DbSet<SOFA.Models.ViewModels.CourseCreateViewModel> CourseCreateViewModels { get; set; }
 
 
     }
