@@ -13,6 +13,11 @@ namespace SOFA.Controllers
     {
         private DBContext db = new DBContext();
 
+        public ActionResult Index(int courseId)
+        {
+            return View(db.Courses.FirstOrDefault(x => x.Id == courseId));
+        }
+
         //
         // GET: /Course/Create
         public ActionResult CreateEdit(int departmentId = 1, int courseID = 0)

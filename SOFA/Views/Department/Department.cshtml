@@ -29,7 +29,7 @@
             <tbody>
                 @foreach (Course c in Model.Courses)
                 {
-                    <tr onclick="location.href='@Url.Action("Index", "ClassBase", new { courseID = c.Id })'">
+                    <tr onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
                         <td>@c.CourseCode</td>
                         <td>@c.CourseName</td>
                         <td>@c.ClassBases.Count()</td>

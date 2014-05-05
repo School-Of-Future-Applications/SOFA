@@ -11,8 +11,12 @@ namespace SOFA.Models
         [Key]
         public int Id { get; set; }
         
+        [Required]
+        [StringLength(30)]
         public String ClassBaseCode { get; set; }
 
+        [Required]
+        [StringLength(10)]
         public String YearLevel { get; set; }
 
         public virtual Course Course { get; set; }

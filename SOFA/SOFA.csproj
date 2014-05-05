@@ -218,7 +218,6 @@
     <Content Include="Views\Timetable\Index.cshtml" />
     <Content Include="Views\ClassBase\Create.cshtml" />
     <Content Include="Views\ClassBase\Edit.cshtml" />
-    <Content Include="Views\ClassBase\Index.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />
@@ -230,6 +229,7 @@
     <Content Include="Views\_DepartmentLayout.cshtml" />
     <Content Include="Views\Department\DepartmentSideBar.cshtml" />
     <Content Include="Views\Course\CreateEdit.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

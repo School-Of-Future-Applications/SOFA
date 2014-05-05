@@ -1,4 +1,5 @@
-﻿@model SOFA.Models.ViewModels.ClassBaseViewModel
+﻿@using SOFA.Models
+@model ClassBase
 
 @{
     ViewBag.Title = "Create Class Base";
@@ -6,19 +7,22 @@
 
 <div class="col-md-11 col-md-offset-1">
 
-    <h2>@Model.CourseName</h2>
-    <h4>New Class Template</h4>
+    <h2>@Html.ActionLink(Model.Course.Department.DepartmentName, "Department"
+                        ,"Department", new { departmentId = Model.Course.Department.id }, null) > 
+         @Html.ActionLink(Model.Course.CourseName, "Index", "Course"
+                         ,new { courseId = Model.Course.Id }, null) >
+         New Class Base</h2>
     <hr />
 
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             @Html.ValidationSummary()
 
-            @using (Html.BeginForm("CreateEdit", "ClassBase", FormMethod.Post
+            @using (Html.BeginForm("Create", "ClassBase", FormMethod.Post
                                   ,new { @class = "form-horizontal" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.CourseID)
+                @Html.HiddenFor(model => model.Course)
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-sm-3" })
@@ -42,10 +46,6 @@
                     </div>
                 </div>
             }
-
-            <div class="col-sm-3">
-                @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
-            </div>
         </div>
     </div>
 

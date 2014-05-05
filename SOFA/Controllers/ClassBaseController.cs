@@ -11,11 +11,12 @@ namespace SOFA.Controllers
     public class ClassBaseController : Controller
     {
         private DBContext db = new DBContext();
+       
         //
         // GET: /ClassBase/
-        public ActionResult Index(int courseID = 1) //default value for debugging only
+       /* public ActionResult Index(int courseId = 1) //default value for debugging only
         {
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);
+            var course = db.Courses.FirstOrDefault(c => c.Id == courseId);
             if (course != null)
             {
                 var classBases = db.ClassBases.Where(c => c.Course.Id == course.Id);
@@ -35,14 +36,17 @@ namespace SOFA.Controllers
             }
 
             return RedirectToAction("Index", "Dashboard");
-        }
+        }*/
 
         //
         // GET: /ClassBase/Create/5
-        public ActionResult Create(int courseID = 1) //default value for debugging only
+        public ActionResult Create(int courseId = 1) //default value for debugging only
         {
-            var viewModel = new ClassBaseViewModel();
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);                
+            ClassBase tmp = new ClassBase();
+            tmp.Course = db.Courses.FirstOrDefault(x => x.Id == courseId);
+            return View(tmp);
+            /*var viewModel = new ClassBaseViewModel();
+            var course = db.Courses.FirstOrDefault(c => c.Id == courseId);                
             if (course != null)
             {
                 viewModel.CourseID = course.Id;
@@ -50,16 +54,24 @@ namespace SOFA.Controllers
                 return View(viewModel);
             }
 
-            return RedirectToAction("Index", new { courseID = courseID });
-            
+            return RedirectToAction("Index", new { courseID = courseId });*/
         }
 
         //
         // POST: /ClassBase/Create
         [HttpPost]
-        public ActionResult Create(ClassBaseViewModel viewModel)
+        public ActionResult Create(ClassBase classBase)
         {
-            var courses = db.Courses;
+            if (ModelState.IsValid)
+            {
+                db.ClassBases.Add(classBase);
+                db.SaveChanges();
+                return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
+            }
+            else
+                return View();
+
+           /* var courses = db.Courses;
             Course course = null;
             if (courses.Count() > 0) 
             {
@@ -78,7 +90,7 @@ namespace SOFA.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(viewModel); //SS validation failed. Try again.
+            return View(viewModel); //SS validation failed. Try again.*/
         }
 
         
