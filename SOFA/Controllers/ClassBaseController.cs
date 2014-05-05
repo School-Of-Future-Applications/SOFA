@@ -34,7 +34,7 @@ namespace SOFA.Controllers
                 return View(viewModels.OrderBy(v => v.YearLevel));
             }
 
-            return View();
+            return RedirectToAction("Index", "Dashboard");
         }
 
         //

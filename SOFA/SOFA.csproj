@@ -181,21 +181,13 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
-    <Compile Include="Controllers\CourseViewController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405050424173_LineTime Changes.cs" />
-    <Compile Include="Migrations\201405050424173_LineTime Changes.Designer.cs">
-      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405050431542_TimetabledClass changes.cs" />
-    <Compile Include="Migrations\201405050431542_TimetabledClass changes.Designer.cs">
-      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
@@ -208,6 +200,7 @@
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
@@ -236,6 +229,7 @@
     <Content Include="Views\Department\CreateEdit.cshtml" />
     <Content Include="Views\_DepartmentLayout.cshtml" />
     <Content Include="Views\Department\DepartmentSideBar.cshtml" />
+    <Content Include="Views\Course\CreateEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,16 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201405050424173_LineTime Changes.resx">
-      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405050431542_TimetabledClass changes.resx">
-      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
