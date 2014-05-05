@@ -9,6 +9,8 @@ namespace SOFA.Models.ViewModels
 {
     public class CourseCreateViewModel
     {
+        [Required]
+        public int ID { get; set; }
         
         [Required]
         [Display(Name="Name")]
@@ -34,8 +36,9 @@ namespace SOFA.Models.ViewModels
         {
             this.CourseCode = course.CourseCode;
             this.CourseName = course.CourseName;
+            this.ID = course.Id;
         }
-        
+  
         
 
     }
