@@ -3,37 +3,43 @@
 @{
     ViewBag.Title = ViewBag.CourseName + " | Class Templates";
 }
+
 <div class="col-md-11 col-md-offset-1">
-    <h2>@ViewBag.CourseName Class Templates</h2>
 
-    <p>
-        @Html.ActionLink("Create New", "Create", new { id = ViewBag.CourseID })
-    </p>
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ClassBaseCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.YearLevel)
-            </th>
-            <th></th>
-        </tr>
+    <h2>@ViewBag.CourseName</h2>
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ClassBaseCode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.YearLevel)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                </td>
-            </tr>
-        }
+    <br /><br />
 
-    </table>
+    <h3>Class Bases</h3>
+    <hr/>
+
+    @Html.ActionLink("Add Class Base", "Create", new { id = ViewBag.CourseID }
+                    ,new { @class = "btn btn-primary pull-right" })
+
+  
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>@Html.DisplayNameFor(model => model.ClassBaseCode)</th>
+                        <th>@Html.DisplayNameFor(model => model.YearLevel)</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.ClassBaseCode)</td>
+                            <td>@Html.DisplayFor(modelItem => item.YearLevel)</td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>

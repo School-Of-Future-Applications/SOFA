@@ -58,3 +58,6 @@
   padding-top: 40px;
 }
 
+.table-hover tbody tr:hover > td {
+    cursor: pointer;
+}

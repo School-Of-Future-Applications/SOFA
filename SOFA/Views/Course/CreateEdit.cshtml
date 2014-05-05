@@ -3,45 +3,53 @@
 @{
     ViewBag.Title = "Create";
 }
+
 <div class="col-md-11 col-md-offset-1">
+
     <h2>Create</h2>
+    <h4>@Model.DepartmentName | New Course</h4>
+    <hr />
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
-        <div class="form-horizontal">
-            <h4>@Model.DepartmentName | New Course</h4>
-            <hr />
-            @Html.ValidationSummary(true)
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            @Html.ValidationSummary()
 
-            @Html.HiddenFor(model => model.ID)
+            @using (Html.BeginForm("CreateEdit", "Course", FormMethod.Post
+                          , new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.ID)
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.CourseName, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CourseName)
-                    @Html.ValidationMessageFor(model => model.CourseName)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseName, "Course Name"
+                                  ,new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.CourseName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CourseName)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.CourseCode, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.CourseCode)
-                    @Html.ValidationMessageFor(model => model.CourseCode)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CourseCode, "Course Code"
+                                  ,new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.CourseCode, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CourseCode)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
                 </div>
+
+            }
+
+            <div class="col-sm-3">
+                @Html.ActionLink("Back to List", "Index")
             </div>
         </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index")
     </div>
 </div>

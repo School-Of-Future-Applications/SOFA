@@ -5,45 +5,48 @@
 }
 
 <div class="col-md-11 col-md-offset-1">
+
     <h2>@Model.CourseName</h2>
+    <h4>New Class Template</h4>
+    <hr />
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            @Html.ValidationSummary()
 
-        <div class="form-horizontal">
-            <h4>New Class Template</h4>
-            <hr />
-            @Html.ValidationSummary(true)
+            @using (Html.BeginForm("CreateEdit", "ClassBase", FormMethod.Post
+                                  ,new { @class = "form-horizontal" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.CourseID)
 
-            @Html.HiddenFor(model => model.CourseID)
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.ClassBaseCode)
-                    @Html.ValidationMessageFor(model => model.ClassBaseCode)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-9">
+                        @Html.TextBoxFor(model => model.ClassBaseCode, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.ClassBaseCode)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => model.YearLevel, new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.YearLevel)
-                    @Html.ValidationMessageFor(model => model.YearLevel)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.YearLevel, new { @class = "control-label col-sm-3" })
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(model => model.YearLevel, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.YearLevel)
+                    </div>
                 </div>
-            </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-9">
+                        <input type="submit" value="Create" class="btn btn-default" />
+                    </div>
                 </div>
+            }
+
+            <div class="col-sm-3">
+                @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
             </div>
         </div>
-    }
-
-    <div>
-        @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
     </div>
 
     <div class="alert-warning">
