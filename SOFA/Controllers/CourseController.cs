@@ -35,7 +35,7 @@ namespace SOFA.Controllers
                 courseViewModel.DepartmentName = department.DepartmentName;
                 courseViewModel.DepartmentId = department.id;
 
-                return View();
+                return View(courseViewModel);
             }
             catch
             {
@@ -78,7 +78,7 @@ namespace SOFA.Controllers
 
                 }
 
-                return View();
+                return View(c);
             }
             catch
             {

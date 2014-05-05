@@ -4,47 +4,49 @@
     ViewBag.Title = "Create Class Base";
 }
 
-<h2>@Model.CourseName</h2>
+<div class="col-md-11 col-md-offset-1">
+    <h2>@Model.CourseName</h2>
 
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>New Class Template</h4>
-        <hr />
-        @Html.ValidationSummary(true)
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.CourseID)
+        <div class="form-horizontal">
+            <h4>New Class Template</h4>
+            <hr />
+            @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ClassBaseCode)
-                @Html.ValidationMessageFor(model => model.ClassBaseCode)
+            @Html.HiddenFor(model => model.CourseID)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ClassBaseCode)
+                    @Html.ValidationMessageFor(model => model.ClassBaseCode)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.YearLevel, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.YearLevel)
+                    @Html.ValidationMessageFor(model => model.YearLevel)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
+    }
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.YearLevel, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.YearLevel)
-                @Html.ValidationMessageFor(model => model.YearLevel)
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    <div>
+        @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index", new { id = Model.CourseID })
-</div>
-
-<div class="alert-warning"> 
-    @ViewBag.ErrorMessage
+    <div class="alert-warning">
+        @ViewBag.ErrorMessage
+    </div>
 </div>
