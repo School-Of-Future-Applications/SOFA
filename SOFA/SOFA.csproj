@@ -189,6 +189,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201405050424173_LineTime Changes.cs" />
+    <Compile Include="Migrations\201405050424173_LineTime Changes.Designer.cs">
+      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201405050431542_TimetabledClass changes.cs" />
+    <Compile Include="Migrations\201405050431542_TimetabledClass changes.Designer.cs">
+      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
@@ -236,6 +244,14 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201405050424173_LineTime Changes.resx">
+      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201405050431542_TimetabledClass changes.resx">
+      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

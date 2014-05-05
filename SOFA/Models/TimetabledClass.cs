@@ -21,5 +21,7 @@ namespace SOFA.Models
         public Int32 Capacity { get; set; }
 
         public virtual Teacher Teacher { get; set; }
+
+        public String DisplayName { get; set; }
     }
 }

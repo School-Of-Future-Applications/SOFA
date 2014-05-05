@@ -107,6 +107,8 @@ namespace SOFA.Controllers
         public ActionResult EditTime(int id)
         {
             LineTime lt = db.LineTimes.Where(x => x.Id == id).FirstOrDefault();
+            lt.StartTimeString = "" + Math.Floor(lt.StartTime) + ":" + (int)Math.Round((lt.StartTime - Math.Floor(lt.StartTime)) * 60);
+            lt.EndTimeString = "" + Math.Floor(lt.EndTime) + ":" + (int)Math.Round((lt.EndTime - Math.Floor(lt.EndTime)) * 60);
             return PartialView("LineTimeCreate", lt);
         }
 
@@ -115,7 +117,10 @@ namespace SOFA.Controllers
         public ActionResult EditTime(LineTime lt)
         {
             LineTime toUpdate = db.LineTimes.Where(x => x.Id == lt.Id).FirstOrDefault();
-            toUpdate.Time = lt.Time;
+            TimeSpan tmpSpan = TimeSpan.Parse(lt.StartTimeString);
+            toUpdate.StartTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
+            tmpSpan = TimeSpan.Parse(lt.EndTimeString);
+            toUpdate.EndTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
             toUpdate.Day = lt.Day;
             db.SaveChanges();
             return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
@@ -139,6 +144,7 @@ namespace SOFA.Controllers
             TimetabledClass toUpdate = db.TimetabledClasses.Where(x => x.Id == tclassmodel.TimetabledClass.Id).FirstOrDefault();
             toUpdate.Capacity = tclassmodel.TimetabledClass.Capacity;
             toUpdate.ClassBaseID = tclassmodel.TimetabledClass.ClassBaseID;
+            toUpdate.DisplayName = tclassmodel.TimetabledClass.DisplayName;
             db.SaveChanges();
             return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
         }
@@ -173,6 +179,10 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult CreateLineTime(LineTime lt)
         {
+            TimeSpan tmpSpan = TimeSpan.Parse(lt.StartTimeString);
+            lt.StartTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
+            tmpSpan = TimeSpan.Parse(lt.EndTimeString);
+            lt.EndTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
             db.LineTimes.Add(lt);
             Line l = db.Lines.Where(x => x.Id == lt.Id).FirstOrDefault();
             l.LineTimes.Add(lt);
