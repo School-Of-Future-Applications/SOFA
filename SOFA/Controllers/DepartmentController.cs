@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -14,24 +15,55 @@ namespace SOFA.Controllers
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View(db.Departments.ToList());
-        }
-
-        public ActionResult CreateEdit(int id = 0)
-        {
             return View();
         }
 
+       
+        [HttpGet]
+        public ActionResult CreateEdit(int? departmentId)
+        {
+            if (departmentId != null)
+                return View(db.Departments.
+                                   Where(x => x.id == departmentId).FirstOrDefault());
+            return View();
+        }
+
+       
         [HttpPost]
-        public ActionResult CreateEdit()
+        public ActionResult CreateEdit(Department dep)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                if (db.Departments.Any(x => x.id == dep.id))
+                {
+                    db.Departments.Attach(dep);
+                    db.Entry(dep).State = EntityState.Modified;
+                }
+                else
+                    db.Departments.Add(dep);
+                db.SaveChanges();
+                return RedirectToAction("Department", new { departmentId = dep.id });
+            }
+            else
+                return View();
         }
 
-        public PartialViewResult Department(int departmentId)
+       
+        public ActionResult Department(int? departmentId)
         {
-            return PartialView(db.Departments.Where(x => x.id == departmentId)
-                               .FirstOrDefault());
+            if (departmentId == null)
+                return RedirectToAction("Index");
+
+            Department dep = db.Departments.Where(x => x.id == departmentId)
+                            .FirstOrDefault();
+            ViewBag.DepartmentId = dep.id;
+            return View(dep);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult DepartmentSideBar()
+        {
+            return PartialView(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
 	}

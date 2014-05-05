@@ -1,0 +1,27 @@
+﻿
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Department>
+
+@{
+}
+
+<div class="nav nav-sidebar">
+    <h3 class="nav-heading text-center">Departments</h3>
+    <div class="btn-group btn-group-justified">
+        <div class="btn-group">
+            <a href="~/Department/CreateEdit"type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus" />
+            </a>
+        </div>
+    </div><!--btn-group-->
+
+    @foreach (Department d in Model)
+    {
+        <li>
+            @Html.ActionLink(d.DepartmentName, "Department", new { departmentId = d.id }
+            ,new { @class = (ViewBag.DepartmentId == d.id ? "active" : "")})
+        </li>
+    }
+</div>
