@@ -15,18 +15,20 @@ namespace SOFA.Controllers
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
+            return View();
         }
 
+       
         [HttpGet]
-        public PartialViewResult CreateEdit(int? departmentId)
+        public ActionResult CreateEdit(int? departmentId)
         {
             if (departmentId != null)
-                return PartialView(db.Departments.
+                return View(db.Departments.
                                    Where(x => x.id == departmentId).FirstOrDefault());
-            return PartialView();
+            return View();
         }
 
+       
         [HttpPost]
         public ActionResult CreateEdit(Department dep)
         {
@@ -40,16 +42,28 @@ namespace SOFA.Controllers
                 else
                     db.Departments.Add(dep);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Department", new { departmentId = dep.id });
             }
             else
                 return View();
         }
 
-        public PartialViewResult Department(int departmentId)
+       
+        public ActionResult Department(int? departmentId)
         {
-            return PartialView(db.Departments.Where(x => x.id == departmentId)
-                               .FirstOrDefault());
+            if (departmentId == null)
+                return RedirectToAction("Index");
+
+            Department dep = db.Departments.Where(x => x.id == departmentId)
+                            .FirstOrDefault();
+            ViewBag.DepartmentId = dep.id;
+            return View(dep);
+        }
+
+        [ChildActionOnly]
+        public PartialViewResult DepartmentSideBar()
+        {
+            return PartialView(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
 	}

@@ -12,6 +12,7 @@ namespace SOFA.Models
         public int id { get; set; }
 
         [Required]
+        [StringLength(50)]
         public String DepartmentName { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
