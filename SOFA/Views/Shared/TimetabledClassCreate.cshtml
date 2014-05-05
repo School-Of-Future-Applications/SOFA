@@ -1,0 +1,45 @@
+﻿@model SOFA.Models.ViewModels.TimetabledClassCreateEditViewModel
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>TimetabledClass</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimetabledClass.Capacity, new { @class = "col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimetabledClass.Capacity)
+                @Html.ValidationMessageFor(model => model.TimetabledClass.Capacity)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimetabledClass.DisplayName, new { @class = "col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TimetabledClass.DisplayName)
+                @Html.ValidationMessageFor(model => model.TimetabledClass.DisplayName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimetabledClass.ClassBase, new { @class = "col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.TimetabledClass.ClassBaseID, new SelectList(Model.ClassBases, "Id", "ClassBaseCode"), "--Please Select One--")
+                @Html.ValidationMessageFor(model => model.TimetabledClass.ClassBaseID)
+            </div>
+            @Html.HiddenFor(model => model.LineID)
+            @Html.HiddenFor(model => model.TimetabledClass.Id)
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

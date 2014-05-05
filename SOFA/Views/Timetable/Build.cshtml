@@ -12,12 +12,19 @@
         $(document).ready(function () {
             $('#my-dialog').dialog({
                 autoOpen: false,
-                width: 400,
-                resizable: false,
+                width: 600,
+                resizable: true,
                 modal: true
             });
 
             $("table a.addtime").click(function (event) {
+                event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
+            });
+
+            $("table a.addclass").click(function (event) {
                 event.preventDefault();
                 $('#my-dialog').load(this.href, function () {
                     $(this).dialog('open');
@@ -62,33 +69,29 @@
             @Html.ValidationSummary(true)
 
             <div class="form-group">
-                @Html.LabelFor(model => model.TimetableCode, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.TimetableCode, new { @class = "col-md-2 text-right" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TimetableCode)
-                    @Html.ValidationMessageFor(model => model.TimetableCode)
+                    @Html.DisplayFor(model => model.TimetableCode)
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.TimetableIdentifier, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.TimetableIdentifier, new { @class = "col-md-2 text-right" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.TimetableIdentifier)
-                    @Html.ValidationMessageFor(model => model.TimetableIdentifier)
+                    @Html.DisplayFor(model => model.TimetableIdentifier)
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(model => model.ActiveDate, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ActiveDate, new { @class = "col-md-2 text-right" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.ActiveDate, new { @class = "datepicker" })
-                    @Html.ValidationMessageFor(model => model.ActiveDate)
+                    @Html.DisplayFor(model => model.ActiveDate, new { @class = "datepicker" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.ExpiryDate, new { @class = "col-md-2 text-right" })
                 <div class="col-md-10">
-                    @Html.TextBoxFor(model => model.ExpiryDate, new { @class = "datepicker" })
-                    @Html.ValidationMessageFor(model => model.ExpiryDate)
+                    @Html.DisplayFor(model => model.ExpiryDate, new { @class = "datepicker" })
                 </div>
             </div>
         @{
@@ -108,7 +111,7 @@
 
                         <td>
                             @Html.ActionLink("Add Time", "CreateLineTime", new { id = line.Id }, new { @class = "addtime" }) |
-                            @Html.ActionLink("Add Class", "AddLineClass", new { id = line.Id }) |
+                            @Html.ActionLink("Add Class", "CreateTimetabledClass", new { id = line.Id }, new { @class = "addclass" }) |
                             @Html.ActionLink("Delete Line", "DeleteLine", new { id = line.Id })
                         </td>
                         <td></td>
@@ -118,7 +121,7 @@
                         <tr class="info">
                             <td></td>
                             <td>
-                                <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.Time, "CustomDoubleTimeOfDay")</b>
+                                <b>@Html.DisplayFor(modelItem => linetime.Day, "CustomIntDayOfWeek") - @Html.DisplayFor(modelItem => linetime.StartTime, "CustomDoubleTimeOfDay")-@Html.DisplayFor(modelItem => linetime.EndTime, "CustomDoubleTimeOfDay")</b>
                             </td>
 
                             <td>
@@ -127,16 +130,25 @@
                             </td>
                         </tr>
                     }
+                    
+                    foreach (var tclass in line.TimetabledClasses)
+                    {
+                        <tr class="success">
+                            <td></td>
+                            <td>
+                                <b>@Html.DisplayFor(modelitem => tclass.DisplayName) - Capacity: @Html.DisplayFor(modelitem => tclass.Capacity)</b>
+                            </td>
+
+                            <td>
+                                @Html.ActionLink("Edit Class", "EditTimetabledClass", new { id = tclass.Id }, new { @class = "addclass" }) |
+                                @Html.ActionLink("Delete Class", "DeleteTimetabledClass", new { id = tclass.Id })
+                            </td>
+                        </tr>
+                    }
                 }
             </table>
 
             <div id="my-dialog"></div>
-
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Build" class="btn btn-default" />
-                </div>
-            </div>
         </div>
     }
 

@@ -90,10 +90,25 @@ namespace SOFA.Controllers
         }
 
         //
+        // GET: /Timetable/CreateLine
+        public ActionResult CreateTimetabledClass(int id)
+        {
+            TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
+            TimetabledClass tclass = new TimetabledClass();
+            tclassmodel.TimetabledClass = tclass;
+            tclassmodel.ClassBases = db.ClassBases;
+            Line l = db.Lines.Where(x => x.Id == id).FirstOrDefault();
+            tclassmodel.LineID = l.Id;
+            return PartialView("TimetabledClassCreate", tclassmodel);
+        }
+
+        //
         // GET: /Timetable/EditLineTime
         public ActionResult EditTime(int id)
         {
             LineTime lt = db.LineTimes.Where(x => x.Id == id).FirstOrDefault();
+            lt.StartTimeString = "" + Math.Floor(lt.StartTime) + ":" + (int)Math.Round((lt.StartTime - Math.Floor(lt.StartTime)) * 60);
+            lt.EndTimeString = "" + Math.Floor(lt.EndTime) + ":" + (int)Math.Round((lt.EndTime - Math.Floor(lt.EndTime)) * 60);
             return PartialView("LineTimeCreate", lt);
         }
 
@@ -102,10 +117,61 @@ namespace SOFA.Controllers
         public ActionResult EditTime(LineTime lt)
         {
             LineTime toUpdate = db.LineTimes.Where(x => x.Id == lt.Id).FirstOrDefault();
-            toUpdate.Time = lt.Time;
+            TimeSpan tmpSpan = TimeSpan.Parse(lt.StartTimeString);
+            toUpdate.StartTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
+            tmpSpan = TimeSpan.Parse(lt.EndTimeString);
+            toUpdate.EndTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
             toUpdate.Day = lt.Day;
             db.SaveChanges();
             return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
+        }
+
+        //
+        // GET: /Timetable/EditLineTime
+        public ActionResult EditTimetabledClass(int id)
+        {
+            TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
+            tclassmodel.TimetabledClass = db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
+            tclassmodel.LineID = tclassmodel.TimetabledClass.Line.Id;
+            tclassmodel.ClassBases = db.ClassBases;
+            return PartialView("TimetabledClassCreate", tclassmodel);
+        }
+
+        // GET: /Timetable/EditLineTime
+        [HttpPost]
+        public ActionResult EditTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
+        {
+            TimetabledClass toUpdate = db.TimetabledClasses.Where(x => x.Id == tclassmodel.TimetabledClass.Id).FirstOrDefault();
+            toUpdate.Capacity = tclassmodel.TimetabledClass.Capacity;
+            toUpdate.ClassBaseID = tclassmodel.TimetabledClass.ClassBaseID;
+            toUpdate.DisplayName = tclassmodel.TimetabledClass.DisplayName;
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = toUpdate.Line.Timetable.Id });
+        }
+
+        //
+        // GET: /Timetable/EditLineTime
+        public ActionResult DeleteTimetabledClass(int id)
+        {
+            TimetabledClass tc = db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
+            int timetableid = tc.Line.Timetable.Id;
+            db.TimetabledClasses.Remove(db.TimetabledClasses.Where(x => x.Id == id).FirstOrDefault());
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = timetableid });
+        }
+
+
+        //
+        // GET: /Timetable/CreateTimetabledClass
+        [HttpPost]
+        public ActionResult CreateTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
+        {
+            var tclass = tclassmodel.TimetabledClass;
+            db.TimetabledClasses.Add(tclass);
+            Line l = db.Lines.Where(x => x.Id == tclassmodel.LineID).FirstOrDefault();
+            l.TimetabledClasses.Add(tclass);
+            db.SaveChanges();
+            return RedirectToAction("Build", new { id = l.Timetable.Id });
         }
 
         //
@@ -113,6 +179,10 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult CreateLineTime(LineTime lt)
         {
+            TimeSpan tmpSpan = TimeSpan.Parse(lt.StartTimeString);
+            lt.StartTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
+            tmpSpan = TimeSpan.Parse(lt.EndTimeString);
+            lt.EndTime = tmpSpan.Hours + (((double)tmpSpan.Minutes / 60d));
             db.LineTimes.Add(lt);
             Line l = db.Lines.Where(x => x.Id == lt.Id).FirstOrDefault();
             l.LineTimes.Add(lt);
