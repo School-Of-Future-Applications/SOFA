@@ -181,7 +181,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
-    <Compile Include="Controllers\CourseViewController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
@@ -200,6 +200,7 @@
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
@@ -225,6 +226,7 @@
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Department\Department.cshtml" />
     <Content Include="Views\Shared\TimetabledClassCreate.cshtml" />
+    <Content Include="Views\Course\Create.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -234,7 +236,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <PropertyGroup>
