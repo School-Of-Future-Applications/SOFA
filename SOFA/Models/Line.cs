@@ -9,6 +9,8 @@ namespace SOFA.Models
     {
         public int Id { get; set; }
         public virtual ICollection<LineTime> LineTimes { get; set; }
+
+        public virtual ICollection<TimetabledClass> TimetabledClasses { get; set; }
         public virtual Timetable Timetable { get; set; }     
     }
 }

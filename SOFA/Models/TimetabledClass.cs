@@ -12,12 +12,16 @@ namespace SOFA.Models
         [Key]
         public int Id { get; set; }
 
-        public ClassBase ClassBase { get; set; }
+        public virtual ClassBase ClassBase { get; set; }
 
-        public Line Line { get; set; }
+        
+        public int? ClassBaseID { get; set; }
+        public virtual Line Line { get; set; }
 
         public Int32 Capacity { get; set; }
 
-        public Teacher Teacher { get; set; }
+        public virtual Teacher Teacher { get; set; }
+
+        public String DisplayName { get; set; }
     }
 }

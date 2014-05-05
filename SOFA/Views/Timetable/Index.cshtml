@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Timetables";
+    ViewBag.NavItem = "Timetabling";
 }
 
 <div class="col-md-11 col-md-offset-1">
@@ -29,7 +30,6 @@
 
             <th></th>
         </tr>
-
         @foreach (var item in Model.CurrentTimetables)
         {
             <tr>
@@ -45,6 +45,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.ExpiryDate)
                 </td>
+
 
                 <td>
                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
@@ -97,6 +98,7 @@
 
             </tr>
         }
+
 
     </table>
 
