@@ -21,7 +21,10 @@
             @using (Html.BeginForm("CreateEdit", "Department", FormMethod.Post
                                   , new { @class = "form-horizontal" }))
             {
-                @Html.HiddenFor(model => model.id)
+                if(Model != null)
+                {
+                    @Html.HiddenFor(model => model.id)
+                }
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentName, "Department Name"
                                   ,new { @class = "control-label col-sm-3" })

@@ -61,3 +61,11 @@
 .table-hover tbody tr:hover > td {
     cursor: pointer;
 }
+
+.table-hover tbody tr.lasthidden td:last-child {
+    visibility: hidden;
+}
+
+.table-hover tbody tr.lasthidden:hover td:last-child {
+      visibility: visible;
+} 

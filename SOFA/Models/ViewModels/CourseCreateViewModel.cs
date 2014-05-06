@@ -11,14 +11,16 @@ namespace SOFA.Models.ViewModels
     {
         [Required]
         public int ID { get; set; }
-        
+
         [Required]
-        [Display(Name="Name")]
-        public string CourseName { get; set; }
-        
-        [Required]
-        [Display(Name="Code")]
+        [Display(Name = "Course Code")]
+        [StringLength(Course.COURSECODE_LENGTH)]
         public string CourseCode { get; set; }
+
+        [Required]
+        [Display(Name="Course Name")]
+        [StringLength(Course.COURSENAME_LENGTH)]
+        public string CourseName { get; set; }
         
         [UIHint("Hidden")]
         [Required]

@@ -8,8 +8,12 @@
 
 <div class="col-md-11 col-md-offset-1">
 
-    <h2>@Html.ActionLink(Model.Department.DepartmentName, "Department"
-                        ,"Department", new { departmentId = Model.Department.id }, null) > @Model.CourseName</h2>
+    <h2>
+        @Html.ActionLink(Model.Department.DepartmentName, "Department"
+                        ,"Department", new { departmentId = Model.Department.id }, null) 
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        @Model.CourseName
+    </h2>
 
     <p></p>
     <b>Course Code:</b> @Model.CourseCode

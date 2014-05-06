@@ -7,8 +7,19 @@
 }
 
 <h2>@Model.DepartmentName</h2>
+<div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li>
+            @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
+            @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
+        </li>
+    </ul>
+</div>
 
-<br/><br/>
+
 
 <h3>Courses</h3>
 <hr/>
@@ -24,15 +35,20 @@
                     <th>Course Code</th>
                     <th>Course Name</th>
                     <th>Class Count</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Course c in Model.Courses)
+                @foreach (Course c in Model.Courses.Where(x => x.Deleted == false))
                 {
-                    <tr onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
+                    <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
                         <td>@c.CourseCode</td>
                         <td>@c.CourseName</td>
                         <td>@c.ClassBases.Count()</td>
+                        <td align="right">
+                            <a class="" href="#">Edit</a> | 
+                            <a class="" href="#">Delete</a>
+                        </td>
                     </tr>
                 }
             </tbody>

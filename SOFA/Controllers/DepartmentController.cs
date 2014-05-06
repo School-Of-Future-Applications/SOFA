@@ -48,6 +48,25 @@ namespace SOFA.Controllers
                 return View();
         }
 
+        public ActionResult Delete(int? departmentId)
+        {
+            Department dep = null;
+            try
+            {
+                if (departmentId == null)
+                    throw new Exception();
+
+                dep = db.Departments.Where(x => x.id == departmentId).First();
+                dep.Deleted = true;
+                db.Entry(dep).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Department", new { departmentId = departmentId });
+            }
+        }
        
         public ActionResult Department(int? departmentId)
         {
@@ -63,7 +82,8 @@ namespace SOFA.Controllers
         [ChildActionOnly]
         public PartialViewResult DepartmentSideBar()
         {
-            return PartialView(db.Departments.OrderBy(x => x.DepartmentName).ToList());
+            return PartialView(db.Departments.Where(x => x.Deleted == false)
+                              .OrderBy(x => x.DepartmentName).ToList());
         }
 
 	}

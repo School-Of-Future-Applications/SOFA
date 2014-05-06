@@ -2,14 +2,17 @@
 
 @{
     ViewBag.Title = "Create";
+    ViewBag.NewCourse = Model.ID == 0;
+    ViewBag.HeadingTitle = (ViewBag.NewCourse ? "New Course"
+                                              : "Edit - " + Model.CourseName);
 }
 
 <div class="col-md-11 col-md-offset-1">
 
-    <h2>Create</h2>
-    <h4>@Model.DepartmentName | New Course</h4>
+    <h2>@Html.ActionLink(Model.DepartmentName, "Department", "Department"
+                        ,new { departmentId = Model.DepartmentId }, null) >
+        @ViewBag.HeadingTitle</h2>
     <hr />
-
 
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
@@ -20,9 +23,10 @@
             {
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(model => model.ID)
+                @Html.HiddenFor(model => model.DepartmentId)
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CourseName, "Course Name"
+                    @Html.LabelFor(model => model.CourseName
                                   ,new { @class = "control-label col-sm-3" })
                     <div class="col-sm-9">
                         @Html.TextBoxFor(model => model.CourseName, new { @class = "form-control" })
@@ -31,7 +35,7 @@
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.CourseCode, "Course Code"
+                    @Html.LabelFor(model => model.CourseCode
                                   ,new { @class = "control-label col-sm-3" })
                     <div class="col-sm-9">
                         @Html.TextBoxFor(model => model.CourseCode, new { @class = "form-control" })
@@ -41,15 +45,16 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="Add Course" class="btn btn-default" />
+                        @if(!ViewBag.NewCourse)
+                        {
+                            <input type="button" value="Delete Course" class="btn btn-danger" />
+                        }
                     </div>
                 </div>
 
             }
 
-            <div class="col-sm-3">
-                @Html.ActionLink("Back to List", "Index")
-            </div>
         </div>
     </div>
 </div>

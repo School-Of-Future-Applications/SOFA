@@ -20,7 +20,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Course/Create
-        public ActionResult CreateEdit(int departmentId = 1, int courseID = 0)
+        public ActionResult CreateEdit(int departmentId = 0, int courseId = 0)
         {
             try
             {
@@ -28,13 +28,11 @@ namespace SOFA.Controllers
 
                 CourseCreateViewModel courseViewModel;
                 //Create time
-                if (courseID == 0)
-                {
+                if (courseId == 0)
                     courseViewModel = new CourseCreateViewModel();
-                }
                 else //Edit time
                 {
-                    var course = db.Courses.First(c => c.Id == courseID);
+                    var course = db.Courses.First(c => c.Id == courseId);
                     courseViewModel = new CourseCreateViewModel(course);
                 }
                 courseViewModel.DepartmentName = department.DepartmentName;
@@ -54,6 +52,7 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult CreateEdit(CourseCreateViewModel c)
         {
+            Course course = null;
             try
             {
                 if (ModelState.IsValid)
@@ -62,7 +61,7 @@ namespace SOFA.Controllers
                     if (c.ID == 0)
                     {
                         Department department = db.Departments.First(d => d.id == c.DepartmentId);
-                        Course course = new Course();
+                        course = new Course();
                         course.Department = department;
                         course.CourseName = c.CourseName;
                         course.CourseCode = c.CourseCode;
@@ -71,28 +70,25 @@ namespace SOFA.Controllers
                     }
                     else //Editing
                     {
-                        Course course = db.Courses.First(dbCourse => dbCourse.Id == c.ID);
+                        course = db.Courses.First(dbCourse => dbCourse.Id == c.ID);
                         course.CourseName = c.CourseName;
                         course.CourseCode = c.CourseCode;
                         db.Courses.Attach(course);
                         db.Entry(course).State = System.Data.Entity.EntityState.Modified;
                         db.SaveChanges();
                     }
-                    
-                    return RedirectToAction("Index", "Department");
+
+                    return RedirectToAction("Department", "Department"
+                                           ,new { departmentId = course.Department.id });
 
                 }
-
                 return View(c);
             }
             catch
             {
-                return RedirectToAction("Index", "Department");
+                return RedirectToAction("Department", "Department"
+                                       ,new { departmentId = c.DepartmentId });
             }
-            
-            
         }
-
-        
     }
 }
