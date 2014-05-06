@@ -3,6 +3,11 @@
 
 @{
     ViewBag.Title = "Create Class Base";
+    ViewBag.NewClassBase = Model.Id == 0;
+    ViewBag.HeadingTitle = (ViewBag.NewClassBase ? "New Class Base"
+                                                 : "Edit - " + Model.ClassBaseCode);
+    ViewBag.SubmitTxt = (ViewBag.NewClassBase ? "Add Class Base"
+                                              : "Save Class Base");
 }
 
 <div class="col-md-11 col-md-offset-1">
@@ -14,17 +19,19 @@
         @Html.ActionLink(Model.CourseName, "Index", "Course"
                         ,new { courseId = Model.CourseID }, null)
         <span class="glyphicon glyphicon-chevron-right"></span>
-        New Class Base</h2>
+        @ViewBag.HeadingTitle
+    </h2>
     <hr />
 
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             @Html.ValidationSummary()
 
-            @using (Html.BeginForm("Create", "ClassBase", FormMethod.Post
+            @using (Html.BeginForm("CreateEdit", "ClassBase", FormMethod.Post
                                   ,new { @class = "form-horizontal" }))
             {
                 @Html.AntiForgeryToken()
+                @Html.HiddenFor(model => model.Id)
                 @Html.HiddenFor(model => model.CourseID)
 
                 <div class="form-group">
@@ -45,7 +52,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" value="Create" class="btn btn-default" />
+                        <input type="submit" value="@ViewBag.SubmitTxt" class="btn btn-default" />
                     </div>
                 </div>
             }

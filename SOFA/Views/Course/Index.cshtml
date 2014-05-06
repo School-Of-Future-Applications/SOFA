@@ -36,7 +36,7 @@
     <h3>Class Bases</h3>
     <hr />
 
-    @Html.ActionLink("Add Class Base", "Create", "ClassBase"
+    @Html.ActionLink("Add Class Base", "CreateEdit", "ClassBase"
                     ,new { courseId = Model.Id }
                     ,new { @class = "btn btn-primary pull-right" })
 
@@ -58,7 +58,9 @@
                             <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
                             <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
                             <td align="right">
-                                @Html.ActionLink("Edit", "Edit", new { id = cb.Id })
+                                @Html.ActionLink("Edit", "CreateEdit", "ClassBase"
+                                                ,new { courseId = cb.Course.Id, classBaseId = cb.Id }
+                                                ,null)
                             </td>
                         </tr>
                     }
@@ -73,7 +75,7 @@
         <div class="col-md-12">
             <div class="jumbotron">
                 <h2 class="text-center">@Model.CourseName Has No Class Bases!</h2>
-                <p class="text-center"><a href="@Url.Action("Create", "ClassBase", new { courseId = Model.Id})" class="btn btn-primary btn-lg">Add Class Base</a></p>
+                <p class="text-center"><a href="@Url.Action("CreateEdit", "ClassBase", new { courseId = Model.Id})" class="btn btn-primary btn-lg">Add Class Base</a></p>
             </div>
         </div>
     </div>   

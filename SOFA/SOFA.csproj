@@ -215,8 +215,7 @@
     <Content Include="Views\_DashboardLayout.cshtml" />
     <Content Include="Views\Timetable\Create.cshtml" />
     <Content Include="Views\Timetable\Index.cshtml" />
-    <Content Include="Views\ClassBase\Create.cshtml" />
-    <Content Include="Views\ClassBase\Edit.cshtml" />
+    <Content Include="Views\ClassBase\CreateEdit.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />

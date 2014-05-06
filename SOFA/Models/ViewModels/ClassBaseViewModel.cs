@@ -38,5 +38,28 @@ namespace SOFA.Models.ViewModels
 
             return classBase;
         }
+
+        public ClassBaseViewModel()
+        {
+        }
+
+        public ClassBaseViewModel(ClassBase classBase)
+        {
+            Id = classBase.Id;
+            CourseID = classBase.Course.Id;
+            CourseName = classBase.Course.CourseName;
+            ClassBaseCode = classBase.ClassBaseCode;
+            DepartmentId = classBase.Course.Department.id;
+            DepartmentName = classBase.Course.Department.DepartmentName;
+            YearLevel = classBase.YearLevel;
+        }
+
+        public ClassBaseViewModel(Course course)
+        {
+            CourseID = course.Id;
+            CourseName = course.CourseName;
+            DepartmentId = course.Department.id;
+            DepartmentName = course.Department.DepartmentName;
+        }
     }
 }
