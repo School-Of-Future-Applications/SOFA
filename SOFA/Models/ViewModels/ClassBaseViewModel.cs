@@ -14,11 +14,18 @@ namespace SOFA.Models.ViewModels
 
         public String CourseName { get; set; }
 
+        [Required]
         [Display(Name="Class Base Code")]
+        [StringLength(ClassBase.CLASSBASECODE_LENGTH)]
         public String ClassBaseCode { get; set; }
+
+        public int DepartmentId { get; set; }
+
+        public String DepartmentName { get; set; }
 
         [Required]
         [Display(Name="Year Level")]
+        [StringLength(ClassBase.YEARLEVEL_LENGTH)]
         public String YearLevel { get; set; }
 
         public ClassBase ToClassBase(Course course)

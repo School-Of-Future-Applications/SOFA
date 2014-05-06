@@ -5,6 +5,8 @@
     ViewBag.NewCourse = Model.ID == 0;
     ViewBag.HeadingTitle = (ViewBag.NewCourse ? "New Course"
                                               : "Edit - " + Model.CourseName);
+    ViewBag.SubmitTxt = (ViewBag.NewCourse ? "Add Course"
+                                           : "Save Course");
 }
 
 <div class="col-md-11 col-md-offset-1">
@@ -45,11 +47,7 @@
 
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-9">
-                        <input type="submit" value="Add Course" class="btn btn-default" />
-                        @if(!ViewBag.NewCourse)
-                        {
-                            <input type="button" value="Delete Course" class="btn btn-danger" />
-                        }
+                        <input type="submit" value="@ViewBag.SubmitTxt" class="btn btn-default" />
                     </div>
                 </div>
 

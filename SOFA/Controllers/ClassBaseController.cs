@@ -40,38 +40,28 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Create/5
-        public ActionResult Create(int courseId = 1) //default value for debugging only
+        public ActionResult Create(int courseId = 0) //default value for debugging only
         {
-            ClassBase tmp = new ClassBase();
-            tmp.Course = db.Courses.FirstOrDefault(x => x.Id == courseId);
-            return View(tmp);
-            /*var viewModel = new ClassBaseViewModel();
+            var viewModel = new ClassBaseViewModel();
             var course = db.Courses.FirstOrDefault(c => c.Id == courseId);                
             if (course != null)
             {
                 viewModel.CourseID = course.Id;
                 viewModel.CourseName = course.CourseName;
+                viewModel.DepartmentId = course.Department.id;
+                viewModel.DepartmentName = course.Department.DepartmentName;
                 return View(viewModel);
             }
 
-            return RedirectToAction("Index", new { courseID = courseId });*/
+            return RedirectToAction("Index", new { courseID = courseId });
         }
 
         //
         // POST: /ClassBase/Create
         [HttpPost]
-        public ActionResult Create(ClassBase classBase)
+        public ActionResult Create(ClassBaseViewModel viewModel)
         {
-            if (ModelState.IsValid)
-            {
-                db.ClassBases.Add(classBase);
-                db.SaveChanges();
-                return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
-            }
-            else
-                return View();
-
-           /* var courses = db.Courses;
+            var courses = db.Courses;
             Course course = null;
             if (courses.Count() > 0) 
             {
@@ -88,9 +78,9 @@ namespace SOFA.Controllers
                 ClassBase classBase = viewModel.ToClassBase(course);
                 db.ClassBases.Add(classBase);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Course", new { courseId = course.Id });
             }
-            return View(viewModel); //SS validation failed. Try again.*/
+            return View(viewModel); //SS validation failed. Try again.
         }
 
         

@@ -1,5 +1,5 @@
-﻿@using SOFA.Models
-@model ClassBase
+﻿@using SOFA.Models.ViewModels
+@model ClassBaseViewModel
 
 @{
     ViewBag.Title = "Create Class Base";
@@ -7,11 +7,14 @@
 
 <div class="col-md-11 col-md-offset-1">
 
-    <h2>@Html.ActionLink(Model.Course.Department.DepartmentName, "Department"
-                        ,"Department", new { departmentId = Model.Course.Department.id }, null) > 
-         @Html.ActionLink(Model.Course.CourseName, "Index", "Course"
-                         ,new { courseId = Model.Course.Id }, null) >
-         New Class Base</h2>
+    <h2>
+        @Html.ActionLink(Model.DepartmentName, "Department"
+                        ,"Department", new { departmentId = Model.DepartmentId }, null) 
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        @Html.ActionLink(Model.CourseName, "Index", "Course"
+                        ,new { courseId = Model.CourseID }, null)
+        <span class="glyphicon glyphicon-chevron-right"></span>
+        New Class Base</h2>
     <hr />
 
     <div class="row">
@@ -22,7 +25,7 @@
                                   ,new { @class = "form-horizontal" }))
             {
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(model => model.Course)
+                @Html.HiddenFor(model => model.CourseID)
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-sm-3" })

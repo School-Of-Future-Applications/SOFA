@@ -15,6 +15,19 @@
         @Model.CourseName
     </h2>
 
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>
+                @Html.ActionLink("Edit Course", "CreateEdit", new { departmentId = Model.Department.id
+                                                                   ,courseId = Model.Id})
+                @Html.ActionLink("Delete Course", "#")
+            </li>
+        </ul>
+    </div>
+
     <p></p>
     <b>Course Code:</b> @Model.CourseCode
     </p>
@@ -24,7 +37,7 @@
     <hr />
 
     @Html.ActionLink("Add Class Base", "Create", "ClassBase"
-                    ,new { id = ViewBag.CourseID }
+                    ,new { courseId = Model.Id }
                     ,new { @class = "btn btn-primary pull-right" })
 
 
@@ -41,11 +54,11 @@
                 <tbody>
                     @foreach (ClassBase cb in Model.ClassBases)
                     {
-                        <tr>
+                        <tr class="lasthidden">
                             <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
                             <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = cb.Id }) |
+                            <td align="right">
+                                @Html.ActionLink("Edit", "Edit", new { id = cb.Id })
                             </td>
                         </tr>
                     }

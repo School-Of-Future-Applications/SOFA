@@ -13,9 +13,16 @@ namespace SOFA.Controllers
     {
         private DBContext db = new DBContext();
 
-        public ActionResult Index(int courseId)
+        public ActionResult Index(int courseId = 0)
         {
-            return View(db.Courses.FirstOrDefault(x => x.Id == courseId));
+            try
+            {
+                return View(db.Courses.First(x => x.Id == courseId));
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Department");
+            }
         }
 
         //

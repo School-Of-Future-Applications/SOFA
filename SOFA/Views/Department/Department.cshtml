@@ -19,7 +19,7 @@
     </ul>
 </div>
 
-
+<br/><br/>
 
 <h3>Courses</h3>
 <hr/>
@@ -46,8 +46,8 @@
                         <td>@c.CourseName</td>
                         <td>@c.ClassBases.Count()</td>
                         <td align="right">
-                            <a class="" href="#">Edit</a> | 
-                            <a class="" href="#">Delete</a>
+                            @Html.ActionLink("Edit", "CreateEdit", "Course"
+                                            ,new { departmentId = Model.id, courseId = c.Id}, null)
                         </td>
                     </tr>
                 }
