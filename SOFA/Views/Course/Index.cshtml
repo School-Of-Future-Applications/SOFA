@@ -10,23 +10,28 @@
 
     <h2>
         @Html.ActionLink(Model.Department.DepartmentName, "Department"
-                        ,"Department", new { departmentId = Model.Department.id }, null) 
+                        , "Department", new { departmentId = Model.Department.id }, null)
         <span class="glyphicon glyphicon-chevron-right"></span>
         @Model.CourseName
-    </h2>
 
-    <div class="btn-group">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li>
-                @Html.ActionLink("Edit Course", "CreateEdit", new { departmentId = Model.Department.id
-                                                                   ,courseId = Model.Id})
-                @Html.ActionLink("Delete Course", "#")
-            </li>
-        </ul>
-    </div>
+
+        <span class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    @Html.ActionLink("Edit Course", "CreateEdit", new
+           {
+               departmentId = Model.Department.id
+            ,
+               courseId = Model.Id
+           })
+                    @Html.ActionLink("Delete Course", "#")
+                </li>
+            </ul>
+        </span>
+    </h2>
 
     <p></p>
     <b>Course Code:</b> @Model.CourseCode
