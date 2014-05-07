@@ -13,7 +13,8 @@
 <div class="col-md-11 col-md-offset-1">
 
     <h2>@Html.ActionLink(Model.DepartmentName, "Department", "Department"
-                        ,new { departmentId = Model.DepartmentId }, null) >
+                        ,new { departmentId = Model.DepartmentId }, null)
+        <span class="glyphicon glyphicon-chevron-right"></span>
         @ViewBag.HeadingTitle</h2>
     <hr />
 
