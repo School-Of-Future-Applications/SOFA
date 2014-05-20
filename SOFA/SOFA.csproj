@@ -188,6 +188,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\DashBoardBaseController.cs" />
+    <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
@@ -237,6 +239,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\DashBoardBase\" />
+    <Folder Include="Views\HttpsBase\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <PropertyGroup>

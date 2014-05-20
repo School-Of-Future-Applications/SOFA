@@ -24,11 +24,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 
 namespace SOFA.Controllers
 {
-    public class DepartmentController : Controller
+    [RequireHttps]
+    public class DepartmentController : DashBoardBaseController
     {
         private DBContext db = new DBContext();
        
