@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace SOFA.Infrastructure
 {
-    public class DashBoardBaseController : HttpsBaseController
+    public abstract class DashBoardBaseController : HttpsBaseController
     {
 	}
 }

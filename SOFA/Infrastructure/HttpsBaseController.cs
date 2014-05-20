@@ -7,7 +7,7 @@ using System.Web.Mvc;
 namespace SOFA.Infrastructure
 {
     [RequireHttps]
-    public class HttpsBaseController : Controller
+    public abstract class HttpsBaseController : Controller
     {
 	}
 }
