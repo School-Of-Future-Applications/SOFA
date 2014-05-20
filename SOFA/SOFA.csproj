@@ -239,8 +239,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\DashBoardBase\" />
-    <Folder Include="Views\HttpsBase\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <PropertyGroup>
