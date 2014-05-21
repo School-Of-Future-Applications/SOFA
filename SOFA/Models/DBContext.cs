@@ -40,7 +40,7 @@ namespace SOFA.Models
 
         public DbSet<LineTime> LineTimes { get; set; }
 
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Person> Teachers { get; set; }
 
         public DbSet<Timetable> Timetables { get; set; }
 
