@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -26,7 +27,7 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class DBContext : DbContext
+    public class DBContext : IdentityDbContext
     {
         public DBContext() : base("DefaultConnection")
         {
@@ -40,7 +41,7 @@ namespace SOFA.Models
 
         public DbSet<LineTime> LineTimes { get; set; }
 
-        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<Person> Teachers { get; set; }
 
         public DbSet<Timetable> Timetables { get; set; }
 

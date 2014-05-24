@@ -18,6 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,11 +27,39 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class Teacher
+    public class Person
     {
         [Key]
         public int Id { get; set; }
 
-        public String Name { get; set; }
+        [Required]
+        [StringLength(50)]
+        public String FirstName { get; set; }
+
+        [Required]
+        [StringLength(50)]
+        public String LastName { get; set; }
+
+        [Required]
+        [StringLength(255)]
+        public String Email { get; set; }
+
+
+        [StringLength(25)]
+        public String PhoneNumber { get; set; }
+
+
+        [StringLength(25)]
+        public String MobileNumber { get; set; }
+
+
+        [StringLength(50)]
+        public String Position { get; set; }
+
+
+        [StringLength(10)]
+        public String Title { get; set; }
+
+        public virtual IdentityUser User { get; set; }
     }
 }
