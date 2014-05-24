@@ -31,9 +31,11 @@ namespace SOFA.Models
         [Key]
         public int Id { get; set; }
 
+        [StringLength(20)]
         [Display(Name="Code")]
         public String TimetableCode { get; set; }
 
+        [StringLength(255)]
         [Display(Name="Name")]
         [Required]
         public String TimetableIdentifier { get; set; }

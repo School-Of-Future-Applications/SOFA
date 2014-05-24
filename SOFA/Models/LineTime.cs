@@ -34,8 +34,10 @@ namespace SOFA.Models
 
         public Int32 Day { get; set; }
 
+        [Range(0d,25d)]
         public Double StartTime { get; set; }
 
+        [Range(0d, 25d)]
         public Double EndTime { get; set; }
         
         [NotMapped]

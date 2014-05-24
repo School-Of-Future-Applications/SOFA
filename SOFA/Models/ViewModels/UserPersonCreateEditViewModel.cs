@@ -1,4 +1,4 @@
-/*
+﻿/*
  *  School Of Future Applications
  *
  *  Copyright (C) 2014  Terminal Coding
@@ -18,29 +18,21 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace SOFA.Migrations
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace SOFA.Models.ViewModels
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-    using SOFA.Models;
-    using System.Collections.Generic;
-    using Microsoft.AspNet.Identity.EntityFramework;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<SOFA.Models.DBContext>
+    public class UserPersonCreateEditViewModel
     {
-        public Configuration()
-        {
-            AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = true; 
-        }
 
-        protected override void Seed(SOFA.Models.DBContext context)
-        {
-            IdentityUser u = new IdentityUser();
-            u.UserName = "jini";
-            context.SaveChanges();
-        }
+        public Person Person { get; set; }
+
+        public IdentityUser User { get; set; }
+
+        public string Password { get; set; }
     }
 }
