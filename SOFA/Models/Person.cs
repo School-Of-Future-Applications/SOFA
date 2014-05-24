@@ -56,7 +56,6 @@ namespace SOFA.Models
         [StringLength(50)]
         public String Position { get; set; }
 
-
         [StringLength(10)]
         public String Title { get; set; }
 
