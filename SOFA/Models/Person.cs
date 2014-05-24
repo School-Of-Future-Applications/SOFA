@@ -44,14 +44,11 @@ namespace SOFA.Models
         [StringLength(255)]
         public String Email { get; set; }
 
-
         [StringLength(25)]
         public String PhoneNumber { get; set; }
 
-
         [StringLength(25)]
         public String MobileNumber { get; set; }
-
 
         [StringLength(50)]
         public String Position { get; set; }
