@@ -11,6 +11,10 @@
    display: none;
 }
 
+.btn-group-vertical-max-wdith {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
   .sidebar, .list-sidebar {
     position: fixed;
