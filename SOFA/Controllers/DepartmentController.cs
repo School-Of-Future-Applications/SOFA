@@ -38,7 +38,7 @@ namespace SOFA.Controllers
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View();
+            return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
        
@@ -101,13 +101,5 @@ namespace SOFA.Controllers
             ViewBag.DepartmentId = dep.id;
             return View(dep);
         }
-
-        [ChildActionOnly]
-        public PartialViewResult DepartmentSideBar()
-        {
-            return PartialView(db.Departments.Where(x => x.Deleted == false)
-                              .OrderBy(x => x.DepartmentName).ToList());
-        }
-
 	}
 }

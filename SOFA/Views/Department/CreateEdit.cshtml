@@ -22,7 +22,6 @@
 @model Department
 
 @{
-    Layout = "~/Views/_DepartmentLayout.cshtml";
     string submitBtnTxt = (@Model == null ? "Add Department" : "Save Department");
     string titleTxt = (@Model == null ? "New Department"
                                       : "Edit Department - "

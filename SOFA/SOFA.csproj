@@ -254,8 +254,6 @@
     <Content Include="Views\Department\Department.cshtml" />
     <Content Include="Views\Shared\TimetabledClassCreate.cshtml" />
     <Content Include="Views\Department\CreateEdit.cshtml" />
-    <Content Include="Views\_DepartmentLayout.cshtml" />
-    <Content Include="Views\Department\DepartmentSideBar.cshtml" />
     <Content Include="Views\Course\CreateEdit.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\UserAdmin\Index.cshtml" />

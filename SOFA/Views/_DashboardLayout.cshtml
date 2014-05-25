@@ -38,6 +38,12 @@
     <link rel="stylesheet" href="~/Content/dashboard.css" />
     <link rel="stylesheet" href="~/Content/themes/base/jquery-ui.css" />
 
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
    <title>@ViewBag.Title</title>
 
@@ -93,9 +99,9 @@
         </div>
     </div>
 
-   <div class="container-fluid">
+    <div class="container-fluid">
       <div class="row">
-         <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                <li>
                 <a href="~/Department">Department &amp; Courses</a>
@@ -107,20 +113,15 @@
                     <a href="~/UserAdmin">User Administration</a>
                 </li>
             </ul> 
-         </div>
-      </div><!--Sidebar Row-->
+        </div>
 
-       <div class="row main">
-           @RenderBody()
-       </div>
-   </div><!--Container for sidebar-->
-
-    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
-    <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+        <div class="col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2">
+            <div class="main">
+                @RenderBody()
+            </div>
+        </div>
+      </div>
+    </div><!--Container for sidebar-->
 
 </body>
 </html>

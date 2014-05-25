@@ -1,22 +1,22 @@
 ﻿@*
- *  School Of Future Applications
- *
- *  Copyright (C) 2014  Terminal Coding
- *
- * This program is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *@
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
 
 @using SOFA.Models
 @model Course
@@ -25,14 +25,9 @@
     ViewBag.Title = "Index";
 }
 
-<div class="col-md-11 col-md-offset-1">
-
+<div class="page-header">
     <h2>
-        @Html.ActionLink(Model.Department.DepartmentName, "Department"
-                        , "Department", new { departmentId = Model.Department.id }, null)
-        <span class="glyphicon glyphicon-chevron-right"></span>
         @Model.CourseName
-
 
         <span class="btn-group pull-right">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -40,68 +35,69 @@
             </button>
             <ul class="dropdown-menu" role="menu">
                 <li>
-                    @Html.ActionLink("Edit Course", "CreateEdit", new
-           {
-               departmentId = Model.Department.id
-            ,
-               courseId = Model.Id
-           })
+                    @Html.ActionLink("Edit Course", "CreateEdit"
+                                    , new
+                                    {
+                                        departmentId = Model.Department.id
+                                     ,
+                                        courseId = Model.Id
+                                    })
                     @Html.ActionLink("Delete Course", "#")
                 </li>
             </ul>
         </span>
     </h2>
 
-    <p></p>
     <b>Course Code:</b> @Model.CourseCode
-    </p>
-    <br /><br />
+</div>
 
-    <h3>Class Bases</h3>
-    <hr />
-
-    @Html.ActionLink("Add Class Base", "CreateEdit", "ClassBase"
-                    ,new { courseId = Model.Id }
-                    ,new { @class = "btn btn-primary pull-right" })
-
-
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>Class Base Code</th>
-                        <th>Year Level</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (ClassBase cb in Model.ClassBases)
-                    {
-                        <tr class="lasthidden">
-                            <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
-                            <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
-                            <td align="right">
-                                @Html.ActionLink("Edit", "CreateEdit", "ClassBase"
-                                                ,new { courseId = cb.Course.Id, classBaseId = cb.Id }
-                                                ,null)
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>
+            @Model.CourseName Class Base List
+            @Html.ActionLink("Add Class Base", "CreateEdit", "ClassBase"
+                        , new { courseId = Model.Id }
+                        , new { @class = "btn btn-primary pull-right" })
+        </h3>
     </div>
+</div>
 
-    @if(Model.ClassBases.Count == 0)
-    {
-        <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h2 class="text-center">@Model.CourseName Has No Class Bases!</h2>
-                <p class="text-center"><a href="@Url.Action("CreateEdit", "ClassBase", new { courseId = Model.Id})" class="btn btn-primary btn-lg">Add Class Base</a></p>
-            </div>
+<div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+         <thead>
+            <tr>
+                <th>Class Base Code</th>
+                <th>Year Level</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (ClassBase cb in Model.ClassBases)
+            {
+                <tr class="lasthidden">
+                    <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
+                    <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
+                    <td align="right">
+                        @Html.ActionLink("Edit", "CreateEdit", "ClassBase"
+                                        ,new { courseId = cb.Course.Id, classBaseId = cb.Id }
+                                        ,null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+      </table>
+
+      @if (Model.ClassBases.Count == 0)
+      {
+        <div class="jumbotron">
+            <h2 class="text-center">@Model.CourseName Has No Class Bases!</h2>
+            <p class="text-center">
+                @Html.ActionLink("Add Class Base", "CreateEdit", "ClassBase"
+                                ,new { courseId = Model.Id }
+                                ,new { @class = "btn btn-primary btn-lg" })
+            </p>
         </div>
-    </div>   
-    }
+      } 
+    </div>
 </div>

@@ -22,31 +22,40 @@
 @model Department
 
 @{
-    Layout = "~/Views/_DepartmentLayout.cshtml";
 }
 
-<h2>
-    @Model.DepartmentName
-    <span class="btn-group pull-right">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-            <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu" role="menu">
-            <li>
-                @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
-                @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
-            </li>
-        </ul>
-    </span>
-</h2>
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Departments", "index")</li>
+        <li class="active">@Model.DepartmentName</li>
+    </ol>
 
-<br/><br/>
+    <h2>
+        @Model.DepartmentName
 
-<h3>Courses</h3>
-<hr/>
+        <span class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
+                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
+                </li>
+            </ul>
+        </span>
+    </h2>
+</div>
 
-<a class="btn btn-primary pull-right"
-   href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id})">Add Course</a>
+<div class="row">
+    <div class="col-sm-12">
+        <h3>
+            @Model.DepartmentName Course List
+            <a class="btn btn-primary pull-right"
+               href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id})">Add Course</a>
+        </h3>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -74,17 +83,17 @@
                 }
             </tbody>
         </table>
-    </div>
-</div>
 
-@if (Model.Courses.Count == 0)
-{
-    <div class="row">
-        <div class="col-md-12">
+        @if (Model.Courses.Count == 0)
+        {
             <div class="jumbotron">
                 <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
-                <p class="text-center"><a href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id})" class="btn btn-primary btn-lg">Add Course</a></p>
+                <p class="text-center">
+                    @Html.ActionLink("Add Course", "CreateEdit", "Course"
+                                    , new { departmentID = Model.id }
+                                    , new { @class = "btn btn-primary btn-lg" })
+                </p>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
