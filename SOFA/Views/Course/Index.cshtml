@@ -26,6 +26,14 @@
 }
 
 <div class="page-header">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Departments", "index", "Department")</li>
+        <li>
+            @Html.ActionLink(Model.Department.DepartmentName, "Department", "Department"
+                            ,new { departmentId = Model.Department.id }, null)
+        </li>
+        <li class="active">@Model.CourseName</li>
+    </ol>
     <h2>
         @Model.CourseName
 

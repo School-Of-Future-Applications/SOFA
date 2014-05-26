@@ -24,8 +24,6 @@
 @{
     ViewBag.Title = "Create";
     ViewBag.NewCourse = Model.ID == 0;
-    ViewBag.BreadCrumbTitle = (ViewBag.NewCourse ? "New Course"
-                                                 : Model.CourseName);
     ViewBag.HeadingTitle = (ViewBag.NewCourse ? "New Course"
                                               : "Edit - " + Model.CourseName);
     ViewBag.SubmitTxt = (ViewBag.NewCourse ? "Add Course"
@@ -39,7 +37,13 @@
             @Html.ActionLink(Model.DepartmentName, "Department", "Department"
                             ,new { departmentId = Model.DepartmentId }, null)
         </li>
-        <li>@ViewBag.BreadCrumbTitle</li>
+        @if(!ViewBag.NewCourse)
+        {
+            <li>
+                @Html.ActionLink(Model.CourseName, "index", new { courseId = Model.ID})
+            </li>
+        }
+        <li class="active">@ViewBag.HeadingTitle</li>
     </ol>
 
     <h2>@ViewBag.HeadingTitle</h2>

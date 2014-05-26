@@ -22,15 +22,26 @@
 @model Department
 
 @{
-    string submitBtnTxt = (@Model == null ? "Add Department" : "Save Department");
-    string titleTxt = (@Model == null ? "New Department"
-                                      : "Edit Department - "
-                                        + @Model.DepartmentName);
+    ViewBag.HeadingTitle = (@Model == null ? "New Department"
+                                           : "Edit Department - "
+                                            + @Model.DepartmentName);
+    ViewBag.SubmitTxt = (@Model == null ? "Add Department" : "Save Department");
 }
 
-<h2>@titleTxt</h2>
-
-<hr/>
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Departments", "index")</li>
+        @if(@Model != null)
+        {
+            <li>
+                @Html.ActionLink(Model.DepartmentName, "Department"
+                                ,new { departmentId = Model.id })
+            </li>
+        }
+        <li class="active">@ViewBag.HeadingTitle</li>
+    </ol>
+    <h2>@ViewBag.HeadingTitle</h2>
+</div>
 
 <div class="row">
     <div class="col-md-4 col-md-offset-4">
@@ -54,7 +65,7 @@
                 
                 <div class="form-group">
                     <div class="col-sm-9 col-sm-offset-3">
-                        <input type="submit" class="btn btn-default" value="@submitBtnTxt" />
+                        <input type="submit" class="btn btn-default" value="@ViewBag.SubmitTxt" />
                     </div>
                 </div>
             }
