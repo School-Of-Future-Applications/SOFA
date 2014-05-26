@@ -63,7 +63,7 @@
             <div class="form-group">
                  @Html.LabelFor(model => model.ClassBaseCode, new { @class = "control-label col-sm-3" })
                 <div class="col-sm-9">
-                    @Html.TextBoxFor(model => model.ClassBaseCode, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.ClassBaseCode)
                     @Html.ValidationMessageFor(model => model.ClassBaseCode)
                 </div>
             </div>
@@ -71,7 +71,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.YearLevel, new { @class = "control-label col-sm-3" })
                 <div class="col-md-9">
-                    @Html.TextBoxFor(model => model.YearLevel, new { @class = "form-control" })
+                    @Html.EditorFor(model => model.YearLevel)
                     @Html.ValidationMessageFor(model => model.YearLevel)
                 </div>
             </div>
