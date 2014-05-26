@@ -1,0 +1,14 @@
+﻿
+@model System.DateTime?
+
+@{
+    Layout = null;
+
+    var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+}
+
+@Html.TextBox("", Model
+             , new RouteValueDictionary(validationAttributes)
+             {
+                { "class", "form-control datepicker" }
+             })

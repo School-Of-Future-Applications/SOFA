@@ -37,7 +37,7 @@ namespace SOFA.Models
         [Display(Name="Name")]
         [Required]
         public String TimetableIdentifier { get; set; }
-        
+
         [Display(Name="Active Date")]
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
@@ -47,9 +47,6 @@ namespace SOFA.Models
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime ExpiryDate { get; set; }
-
-
-        
 
         public virtual ICollection<Line> Lines { get; set; }
     }
