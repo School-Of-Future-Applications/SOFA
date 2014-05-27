@@ -117,6 +117,7 @@
         @{
     var timetable = Model; ;
     var timetableLines = Model.Lines;
+    var lineid = 0;
         }
             <hr />
 
@@ -124,9 +125,12 @@
         <table class="table">
             @foreach (var line in timetableLines)
             { 
+
+           lineid++;
+
             <tr>
                 <td>
-                    <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
+                    <b>Line @Html.DisplayFor(modelItem => lineid)</b>
                 </td>
 
                         <td>
