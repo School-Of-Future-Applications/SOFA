@@ -27,6 +27,8 @@ namespace SOFA.Migrations
     using SOFA.Models;
     using System.Collections.Generic;
     using Microsoft.AspNet.Identity.EntityFramework;
+    using Microsoft.AspNet.Identity;
+    using Microsoft.AspNet.Identity.EntityFramework;
 
     internal sealed class Configuration : DbMigrationsConfiguration<SOFA.Models.DBContext>
     {
@@ -38,8 +40,31 @@ namespace SOFA.Migrations
 
         protected override void Seed(SOFA.Models.DBContext context)
         {
-            IdentityUser u = new IdentityUser();
-            u.UserName = "jini";
+            string[] usernames = { "teacher", "sysadmin" };
+            string[] rolenames = {"SystemAdmin","Teacher"};
+            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            var um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+
+            //add default users
+            foreach(string uname in usernames)
+            {
+                var user = new IdentityUser() { UserName = uname };
+                um.Create(user, uname);
+            }
+            
+            //add default roles
+            foreach(string r in rolenames)
+            {
+                if (!rm.RoleExists(r))
+                    rm.Create(new IdentityRole(r));
+            }
+
+            context.SaveChanges();
+
+            //add roles to users
+            um.AddToRole(um.FindByName("sysadmin").Id, "SystemAdmin");
+            um.AddToRole(um.FindByName("teacher").Id, "Teacher");
+            
             context.SaveChanges();
         }
     }
