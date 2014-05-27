@@ -31,7 +31,8 @@ namespace SOFA.Controllers
     public class DepartmentController : Controller
     {
         private DBContext db = new DBContext();
-       
+
+        [Authorize]
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
@@ -40,6 +41,7 @@ namespace SOFA.Controllers
 
        
         [HttpGet]
+        [Authorize(Roles = "Moderator")]
         public ActionResult CreateEdit(int? departmentId)
         {
             if (departmentId != null)
@@ -50,6 +52,7 @@ namespace SOFA.Controllers
 
        
         [HttpPost]
+        [Authorize(Roles = "Moderator")]
         public ActionResult CreateEdit(Department dep)
         {
             if (ModelState.IsValid)
@@ -68,6 +71,7 @@ namespace SOFA.Controllers
                 return View();
         }
 
+        [Authorize(Roles = "Moderator")]
         public ActionResult Delete(int? departmentId)
         {
             Department dep = null;
@@ -87,7 +91,8 @@ namespace SOFA.Controllers
                 return RedirectToAction("Department", new { departmentId = departmentId });
             }
         }
-       
+
+        [Authorize(Roles = "Moderator")]
         public ActionResult Department(int? departmentId)
         {
             if (departmentId == null)
@@ -99,6 +104,7 @@ namespace SOFA.Controllers
             return View(dep);
         }
 
+        [Authorize(Roles = "Moderator")]
         [ChildActionOnly]
         public PartialViewResult DepartmentSideBar()
         {

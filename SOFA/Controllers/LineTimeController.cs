@@ -33,6 +33,7 @@ namespace SOFA.Controllers
         DBContext db = new DBContext();
         //
         // GET: /LineTime/LineTimeCreate
+        [Authorize(Roles = "Moderator")]
         public ActionResult LineTimeCreate()
         {
             return View();
@@ -41,6 +42,7 @@ namespace SOFA.Controllers
 
         //
         // POST: /Timetable/LineTimeCreate
+        [Authorize(Roles = "Moderator")]
         [HttpPost]
         public ActionResult LineTimeCreate(LineTime lt)
         {

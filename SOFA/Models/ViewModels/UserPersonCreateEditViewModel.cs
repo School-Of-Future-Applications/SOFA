@@ -34,5 +34,9 @@ namespace SOFA.Models.ViewModels
         public IdentityUser User { get; set; }
 
         public string Password { get; set; }
+
+        public string VerifyPassword { get; set; }
+
+        public string CurrentPassword { get; set; }
     }
 }

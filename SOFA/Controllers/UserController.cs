@@ -19,10 +19,13 @@ namespace SOFA.Controllers
         public UserController(DBContext dbcontext)
         {
             UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(dbcontext));
+            RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbcontext));
             db = dbcontext;
         }
 
         public UserManager<IdentityUser> UserManager { get; private set; }
+
+        public RoleManager<IdentityRole> RoleManager { get; private set; }
 
         private DBContext db { get; set; }
 
@@ -42,31 +45,56 @@ namespace SOFA.Controllers
 
         //
         // GET: /User/Create
+        [Authorize]
         public ActionResult CreateEdit(int? id)
         {
-            if(id != null && id != 0)
+            UserPersonCreateEditViewModel view = new UserPersonCreateEditViewModel();
+            if (User.IsInRole("SOFAAdmin"))
             {
-                UserPersonCreateEditViewModel view = new UserPersonCreateEditViewModel();
-                Person person = db.Persons.Where(x => x.Id == id).FirstOrDefault();
-                if (person != null)
+                if (id != null && id != 0)
                 {
-                    if (person.User != null)
+                    //admin editing
+                    Person person = db.Persons.Where(x => x.Id == id).FirstOrDefault();
+                    if (person != null)
                     {
-                        IdentityUser user = UserManager.FindByName(person.User.UserName);
-                        if (user != null)
-                            view.User = user;
+                        if (person.User != null)
+                        {
+                            IdentityUser user = UserManager.FindByName(person.User.UserName);
+                            if (user != null)
+                                view.User = user;
+                        }
+                        view.Person = person;
+                        if (User.IsInRole("SOFAAdmin"))
+                            return View(view);
+                        else
+                            return View();
                     }
-                    view.Person = person;
-                    return View(view);
-
+                    else
+                    {
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    //admin creating
+                    view.Person = new Person();
+                    view.Person.Id = 0;
+                    return View("CreateEdit", view);
                 }
             }
-            return View("CreateEdit");
+            else
+            {
+                //personal editing
+                view.Person = db.Persons.Where(x => x.User.UserName == User.Identity.GetUserName()).FirstOrDefault();
+                view.User = view.Person.User;
+                return View("UserCreateEdit", view);
+            }
         }
 
         //
         // POST: /User/Create
         [HttpPost]
+        [Authorize]
         public ActionResult CreateEdit(UserPersonCreateEditViewModel p)
         {
                 if (ModelState.IsValid)
@@ -74,87 +102,82 @@ namespace SOFA.Controllers
                     if (p.Person.Id == 0)
                     {
                         //creating
-                        if (p.User.UserName != null)
+                        if (User.IsInRole("SOFAAdmin"))
                         {
-                            var user = new IdentityUser() { UserName = p.User.UserName };
-                            var result = UserManager.Create(user, p.Password);
-                            if (result.Succeeded)
+                            if (p.User.UserName != null)
                             {
-                                p.Person.User = user;
+                                var user = new IdentityUser() { UserName = p.User.UserName };
+                                var result = UserManager.Create(user, p.Password);
+                                if (result.Succeeded)
+                                {
+                                    p.Person.User = user;
+                                    db.Persons.Add(p.Person);
+                                    db.SaveChanges();
+                                    return RedirectToAction("Index");
+                                }
+                                else
+                                {
+                                    ModelState.AddModelError("", result.Errors.FirstOrDefault());
+                                    return View("CreateEdit", p);
+                                }
+                            }
+                            else
+                            {
                                 db.Persons.Add(p.Person);
                                 db.SaveChanges();
                                 return RedirectToAction("Index");
                             }
-                            else
-                            {
-                                ModelState.AddModelError("", result.Errors.FirstOrDefault());
-                                return View("CreateEdit", p);
-                            }
                         }
                         else
                         {
-                            db.Persons.Add(p.Person);
-                            db.SaveChanges();
-                            return RedirectToAction("Index");
+                            ModelState.AddModelError("", "You do not have permission to create a user.");
+                            return View("CreateEdit", p);
                         }
                     }
                     else
                     {
-                        Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
+                        if (User.IsInRole("SOFAAdmin"))
+                        {
+                            //admin editing
+                            Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
+                            IdentityUser userToUpdate = toUpdate.User;
+                            toUpdate.FirstName = p.Person.FirstName;
+                            toUpdate.LastName = p.Person.LastName;
+                            toUpdate.Email = p.Person.Email;
+                            toUpdate.PhoneNumber = p.Person.PhoneNumber;
+                            toUpdate.MobileNumber = p.Person.MobileNumber;
+                            toUpdate.Position = p.Person.Position;
+                            toUpdate.Title = p.Person.Title;
+                            userToUpdate.PasswordHash = (new PasswordHasher()).HashPassword(p.Password);
+                            db.SaveChanges();
+                        }
+                        else if(User.Identity.GetUserName() == p.User.UserName)
+                        {
+                            //user self editing
+                            Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
+                            IdentityUser userToUpdate = toUpdate.User;
+                            if(p.Password == p.VerifyPassword)
+                                UserManager.ChangePassword(userToUpdate.Id, p.CurrentPassword, p.Password);
+                            toUpdate.FirstName = p.Person.FirstName;
+                            toUpdate.LastName = p.Person.LastName;
+                            toUpdate.Email = p.Person.Email;
+                            toUpdate.PhoneNumber = p.Person.PhoneNumber;
+                            toUpdate.MobileNumber = p.Person.MobileNumber;
+                            toUpdate.Position = p.Person.Position;
+                            toUpdate.Title = p.Person.Title;
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("", "You do not have permission to edit this.");
+                            return View(p);
+                        }
                     }
                     
                 }
                 //db.SaveChanges();
                 return RedirectToAction("Index");
                 //return View("UserCreateEdit");
-        }
-
-        //
-        // GET: /User/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        //
-        // GET: /User/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        //
-        // POST: /User/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

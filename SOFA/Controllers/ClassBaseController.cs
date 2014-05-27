@@ -60,6 +60,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Create/5
+        [Authorize(Roles = "Moderator")]
         public ActionResult CreateEdit(int courseId = 0, int classBaseId = 0) //default value for debugging only
         {
             ClassBaseViewModel viewModel = null;
@@ -85,6 +86,7 @@ namespace SOFA.Controllers
 
         //
         // POST: /ClassBase/Create
+        [Authorize(Roles = "Moderator")]
         [HttpPost]
         public ActionResult CreateEdit(ClassBaseViewModel viewModel)
         {
@@ -123,6 +125,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Delete/5
+        [Authorize(Roles = "Moderator")]
         public ActionResult Delete(int classBaseId)
         {
             return View();
