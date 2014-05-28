@@ -251,7 +251,8 @@ namespace SOFA.Controllers
                             toUpdate.MobileNumber = p.Person.MobileNumber;
                             toUpdate.Position = p.Person.Position;
                             toUpdate.Title = p.Person.Title;
-                            userToUpdate.PasswordHash = (new PasswordHasher()).HashPassword(p.Password);
+                            if(p.Password != null)
+                                userToUpdate.PasswordHash = (new PasswordHasher()).HashPassword(p.Password);
                             db.SaveChanges();
                         }
                         else if(User.Identity.GetUserName() == p.User.UserName)
@@ -259,8 +260,9 @@ namespace SOFA.Controllers
                             //user self editing
                             Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
                             IdentityUser userToUpdate = toUpdate.User;
-                            if(p.Password == p.VerifyPassword)
-                                UserManager.ChangePassword(userToUpdate.Id, p.CurrentPassword, p.Password);
+                            if (p.Password != null)
+                                if(p.Password == p.VerifyPassword)
+                                    UserManager.ChangePassword(userToUpdate.Id, p.CurrentPassword, p.Password);
                             toUpdate.FirstName = p.Person.FirstName;
                             toUpdate.LastName = p.Person.LastName;
                             toUpdate.Email = p.Person.Email;
