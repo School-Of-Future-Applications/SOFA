@@ -63,8 +63,11 @@ namespace SOFA.Migrations
 
             //add roles to users
             um.AddToRole(um.FindByName("sysadmin").Id, "SystemAdmin");
+            um.AddToRole(um.FindByName("sysadmin").Id, "SOFAAdmin");
+            um.AddToRole(um.FindByName("sysadmin").Id, "Moderator");
             um.AddToRole(um.FindByName("teacher").Id, "Teacher");
             um.AddToRole(um.FindByName("sofaadmin").Id, "SOFAAdmin");
+            um.AddToRole(um.FindByName("sofaadmin").Id, "Moderator");
             um.AddToRole(um.FindByName("moderator").Id, "Moderator");
             
             context.SaveChanges();

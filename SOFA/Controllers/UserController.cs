@@ -29,6 +29,29 @@ namespace SOFA.Controllers
 
         private DBContext db { get; set; }
 
+        private void SetSysAdmin(IdentityUser u)
+        {
+            UserManager.AddToRole(u.Id, "SystemAdmin");
+            UserManager.AddToRole(u.Id, "SOFAAdmin");
+            UserManager.AddToRole(u.Id, "Moderator");
+        }
+
+        private void SetSOFAAdmin(IdentityUser u)
+        {
+            UserManager.AddToRole(u.Id, "SOFAAdmin");
+            UserManager.AddToRole(u.Id, "Moderator");
+        }
+
+        private void SetModerator(IdentityUser u)
+        {
+            UserManager.AddToRole(u.Id, "Moderator");
+        }
+
+        private void SetTeacher(IdentityUser u)
+        {
+            UserManager.AddToRole(u.Id, "Teacher");
+        }
+
         //
         // GET: /User/
         public ActionResult Index()
@@ -41,6 +64,86 @@ namespace SOFA.Controllers
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        //
+        // GET: /User/EditRoles?username=joebloggs
+        [Authorize(Roles="SOFAAdmin")]
+        public ActionResult EditRoles(string username)
+        {
+            if(username != null)
+            { 
+                EditUserRolesViewModel view = new EditUserRolesViewModel();
+                view.AvailableRoles = RoleManager.Roles;
+                var u = UserManager.FindByName(username);
+                if(u != null)
+                {
+                    view.User = u.UserName;
+                    view.CurrentRole = GetHighestRole(u);
+                    view.CurrentRoleId = RoleManager.FindByName(view.CurrentRole).Id;
+                    return View(view);
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        private string GetHighestRole(IdentityUser u)
+        {
+            var roles = UserManager.GetRoles(u.Id);
+            if(roles.Contains("SystemAdmin"))
+            {
+                return "SystemAdmin";
+            }
+            else if (roles.Contains("SOFAAdmin"))
+            {
+                return "SOFAAdmin";
+            }
+            else if (roles.Contains("Moderator"))
+            {
+                return "Moderator";
+            }
+            else if(roles.Count == 1)
+            {
+                return roles.FirstOrDefault();
+            }
+            else
+            {
+                return "None";
+            }
+        }
+
+        //
+        // POST: /User/EditRoles/joebloggs
+        [Authorize(Roles = "SOFAAdmin")]
+        [HttpPost]
+        public ActionResult EditRoles(EditUserRolesViewModel m)
+        {
+            var u = UserManager.FindByName(m.User);
+            if(u != null)
+            {
+                var r = RoleManager.FindById(m.SelectedRoleId);
+                foreach(var role in UserManager.GetRoles(u.Id))
+                {
+                    UserManager.RemoveFromRole(u.Id,role);
+                }
+                switch(r.Name)
+                {
+                    case "SystemAdmin":
+                        SetSysAdmin(u);
+                        break;
+                    case "SOFAAdmin":
+                        SetSOFAAdmin(u);
+                        break;
+                    case "Moderator":
+                        SetModerator(u);
+                        break;
+                    case "Teacher":
+                        SetTeacher(u);
+                        break;
+                }
+                db.SaveChanges();
+            }
+            return EditRoles(u.UserName);
         }
 
         //
@@ -85,7 +188,7 @@ namespace SOFA.Controllers
             else
             {
                 //personal editing
-                view.Person = db.Persons.Where(x => x.User.UserName == User.Identity.GetUserName()).FirstOrDefault();
+                view.Person = db.Persons.Where(x => x.User.UserName == User.Identity.Name).FirstOrDefault();
                 view.User = view.Person.User;
                 return View("UserCreateEdit", view);
             }

@@ -46,13 +46,12 @@ namespace SOFA.Controllers
             }
         }
 
-        [Authorize]
         public ActionResult Index()
         {
             DBContext db = new DBContext();
             var UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(db));
             var identity = UserManager.CreateIdentity(UserManager.FindByName("sysadmin"),DefaultAuthenticationTypes.ApplicationCookie);
-            //AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
+            AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = false }, identity);
             return View();
         }
 	}

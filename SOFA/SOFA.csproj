@@ -231,6 +231,7 @@
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\EditUserRolesViewModel.cs" />
     <Compile Include="Models\ViewModels\UserPersonCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassIndexViewModel.cs" />
@@ -263,6 +264,7 @@
     <Content Include="Views\Course\Index.cshtml" />
     <Content Include="Views\User\CreateEdit.cshtml" />
     <Content Include="Views\User\UserCreateEdit.cshtml" />
+    <Content Include="Views\User\EditRoles.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
