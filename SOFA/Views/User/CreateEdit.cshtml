@@ -27,7 +27,14 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Edit Roles", "EditRoles", new { username = Model.User.UserName }, new { @class = "btn btn-default" })
+                </div>
+            </div>
+
             <hr />
+
             <h4>Person</h4>
 
             @Html.HiddenFor(model => model.Person.Id)
