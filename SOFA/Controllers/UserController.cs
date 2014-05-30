@@ -78,23 +78,6 @@ namespace SOFA.Controllers
                 if (u != null)
                 {
                     var token = UserManager.GenerateUserToken("EmailToken", u.Id);
-                    //send email with that token
-                    /*MailMessage msg = new MailMessage();
-                    msg.IsBodyHtml = true;
-                    msg.From = new MailAddress("sofa@jinivus.com");
-                    msg.To.Add(person.Email);
-                    msg.Subject = "SOFA Password Reset Requested";
-                    msg.Body = String.Format("{0},<br />This email is being sent to you because someone(hopefully you) at {1} requested a password reset.<br />If you did not request a reset then please ignore this email, however if you did, please continue by clicking the link below<br />{2}", u.UserName, userip, String.Format("http://{0}/User/ConfirmResetPassword?u={1}&token={2}", "sofa.jinivus.com", u.Id, token));
-
-                    SmtpClient client = new SmtpClient();
-                    client.Credentials = new NetworkCredential("sofa@jinivus.com", "sofaemail");
-                    client.Host = "smtp.gmail.com";
-                    client.Port = 587;
-                    client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    client.EnableSsl = true;
-
-                    client.Send(msg);
-                     */
                     Helper.SendEmail(person.Email, "SOFA Password Reset Requested", String.Format("{0},<br />This email is being sent to you because someone(hopefully you) at {1} requested a password reset.<br />If you did not request a reset then please ignore this email, however if you did, please continue by clicking the link below<br />{2}", u.UserName, userip, String.Format("http://{0}/User/ConfirmResetPassword?u={1}&token={2}", "sofa.jinivus.com", u.Id, token)));
                 }
             }
@@ -117,24 +100,28 @@ namespace SOFA.Controllers
                         var newpassword = Membership.GeneratePassword(10, 1);
                         user.PasswordHash = UserManager.PasswordHasher.HashPassword(newpassword);
                         db.SaveChanges();
-                        /*
-                        MailMessage msg = new MailMessage();
-                        msg.IsBodyHtml = true;
-                        msg.From = new MailAddress("sofa@jinivus.com");
-                        msg.To.Add(person.Email);
-                        msg.Subject = "SOFA New Password";
-                        msg.Body = String.Format("{0},<br />Your password has been reset.<br />Your new password is: {1}", user.UserName, newpassword);
-
-                        SmtpClient client = new SmtpClient();
-                        client.Credentials = new NetworkCredential("sofa@jinivus.com", "sofaemail");
-                        client.Host = "smtp.gmail.com";
-                        client.Port = 587;
-                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
-                        client.EnableSsl = true;
-
-                        client.Send(msg
-                         */
                         Helper.SendEmail(person.Email, "SOFA New Password", String.Format("{0},<br />Your password has been reset.<br />Your new password is: {1}", user.UserName, newpassword));
+                    }
+                }
+            }
+            return RedirectToAction("Index");
+        }
+
+        //
+        // GET: /User/
+        public ActionResult ActivateAccount(string u, string token)
+        {
+            var user = UserManager.FindById(u);
+            token = token.Replace(' ', '+');
+            if (user != null)
+            {
+                if (UserManager.VerifyUserToken(u, "activate", token))
+                {
+                    var person = db.Persons.Where(p => p.User.Id == u).First();
+                    if(person != null)
+                    {
+                        person.Active = true;
+                        db.SaveChanges();
                     }
                 }
             }
@@ -296,8 +283,11 @@ namespace SOFA.Controllers
                                 if (result.Succeeded)
                                 {
                                     p.Person.User = user;
+                                    p.Person.Active = false;
                                     db.Persons.Add(p.Person);
                                     db.SaveChanges();
+                                    var activationtoken = UserManager.GenerateUserToken("activate", user.Id);
+                                    Helper.SendEmail(p.Person.Email, "SOFA Account Activation Required", String.Format("{0},<br />Your account requires activation before use.<br />Click here to activate your account: {1}", user.UserName, String.Format("http://{0}/User/ActivateAccount?u={1}&token={2}", "sofa.jinivus.com", user.Id, activationtoken)));
                                     return RedirectToAction("Index");
                                 }
                                 else
@@ -308,6 +298,7 @@ namespace SOFA.Controllers
                             }
                             else
                             {
+                                p.Person.Active = false;
                                 db.Persons.Add(p.Person);
                                 db.SaveChanges();
                                 return RedirectToAction("Index");
@@ -325,7 +316,6 @@ namespace SOFA.Controllers
                         {
                             //admin editing
                             Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
-                            IdentityUser userToUpdate = toUpdate.User;
                             toUpdate.FirstName = p.Person.FirstName;
                             toUpdate.LastName = p.Person.LastName;
                             toUpdate.Email = p.Person.Email;
@@ -333,8 +323,26 @@ namespace SOFA.Controllers
                             toUpdate.MobileNumber = p.Person.MobileNumber;
                             toUpdate.Position = p.Person.Position;
                             toUpdate.Title = p.Person.Title;
-                            if(p.Password != null)
+                            IdentityUser userToUpdate = toUpdate.User;
+                            if (userToUpdate != null && p.Password != null)
+                            {
                                 userToUpdate.PasswordHash = (new PasswordHasher()).HashPassword(p.Password);
+                            }
+                            if(userToUpdate == null && p.User.UserName != null && p.Password != null)
+                            {
+                                //create user account for existing Person
+                                var user = new IdentityUser() { UserName = p.User.UserName };
+                                var result = UserManager.Create(user, p.Password);
+                                if(result.Succeeded)
+                                {
+                                    toUpdate.Active = false;
+                                    toUpdate.User = user;
+                                    userToUpdate = user;
+                                    var activationtoken = UserManager.GenerateUserToken("activate", user.Id);
+                                    Helper.SendEmail(p.Person.Email, "SOFA Account Activation Required", String.Format("{0},<br />Your account requires activation before use.<br />Click here to activate your account: {1}", user.UserName, String.Format("http://{0}/User/ActivateAccount?u={1}&token={2}", "sofa.jinivus.com", user.Id, activationtoken)));
+                                }
+                            }
+                                
                             db.SaveChanges();
                         }
                         else if(User.Identity.GetUserName() == p.User.UserName)
