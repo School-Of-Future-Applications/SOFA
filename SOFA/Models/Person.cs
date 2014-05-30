@@ -42,6 +42,7 @@ namespace SOFA.Models
 
         [Required]
         [StringLength(255)]
+        [EmailAddress]
         public String Email { get; set; }
 
         [StringLength(25)]
@@ -52,10 +53,8 @@ namespace SOFA.Models
 
         [StringLength(50)]
         public String Position { get; set; }
-
         [StringLength(10)]
         public String Title { get; set; }
-
         public virtual IdentityUser User { get; set; }
     }
 }

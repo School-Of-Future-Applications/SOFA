@@ -24,12 +24,10 @@
     Layout = null;
 
     var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
-    
-    
 }
 
 @Html.TextBox("", Model
-             ,new RouteValueDictionary(validationAttributes)
+             , new RouteValueDictionary(validationAttributes)
              {
                 { "class", "form-control" },
                 { "placeholder", ViewData["placeholder"] }

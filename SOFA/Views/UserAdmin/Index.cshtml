@@ -27,53 +27,37 @@
     ViewBag.Title = "Index";
 }
 
-<div class="col-md-11 col-md-offset-1">
+<div class="page-header">
+    <h2>
+        User Administration
 
-    <div class="row">
-        <div class="col-md-12">
-            <h2>
-                User Administration
+        <span class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+            </button>
+        </span>
+    </h2>
+</div>
+ 
 
-                <span class="btn-group pull-right">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
-                    </button>
-                </span>
-            </h2>
-
-            <hr />
+<div class="row">
+    <div class="col-md-1">
+        <div class="btn-group-vertical btn-group-vertical-max-wdith">
+            @Html.ActionLink("Add New User", "NewUser", null, new { @class = "btn btn-default" })
         </div>
     </div>
+    <div class="col-md-11">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Full Name</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <div class="row">
-        <div class="col-md-1">
-            <div class="btn-group-vertical btn-group-vertical-max-wdith">
-                <button type="button" class="btn btn-default">Add New User</button>
-            </div>
-        </div>
-        <div class="col-md-11">
-
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>User Name</th>
-                        <th>Full Name</th>
-                        <th>Position</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for(int i=0; i < 100; ++i)
-                    {
-                       <tr>
-                           <td>@i</td>
-                           <td>Thomas Leslie Miller</td>
-                           <td>Lead Programmer</td>
-                       </tr> 
-                    }
-                </tbody>
-            </table>@* End of Person table. *@
-
-        </div>
+            </tbody>
+        </table>@* End of Person table. *@
     </div>
-
 </div>
