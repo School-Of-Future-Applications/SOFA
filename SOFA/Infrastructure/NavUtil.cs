@@ -47,6 +47,7 @@ namespace SOFA.Infrastructure
     {
         DepartmentCourse
        ,None
+       ,SystemConfig
        ,Timetabling
        ,UserAdmin
     }
@@ -84,6 +85,19 @@ namespace SOFA.Infrastructure
                                      ,controllerName = "UserAdmin"
                                      ,displayName = "User Administration"}}
                    }
+                }
+            }
+
+           ,{new NavSection
+                {
+                    sectionName = "System Administration"
+                    ,navItems = new Dictionary<Enum,NavInfo>
+                    {
+                        {DashboardNavTerms.SystemConfig
+                        ,new NavInfo {actionName = "Index"
+                                     ,controllerName = "Settings"
+                                     ,displayName = "System Settings"}}
+                    }
                 }
             }
         };

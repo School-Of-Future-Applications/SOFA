@@ -40,7 +40,6 @@ namespace SOFA.Controllers
             ViewBag.NavItem = "Department & Courses";
             return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
-
        
         [HttpGet]
         public ActionResult CreateEdit(int? departmentId)
