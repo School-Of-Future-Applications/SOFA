@@ -35,6 +35,7 @@ namespace SOFA.Controllers
             return View();
         }
 
+        [NonAction]
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.None;
