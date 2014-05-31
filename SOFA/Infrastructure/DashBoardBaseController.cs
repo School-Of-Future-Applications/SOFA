@@ -8,6 +8,6 @@ namespace SOFA.Infrastructure
 {
     public abstract class DashBoardBaseController : HttpsBaseController, INavProvider
     {
-        public abstract DashboardNavTerms NavProviderTerm();
+        public abstract Enum NavProviderTerm();
 	}
 }

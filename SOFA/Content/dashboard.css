@@ -58,6 +58,12 @@
   background-color: #428bca;
 }
 
+.nav-sidebar > .heading {
+  padding-left: 10px;
+  color: #000000;
+  background-color: #b8b8b8;
+}
+
 .main {
   padding-top: 40px;
 }

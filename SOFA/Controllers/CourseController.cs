@@ -120,7 +120,7 @@ namespace SOFA.Controllers
             }
         }
 
-        public override DashboardNavTerms NavProviderTerm()
+        public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.DepartmentCourse;
         }

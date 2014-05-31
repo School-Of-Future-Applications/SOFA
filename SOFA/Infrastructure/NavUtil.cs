@@ -27,7 +27,7 @@ namespace SOFA.Infrastructure
 {
     interface INavProvider
     {
-        DashboardNavTerms NavProviderTerm();
+        Enum NavProviderTerm();
     }
 
     public struct NavInfo
@@ -35,6 +35,12 @@ namespace SOFA.Infrastructure
         public string actionName;
         public string controllerName;
         public string displayName;
+    }
+
+    public struct NavSection
+    {
+        public string sectionName;
+        public Dictionary<Enum, NavInfo> navItems;
     }
 
     public enum DashboardNavTerms
@@ -47,45 +53,79 @@ namespace SOFA.Infrastructure
 
     public static class NavUtil
     {
-        public static Dictionary<DashboardNavTerms, NavInfo> DashboardNavItems =
-            new Dictionary<DashboardNavTerms, NavInfo>
+        public static List<NavSection> DashboardSections =
+            new List<NavSection>
         {
-             {DashboardNavTerms.DepartmentCourse
-             ,new NavInfo {actionName = "Index", controllerName = "Department"
-                          ,displayName = "Department & Courses"}}
+            {new NavSection
+                {
+                    sectionName = null
+                   ,navItems = new Dictionary<Enum,NavInfo>
+                   {
+                       {DashboardNavTerms.DepartmentCourse
+                       ,new NavInfo {actionName = "Index"
+                                    ,controllerName = "Department"
+                                    ,displayName = "Department & Courses"}}
 
-            ,{DashboardNavTerms.Timetabling
-             ,new NavInfo {actionName = "Index", controllerName = "Timetable"
-                          ,displayName = "Timetabling"}}      
-            
-            ,{DashboardNavTerms.UserAdmin
-             ,new NavInfo {actionName="Index", controllerName = "UserAdmin"
-                          ,displayName = "User Administration"}}
+                      ,{DashboardNavTerms.Timetabling
+                       ,new NavInfo {actionName = "Index"
+                                    ,controllerName = "Timetable"
+                                    ,displayName = "Timetabling"}}
+                   }
+                }
+            }
+
+           ,{new NavSection
+                {
+                    sectionName = "SOFA Administration"
+                   ,navItems = new Dictionary<Enum,NavInfo>
+                   {
+                        {DashboardNavTerms.UserAdmin
+                        ,new NavInfo {actionName = "Index"
+                                     ,controllerName = "UserAdmin"
+                                     ,displayName = "User Administration"}}
+                   }
+                }
+            }
         };
 
         public static MvcHtmlString DashboardNavigation(this HtmlHelper html)
         {
+            String navHtml = "";
+
+            foreach (NavSection ns in DashboardSections)
+                navHtml += DashboardSection(html, ns).ToHtmlString();
+            return new MvcHtmlString(navHtml);
+        }
+
+        public static MvcHtmlString DashboardSection(this HtmlHelper html
+                                                       ,NavSection section)
+        {
             MvcHtmlString link;
             TagBuilder liTag;
             INavProvider provider;
-            ReflectedControllerDescriptor rcd = null;
             TagBuilder ulTag = new TagBuilder("ul");
             NavInfo value;
 
             ulTag.AddCssClass("nav nav-sidebar");
 
-            foreach(KeyValuePair<DashboardNavTerms, NavInfo> k in DashboardNavItems)
+            if(section.sectionName != null)
+            {
+                liTag = new TagBuilder("li");
+                liTag.AddCssClass("heading");
+                liTag.InnerHtml = section.sectionName;
+                ulTag.InnerHtml += liTag;
+            }
+
+            foreach(KeyValuePair<Enum, NavInfo> k in section.navItems)
             {
                 provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
                 value = k.Value;
                 liTag = new TagBuilder("li");
 
                 if (provider != null)
-                    if(provider.NavProviderTerm() == k.Key)
+                    if(provider.NavProviderTerm().CompareTo(k.Key) == 0)
                         liTag.AddCssClass("active");
-                   
-               
-   
+                    
                 link = LinkExtensions.ActionLink(html, value.displayName
                                                 ,value.actionName
                                                 ,value.controllerName);

@@ -101,7 +101,7 @@ namespace SOFA.Controllers
             return View(dep);
         }
 
-        public override DashboardNavTerms NavProviderTerm()
+        public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.DepartmentCourse;
         }
