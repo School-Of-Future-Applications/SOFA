@@ -220,6 +220,7 @@
     </Compile>
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
+    <Compile Include="Infrastructure\NavUtil.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />

@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
+@using SOFA.Infrastructure;
+
 @{
     if (ViewBag.NavItem == null)
     {
@@ -102,17 +104,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-               <li>
-                <a href="~/Department">Department &amp; Courses</a>
-               </li>
-                <li>
-                    <a href="~/Timetable">Timetabling</a>
-                </li>
-                <li>
-                    <a href="~/UserAdmin">User Administration</a>
-                </li>
-            </ul> 
+            @Html.DashboardNavigation()
         </div>
 
         <div class="col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2">

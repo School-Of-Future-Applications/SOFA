@@ -130,5 +130,10 @@ namespace SOFA.Controllers
         {
             return View();
         }
+
+        public override DashboardNavTerms NavProviderTerm()
+        {
+            return DashboardNavTerms.DepartmentCourse;
+        }
     }
 }

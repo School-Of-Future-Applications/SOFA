@@ -100,5 +100,10 @@ namespace SOFA.Controllers
             ViewBag.DepartmentId = dep.id;
             return View(dep);
         }
+
+        public override DashboardNavTerms NavProviderTerm()
+        {
+            return DashboardNavTerms.DepartmentCourse;
+        }
 	}
 }

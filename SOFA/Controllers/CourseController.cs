@@ -119,5 +119,10 @@ namespace SOFA.Controllers
                                        ,new { departmentId = c.DepartmentId });
             }
         }
+
+        public override DashboardNavTerms NavProviderTerm()
+        {
+            return DashboardNavTerms.DepartmentCourse;
+        }
     }
 }

@@ -236,8 +236,9 @@ namespace SOFA.Controllers
             return RedirectToAction("Build", new { id = sender });
         }
 
-
-
-       
+        public override DashboardNavTerms NavProviderTerm()
+        {
+            return DashboardNavTerms.Timetabling;
+        }
     }
 }
