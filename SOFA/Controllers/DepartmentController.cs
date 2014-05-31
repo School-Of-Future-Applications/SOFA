@@ -51,7 +51,6 @@ namespace SOFA.Controllers
             return View();
         }
 
-       
         [HttpPost]
         public ActionResult CreateEdit(Department dep)
         {
