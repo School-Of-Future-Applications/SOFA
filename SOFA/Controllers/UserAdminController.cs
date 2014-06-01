@@ -69,6 +69,18 @@ namespace SOFA.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult NewUser()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewUser(Person p)
+        {
+            return View();
+        }
+
         public ActionResult UserAdmin(int personId)
         {
             Person p = null;

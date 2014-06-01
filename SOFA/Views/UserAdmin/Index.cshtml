@@ -49,6 +49,7 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th>User Id</th>
                     <th>User Name</th>
                     <th>Full Name</th>
                     <th>Position</th>
@@ -58,8 +59,10 @@
                 @foreach(Person p in Model)
                 {
                     <tr onclick="location.href='@Url.Action("UserAdmin", "UserAdmin"
-                                                           ,new { personId = p.Id })'">
-                        <td></td>
+                                                           ,new { personId = p.Id })'"
+                        class=@(p.User.LockoutEnabled ? "danger" : "")>
+                        <td>@p.User.Id</td>
+                        <td>@p.User.UserName</td>
                         <td>@p.FullName()</td>
                         <td>@p.Position</td>
                     </tr>

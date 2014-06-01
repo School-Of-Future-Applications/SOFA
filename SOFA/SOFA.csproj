@@ -290,6 +290,8 @@
     <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
     <Content Include="Views\Person\EditPerson.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\UserAdmin\NewUser.cshtml" />
+    <Content Include="Views\Shared\PersonFormComponents.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
