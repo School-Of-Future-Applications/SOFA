@@ -284,6 +284,7 @@
     <Content Include="Views\User\CreateEdit.cshtml" />
     <Content Include="Views\User\UserCreateEdit.cshtml" />
     <Content Include="Views\User\EditRoles.cshtml" />
+    <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
