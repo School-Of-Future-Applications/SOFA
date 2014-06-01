@@ -23,12 +23,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
-    public class TimetableController : Controller
+    public class TimetableController : DashBoardBaseController
     {
         private DBContext db = new DBContext();
 
@@ -234,8 +236,10 @@ namespace SOFA.Controllers
             return RedirectToAction("Build", new { id = sender });
         }
 
-
-
-       
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.Timetabling;
+        }
     }
 }

@@ -11,6 +11,10 @@
    display: none;
 }
 
+.btn-group-vertical-max-wdith {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
   .sidebar, .list-sidebar {
     position: fixed;
@@ -52,6 +56,12 @@
 .nav-sidebar > .active > a {
   color: #fff;
   background-color: #428bca;
+}
+
+.nav-sidebar > .heading {
+  padding-left: 10px;
+  color: #000000;
+  background-color: #b8b8b8;
 }
 
 .main {

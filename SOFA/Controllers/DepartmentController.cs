@@ -24,20 +24,22 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 
 namespace SOFA.Controllers
 {
-    public class DepartmentController : Controller
+    [RequireHttps]
+    public class DepartmentController : DashBoardBaseController
     {
         private DBContext db = new DBContext();
        
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View();
+            return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
         }
-
        
         [HttpGet]
         public ActionResult CreateEdit(int? departmentId)
@@ -48,7 +50,6 @@ namespace SOFA.Controllers
             return View();
         }
 
-       
         [HttpPost]
         public ActionResult CreateEdit(Department dep)
         {
@@ -99,12 +100,10 @@ namespace SOFA.Controllers
             return View(dep);
         }
 
-        [ChildActionOnly]
-        public PartialViewResult DepartmentSideBar()
+        [NonAction]
+        public override Enum NavProviderTerm()
         {
-            return PartialView(db.Departments.Where(x => x.Deleted == false)
-                              .OrderBy(x => x.DepartmentName).ToList());
+            return DashboardNavTerms.DepartmentCourse;
         }
-
 	}
 }

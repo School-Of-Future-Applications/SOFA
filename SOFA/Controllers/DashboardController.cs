@@ -24,13 +24,21 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+using SOFA.Infrastructure;
+
 namespace SOFA.Controllers
 {
-    public class DashboardController : Controller
+    public class DashboardController : DashBoardBaseController
     {
         public ActionResult Index()
         {
             return View();
+        }
+
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.None;
         }
 	}
 }

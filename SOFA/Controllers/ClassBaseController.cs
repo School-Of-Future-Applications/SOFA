@@ -23,12 +23,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
-    public class ClassBaseController : Controller
+    
+    public class ClassBaseController : DashBoardBaseController
     {
         private DBContext db = new DBContext();
        
@@ -126,6 +129,12 @@ namespace SOFA.Controllers
         public ActionResult Delete(int classBaseId)
         {
             return View();
+        }
+
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.DepartmentCourse;
         }
     }
 }

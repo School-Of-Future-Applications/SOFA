@@ -18,7 +18,42 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Department>
+
 @{
-    Layout = "~/Views/_DepartmentLayout.cshtml";
 }
  
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Departments</li>
+    </ol>
+    <h2>Departments</h2>
+    @Html.ActionLink("New Department", "CreateEdit", null, new { @class = "btn btn-default" })
+</div>
+
+<div class="row">
+
+    @foreach(Department d in Model)
+    {
+        <div class="col-md-3 col-sm-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@d.DepartmentName</div>
+                <div class="panel-body">
+                    <p>
+                        <b>Department Id: </b>@d.id<br/>
+                        <b>No of Courses: </b>@d.Courses.Count<br/>
+                    </p>
+                    
+                    <div>
+                        @Html.ActionLink("View", "Department", new { departmentId = d.id }
+                                        ,new { @class = "btn btn-default btn-sm pull-right"})
+                    </div>
+                </div>
+            </div>
+        </div>       
+    }
+ 
+</div>

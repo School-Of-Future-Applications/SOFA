@@ -23,13 +23,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
 
 
 namespace SOFA.Controllers
 {
-    public class CourseController : Controller
+    public class CourseController : DashBoardBaseController
     {
         private DBContext db = new DBContext();
 
@@ -116,6 +118,12 @@ namespace SOFA.Controllers
                 return RedirectToAction("Department", "Department"
                                        ,new { departmentId = c.DepartmentId });
             }
+        }
+
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.DepartmentCourse;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿@*
+﻿/*
  *  School Of Future Applications
  *
  *  Copyright (C) 2014  Terminal Coding
@@ -16,31 +16,33 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- *@
+ */
 
-@using System.Collections.Generic
-@using SOFA.Models
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 
-@model List<Department>
+using SOFA.Infrastructure;
+using SOFA.Models;
 
-@{
-}
-
-<div class="nav nav-sidebar">
-    <h3 class="nav-heading text-center">Departments</h3>
-    <div class="btn-group btn-group-justified">
-        <div class="btn-group">
-            <a href="~/Department/CreateEdit"type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus" />
-            </a>
-        </div>
-    </div><!--btn-group-->
-
-    @foreach (Department d in Model)
+namespace SOFA.Controllers
+{
+    public class UserAdminController : DashBoardBaseController
     {
-        <li>
-            @Html.ActionLink(d.DepartmentName, "Department", new { departmentId = d.id }
-            ,new { @class = (ViewBag.DepartmentId == d.id ? "active" : "")})
-        </li>
-    }
-</div>
+        private DBContext db = new DBContext();
+
+        // GET: /UserAdmin/
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.UserAdmin;
+        }
+	}
+}
