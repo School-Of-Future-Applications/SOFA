@@ -209,6 +209,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
     <Compile Include="Controllers\CourseController.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -227,6 +229,7 @@
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
     <Compile Include="Helpers\Helpers.cs" />
+    <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
@@ -285,6 +288,8 @@
     <Content Include="Views\User\UserCreateEdit.cshtml" />
     <Content Include="Views\User\EditRoles.cshtml" />
     <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
+    <Content Include="Views\Person\EditPerson.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

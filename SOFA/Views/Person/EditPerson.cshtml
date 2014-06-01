@@ -1,0 +1,105 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+
+@model Person
+
+@{
+    ViewBag.Title = "EditPerson";
+}
+
+<div class="page-header">
+    <h2>Edit - @Model.FullName()</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.ValidationSummary()
+
+        @using (Html.BeginForm("EditPerson", "Person", FormMethod.Post
+                              ,new { @class = "form-horizontal" }))
+        {
+            @Html.HiddenFor(model => model.Id)
+            @Html.HiddenFor(model => model.Active)
+            @Html.HiddenFor(model => model.Deleted)
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.GivenNames, "Given Names"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.GivenNames)
+                    @Html.ValidationMessageFor(model => model.GivenNames)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.LastName, "Last Name"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.LastName)
+                    @Html.ValidationMessageFor(model => model.LastName)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Position, "Position"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.Position)
+                    @Html.ValidationMessageFor(model => model.Position)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.Email, "Email"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.Email)
+                    @Html.ValidationMessageFor(model => model.Email)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.PhoneNumber, "Phone Number"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.PhoneNumber)
+                    @Html.ValidationMessageFor(model => model.PhoneNumber)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                @Html.LabelFor(model => model.MobileNumber, "Mobile Number"
+                              ,new { @class = "control-label col-sm-3" })
+                <div class="col-sm-9">
+                    @Html.EditorFor(model => model.MobileNumber)
+                    @Html.ValidationMessageFor(model => model.MobileNumber)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <input type="submit" class="btn btn-default" value="Save Person" />
+                </div>
+            </div>                                                                       
+        }
+    </div>
+</div>

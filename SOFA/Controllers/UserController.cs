@@ -316,13 +316,12 @@ namespace SOFA.Controllers
                         {
                             //admin editing
                             Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
-                            toUpdate.FirstName = p.Person.FirstName;
+                            toUpdate.GivenNames = p.Person.GivenNames;
                             toUpdate.LastName = p.Person.LastName;
                             toUpdate.Email = p.Person.Email;
                             toUpdate.PhoneNumber = p.Person.PhoneNumber;
                             toUpdate.MobileNumber = p.Person.MobileNumber;
                             toUpdate.Position = p.Person.Position;
-                            toUpdate.Title = p.Person.Title;
                             IdentityUser userToUpdate = toUpdate.User;
                             if (userToUpdate != null && p.Password != null)
                             {
@@ -353,13 +352,12 @@ namespace SOFA.Controllers
                             if (p.Password != null)
                                 if(p.Password == p.VerifyPassword)
                                     UserManager.ChangePassword(userToUpdate.Id, p.CurrentPassword, p.Password);
-                            toUpdate.FirstName = p.Person.FirstName;
+                            toUpdate.GivenNames = p.Person.GivenNames;
                             toUpdate.LastName = p.Person.LastName;
                             toUpdate.Email = p.Person.Email;
                             toUpdate.PhoneNumber = p.Person.PhoneNumber;
                             toUpdate.MobileNumber = p.Person.MobileNumber;
                             toUpdate.Position = p.Person.Position;
-                            toUpdate.Title = p.Person.Title;
                             db.SaveChanges();
                         }
                         else

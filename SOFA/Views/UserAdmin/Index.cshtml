@@ -39,7 +39,6 @@
     </h2>
 </div>
  
-
 <div class="row">
     <div class="col-md-1">
         <div class="btn-group-vertical btn-group-vertical-max-wdith">
@@ -56,7 +55,15 @@
                 </tr>
             </thead>
             <tbody>
-
+                @foreach(Person p in Model)
+                {
+                    <tr onclick="location.href='@Url.Action("UserAdmin", "UserAdmin"
+                                                           ,new { personId = p.Id })'">
+                        <td></td>
+                        <td>@p.FullName()</td>
+                        <td>@p.Position</td>
+                    </tr>
+                }
             </tbody>
         </table>@* End of Person table. *@
     </div>

@@ -35,41 +35,48 @@ namespace SOFA.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public String FirstName { get; set; }
-
-        [Required]
-        [StringLength(50)]
-        public String LastName { get; set; }
-
-        [Required]
-        [StringLength(255)]
-        [EmailAddress]
-        public String Email { get; set; }
-
-        [StringLength(25)]
-        public String PhoneNumber { get; set; }
-
-        [StringLength(25)]
-        public String MobileNumber { get; set; }
-
-        [StringLength(50)]
-        public String Position { get; set; }
-
-        [StringLength(10)]
-        public String Title { get; set; }
+        [DefaultValue(false)]
+        public bool Active { get; set; }
 
         [Required]
         [DefaultValue(false)]
         public bool Deleted { get; set; }
 
         [Required]
-        [DefaultValue(false)]
-        public bool Active { get; set; }
+        [DisplayName("Email")]
+        [StringLength(255)]
+        [EmailAddress]
+        public String Email { get; set; }
+
+        [Required]
+        [DisplayName("Given Names")]
+        [StringLength(50)]
+        public String GivenNames { get; set; }
+
+        [Required]
+        [DisplayName("Last Name")]
+        [StringLength(50)]
+        public String LastName { get; set; }
+
+        [DisplayName("Mobile")]
+        [StringLength(25)]
+        public String MobileNumber { get; set; }
+
+        [DisplayName("Phone")]
+        [StringLength(25)]
+        public String PhoneNumber { get; set; }
+
+        [StringLength(50)]
+        public String Position { get; set; }
 
         [NotMapped]
         public String Password { get; set; }
 
         public virtual IdentityUser User { get; set; }
+
+        public String FullName()
+        {
+            return GivenNames + " " + LastName;
+        }
     }
 }

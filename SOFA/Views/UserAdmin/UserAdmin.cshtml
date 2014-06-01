@@ -18,6 +18,10 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using SOFA.Models
+
+@model Person
+
 @{
     ViewBag.Title = "UserAdmin";
 }
@@ -29,7 +33,7 @@
 <div class="row">
 
     <div class="col-md-12">
-        <div class="panel panel-primary">
+        <div class="panel @(Model.User.LockoutEnabled ? "panel-danger" : "panel-primary")">
 
             <div class="panel-heading clearfix">
                 <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
@@ -37,7 +41,19 @@
                 </h4>
                 <div class="btn-toolbar pull-right" role="toolbar">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Activate</button>
+                        @if(Model.User.LockoutEnabled)
+                        {
+                            @Html.ActionLink("Unlock", "LockUser"
+                                            ,new { userId = Model.User.Id
+                                                 , userLock = false }
+                                            ,new { @class = "btn btn-default" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Lock", "LockUser"
+                                            ,new { userId = Model.User.Id}
+                                            ,new { @class = "btn btn-default" })                            
+                        }
                     </div>
                     <div class="btn-group">
                         <button type="button" class="btn btn-default">Reset Password</button>
@@ -47,14 +63,19 @@
 
             <div class="panel-body">
                 <p>
-                    Test
+                    <b>@Html.LabelFor(model => model.User.UserName):</b>
+                        @Html.DisplayFor(model => model.User.UserName)<br />
+                    <b>@Html.LabelFor(model => model.User.EmailConfirmed):</b>
+                        @Html.DisplayFor(model => model.User.EmailConfirmed)<br />
+                    <b>@Html.LabelFor(model => model.User.AccessFailedCount):</b>
+                        @Html.DisplayFor(model => model.User.AccessFailedCount)
                 </p>
             </div>
         </div>
     </div>
 
     <div class="col-md-12">
-        <div class="panel panel-default">
+        <div class="panel panel-primary">
             <div class="panel-heading"><h4>Role Membership</h4></div>
             <div class="panel-body">
                 <p>
@@ -65,11 +86,34 @@
     </div>
 
     <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading"><h4>Personal Information</h4></div>
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    Personal Information
+                </h4>
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <div class="btn-group">
+                        @Html.ActionLink("Edit", "EditPerson", "Person"
+                                        ,new { personId = Model.Id }
+                                        ,new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+
             <div class="panel-body">
                 <p>
-                    Test
+                    <b>@Html.LabelFor(model => model.GivenNames):</b>
+                        @Html.DisplayFor(model => model.GivenNames)<br />
+                    <b>@Html.LabelFor(model => model.LastName):</b>
+                        @Html.DisplayFor(model => model.LastName)<br />
+                    <b>@Html.LabelFor(model => model.Position):</b>
+                        @Html.DisplayFor(model => model.Position)<br />
+                    <b>@Html.LabelFor(model => model.Email):</b>
+                        @Html.DisplayFor(model => model.Email)<br />
+                    <b>@Html.LabelFor(model => model.PhoneNumber):</b>
+                        @Html.DisplayFor(model => model.PhoneNumber)<br />
+                    <b>@Html.LabelFor(model => model.MobileNumber):</b>
+                        @Html.DisplayFor(model => model.MobileNumber)<br />
                 </p>
             </div>
         </div> 

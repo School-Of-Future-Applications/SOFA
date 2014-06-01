@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,12 +38,51 @@ namespace SOFA.Controllers
         // GET: /UserAdmin/
         public ActionResult Index()
         {
-            return View();
+            return View(db.Persons.Where(person => person.User != null).ToList());
         }
 
-        public ActionResult UserAdmin()
+        public ActionResult LockUser(String userId, bool userLock = true)
         {
-            return View();
+            IdentityResult result = null;
+            IdentityUser user = UserManager.FindById(userId);
+            Person userPerson = null;
+
+            try
+            {
+                if (user == null)
+                    throw new InvalidOperationException();
+
+                user.LockoutEnabled = userLock;
+                result = UserManager.Update(user);
+                if (result.Succeeded)
+                {
+                    userPerson = DBCon.Persons
+                                .Where(person => person.User.Id == userId)
+                                .First();
+                    return RedirectToAction("UserAdmin", new { personId = userPerson.Id });
+                }
+                throw new InvalidOperationException(); 
+            }
+            catch(InvalidOperationException)
+            {
+                return RedirectToActionPermanent("Index", "Dashboard");   
+            }
+        }
+
+        public ActionResult UserAdmin(int personId)
+        {
+            Person p = null;
+
+            try
+            {
+                p = db.Persons.Where(person => person.Id == personId).First();
+            }
+            catch(InvalidOperationException)
+            {
+                return RedirectToActionPermanent("Index", "Dashboard");
+            }
+           
+            return View(p);
         }
 
         [NonAction]

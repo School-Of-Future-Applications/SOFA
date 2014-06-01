@@ -30,14 +30,15 @@ namespace SOFA.Models
     public class DBContext : IdentityDbContext
     {
         public DBContext() : base("DefaultConnection")
-        {
+        { }
 
-        }
+        public DbSet<Department> Departments { get; set; }
 
-        public DbSet<Line> Lines { get; set; }
         public DbSet<ClassBase> ClassBases { get; set; }
 
         public DbSet<Course> Courses { get; set; }
+
+        public DbSet<Line> Lines { get; set; }
 
         public DbSet<LineTime> LineTimes { get; set; }
 
@@ -47,10 +48,9 @@ namespace SOFA.Models
 
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
 
-        public DbSet<Department> Departments { get; set; }
-
-
-
-
+        public static DBContext Create()
+        {
+            return new DBContext();
+        }
     }
 }
