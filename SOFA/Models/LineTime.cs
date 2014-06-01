@@ -34,13 +34,20 @@ namespace SOFA.Models
 
         public Int32 Day { get; set; }
 
+        [Range(0d,25d)]
         public Double StartTime { get; set; }
 
+        [Range(0d, 25d)]
         public Double EndTime { get; set; }
         
         [NotMapped]
+        [RegularExpression(@"^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$",ErrorMessage="Not a valid time")]
+        [Display(Name = "Start Time")]
         public String StartTimeString { get; set; }
+
         [NotMapped]
+        [RegularExpression(@"^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$", ErrorMessage = "Not a valid time")]
+        [Display(Name = "End Time")]
         public String EndTimeString { get; set; }
 
         public virtual Line Line { get; set; }

@@ -21,7 +21,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -55,6 +57,18 @@ namespace SOFA.Models
         public String Position { get; set; }
         [StringLength(10)]
         public String Title { get; set; }
+
+        [Required]
+        [DefaultValue(false)]
+        public bool Deleted { get; set; }
+
+        [Required]
+        [DefaultValue(false)]
+        public bool Active { get; set; }
+
+        [NotMapped]
+        public String Password { get; set; }
+
         public virtual IdentityUser User { get; set; }
     }
 }

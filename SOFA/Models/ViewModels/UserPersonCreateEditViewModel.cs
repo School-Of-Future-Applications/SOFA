@@ -18,38 +18,25 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace SOFA.Models
+namespace SOFA.Models.ViewModels
 {
-    public class Timetable
+    public class UserPersonCreateEditViewModel
     {
-        [Key]
-        public int Id { get; set; }
 
-        [StringLength(20)]
-        [Display(Name="Code")]
-        public String TimetableCode { get; set; }
+        public Person Person { get; set; }
 
-        [StringLength(255)]
-        [Display(Name="Name")]
-        [Required]
-        public String TimetableIdentifier { get; set; }
+        public IdentityUser User { get; set; }
 
-        [Display(Name="Active Date")]
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime ActiveDate { get; set; }
-        
-        [Display(Name="Expiry Date")]
-        [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime ExpiryDate { get; set; }
+        public string Password { get; set; }
 
-        public virtual ICollection<Line> Lines { get; set; }
+        public string VerifyPassword { get; set; }
+
+        public string CurrentPassword { get; set; }
     }
 }

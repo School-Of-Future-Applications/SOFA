@@ -81,6 +81,7 @@
 
 </head>
 <body>
+<<<<<<< HEAD
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
@@ -95,7 +96,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">User</a></li>
+               	    <li><a href="#">@(@User.Identity.Name.IsEmpty() ? "Login" : @User.Identity.Name)</a></li>
                 </ul>
             </div>
         </div>

@@ -35,6 +35,7 @@ namespace SOFA.Controllers
     {
         private DBContext db = new DBContext();
 
+        [Authorize]
         public ActionResult Index(int courseId = 0)
         {
             try
@@ -49,6 +50,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Course/Create
+        [Authorize(Roles = "Moderator")]
         public ActionResult CreateEdit(int departmentId = 0, int courseId = 0)
         {
             try
@@ -78,6 +80,7 @@ namespace SOFA.Controllers
 
         //
         //POST: /Course/Create
+        [Authorize(Roles = "Moderator")]
         [HttpPost]
         public ActionResult CreateEdit(CourseCreateViewModel c)
         {
