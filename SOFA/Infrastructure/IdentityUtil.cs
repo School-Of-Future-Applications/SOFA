@@ -19,18 +19,35 @@
  */
 
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security;
 using System;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure.Users;
 
 namespace SOFA.Infrastructure
 {
     public static class IdentityUtil
     {
+        public static IAuthenticationManager AuthManager(this Controller @this)
+        {
+            return @this.HttpContext.GetOwinContext().Authentication;
+        }
+
         public static void resultToModelState(ModelStateDictionary dest
                                              ,IdentityResult result)
         {
             foreach(String error in result.Errors)
                 dest.AddModelError("", error);         
+        }
+
+        public static SOFAUserManager UserManager(this Controller @this)
+        {
+            return @this.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
         }
     }
 }

@@ -2,7 +2,11 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using System;
+using System.Web;
+using System.Web.Mvc;
 
+using SOFA.Infrastructure;
 using SOFA.Models;
 
 namespace SOFA.Infrastructure.Users

@@ -40,7 +40,7 @@ namespace SOFA.Migrations
 
         protected override void Seed(SOFA.Models.DBContext context)
         {
-            string[] usernames = { "teacher", "sysadmin","sofaadmin","moderator" };
+      /*      string[] usernames = { "teacher", "sysadmin","sofaadmin","moderator" };
             string[] rolenames = {"SystemAdmin","SOFAAdmin","Moderator","Teacher"};
             var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             var um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
@@ -70,7 +70,7 @@ namespace SOFA.Migrations
             um.AddToRole(um.FindByName("sofaadmin").Id, "Moderator");
             um.AddToRole(um.FindByName("moderator").Id, "Moderator");
             
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }

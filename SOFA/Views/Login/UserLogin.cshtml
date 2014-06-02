@@ -1,4 +1,8 @@
 ﻿
+@using SOFA.Models.ViewModels
+
+@model UserLoginViewModel
+
 @{
     Layout = null;
 }
@@ -23,14 +27,22 @@
 <body>
     <div class="container">
 
-        <form class="form-signin" role="form">
+        @using (Html.BeginForm("UserLogin", "Login", FormMethod.Post
+                              ,new { @class = "form-signin" }))
+        {
+            @Html.AntiForgeryToken()
+            
+            @Html.Hidden("returnUrl", (object)ViewBag.returnUrl)
+            
             <h2 class="form-signin-heading">SOFA Sign In</h2>
-            <input type="email" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" class="form-control" placeholder="Password" required>
+            @Html.EditorFor(model => model.UserName, new { placeholder = "Email address" })
+            @Html.EditorFor(model => model.Password, new { placeholder = "Password" })
+            
+            @Html.ValidationSummary()
+            
             <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
-        </form>
-
-    </div> <!-- /container -->
+        }
+    </div> 
 
 </body>
 </html>
