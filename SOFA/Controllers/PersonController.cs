@@ -58,16 +58,14 @@ namespace SOFA.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Persons.Any(person => person.Id == p.Id))
+                if(isPersonForEmail(this, p.Email, p.Id))
                 {
-                    db.Persons.Attach(p);
-                    db.Entry(p).State = EntityState.Modified;
-                    db.SaveChanges();
-                    return RedirectToAction("UserAdmin", "UserAdmin"
-                                           ,new { personId = p.Id });
+                    ModelState.AddModelError("Email", "Error Person Already Exists For This Email");
+                    return View(p);
                 }
-                else
-                    return RedirectToActionPermanent("Index", "Dashboard");
+                UpdatePerson(this, p);
+                return RedirectToAction("UserAdmin", "UserAdmin"
+                                       ,new { personId = p.Id });
             }
             else
                 return View();
@@ -77,6 +75,30 @@ namespace SOFA.Controllers
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.None;
+        }
+
+        [NonAction]
+        public static bool isPersonForEmail(DashBoardBaseController con
+                                           ,String email
+                                           ,int? notPersonId = null)
+        {
+            if (con.DBCon.Persons.Any(person => person.Email == email
+                                             && person.Id != notPersonId))
+                return true;
+            return false;
+        }
+
+        [NonAction]
+        public static void UpdatePerson(DashBoardBaseController con, Person p)
+        {
+            if (con.DBCon.Persons.Any(person => person.Id == p.Id))
+            {
+                con.DBCon.Persons.Attach(p);
+                con.DBCon.Entry(p).State = EntityState.Modified;
+            }
+            else
+                con.DBCon.Persons.Add(p);
+            con.DBCon.SaveChanges();
         }
 	}
 }

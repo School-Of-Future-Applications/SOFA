@@ -25,9 +25,12 @@
 @{
 }
 
-@Html.HiddenFor(model => model.Id)
-@Html.HiddenFor(model => model.Active)
-@Html.HiddenFor(model => model.Deleted)
+@if(Model != null)
+{
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.Active)
+    @Html.HiddenFor(model => model.Deleted)   
+}
 
 <div class="form-group">
     @Html.LabelFor(model => model.GivenNames, "Given Names"

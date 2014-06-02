@@ -78,7 +78,30 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult NewUser(Person p)
         {
-            return View();
+            IdentityUser newUser = null;
+            IdentityResult result = null;
+
+            if(ModelState.IsValid)
+            {
+                if(PersonController.isPersonForEmail(this, p.Email))
+                {
+                    ModelState.AddModelError("Email", "Error user already exsists for this email");
+                    return View(p);
+                }
+                newUser = new IdentityUser { UserName = p.Email, Email = p.Email
+                                           , LockoutEnabled = true};
+                result = UserManager.Create(newUser, "rgererggrerergger");
+                if(!result.Succeeded)
+                {
+                    IdentityUtil.resultToModelState(ModelState, result);
+                    return View(p);
+                }
+
+                p.User = newUser;
+                PersonController.UpdatePerson(this, p);
+                return RedirectToAction("UserAdmin", new { personId = p.Id });
+            }
+            return View(p);
         }
 
         public ActionResult UserAdmin(int personId)

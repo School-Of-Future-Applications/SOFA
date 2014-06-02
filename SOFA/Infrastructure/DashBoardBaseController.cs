@@ -16,7 +16,7 @@ namespace SOFA.Infrastructure
         [NonAction]
         public abstract Enum NavProviderTerm();
 
-        protected DBContext DBCon
+        public DBContext DBCon
         {
             get
             {

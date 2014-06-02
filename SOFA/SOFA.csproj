@@ -227,6 +227,7 @@
     </Compile>
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
+    <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
     <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
