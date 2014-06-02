@@ -19,15 +19,19 @@
  */
 
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
 using System;
+using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 
 using SOFA.Infrastructure.Users;
+using SOFA.Models;
 
 namespace SOFA.Infrastructure
 {
@@ -36,6 +40,23 @@ namespace SOFA.Infrastructure
         public static IAuthenticationManager AuthManager(this Controller @this)
         {
             return @this.HttpContext.GetOwinContext().Authentication;
+        }
+
+        public static IdentityUser CurrentUser(this HtmlHelper @this)
+        {
+            HttpContext current = HttpContext.Current;
+            SOFAUserManager userManager = current.GetOwinContext().GetUserManager<SOFAUserManager>();
+            IdentityUser user = userManager.FindByName(current.User.Identity.Name);
+            return user;
+        }
+
+        public static Person CurrentUserPerson(this HtmlHelper @this)
+        {
+            HttpContext current = HttpContext.Current;
+            DBContext dbCon = new DBContext();
+            IdentityUser user = @this.CurrentUser();
+
+            return dbCon.Persons.Where(person => person.User.Id == user.Id).First();
         }
 
         public static void resultToModelState(ModelStateDictionary dest

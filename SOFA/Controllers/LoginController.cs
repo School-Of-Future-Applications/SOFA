@@ -56,5 +56,12 @@ namespace SOFA.Controllers
             ViewBag.returnUrl = returnUrl;
             return View(new UserLoginViewModel { UserName = login.UserName });
         }
+
+        [Authorize]
+        public ActionResult UserLogout()
+        {
+            this.AuthManager().SignOut();
+            return RedirectToAction("UserLogin");
+        }
 	}
 }

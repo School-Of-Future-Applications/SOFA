@@ -18,13 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
-@using SOFA.Infrastructure;
+@using SOFA.Infrastructure
+@using SOFA.Models
 
 @{
     if (ViewBag.NavItem == null)
     {
         ViewBag.NavItem = "";
     }
+    
+    Person currentUserPerson = Html.CurrentUserPerson();
 }
 
 <!DOCTYPE html>
@@ -74,14 +77,12 @@
                 $("span.field-validation-valid, span.field-validation-error").addClass('help-block');
                 $("div.form-group").has("span.field-validation-error").addClass('has-error');
                 $("div.validation-summary-errors").has("li:visible").addClass("alert alert-block alert-danger");
-
             }
         );
     </script>
 
 </head>
 <body>
-<<<<<<< HEAD
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container-fluid">
@@ -96,7 +97,13 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-               	    <li><a href="#">@(@User.Identity.Name.IsEmpty() ? "Login" : @User.Identity.Name)</a></li>
+                    <li>@Html.ActionLink("Logout", "UserLogout", "Login")</li>
+                    <li>
+                        @Html.ActionLink(currentUserPerson.FullName(), "UserAdmin"
+                                        ,"UserAdmin"
+                                        ,new { personId = currentUserPerson.Id }
+                                        ,null)
+                    </li>
                 </ul>
             </div>
         </div>

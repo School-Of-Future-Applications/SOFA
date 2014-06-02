@@ -113,7 +113,7 @@ namespace SOFA.Controllers
                     this.DBCon().ClassBases.Attach(classBase);
                     this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
                 }
-                db.SaveChanges();
+                this.DBCon().SaveChanges();
                 return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
             }
             catch

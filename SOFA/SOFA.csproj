@@ -226,6 +226,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
+    <Compile Include="Infrastructure\DBContextUtil.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
