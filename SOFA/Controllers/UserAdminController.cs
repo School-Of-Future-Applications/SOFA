@@ -33,18 +33,16 @@ namespace SOFA.Controllers
 {
     public class UserAdminController : DashBoardBaseController
     {
-        private DBContext db = new DBContext();
-
         // GET: /UserAdmin/
         public ActionResult Index()
         {
-            return View(db.Persons.Where(person => person.User != null).ToList());
+            return View(this.DBCon().Persons.Where(person => person.User != null).ToList());
         }
 
         public ActionResult LockUser(String userId, bool userLock = true)
         {
             IdentityResult result = null;
-            IdentityUser user = UserManager.FindById(userId);
+            IdentityUser user = this.UserManager().FindById(userId);
             Person userPerson = null;
 
             try
@@ -53,10 +51,10 @@ namespace SOFA.Controllers
                     throw new InvalidOperationException();
 
                 user.LockoutEnabled = userLock;
-                result = UserManager.Update(user);
+                result = this.UserManager().Update(user);
                 if (result.Succeeded)
                 {
-                    userPerson = DBCon.Persons
+                    userPerson = this.DBCon().Persons
                                 .Where(person => person.User.Id == userId)
                                 .First();
                     return RedirectToAction("UserAdmin", new { personId = userPerson.Id });
@@ -90,7 +88,7 @@ namespace SOFA.Controllers
                 }
                 newUser = new IdentityUser { UserName = p.Email, Email = p.Email
                                            , LockoutEnabled = true};
-                result = UserManager.Create(newUser, "rgererggrerergger");
+                result = this.UserManager().Create(newUser, "rgererggrerergger");
                 if(!result.Succeeded)
                 {
                     IdentityUtil.resultToModelState(ModelState, result);
@@ -110,7 +108,7 @@ namespace SOFA.Controllers
 
             try
             {
-                p = db.Persons.Where(person => person.Id == personId).First();
+                p = this.DBCon().Persons.Where(person => person.Id == personId).First();
             }
             catch(InvalidOperationException)
             {

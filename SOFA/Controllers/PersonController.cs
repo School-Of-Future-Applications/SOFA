@@ -32,8 +32,6 @@ namespace SOFA.Controllers
 {
     public class PersonController : DashboardController
     {
-        private DBContext db = new DBContext();
-
         [HttpGet]
         public ActionResult EditPerson(int? personId)
         {
@@ -43,7 +41,7 @@ namespace SOFA.Controllers
             {
                 if(personId == null)
                     throw new InvalidOperationException();
-                p = db.Persons.Where(person => person.Id == personId).First();
+                p = this.DBCon().Persons.Where(person => person.Id == personId).First();
             }
             catch(InvalidOperationException)
             {
@@ -82,7 +80,7 @@ namespace SOFA.Controllers
                                            ,String email
                                            ,int? notPersonId = null)
         {
-            if (con.DBCon.Persons.Any(person => person.Email == email
+            if (con.DBCon().Persons.Any(person => person.Email == email
                                              && person.Id != notPersonId))
                 return true;
             return false;
@@ -91,14 +89,14 @@ namespace SOFA.Controllers
         [NonAction]
         public static void UpdatePerson(DashBoardBaseController con, Person p)
         {
-            if (con.DBCon.Persons.Any(person => person.Id == p.Id))
+            if (con.DBCon().Persons.Any(person => person.Id == p.Id))
             {
-                con.DBCon.Persons.Attach(p);
-                con.DBCon.Entry(p).State = EntityState.Modified;
+                con.DBCon().Persons.Attach(p);
+                con.DBCon().Entry(p).State = EntityState.Modified;
             }
             else
-                con.DBCon.Persons.Add(p);
-            con.DBCon.SaveChanges();
+                con.DBCon().Persons.Add(p);
+            con.DBCon().SaveChanges();
         }
 	}
 }

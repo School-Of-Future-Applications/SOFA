@@ -30,16 +30,13 @@ using SOFA.Models;
 
 namespace SOFA.Controllers
 {
-    [RequireHttps]
     public class DepartmentController : DashBoardBaseController
-    {
-        private DBContext db = new DBContext();
-       
+    {  
         [Authorize]
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
-            return View(db.Departments.OrderBy(x => x.DepartmentName).ToList());
+            return View(this.DBCon().Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 
         [HttpGet]
@@ -47,7 +44,7 @@ namespace SOFA.Controllers
         public ActionResult CreateEdit(int? departmentId)
         {
             if (departmentId != null)
-                return View(db.Departments.
+                return View(this.DBCon().Departments.
                                    Where(x => x.id == departmentId).FirstOrDefault());
             return View();
         }
@@ -58,14 +55,14 @@ namespace SOFA.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (db.Departments.Any(x => x.id == dep.id))
+                if (this.DBCon().Departments.Any(x => x.id == dep.id))
                 {
-                    db.Departments.Attach(dep);
-                    db.Entry(dep).State = EntityState.Modified;
+                    this.DBCon().Departments.Attach(dep);
+                    this.DBCon().Entry(dep).State = EntityState.Modified;
                 }
                 else
-                    db.Departments.Add(dep);
-                db.SaveChanges();
+                    this.DBCon().Departments.Add(dep);
+                this.DBCon().SaveChanges();
                 return RedirectToAction("Department", new { departmentId = dep.id });
             }
             else
@@ -81,10 +78,10 @@ namespace SOFA.Controllers
                 if (departmentId == null)
                     throw new Exception();
 
-                dep = db.Departments.Where(x => x.id == departmentId).First();
+                dep = this.DBCon().Departments.Where(x => x.id == departmentId).First();
                 dep.Deleted = true;
-                db.Entry(dep).State = EntityState.Modified;
-                db.SaveChanges();
+                this.DBCon().Entry(dep).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
                 return RedirectToAction("Index");
             }
             catch
@@ -99,7 +96,7 @@ namespace SOFA.Controllers
             if (departmentId == null)
                 return RedirectToAction("Index");
 
-            Department dep = db.Departments.Where(x => x.id == departmentId)
+            Department dep = this.DBCon().Departments.Where(x => x.id == departmentId)
                             .FirstOrDefault();
             ViewBag.DepartmentId = dep.id;
             return View(dep);

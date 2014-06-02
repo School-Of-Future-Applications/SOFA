@@ -33,8 +33,6 @@ namespace SOFA.Controllers
     
     public class ClassBaseController : DashBoardBaseController
     {
-        private DBContext db = new DBContext();
-       
         //
         // GET: /ClassBase/
        /* public ActionResult Index(int courseId = 1) //default value for debugging only
@@ -71,12 +69,12 @@ namespace SOFA.Controllers
             {
                 if (classBaseId == 0)
                 {
-                    var course = db.Courses.First(c => c.Id == courseId);
+                    var course = this.DBCon().Courses.First(c => c.Id == courseId);
                     viewModel = new ClassBaseViewModel(course);
                 }
                 else
                 {
-                    var classBase = db.ClassBases.First(c => c.Id == classBaseId);
+                    var classBase = this.DBCon().ClassBases.First(c => c.Id == classBaseId);
                     viewModel = new ClassBaseViewModel(classBase);
                 }
                 return View(viewModel);
@@ -100,20 +98,20 @@ namespace SOFA.Controllers
                     return View(viewModel);
                 if(viewModel.Id == 0)
                 {
-                    var course = db.Courses.First(c => c.Id == viewModel.CourseID);
+                    var course = this.DBCon().Courses.First(c => c.Id == viewModel.CourseID);
                     classBase = new ClassBase();
                     classBase.ClassBaseCode = viewModel.ClassBaseCode;
                     classBase.YearLevel = viewModel.YearLevel;
                     classBase.Course = course;
-                    db.ClassBases.Add(classBase);
+                    this.DBCon().ClassBases.Add(classBase);
                 }
                 else
                 {
-                    classBase = db.ClassBases.First(cb => cb.Id == viewModel.Id);
+                    classBase = this.DBCon().ClassBases.First(cb => cb.Id == viewModel.Id);
                     classBase.ClassBaseCode = viewModel.ClassBaseCode;
                     classBase.YearLevel = viewModel.YearLevel;
-                    db.ClassBases.Attach(classBase);
-                    db.Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
+                    this.DBCon().ClassBases.Attach(classBase);
+                    this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
                 }
                 db.SaveChanges();
                 return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
@@ -123,8 +121,6 @@ namespace SOFA.Controllers
                 return RedirectToAction("Index", "Course", new { courseId = viewModel.CourseID });
             }
         }
-
-        
 
         //
         // GET: /ClassBase/Delete/5
