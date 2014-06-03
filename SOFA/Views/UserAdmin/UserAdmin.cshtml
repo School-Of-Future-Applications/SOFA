@@ -33,7 +33,7 @@
 <div class="row">
 
     <div class="col-md-12">
-        <div class="panel @(Model.User.LockoutEnabled ? "panel-danger" : "panel-primary")">
+        <div class="panel @(!Model.User.Active ? "panel-danger" : "panel-primary")">
 
             <div class="panel-heading clearfix">
                 <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
@@ -41,22 +41,24 @@
                 </h4>
                 <div class="btn-toolbar pull-right" role="toolbar">
                     <div class="btn-group">
-                        @if(Model.User.LockoutEnabled)
+                        @if(!Model.User.Active)
                         {
-                            @Html.ActionLink("Unlock", "LockUser"
+                            @Html.ActionLink("Activate", "ActiveUser"
                                             ,new { userId = Model.User.Id
-                                                 , userLock = false }
+                                                 , active = true }
                                             ,new { @class = "btn btn-default" })
                         }
                         else
                         {
-                            @Html.ActionLink("Lock", "LockUser"
+                            @Html.ActionLink("Deactivate", "ActiveUser"
                                             ,new { userId = Model.User.Id}
                                             ,new { @class = "btn btn-default" })                            
                         }
                     </div>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default">Reset Password</button>
+                        @Html.ActionLink("Reset Password", "UserPasswordReset"
+                                        ,new { userId = Model.User.Id }
+                                        ,new { @class = "btn btn-default" })
                     </div>
                 </div>
             </div>

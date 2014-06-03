@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
+using SOFA.Models;
+
 namespace SOFA.Models.ViewModels
 {
     public class UserPersonCreateEditViewModel
@@ -31,7 +33,7 @@ namespace SOFA.Models.ViewModels
 
         public Person Person { get; set; }
 
-        public IdentityUser User { get; set; }
+        public SOFAUser User { get; set; }
 
         public string Password { get; set; }
 

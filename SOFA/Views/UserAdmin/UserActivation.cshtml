@@ -1,0 +1,49 @@
+﻿
+@using SOFA.Models.ViewModels
+
+@model UserActivationViewModel
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <meta name="author" content="Terminal Coding" />
+
+    <link rel="stylesheet" href="~/Content/bootstrap-theme.css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.css" />
+    <link rel="stylesheet" href="~/Content/login.css" />
+
+    <script src="~/Scripts/jquery-2.1.0.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <title>UserActivitation</title>
+</head>
+<body>
+
+    <div class="container">
+
+        @using (Html.BeginForm("UserActivation", "UserAdmin", FormMethod.Post
+                              ,new { @class = "form-signin" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.Token)
+            @Html.HiddenFor(model => model.UserName)
+            
+            <h2 class="form-signin-heading">@Model.UserName</h2>
+            @Html.EditorFor(model => model.Password, new { placeholder = "Password" })
+            @Html.EditorFor(model => model.ConfirmPassword, new { placeholder = "Confirm Password" })
+
+            @Html.ValidationSummary()
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Activate Account</button>
+        }
+    </div> 
+
+</body>
+</html>

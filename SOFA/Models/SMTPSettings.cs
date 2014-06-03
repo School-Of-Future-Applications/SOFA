@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Configuration;
 
@@ -18,7 +20,7 @@ namespace SOFA.Models
         private const String SMTP_HOST_KEY = "SMTP:Host";
         private const String SMTP_PASSWORD_KEY = "SMTP:Password";
         private const String SMTP_PORT_KEY = "SMTP:Port";
-        private const String SMTP_SSL_KEY = "SMTP:SSL";
+        private const String SMTP_SSL_KEY = "SMTP:TLS";
         private const String SMTP_USERNAME_KEY = "SMTP:UserName";
 
         private String _password = "";
@@ -50,7 +52,7 @@ namespace SOFA.Models
 
         [Required]
         [DefaultValue(false)]
-        public bool SSL { get; set; }
+        public bool TLS { get; set; }
 
         [DisplayName("User Name")]
         public string UserName { get; set; }
@@ -66,7 +68,7 @@ namespace SOFA.Models
                 smtpSettings.Host = settings[SMTP_HOST_KEY].Value;
                 smtpSettings.Password = settings[SMTP_PASSWORD_KEY].Value;
                 smtpSettings.Port = Convert.ToInt32(settings[SMTP_PORT_KEY].Value);
-                smtpSettings.SSL = Convert.ToBoolean(settings[SMTP_SSL_KEY].Value);
+                smtpSettings.TLS = Convert.ToBoolean(settings[SMTP_SSL_KEY].Value);
                 smtpSettings.UserName = settings[SMTP_USERNAME_KEY].Value;
             }
             return smtpSettings;
@@ -82,7 +84,7 @@ namespace SOFA.Models
                 settings.Add(SMTP_HOST_KEY, smtpSettings.Host);
                 settings.Add(SMTP_PASSWORD_KEY, smtpSettings.Password);
                 settings.Add(SMTP_PORT_KEY, smtpSettings.Port.ToString());
-                settings.Add(SMTP_SSL_KEY, smtpSettings.SSL.ToString());
+                settings.Add(SMTP_SSL_KEY, smtpSettings.TLS.ToString());
                 settings.Add(SMTP_USERNAME_KEY, smtpSettings.UserName);
             }
             else
@@ -90,10 +92,23 @@ namespace SOFA.Models
                 settings[SMTP_HOST_KEY].Value = smtpSettings.Host;
                 settings[SMTP_PASSWORD_KEY].Value = smtpSettings.Password;
                 settings[SMTP_PORT_KEY].Value = smtpSettings.Port.ToString();
-                settings[SMTP_SSL_KEY].Value = smtpSettings.SSL.ToString();
+                settings[SMTP_SSL_KEY].Value = smtpSettings.TLS.ToString();
                 settings[SMTP_USERNAME_KEY].Value = smtpSettings.UserName;
             }
             webConfig.Save();
+        }
+
+        public static SmtpClient SmtpClientFromSettings()
+        {
+            SmtpClient client = new SmtpClient();
+            SMTPSettings settings = FetchSMTPSettings();
+
+            client.Credentials = new NetworkCredential(settings.UserName, settings.Password);
+            client.Host = settings.Host;
+            client.Port = settings.Port;
+            client.EnableSsl = settings.TLS;
+            client.DeliveryMethod = SmtpDeliveryMethod.Network;
+            return client;
         }
     }
 }

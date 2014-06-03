@@ -27,7 +27,7 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class DBContext : IdentityDbContext
+    public class DBContext : IdentityDbContext<SOFAUser>
     {
         public DBContext() : base("DefaultConnection")
         { }

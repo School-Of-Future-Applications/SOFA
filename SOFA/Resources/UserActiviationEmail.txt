@@ -1,0 +1,12 @@
+<b>
+Hi {0},
+<br />
+This email is being sent to you so that you may activate your account on SOFA.
+<br />
+Please use the link below to activate your account.
+<br />
+<a href={1}>Activate Now</a>
+<br />
+or copy and paste the following URL into your web browser.
+<br />
+{1}

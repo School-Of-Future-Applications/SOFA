@@ -72,7 +72,7 @@ namespace SOFA.Models
         [NotMapped]
         public String Password { get; set; }
 
-        public virtual IdentityUser User { get; set; }
+        public virtual SOFAUser User { get; set; }
 
         public String FullName()
         {

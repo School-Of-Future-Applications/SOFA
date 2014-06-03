@@ -13,6 +13,7 @@ using System.Net;
 using Microsoft.Owin.Security.DataProtection;
 using System.Web.Security;
 using SOFA.Helpers;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace SOFA.Controllers
 {
@@ -23,38 +24,38 @@ namespace SOFA.Controllers
 
         public UserController(DBContext dbcontext)
         {
-            UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(dbcontext));
+            UserManager = new UserManager<SOFAUser>(new UserStore<SOFAUser>(dbcontext));
             RoleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(dbcontext));
             DpapiDataProtectionProvider provider = new DpapiDataProtectionProvider("SOFA");
-            UserManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<IdentityUser>(provider.Create("EmailToken"));
+            UserManager.UserTokenProvider = new Microsoft.AspNet.Identity.Owin.DataProtectorTokenProvider<SOFAUser>(provider.Create("EmailToken"));
             db = dbcontext;
         }
 
-        public UserManager<IdentityUser> UserManager { get; private set; }
+        public UserManager<SOFAUser> UserManager { get; private set; }
 
         public RoleManager<IdentityRole> RoleManager { get; private set; }
 
         private DBContext db { get; set; }
 
-        private void SetSysAdmin(IdentityUser u)
+        private void SetSysAdmin(SOFAUser u)
         {
             UserManager.AddToRole(u.Id, "SystemAdmin");
             UserManager.AddToRole(u.Id, "SOFAAdmin");
             UserManager.AddToRole(u.Id, "Moderator");
         }
 
-        private void SetSOFAAdmin(IdentityUser u)
+        private void SetSOFAAdmin(SOFAUser u)
         {
             UserManager.AddToRole(u.Id, "SOFAAdmin");
             UserManager.AddToRole(u.Id, "Moderator");
         }
 
-        private void SetModerator(IdentityUser u)
+        private void SetModerator(SOFAUser u)
         {
             UserManager.AddToRole(u.Id, "Moderator");
         }
 
-        private void SetTeacher(IdentityUser u)
+        private void SetTeacher(SOFAUser u)
         {
             UserManager.AddToRole(u.Id, "Teacher");
         }
@@ -73,7 +74,7 @@ namespace SOFA.Controllers
             var person = db.Persons.Where(p => p.Email == email).First();
             if(person != null)
             {
-                IdentityUser u = person.User;
+                SOFAUser u = person.User;
                 var userip = Request.ServerVariables["REMOTE_ADDR"];
                 if (u != null)
                 {
@@ -81,6 +82,8 @@ namespace SOFA.Controllers
                     Helper.SendEmail(person.Email, "SOFA Password Reset Requested", String.Format("{0},<br />This email is being sent to you because someone(hopefully you) at {1} requested a password reset.<br />If you did not request a reset then please ignore this email, however if you did, please continue by clicking the link below<br />{2}", u.UserName, userip, String.Format("http://{0}/User/ConfirmResetPassword?u={1}&token={2}", "sofa.jinivus.com", u.Id, token)));
                 }
             }
+
+            
             return RedirectToAction("Index");
         }
 
@@ -156,7 +159,7 @@ namespace SOFA.Controllers
             return RedirectToAction("Index");
         }
 
-        private string GetHighestRole(IdentityUser u)
+        private string GetHighestRole(SOFAUser u)
         {
             var roles = UserManager.GetRoles(u.Id);
             if(roles.Contains("SystemAdmin"))
@@ -231,7 +234,7 @@ namespace SOFA.Controllers
                     {
                         if (person.User != null)
                         {
-                            IdentityUser user = UserManager.FindByName(person.User.UserName);
+                            SOFAUser user = UserManager.FindByName(person.User.UserName);
                             if (user != null)
                                 view.User = user;
                         }
@@ -278,7 +281,7 @@ namespace SOFA.Controllers
                         {
                             if (p.User.UserName != null)
                             {
-                                var user = new IdentityUser() { UserName = p.User.UserName };
+                                var user = new SOFAUser() { UserName = p.User.UserName };
                                 var result = UserManager.Create(user, p.Password);
                                 if (result.Succeeded)
                                 {
@@ -322,7 +325,7 @@ namespace SOFA.Controllers
                             toUpdate.PhoneNumber = p.Person.PhoneNumber;
                             toUpdate.MobileNumber = p.Person.MobileNumber;
                             toUpdate.Position = p.Person.Position;
-                            IdentityUser userToUpdate = toUpdate.User;
+                            SOFAUser userToUpdate = toUpdate.User;
                             if (userToUpdate != null && p.Password != null)
                             {
                                 userToUpdate.PasswordHash = (new PasswordHasher()).HashPassword(p.Password);
@@ -330,7 +333,7 @@ namespace SOFA.Controllers
                             if(userToUpdate == null && p.User.UserName != null && p.Password != null)
                             {
                                 //create user account for existing Person
-                                var user = new IdentityUser() { UserName = p.User.UserName };
+                                var user = new SOFAUser() { UserName = p.User.UserName };
                                 var result = UserManager.Create(user, p.Password);
                                 if(result.Succeeded)
                                 {
@@ -348,7 +351,7 @@ namespace SOFA.Controllers
                         {
                             //user self editing
                             Person toUpdate = db.Persons.Where(x => x.Id == p.Person.Id).FirstOrDefault();
-                            IdentityUser userToUpdate = toUpdate.User;
+                            SOFAUser userToUpdate = toUpdate.User;
                             if (p.Password != null)
                                 if(p.Password == p.VerifyPassword)
                                     UserManager.ChangePassword(userToUpdate.Id, p.CurrentPassword, p.Password);

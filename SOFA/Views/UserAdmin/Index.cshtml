@@ -60,7 +60,7 @@
                 {
                     <tr onclick="location.href='@Url.Action("UserAdmin", "UserAdmin"
                                                            ,new { personId = p.Id })'"
-                        class=@(p.User.LockoutEnabled ? "danger" : "")>
+                        class=@(!p.User.Active ? "danger" : "")>
                         <td>@p.User.Id</td>
                         <td>@p.User.UserName</td>
                         <td>@p.FullName()</td>

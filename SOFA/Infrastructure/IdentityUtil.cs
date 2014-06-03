@@ -42,11 +42,11 @@ namespace SOFA.Infrastructure
             return @this.HttpContext.GetOwinContext().Authentication;
         }
 
-        public static IdentityUser CurrentUser(this HtmlHelper @this)
+        public static SOFAUser CurrentUser(this HtmlHelper @this)
         {
             HttpContext current = HttpContext.Current;
             SOFAUserManager userManager = current.GetOwinContext().GetUserManager<SOFAUserManager>();
-            IdentityUser user = userManager.FindByName(current.User.Identity.Name);
+            SOFAUser user = userManager.FindByName(current.User.Identity.Name);
             return user;
         }
 
@@ -54,7 +54,7 @@ namespace SOFA.Infrastructure
         {
             HttpContext current = HttpContext.Current;
             DBContext dbCon = new DBContext();
-            IdentityUser user = @this.CurrentUser();
+            SOFAUser user = @this.CurrentUser();
 
             return dbCon.Persons.Where(person => person.User.Id == user.Id).First();
         }

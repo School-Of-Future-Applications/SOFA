@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Infrastructure.Users;
+using SOFA.Models;
 using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
@@ -36,7 +37,7 @@ namespace SOFA.Controllers
         public ActionResult UserLogin(UserLoginViewModel login, string returnUrl)
         {
             ClaimsIdentity ident = null;
-            IdentityUser user = null;
+            SOFAUser user = null;
 
             if(ModelState.IsValid)
             {

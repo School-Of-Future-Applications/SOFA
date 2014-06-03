@@ -189,6 +189,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -228,6 +229,7 @@
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
     <Compile Include="Infrastructure\DBContextUtil.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
+    <Compile Include="Infrastructure\IdentityEmail.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
     <Compile Include="Helpers\Helpers.cs" />
@@ -241,18 +243,26 @@
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\SOFAUser.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\EditUserRolesViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
     <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserPasswordResetViewModel.cs" />
     <Compile Include="Models\ViewModels\UserPersonCreateEditViewModel.cs" />
     <Compile Include="Models\SMTPSettings.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +305,8 @@
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
     <Content Include="Views\UserAdmin\NewUser.cshtml" />
     <Content Include="Views\Shared\PersonFormComponents.cshtml" />
+    <Content Include="Views\UserAdmin\UserActivation.cshtml" />
+    <Content Include="Views\UserAdmin\UserPasswordReset.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -305,6 +317,13 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\LineTime\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

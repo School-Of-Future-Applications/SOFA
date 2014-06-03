@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Configuration;
 
@@ -42,6 +43,12 @@ namespace SOFA.Models
                 settings[USERADMINFROMEMAIL_KEY].Value = emailSettings.UserAdminFromEmail;
             }
             webConfig.Save();
+        }
+
+        public static MailAddress UserAdminMailAddress()
+        {
+            EmailSettings settings = FetchEmailSettings();
+            return new MailAddress(settings.UserAdminFromEmail);
         }
     }
 }
