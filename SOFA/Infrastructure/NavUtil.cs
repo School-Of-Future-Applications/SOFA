@@ -20,8 +20,13 @@
 
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using Microsoft.AspNet.Identity.Owin;
+using SOFA.Infrastructure.Users;
+using Microsoft.AspNet.Identity;
+using System.Linq;
 
 namespace SOFA.Infrastructure
 {
@@ -35,12 +40,14 @@ namespace SOFA.Infrastructure
         public string actionName;
         public string controllerName;
         public string displayName;
+        public string requiredAuth;
     }
 
     public struct NavSection
     {
         public string sectionName;
         public Dictionary<Enum, NavInfo> navItems;
+        public string requiredAuth;
     }
 
     public enum DashboardNavTerms
@@ -60,17 +67,20 @@ namespace SOFA.Infrastructure
             {new NavSection
                 {
                     sectionName = null
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER
                    ,navItems = new Dictionary<Enum,NavInfo>
                    {
                        {DashboardNavTerms.DepartmentCourse
                        ,new NavInfo {actionName = "Index"
                                     ,controllerName = "Department"
-                                    ,displayName = "Department & Courses"}}
+                                    ,displayName = "Department & Courses"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER}}
 
                       ,{DashboardNavTerms.Timetabling
                        ,new NavInfo {actionName = "Index"
                                     ,controllerName = "Timetable"
-                                    ,displayName = "Timetabling"}}
+                                    ,displayName = "Timetabling"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER}}
                    }
                 }
             }
@@ -78,12 +88,14 @@ namespace SOFA.Infrastructure
            ,{new NavSection
                 {
                     sectionName = "SOFA Administration"
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR
                    ,navItems = new Dictionary<Enum,NavInfo>
                    {
                         {DashboardNavTerms.UserAdmin
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "UserAdmin"
-                                     ,displayName = "User Administration"}}
+                                     ,displayName = "User Administration"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
                    }
                 }
             }
@@ -91,12 +103,14 @@ namespace SOFA.Infrastructure
            ,{new NavSection
                 {
                     sectionName = "System Administration"
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN
                     ,navItems = new Dictionary<Enum,NavInfo>
                     {
                         {DashboardNavTerms.SystemConfig
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Settings"
-                                     ,displayName = "System Settings"}}
+                                     ,displayName = "System Settings"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN}}
                     }
                 }
             }
@@ -105,9 +119,13 @@ namespace SOFA.Infrastructure
         public static MvcHtmlString DashboardNavigation(this HtmlHelper html)
         {
             String navHtml = "";
-
+            var um = html.ViewContext.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
+            var roles = um.GetRoles(html.CurrentUser().Id);
             foreach (NavSection ns in DashboardSections)
+            {
+                if (ns.requiredAuth.Split(',').Intersect(roles).Count() > 0)
                 navHtml += DashboardSection(html, ns).ToHtmlString();
+            }
             return new MvcHtmlString(navHtml);
         }
 
@@ -130,22 +148,28 @@ namespace SOFA.Infrastructure
                 ulTag.InnerHtml += liTag;
             }
 
+            var um = html.ViewContext.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
+            var roles = um.GetRoles(html.CurrentUser().Id);
+
             foreach(KeyValuePair<Enum, NavInfo> k in section.navItems)
             {
-                provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
-                value = k.Value;
-                liTag = new TagBuilder("li");
+               provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
+               value = k.Value;
+               if(value.requiredAuth.Split(',').Intersect(roles).Count() > 0)
+                {
+                    liTag = new TagBuilder("li");
 
-                if (provider != null)
-                    if(provider.NavProviderTerm().CompareTo(k.Key) == 0)
-                        liTag.AddCssClass("active");
-                    
-                link = LinkExtensions.ActionLink(html, value.displayName
-                                                ,value.actionName
-                                                ,value.controllerName);
+                    if (provider != null)
+                        if (provider.NavProviderTerm().CompareTo(k.Key) == 0)
+                            liTag.AddCssClass("active");
 
-                liTag.InnerHtml = link.ToHtmlString();
-                ulTag.InnerHtml += liTag;
+                    link = LinkExtensions.ActionLink(html, value.displayName
+                                                    , value.actionName
+                                                    , value.controllerName);
+
+                    liTag.InnerHtml = link.ToHtmlString();
+                    ulTag.InnerHtml += liTag;
+                }
             }
 
             return new MvcHtmlString(ulTag.ToString());
