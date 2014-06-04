@@ -18,15 +18,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
-using Microsoft.AspNet.Identity.Owin;
-using SOFA.Infrastructure.Users;
-using Microsoft.AspNet.Identity;
 using System.Linq;
+
+using SOFA.Infrastructure.Users;
+using SOFA.Models;
 
 namespace SOFA.Infrastructure
 {
@@ -88,14 +90,14 @@ namespace SOFA.Infrastructure
            ,{new NavSection
                 {
                     sectionName = "SOFA Administration"
-                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN
                    ,navItems = new Dictionary<Enum,NavInfo>
                    {
                         {DashboardNavTerms.UserAdmin
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "UserAdmin"
                                      ,displayName = "User Administration"
-                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN}}
                    }
                 }
             }
@@ -118,19 +120,22 @@ namespace SOFA.Infrastructure
 
         public static MvcHtmlString DashboardNavigation(this HtmlHelper html)
         {
+            SOFAUser currentUser = html.CurrentUser();
             String navHtml = "";
-            var um = html.ViewContext.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
-            var roles = um.GetRoles(html.CurrentUser().Id);
+            SOFAUserManager userManager = html.UserManager();
+
             foreach (NavSection ns in DashboardSections)
             {
-                if (ns.requiredAuth.Split(',').Intersect(roles).Count() > 0)
-                navHtml += DashboardSection(html, ns).ToHtmlString();
+                if(userManager.IsInRoles(currentUser.Id, ns.requiredAuth))
+                    navHtml += DashboardSection(html, ns, currentUser, userManager).ToHtmlString();
             }
             return new MvcHtmlString(navHtml);
         }
 
         public static MvcHtmlString DashboardSection(this HtmlHelper html
-                                                       ,NavSection section)
+                                                    ,NavSection section
+                                                    ,SOFAUser currentUser
+                                                    ,SOFAUserManager userManager)
         {
             MvcHtmlString link;
             TagBuilder liTag;
@@ -148,14 +153,11 @@ namespace SOFA.Infrastructure
                 ulTag.InnerHtml += liTag;
             }
 
-            var um = html.ViewContext.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
-            var roles = um.GetRoles(html.CurrentUser().Id);
-
             foreach(KeyValuePair<Enum, NavInfo> k in section.navItems)
             {
                provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
                value = k.Value;
-               if(value.requiredAuth.Split(',').Intersect(roles).Count() > 0)
+               if(userManager.IsInRoles(currentUser.Id, section.requiredAuth))
                 {
                     liTag = new TagBuilder("li");
 
