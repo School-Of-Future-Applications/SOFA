@@ -27,29 +27,30 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class DBContext : IdentityDbContext
+    public class DBContext : IdentityDbContext<SOFAUser>
     {
         public DBContext() : base("DefaultConnection")
-        {
+        { }
 
-        }
+        public DbSet<Department> Departments { get; set; }
 
-        public DbSet<Line> Lines { get; set; }
         public DbSet<ClassBase> ClassBases { get; set; }
 
         public DbSet<Course> Courses { get; set; }
 
+        public DbSet<Line> Lines { get; set; }
+
         public DbSet<LineTime> LineTimes { get; set; }
 
-        public DbSet<Person> Teachers { get; set; }
+        public DbSet<Person> Persons { get; set; }
 
         public DbSet<Timetable> Timetables { get; set; }
 
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
 
-        public DbSet<Department> Departments { get; set; }
-
-
-
+        public static DBContext Create()
+        {
+            return new DBContext();
+        }
     }
 }

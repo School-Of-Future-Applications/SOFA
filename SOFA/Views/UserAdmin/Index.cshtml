@@ -39,7 +39,6 @@
     </h2>
 </div>
  
-
 <div class="row">
     <div class="col-md-1">
         <div class="btn-group-vertical btn-group-vertical-max-wdith">
@@ -50,13 +49,24 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th>User Id</th>
                     <th>User Name</th>
                     <th>Full Name</th>
                     <th>Position</th>
                 </tr>
             </thead>
             <tbody>
-
+                @foreach(Person p in Model)
+                {
+                    <tr onclick="location.href='@Url.Action("UserAdmin", "UserAdmin"
+                                                           ,new { personId = p.Id })'"
+                        class=@(!p.User.Active ? "danger" : "")>
+                        <td>@p.User.Id</td>
+                        <td>@p.User.UserName</td>
+                        <td>@p.FullName()</td>
+                        <td>@p.Position</td>
+                    </tr>
+                }
             </tbody>
         </table>@* End of Person table. *@
     </div>

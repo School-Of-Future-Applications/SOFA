@@ -31,10 +31,9 @@ namespace SOFA.Controllers
 {
     public class LineTimeController : DashBoardBaseController
     {
-
-        DBContext db = new DBContext();
         //
         // GET: /LineTime/LineTimeCreate
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult LineTimeCreate()
         {
             return View();
@@ -43,6 +42,7 @@ namespace SOFA.Controllers
 
         //
         // POST: /Timetable/LineTimeCreate
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult LineTimeCreate(LineTime lt)
         {
@@ -50,8 +50,8 @@ namespace SOFA.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    db.LineTimes.Add(lt);
-                    db.SaveChanges();
+                    this.DBCon().LineTimes.Add(lt);
+                    this.DBCon().SaveChanges();
                     return RedirectToAction("LineTimeCreate");
                 }
                 return View();

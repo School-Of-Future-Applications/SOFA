@@ -33,13 +33,11 @@ namespace SOFA.Controllers
 {
     public class CourseController : DashBoardBaseController
     {
-        private DBContext db = new DBContext();
-
         public ActionResult Index(int courseId = 0)
         {
             try
             {
-                return View(db.Courses.First(x => x.Id == courseId));
+                return View(this.DBCon().Courses.First(x => x.Id == courseId));
             }
             catch
             {
@@ -49,11 +47,12 @@ namespace SOFA.Controllers
 
         //
         // GET: /Course/Create
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(int departmentId = 0, int courseId = 0)
         {
             try
             {
-                var department = db.Departments.First(d => d.id == departmentId);
+                var department = this.DBCon().Departments.First(d => d.id == departmentId);
 
                 CourseCreateViewModel courseViewModel;
                 //Create time
@@ -61,7 +60,7 @@ namespace SOFA.Controllers
                     courseViewModel = new CourseCreateViewModel();
                 else //Edit time
                 {
-                    var course = db.Courses.First(c => c.Id == courseId);
+                    var course = this.DBCon().Courses.First(c => c.Id == courseId);
                     courseViewModel = new CourseCreateViewModel(course);
                 }
                 courseViewModel.DepartmentName = department.DepartmentName;
@@ -79,6 +78,7 @@ namespace SOFA.Controllers
         //
         //POST: /Course/Create
         [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(CourseCreateViewModel c)
         {
             Course course = null;
@@ -89,22 +89,22 @@ namespace SOFA.Controllers
                     //Adding
                     if (c.ID == 0)
                     {
-                        Department department = db.Departments.First(d => d.id == c.DepartmentId);
+                        Department department = this.DBCon().Departments.First(d => d.id == c.DepartmentId);
                         course = new Course();
                         course.Department = department;
                         course.CourseName = c.CourseName;
                         course.CourseCode = c.CourseCode;
-                        db.Courses.Add(course);
-                        db.SaveChanges();
+                        this.DBCon().Courses.Add(course);
+                        this.DBCon().SaveChanges();
                     }
                     else //Editing
                     {
-                        course = db.Courses.First(dbCourse => dbCourse.Id == c.ID);
+                        course = this.DBCon().Courses.First(dbCourse => dbCourse.Id == c.ID);
                         course.CourseName = c.CourseName;
                         course.CourseCode = c.CourseCode;
-                        db.Courses.Attach(course);
-                        db.Entry(course).State = System.Data.Entity.EntityState.Modified;
-                        db.SaveChanges();
+                        this.DBCon().Courses.Attach(course);
+                        this.DBCon().Entry(course).State = System.Data.Entity.EntityState.Modified;
+                        this.DBCon().SaveChanges();
                     }
 
                     return RedirectToAction("Department", "Department"

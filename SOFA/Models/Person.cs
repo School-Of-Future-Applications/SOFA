@@ -21,7 +21,9 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -33,28 +35,41 @@ namespace SOFA.Models
         public int Id { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public String FirstName { get; set; }
+        [DefaultValue(false)]
+        public bool Deleted { get; set; }
 
         [Required]
-        [StringLength(50)]
-        public String LastName { get; set; }
-
-        [Required]
+        [DisplayName("Email")]
         [StringLength(255)]
         [EmailAddress]
         public String Email { get; set; }
 
-        [StringLength(25)]
-        public String PhoneNumber { get; set; }
+        [Required]
+        [DisplayName("Given Names")]
+        [StringLength(50)]
+        public String GivenNames { get; set; }
 
+        [Required]
+        [DisplayName("Last Name")]
+        [StringLength(50)]
+        public String LastName { get; set; }
+
+        [DisplayName("Mobile")]
         [StringLength(25)]
         public String MobileNumber { get; set; }
 
+        [DisplayName("Phone")]
+        [StringLength(25)]
+        public String PhoneNumber { get; set; }
+
         [StringLength(50)]
         public String Position { get; set; }
-        [StringLength(10)]
-        public String Title { get; set; }
-        public virtual IdentityUser User { get; set; }
+
+        public virtual SOFAUser User { get; set; }
+
+        public String FullName()
+        {
+            return GivenNames + " " + LastName;
+        }
     }
 }

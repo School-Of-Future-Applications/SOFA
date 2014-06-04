@@ -42,6 +42,7 @@ namespace SOFA.Models
 
         public virtual Person Teacher { get; set; }
 
+        [StringLength(100)]
         public String DisplayName { get; set; }
     }
 }

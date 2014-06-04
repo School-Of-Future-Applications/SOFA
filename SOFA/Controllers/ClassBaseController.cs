@@ -33,36 +33,9 @@ namespace SOFA.Controllers
     
     public class ClassBaseController : DashBoardBaseController
     {
-        private DBContext db = new DBContext();
-       
-        //
-        // GET: /ClassBase/
-       /* public ActionResult Index(int courseId = 1) //default value for debugging only
-        {
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseId);
-            if (course != null)
-            {
-                var classBases = db.ClassBases.Where(c => c.Course.Id == course.Id);
-                List<ClassBaseViewModel> viewModels = new List<ClassBaseViewModel>();
-                foreach (ClassBase c in classBases)
-                {
-                    viewModels.Add(new ClassBaseViewModel
-                    {
-                        Id = c.Id,
-                        ClassBaseCode = c.ClassBaseCode,
-                        YearLevel = c.YearLevel
-                    });
-                }
-                ViewBag.CourseID = course.Id;
-                ViewBag.CourseName = course.CourseName;
-                return View(viewModels.OrderBy(v => v.YearLevel));
-            }
-
-            return RedirectToAction("Index", "Dashboard");
-        }*/
-
         //
         // GET: /ClassBase/Create/5
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(int courseId = 0, int classBaseId = 0) //default value for debugging only
         {
             ClassBaseViewModel viewModel = null;
@@ -70,12 +43,12 @@ namespace SOFA.Controllers
             {
                 if (classBaseId == 0)
                 {
-                    var course = db.Courses.First(c => c.Id == courseId);
+                    var course = this.DBCon().Courses.First(c => c.Id == courseId);
                     viewModel = new ClassBaseViewModel(course);
                 }
                 else
                 {
-                    var classBase = db.ClassBases.First(c => c.Id == classBaseId);
+                    var classBase = this.DBCon().ClassBases.First(c => c.Id == classBaseId);
                     viewModel = new ClassBaseViewModel(classBase);
                 }
                 return View(viewModel);
@@ -89,6 +62,7 @@ namespace SOFA.Controllers
         //
         // POST: /ClassBase/Create
         [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(ClassBaseViewModel viewModel)
         {
             ClassBase classBase = null;
@@ -98,22 +72,22 @@ namespace SOFA.Controllers
                     return View(viewModel);
                 if(viewModel.Id == 0)
                 {
-                    var course = db.Courses.First(c => c.Id == viewModel.CourseID);
+                    var course = this.DBCon().Courses.First(c => c.Id == viewModel.CourseID);
                     classBase = new ClassBase();
                     classBase.ClassBaseCode = viewModel.ClassBaseCode;
                     classBase.YearLevel = viewModel.YearLevel;
                     classBase.Course = course;
-                    db.ClassBases.Add(classBase);
+                    this.DBCon().ClassBases.Add(classBase);
                 }
                 else
                 {
-                    classBase = db.ClassBases.First(cb => cb.Id == viewModel.Id);
+                    classBase = this.DBCon().ClassBases.First(cb => cb.Id == viewModel.Id);
                     classBase.ClassBaseCode = viewModel.ClassBaseCode;
                     classBase.YearLevel = viewModel.YearLevel;
-                    db.ClassBases.Attach(classBase);
-                    db.Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
+                    this.DBCon().ClassBases.Attach(classBase);
+                    this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
                 }
-                db.SaveChanges();
+                this.DBCon().SaveChanges();
                 return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
             }
             catch
@@ -122,10 +96,9 @@ namespace SOFA.Controllers
             }
         }
 
-        
-
         //
         // GET: /ClassBase/Delete/5
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Delete(int classBaseId)
         {
             return View();

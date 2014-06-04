@@ -1,7 +1,7 @@
 ﻿
 @using SOFA.Models.ViewModels
 
-@model UserLoginViewModel
+@model UserActivationViewModel
 
 @{
     Layout = null;
@@ -11,7 +11,6 @@
 
 <html>
 <head>
-    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="author" content="Terminal Coding" />
 
@@ -22,25 +21,27 @@
     <script src="~/Scripts/jquery-2.1.0.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
-    <title>UserLogin</title>
+    <title>UserActivitation</title>
 </head>
 <body>
+
     <div class="container">
 
-        @using (Html.BeginForm("UserLogin", "Login", FormMethod.Post
+        @using (Html.BeginForm("UserActivation", "UserAdmin", FormMethod.Post
                               ,new { @class = "form-signin" }))
         {
             @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.UserId)
+            @Html.HiddenFor(model => model.Token)
+            @Html.HiddenFor(model => model.UserName)
             
-            @Html.Hidden("returnUrl", (object)ViewBag.returnUrl)
-            
-            <h2 class="form-signin-heading">SOFA Sign In</h2>
-            @Html.EditorFor(model => model.UserName, new { placeholder = "Email address" })
+            <h2 class="form-signin-heading">@Model.UserName</h2>
             @Html.EditorFor(model => model.Password, new { placeholder = "Password" })
-            
+            @Html.EditorFor(model => model.ConfirmPassword, new { placeholder = "Confirm Password" })
+
             @Html.ValidationSummary()
-            
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Activate Account</button>
         }
     </div> 
 
