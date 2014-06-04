@@ -9,6 +9,7 @@ using SOFA.Models;
 
 namespace SOFA.Controllers
 {
+    [Authorize(Roles = SOFARole.AUTH_SYSADMIN)]
     public class SettingsController : DashBoardBaseController
     {
         //

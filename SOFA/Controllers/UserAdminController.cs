@@ -37,11 +37,13 @@ namespace SOFA.Controllers
     public class UserAdminController : DashBoardBaseController
     {
         // GET: /UserAdmin/
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
         public ActionResult Index()
         {
             return View(this.DBCon().Persons.Where(person => person.User != null).ToList());
         }
 
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
         public async Task<ActionResult> ActiveUser(String userId, bool active = false)
         {
             Person person = null;
@@ -71,12 +73,14 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
         public ActionResult NewUser()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
         public ActionResult NewUser(Person p)
         {
             SOFAUser newUser = null;
@@ -153,6 +157,7 @@ namespace SOFA.Controllers
 
         [ChildActionOnly]
         [HttpGet]
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
         public ActionResult UserRoleEdit(string userId)
         {
             SOFAUser user = this.UserManager().FindById(userId);
@@ -163,9 +168,34 @@ namespace SOFA.Controllers
                 viewModel.AvailableRoles = this.RoleManager().Roles;
                 viewModel.CurrentRole = SOFARole.HighestListRole(
                     this.UserManager().GetRoles(userId));
-                viewModel.CurrentRoleId = this.RoleManager()
+                if(viewModel.CurrentRole != SOFARole.NONE_ROLE)
+                    viewModel.CurrentRoleId = this.RoleManager()
                     .FindByName(viewModel.CurrentRole).Id;
+
                 return PartialView(viewModel);
+            }
+            return RedirectToAction("Index", "Dashboard");
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        public ActionResult UserRoleEdit(UserRoleEditViewModel model)
+        {
+            /* Needs to handle no person */
+            SOFARole selectedRole = null;
+            Person person = null;
+
+            if(ModelState.IsValid)
+            {
+                person = this.DBCon().Persons.Where(p => p.User.Id == model.UserId).First();
+
+                foreach (String role in this.UserManager().GetRoles(person.User.Id))
+                    this.UserManager().RemoveFromRole(person.User.Id, role);
+
+                selectedRole = this.RoleManager().FindById(model.SelectedRoleId);
+                this.UserManager().AddToRole(person.User.Id, selectedRole.Name);
+                this.DBCon().SaveChanges();
+                return RedirectToAction("UserAdmin", new { personId = person.Id });
             }
             return RedirectToAction("Index", "Dashboard");
         }
@@ -185,6 +215,7 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public ActionResult UserActivation(string userId, string token)
         {
             UserActivationViewModel model = new UserActivationViewModel();
@@ -204,6 +235,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public ActionResult UserActivation(UserActivationViewModel ua)
         {
             SOFAUser user = null;
@@ -224,6 +256,7 @@ namespace SOFA.Controllers
             }
             return View(ua);
         }
+
 
         public ActionResult UserAdmin(int personId)
         {

@@ -31,6 +31,8 @@ namespace SOFA.Models.ViewModels
 {
     public class UserRoleEditViewModel
     {
+        public IEnumerable<SOFARole> AvailableRoles { get; set; }
+
         [Display(Name = "Current Role")]
         public string CurrentRole { get; set; }
 
@@ -39,6 +41,7 @@ namespace SOFA.Models.ViewModels
         [Required]
         public string SelectedRoleId { get; set; }
 
-        public IEnumerable<SOFARole> AvailableRoles { get; set; }
+        [Required]
+        public string UserId { get; set; }
     }
 }

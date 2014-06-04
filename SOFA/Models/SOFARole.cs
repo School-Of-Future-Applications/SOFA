@@ -12,6 +12,21 @@ namespace SOFA.Models
         public const String SYSADMIN_ROLE = "sysadmin";
         public const String TEACHER_ROLE = "teacher";
 
+        public const String AUTH_TEACHER = TEACHER_ROLE + "," +
+                                           MODERATOR_ROLE + "," +
+                                           SOFAADMIN_ROLE + "," +
+                                           SYSADMIN_ROLE + ",";
+
+
+        public const String AUTH_MODERATOR = MODERATOR_ROLE + "," +
+                                             SOFAADMIN_ROLE + "," +
+                                             SYSADMIN_ROLE;
+
+        public const String AUTH_SOFAADMIN = SOFAADMIN_ROLE + "," +
+                                             SYSADMIN_ROLE;
+
+        public const String AUTH_SYSADMIN = SYSADMIN_ROLE;
+
         public static List<String> SOFA_ROLES = new List<String>()
         {
              MODERATOR_ROLE

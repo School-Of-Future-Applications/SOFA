@@ -33,7 +33,7 @@ namespace SOFA.Controllers
     {
         //
         // GET: /LineTime/LineTimeCreate
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult LineTimeCreate()
         {
             return View();
@@ -42,7 +42,7 @@ namespace SOFA.Controllers
 
         //
         // POST: /Timetable/LineTimeCreate
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult LineTimeCreate(LineTime lt)
         {

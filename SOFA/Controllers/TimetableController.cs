@@ -34,7 +34,6 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Timetable/
-        [Authorize]
         public ActionResult Index()
         {
 
@@ -45,7 +44,6 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/Details/5
-        [Authorize]
         public ActionResult Details(int id)
         {
             return View();
@@ -53,7 +51,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/Create
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Create()
         {
             return View();
@@ -62,7 +60,7 @@ namespace SOFA.Controllers
         //
         // POST: /Timetable/Create
         [HttpPost]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Create(Timetable t)
         {
             try
@@ -86,7 +84,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/Build/5
-        [Authorize(Roles="Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Build(int id)
         {
             var timetable = this.DBCon().Timetables.Where(t => t.Id == id).FirstOrDefault();
@@ -95,7 +93,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/CreateLine
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateLine(int id)
         {
             Line l = new Line();
@@ -108,7 +106,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/CreateLine
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateLineTime(int id)
         {
             LineTime lt = new LineTime();
@@ -119,7 +117,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/CreateLine
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateTimetabledClass(int id)
         {
             TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
@@ -133,7 +131,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/EditLineTime
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EditTime(int id)
         {
             LineTime lt = this.DBCon().LineTimes.Where(x => x.Id == id).FirstOrDefault();
@@ -143,7 +141,7 @@ namespace SOFA.Controllers
         }
 
         // GET: /Timetable/EditLineTime
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult EditTime(LineTime lt)
         {
@@ -159,7 +157,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/EditLineTime
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EditTimetabledClass(int id)
         {
             TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
@@ -170,7 +168,7 @@ namespace SOFA.Controllers
         }
 
         // GET: /Timetable/EditLineTime
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult EditTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
         {
@@ -184,7 +182,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/EditLineTime
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult DeleteTimetabledClass(int id)
         {
             TimetabledClass tc = this.DBCon().TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
@@ -197,7 +195,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/CreateTimetabledClass
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult CreateTimetabledClass(TimetabledClassCreateEditViewModel tclassmodel)
         {
@@ -211,7 +209,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/CreateLine
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         [HttpPost]
         public ActionResult CreateLineTime(LineTime lt)
         {
@@ -229,7 +227,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/DeleteLine/5
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult DeleteLine(int id)
         {
             Line l = this.DBCon().Lines.Where(x => x.Id == id).FirstOrDefault();
@@ -241,7 +239,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Timetable/DeleteLine/5
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult DeleteTime(int id)
         {
             LineTime l = this.DBCon().LineTimes.Where(x => x.Id == id).FirstOrDefault();

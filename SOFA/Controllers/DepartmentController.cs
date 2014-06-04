@@ -32,7 +32,6 @@ namespace SOFA.Controllers
 {
     public class DepartmentController : DashBoardBaseController
     {  
-        [Authorize]
         public ActionResult Index()
         {
             ViewBag.NavItem = "Department & Courses";
@@ -40,7 +39,7 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(int? departmentId)
         {
             if (departmentId != null)
@@ -50,7 +49,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(Department dep)
         {
             if (ModelState.IsValid)
@@ -69,7 +68,7 @@ namespace SOFA.Controllers
                 return View();
         }
 
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Delete(int? departmentId)
         {
             Department dep = null;
@@ -90,7 +89,6 @@ namespace SOFA.Controllers
             }
         }
        
-        [Authorize(Roles = "Moderator")]
         public ActionResult Department(int? departmentId)
         {
             if (departmentId == null)

@@ -34,34 +34,8 @@ namespace SOFA.Controllers
     public class ClassBaseController : DashBoardBaseController
     {
         //
-        // GET: /ClassBase/
-       /* public ActionResult Index(int courseId = 1) //default value for debugging only
-        {
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseId);
-            if (course != null)
-            {
-                var classBases = db.ClassBases.Where(c => c.Course.Id == course.Id);
-                List<ClassBaseViewModel> viewModels = new List<ClassBaseViewModel>();
-                foreach (ClassBase c in classBases)
-                {
-                    viewModels.Add(new ClassBaseViewModel
-                    {
-                        Id = c.Id,
-                        ClassBaseCode = c.ClassBaseCode,
-                        YearLevel = c.YearLevel
-                    });
-                }
-                ViewBag.CourseID = course.Id;
-                ViewBag.CourseName = course.CourseName;
-                return View(viewModels.OrderBy(v => v.YearLevel));
-            }
-
-            return RedirectToAction("Index", "Dashboard");
-        }*/
-
-        //
         // GET: /ClassBase/Create/5
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(int courseId = 0, int classBaseId = 0) //default value for debugging only
         {
             ClassBaseViewModel viewModel = null;
@@ -87,8 +61,8 @@ namespace SOFA.Controllers
 
         //
         // POST: /ClassBase/Create
-        [Authorize(Roles = "Moderator")]
         [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(ClassBaseViewModel viewModel)
         {
             ClassBase classBase = null;
@@ -124,7 +98,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /ClassBase/Delete/5
-        [Authorize(Roles = "Moderator")]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Delete(int classBaseId)
         {
             return View();

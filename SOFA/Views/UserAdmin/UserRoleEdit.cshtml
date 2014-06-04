@@ -6,9 +6,13 @@
 @{
 }
 
+
+
 @using (Html.BeginForm("UserRoleEdit", "UserAdmin", FormMethod.Post
                       ,new { @class = "form-horizontal" }))
 {
+    @Html.HiddenFor(model => model.UserId)
+    
     <div class="form-group">
         @Html.LabelFor(model => model.CurrentRole, new { @class = "col-sm-3" })
         <div class="col-sm-9">

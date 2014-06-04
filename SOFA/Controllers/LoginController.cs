@@ -16,8 +16,10 @@ using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
+    [Authorize]
     public class LoginController : HttpsBaseController
     {
+        [AllowAnonymous]
         public ActionResult Index()
         {
             return RedirectPermanent("~/Login/UserLogin");
@@ -58,7 +60,6 @@ namespace SOFA.Controllers
             return View(new UserLoginViewModel { UserName = login.UserName });
         }
 
-        [Authorize]
         public ActionResult UserLogout()
         {
             this.AuthManager().SignOut();
