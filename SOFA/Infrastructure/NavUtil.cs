@@ -18,10 +18,17 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
+using System.Linq;
+
+using SOFA.Infrastructure.Users;
+using SOFA.Models;
 
 namespace SOFA.Infrastructure
 {
@@ -35,12 +42,14 @@ namespace SOFA.Infrastructure
         public string actionName;
         public string controllerName;
         public string displayName;
+        public string requiredAuth;
     }
 
     public struct NavSection
     {
         public string sectionName;
         public Dictionary<Enum, NavInfo> navItems;
+        public string requiredAuth;
     }
 
     public enum DashboardNavTerms
@@ -60,17 +69,20 @@ namespace SOFA.Infrastructure
             {new NavSection
                 {
                     sectionName = null
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER
                    ,navItems = new Dictionary<Enum,NavInfo>
                    {
                        {DashboardNavTerms.DepartmentCourse
                        ,new NavInfo {actionName = "Index"
                                     ,controllerName = "Department"
-                                    ,displayName = "Department & Courses"}}
+                                    ,displayName = "Department & Courses"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER}}
 
                       ,{DashboardNavTerms.Timetabling
                        ,new NavInfo {actionName = "Index"
                                     ,controllerName = "Timetable"
-                                    ,displayName = "Timetabling"}}
+                                    ,displayName = "Timetabling"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_TEACHER}}
                    }
                 }
             }
@@ -78,12 +90,14 @@ namespace SOFA.Infrastructure
            ,{new NavSection
                 {
                     sectionName = "SOFA Administration"
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN
                    ,navItems = new Dictionary<Enum,NavInfo>
                    {
                         {DashboardNavTerms.UserAdmin
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "UserAdmin"
-                                     ,displayName = "User Administration"}}
+                                     ,displayName = "User Administration"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN}}
                    }
                 }
             }
@@ -91,12 +105,14 @@ namespace SOFA.Infrastructure
            ,{new NavSection
                 {
                     sectionName = "System Administration"
+                   ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN
                     ,navItems = new Dictionary<Enum,NavInfo>
                     {
                         {DashboardNavTerms.SystemConfig
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Settings"
-                                     ,displayName = "System Settings"}}
+                                     ,displayName = "System Settings"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN}}
                     }
                 }
             }
@@ -104,15 +120,22 @@ namespace SOFA.Infrastructure
 
         public static MvcHtmlString DashboardNavigation(this HtmlHelper html)
         {
+            SOFAUser currentUser = html.CurrentUser();
             String navHtml = "";
+            SOFAUserManager userManager = html.UserManager();
 
             foreach (NavSection ns in DashboardSections)
-                navHtml += DashboardSection(html, ns).ToHtmlString();
+            {
+                if(userManager.IsInRoles(currentUser.Id, ns.requiredAuth))
+                    navHtml += DashboardSection(html, ns, currentUser, userManager).ToHtmlString();
+            }
             return new MvcHtmlString(navHtml);
         }
 
         public static MvcHtmlString DashboardSection(this HtmlHelper html
-                                                       ,NavSection section)
+                                                    ,NavSection section
+                                                    ,SOFAUser currentUser
+                                                    ,SOFAUserManager userManager)
         {
             MvcHtmlString link;
             TagBuilder liTag;
@@ -132,20 +155,23 @@ namespace SOFA.Infrastructure
 
             foreach(KeyValuePair<Enum, NavInfo> k in section.navItems)
             {
-                provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
-                value = k.Value;
-                liTag = new TagBuilder("li");
+               provider = html.ViewContext.Controller.ControllerContext.Controller as INavProvider;
+               value = k.Value;
+               if(userManager.IsInRoles(currentUser.Id, section.requiredAuth))
+                {
+                    liTag = new TagBuilder("li");
 
-                if (provider != null)
-                    if(provider.NavProviderTerm().CompareTo(k.Key) == 0)
-                        liTag.AddCssClass("active");
-                    
-                link = LinkExtensions.ActionLink(html, value.displayName
-                                                ,value.actionName
-                                                ,value.controllerName);
+                    if (provider != null)
+                        if (provider.NavProviderTerm().CompareTo(k.Key) == 0)
+                            liTag.AddCssClass("active");
 
-                liTag.InnerHtml = link.ToHtmlString();
-                ulTag.InnerHtml += liTag;
+                    link = LinkExtensions.ActionLink(html, value.displayName
+                                                    , value.actionName
+                                                    , value.controllerName);
+
+                    liTag.InnerHtml = link.ToHtmlString();
+                    ulTag.InnerHtml += liTag;
+                }
             }
 
             return new MvcHtmlString(ulTag.ToString());
