@@ -231,7 +231,6 @@
     <Compile Include="Infrastructure\IdentityEmail.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
-    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Migrations\Configuration.cs" />
@@ -297,9 +296,6 @@
     <Content Include="Views\Shared\EditorTemplates\Int32.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
     <Content Include="Views\Settings\EditEmailSettings.cshtml" />
-    <Content Include="Views\User\CreateEdit.cshtml" />
-    <Content Include="Views\User\UserCreateEdit.cshtml" />
-    <Content Include="Views\User\EditRoles.cshtml" />
     <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
     <Content Include="Views\Person\EditPerson.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
