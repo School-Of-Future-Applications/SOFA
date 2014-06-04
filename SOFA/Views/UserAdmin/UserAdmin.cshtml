@@ -18,11 +18,13 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using SOFA.Infrastructure;
 @using SOFA.Models
 
 @model Person
 
 @{
+    SOFAUser currentUser = Html.CurrentUser();
     ViewBag.Title = "UserAdmin";
 }
 
@@ -40,7 +42,10 @@
                     System Login Information
                 </h4>
                 <div class="btn-toolbar pull-right" role="toolbar">
+                    @if (Html.UserManager().IsInRoles(currentUser.Id, SOFARole.AUTH_SOFAADMIN))
+                    {
                     <div class="btn-group">
+                       
                         @if(!Model.User.Active)
                         {
                             @Html.ActionLink("Activate", "ActiveUser"
@@ -55,11 +60,16 @@
                                             ,new { @class = "btn btn-default" })                            
                         }
                     </div>
+                    }
+                    
+                    @if(currentUser.Id == Model.User.Id)
+                    {
                     <div class="btn-group">
                         @Html.ActionLink("Reset Password", "UserPasswordReset"
                                         ,new { userId = Model.User.Id }
                                         ,new { @class = "btn btn-default" })
                     </div>
+                    }
                 </div>
             </div>
 
@@ -76,6 +86,8 @@
         </div>
     </div>
 
+    @if(Html.UserManager().IsInRoles(currentUser.Id, SOFARole.AUTH_SOFAADMIN))
+    {
     <div class="col-md-12">
         <div class="panel panel-primary">
             <div class="panel-heading clearfix">
@@ -88,6 +100,7 @@
             </div>
         </div>
     </div>
+    }
 
     <div class="col-md-12">
         <div class="panel panel-primary">

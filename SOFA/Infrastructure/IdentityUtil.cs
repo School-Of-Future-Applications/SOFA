@@ -42,6 +42,14 @@ namespace SOFA.Infrastructure
             return @this.HttpContext.GetOwinContext().Authentication;
         }
 
+        public static SOFAUser CurrentUser(this Controller @this)
+        {
+            SOFAUserManager userManager = @this.HttpContext.GetOwinContext()
+                                               .GetUserManager<SOFAUserManager>();
+            SOFAUser user = userManager.FindByName(@this.HttpContext.User.Identity.Name);
+            return user;
+        }
+
         public static SOFAUser CurrentUser(this HtmlHelper @this)
         {
             HttpContext current = HttpContext.Current;
@@ -59,6 +67,12 @@ namespace SOFA.Infrastructure
             return dbCon.Persons.Where(person => person.User.Id == user.Id).First();
         }
 
+        public static bool IsInRoles(this SOFAUserManager @this, string userId
+                                    ,string roles)
+        {
+            return @this.GetRoles(userId).Intersect(roles.Split(',')).Count() > 0;
+        }
+
         public static void resultToModelState(ModelStateDictionary dest
                                              ,IdentityResult result)
         {
@@ -74,6 +88,12 @@ namespace SOFA.Infrastructure
         public static SOFAUserManager UserManager(this Controller @this)
         {
             return @this.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();
+        }
+
+        public static SOFAUserManager UserManager(this HtmlHelper @this)
+        {
+            HttpContext context = HttpContext.Current;
+            return context.GetOwinContext().GetUserManager<SOFAUserManager>();
         }
     }
 }

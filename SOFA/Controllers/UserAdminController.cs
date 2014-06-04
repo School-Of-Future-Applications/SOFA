@@ -260,11 +260,15 @@ namespace SOFA.Controllers
 
         public ActionResult UserAdmin(int personId)
         {
+            SOFAUser currentUser = this.CurrentUser();
             Person p = null;
 
             try
             {
                 p = this.DBCon().Persons.Where(person => person.Id == personId).First();
+                if(p.User.Id.CompareTo(currentUser.Id) != 0 &&
+                   !this.UserManager().IsInRoles(currentUser.Id, SOFARole.AUTH_SYSADMIN))
+                    throw new InvalidOperationException();
             }
             catch(InvalidOperationException)
             {
