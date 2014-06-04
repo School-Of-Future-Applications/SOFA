@@ -37,13 +37,13 @@ namespace SOFA.Controllers
     public class UserAdminController : DashBoardBaseController
     {
         // GET: /UserAdmin/
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Index()
         {
             return View(this.DBCon().Persons.Where(person => person.User != null).ToList());
         }
 
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public async Task<ActionResult> ActiveUser(String userId, bool active = false)
         {
             Person person = null;
@@ -73,14 +73,14 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult NewUser()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult NewUser(Person p)
         {
             SOFAUser newUser = null;
@@ -157,7 +157,7 @@ namespace SOFA.Controllers
 
         [ChildActionOnly]
         [HttpGet]
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult UserRoleEdit(string userId)
         {
             SOFAUser user = this.UserManager().FindById(userId);
@@ -178,7 +178,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.SOFAADMIN_ROLE)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult UserRoleEdit(UserRoleEditViewModel model)
         {
             /* Needs to handle no person */

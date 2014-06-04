@@ -44,17 +44,19 @@ namespace SOFA.Controllers
             if(ModelState.IsValid)
             {
                 user = this.UserManager().Find(login.UserName, login.Password);
-                if(user == null)
+                if (user == null)
                 {
                     ModelState.AddModelError("", "Invalid email or password");
                 }
-                else
+                else if (user.Active && user.EmailConfirmed)
                 {
                     ident = this.UserManager().CreateIdentity(user, DefaultAuthenticationTypes.ApplicationCookie);
                     this.AuthManager().SignOut();
                     this.AuthManager().SignIn(new AuthenticationProperties { IsPersistent = false }, ident);
                     return RedirectToAction("Index", "Dashboard");
                 }
+                else
+                    ModelState.AddModelError("", "Failed to login");
             }
             ViewBag.returnUrl = returnUrl;
             return View(new UserLoginViewModel { UserName = login.UserName });

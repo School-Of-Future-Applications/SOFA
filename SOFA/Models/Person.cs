@@ -36,10 +36,6 @@ namespace SOFA.Models
 
         [Required]
         [DefaultValue(false)]
-        public bool Active { get; set; }
-
-        [Required]
-        [DefaultValue(false)]
         public bool Deleted { get; set; }
 
         [Required]
@@ -68,9 +64,6 @@ namespace SOFA.Models
 
         [StringLength(50)]
         public String Position { get; set; }
-
-        [NotMapped]
-        public String Password { get; set; }
 
         public virtual SOFAUser User { get; set; }
 
