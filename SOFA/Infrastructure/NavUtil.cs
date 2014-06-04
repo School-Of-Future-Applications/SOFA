@@ -24,24 +24,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
 using SOFA.Infrastructure.Users;
-using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security;
-using System;
-using System.Data.Entity;
 using System.Linq;
-using System.Security.Claims;
-using System.Web;
-using System.Web.Mvc;
-
-using SOFA.Infrastructure.Users;
-using SOFA.Models;
 
 namespace SOFA.Infrastructure
 {
