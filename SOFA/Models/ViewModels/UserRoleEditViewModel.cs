@@ -25,14 +25,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
+using SOFA.Models.ViewModels;
+
 namespace SOFA.Models.ViewModels
 {
-    public class EditUserRolesViewModel
+    public class UserRoleEditViewModel
     {
-        [Required]
-        [Display(Name = "Username")]
-        public string User { get; set; }
-
         [Display(Name = "Current Role")]
         public string CurrentRole { get; set; }
 
@@ -41,6 +39,6 @@ namespace SOFA.Models.ViewModels
         [Required]
         public string SelectedRoleId { get; set; }
 
-        public IEnumerable<IdentityRole> AvailableRoles { get; set; }
+        public IEnumerable<SOFARole> AvailableRoles { get; set; }
     }
 }

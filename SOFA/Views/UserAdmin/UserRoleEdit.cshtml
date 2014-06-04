@@ -1,0 +1,34 @@
+﻿
+@using SOFA.Models.ViewModels
+
+@model UserRoleEditViewModel
+
+@{
+}
+
+@using (Html.BeginForm("UserRoleEdit", "UserAdmin", FormMethod.Post
+                      ,new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.CurrentRole, new { @class = "col-sm-3" })
+        <div class="col-sm-9">
+            @Html.DisplayFor(model => model.CurrentRole)
+        </div>
+    </div>
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.AvailableRoles, "New Role"
+                      ,new { @class = "col-sm-3" })
+        <div class="col-sm-9">
+            @Html.DropDownListFor(model => model.SelectedRoleId
+                                 ,new SelectList(Model.AvailableRoles, "Id"
+                                                ,"Name", Model.CurrentRoleId))
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="col-sm-9 col-sm-offset-3">
+            <button type="submit" class="btn btn-default">Save New Role</button>
+        </div> 
+    </div>
+}

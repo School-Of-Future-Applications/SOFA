@@ -15,6 +15,7 @@ namespace SOFA.App_Start
         {
             app.CreatePerOwinContext<DBContext>(DBContext.Create);
             app.CreatePerOwinContext<SOFAUserManager>(SOFAUserManager.Create);
+            app.CreatePerOwinContext<SOFARoleManager>(SOFARoleManager.Create);
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
                 {

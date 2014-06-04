@@ -19,7 +19,7 @@ namespace SOFA.Controllers
 {
     public class UserController : Controller
     {
-        public UserController() : this(new DBContext())
+ /*       public UserController() : this(new DBContext())
         { }
 
         public UserController(DBContext dbcontext)
@@ -145,7 +145,7 @@ namespace SOFA.Controllers
         {
             if(username != null)
             { 
-                EditUserRolesViewModel view = new EditUserRolesViewModel();
+                UserRoleEditViewModel view = new UserRoleEditViewModel();
                 view.AvailableRoles = RoleManager.Roles;
                 var u = UserManager.FindByName(username);
                 if(u != null)
@@ -161,6 +161,7 @@ namespace SOFA.Controllers
 
         private string GetHighestRole(SOFAUser u)
         {
+           
             var roles = UserManager.GetRoles(u.Id);
             if(roles.Contains("SystemAdmin"))
             {
@@ -188,7 +189,7 @@ namespace SOFA.Controllers
         // POST: /User/EditRoles/joebloggs
         [Authorize(Roles = "SOFAAdmin")]
         [HttpPost]
-        public ActionResult EditRoles(EditUserRolesViewModel m)
+        public ActionResult EditRoles(UserRoleEditViewModel m)
         {
             var u = UserManager.FindByName(m.User);
             if(u != null)
@@ -374,6 +375,6 @@ namespace SOFA.Controllers
                 //db.SaveChanges();
                 return RedirectToAction("Index");
                 //return View("UserCreateEdit");
-        }
+        }*/
     }
 }

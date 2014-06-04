@@ -66,6 +66,11 @@ namespace SOFA.Infrastructure
                 dest.AddModelError("", error);         
         }
 
+        public static SOFARoleManager RoleManager(this Controller @this)
+        {
+            return @this.HttpContext.GetOwinContext().Get<SOFARoleManager>();
+        }
+
         public static SOFAUserManager UserManager(this Controller @this)
         {
             return @this.HttpContext.GetOwinContext().GetUserManager<SOFAUserManager>();

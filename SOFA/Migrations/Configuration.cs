@@ -18,14 +18,16 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
+
+using SOFA.Infrastructure.Users;
 using SOFA.Models;
-using System.Collections.Generic;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity;
 
 namespace SOFA.Migrations
 {
@@ -38,39 +40,40 @@ namespace SOFA.Migrations
             AutomaticMigrationDataLossAllowed = true; 
         }
 
-        protected override void Seed(SOFA.Models.DBContext context)
+        protected override void Seed(DBContext context)
         {
-      /*      string[] usernames = { "teacher", "sysadmin","sofaadmin","moderator" };
-            string[] rolenames = {"SystemAdmin","SOFAAdmin","Moderator","Teacher"};
-            var rm = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
-            var um = new UserManager<IdentityUser>(new UserStore<IdentityUser>(context));
+            SOFAUser God = new SOFAUser();
+            Person Gods_Info = new Person();
+            SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+            SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
 
-            //add default users
-            foreach(string uname in usernames)
-            {
-                var user = new IdentityUser() { UserName = uname };
-                um.Create(user, uname);
-            }
-            
-            //add default roles
-            foreach(string r in rolenames)
-            {
-                if (!rm.RoleExists(r))
-                    rm.Create(new IdentityRole(r));
-            }
+            God.Active = true;
+            God.Email = "chuck_norris@asskicking.com";
+            God.EmailConfirmed = true;
+            God.UserName = "chuck_norris@asskicking.com";
+
+            sum.Create(God, "chucknorris");
 
             context.SaveChanges();
 
-            //add roles to users
-            um.AddToRole(um.FindByName("sysadmin").Id, "SystemAdmin");
-            um.AddToRole(um.FindByName("sysadmin").Id, "SOFAAdmin");
-            um.AddToRole(um.FindByName("sysadmin").Id, "Moderator");
-            um.AddToRole(um.FindByName("teacher").Id, "Teacher");
-            um.AddToRole(um.FindByName("sofaadmin").Id, "SOFAAdmin");
-            um.AddToRole(um.FindByName("sofaadmin").Id, "Moderator");
-            um.AddToRole(um.FindByName("moderator").Id, "Moderator");
-            
-            context.SaveChanges();*/
+            Gods_Info.GivenNames = "Carlos Ray";
+            Gods_Info.LastName = "Norris";
+            Gods_Info.Position = "Ass Kicker";
+            Gods_Info.Email = "chuck_norris@asskicking.com";
+            Gods_Info.User = God;
+
+            context.Persons.Add(Gods_Info);
+            context.SaveChanges();
+
+            foreach (string role in SOFARole.SOFA_ROLES)
+                if (!srm.RoleExists(role))
+                    srm.Create(new SOFARole(role));
+
+            context.SaveChanges();
+
+            sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
+
+            context.SaveChanges();
         }
     }
 }

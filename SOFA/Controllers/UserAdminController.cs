@@ -151,6 +151,25 @@ namespace SOFA.Controllers
             return View(newModel);
         }
 
+        [ChildActionOnly]
+        [HttpGet]
+        public ActionResult UserRoleEdit(string userId)
+        {
+            SOFAUser user = this.UserManager().FindById(userId);
+            UserRoleEditViewModel viewModel = new UserRoleEditViewModel();
+
+            if(user != null)
+            {
+                viewModel.AvailableRoles = this.RoleManager().Roles;
+                viewModel.CurrentRole = SOFARole.HighestListRole(
+                    this.UserManager().GetRoles(userId));
+                viewModel.CurrentRoleId = this.RoleManager()
+                    .FindByName(viewModel.CurrentRole).Id;
+                return PartialView(viewModel);
+            }
+            return RedirectToAction("Index", "Dashboard");
+        }
+
         [NonAction]
         public async Task SendActivationEmail(Person p)
         {
