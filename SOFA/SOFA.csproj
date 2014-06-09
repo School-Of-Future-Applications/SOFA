@@ -307,6 +307,9 @@
     <Content Include="Views\UserAdmin\UserActivation.cshtml" />
     <Content Include="Views\UserAdmin\UserPasswordReset.cshtml" />
     <Content Include="Views\UserAdmin\UserRoleEdit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
