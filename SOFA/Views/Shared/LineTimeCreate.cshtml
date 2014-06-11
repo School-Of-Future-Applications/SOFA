@@ -50,7 +50,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartTimeString, new { @class = "col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTimeString)
+                @Html.EditorFor(model => model.StartTimeString, "Time")
                 @Html.ValidationMessageFor(model => model.StartTimeString)
             </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.EndTimeString, new { @class = "col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTimeString)
+                @Html.EditorFor(model => model.EndTimeString, "Time")
                 @Html.ValidationMessageFor(model => model.EndTimeString)
             </div>
         </div>
