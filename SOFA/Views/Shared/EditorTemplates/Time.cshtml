@@ -25,7 +25,8 @@
     $(document).ready(function () {
         $(".timepicker").timepicker({
             'timeFormat': 'H:i',
-            'step': 5
+            'step': 5,
+            'className': "dropdown-menu"
         });
     });
 </script>
@@ -38,5 +39,6 @@
 @Html.TextBox("", Model
              , new Dictionary<String, object>(validationAttributes)
              {
-                 { "class", "form-control timepicker" }
+                 { "class", "form-control timepicker" }, 
+                 { "style", "width:160px"}
              })
