@@ -25,11 +25,32 @@ namespace SOFA.Models.Validation
          */
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            return ValidationResult.Success;
+            //Get the type of the compared property.
+            var comparePropInfo = validationContext.ObjectType.GetProperty(this.comparePropertyName);
+            if (comparePropInfo == null)
+            {
+                return new ValidationResult(String.Format("Invalid property: {0}", this.comparePropertyName));
+            }
+            //Get the actual value of the compared property.
+            var comparePropValue = comparePropInfo.GetValue(validationContext.ObjectInstance);
+
+            //Cover null cases and type mismatches first.
+            if (value == null || !(value is DateTime) ||
+                comparePropValue == null || !(comparePropValue is DateTime))
+            {
+                return ValidationResult.Success;
+            }
+            //Do the actual comparison.
+            if ((DateTime)value > (DateTime)comparePropValue)
+            {
+                return ValidationResult.Success;
+            }
+            
+            return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
         }
 
         /**
-         * Adds support for CS Validation if we want it.
+         * Adds support for CS Validation if we want it later.
          */
         public IEnumerable<ModelClientValidationRule> GetClientValidationRules(
                                         ModelMetadata metadata,
