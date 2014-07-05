@@ -46,7 +46,10 @@ namespace SOFA.Models.Validation
                 return ValidationResult.Success;
             }
             
-            return new ValidationResult(FormatErrorMessage(validationContext.DisplayName));
+            return new ValidationResult(String.Format("{0} must be greater than {1}", 
+                                            validationContext.DisplayName,
+                                            comparePropertyName));
+
         }
 
         /**
