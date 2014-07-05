@@ -31,17 +31,18 @@ namespace SOFA.Models.Validation
         /**
          * Adds support for CS Validation if we want it.
          */
-        public override IEnumerable<ModelClientValidationRule> GetClientValidationRules(
+        public IEnumerable<ModelClientValidationRule> GetClientValidationRules(
                                         ModelMetadata metadata,
-	                                    ControllerContext context
+                                        ControllerContext context
         )
         {
             var rule = new ModelClientValidationRule
             {
                 ErrorMessage = this.ErrorMessageString,
-                ValidationType = "DateAfter"
+                ValidationType = "dateafter"
             };
             rule.ValidationParameters["propertytested"] = this.comparePropertyName;
             yield return rule;
         }
+    }
 }
