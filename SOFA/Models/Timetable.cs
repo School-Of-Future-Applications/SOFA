@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
@@ -48,6 +49,7 @@ namespace SOFA.Models
         [Display(Name="Expiry Date")]
         [Required]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
+        [AfterDate("ActiveDate")]
         public DateTime ExpiryDate { get; set; }
 
         public virtual ICollection<Line> Lines { get; set; }
