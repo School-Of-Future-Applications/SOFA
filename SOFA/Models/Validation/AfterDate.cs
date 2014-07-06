@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models.Validation
@@ -25,7 +26,7 @@ namespace SOFA.Models.Validation
          */
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            //Get the type of the compared property.
+            //Get the type info of the compared property.
             var comparePropInfo = validationContext.ObjectType.GetProperty(this.comparePropertyName);
             if (comparePropInfo == null)
             {
@@ -33,7 +34,7 @@ namespace SOFA.Models.Validation
             }
             //Get the actual value of the compared property.
             var comparePropValue = comparePropInfo.GetValue(validationContext.ObjectInstance);
-
+            //Begin comparison.
             //Cover null cases and type mismatches first.
             if (value == null || !(value is DateTime) ||
                 comparePropValue == null || !(comparePropValue is DateTime))
@@ -45,10 +46,21 @@ namespace SOFA.Models.Validation
             {
                 return ValidationResult.Success;
             }
-            
-            return new ValidationResult(String.Format("{0} must be greater than {1}", 
+            //Get the display name and use it for the error message.
+            //If it doesn't exist then use the property name.
+            var displayAttribute = (DisplayAttribute) comparePropInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
+            String comparePropDispName;
+            if (displayAttribute == null)
+            {
+                comparePropDispName = comparePropertyName;
+            }
+            else
+            {
+                comparePropDispName = displayAttribute.Name;
+            }
+            return new ValidationResult(String.Format("{0} must be after {1}", 
                                             validationContext.DisplayName,
-                                            comparePropertyName));
+                                            comparePropDispName));
 
         }
 
