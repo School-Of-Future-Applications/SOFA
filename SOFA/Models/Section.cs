@@ -11,7 +11,7 @@ namespace SOFA
     public class Section
     {
         [Key]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public DateTime DateCreated { get; set; }
 

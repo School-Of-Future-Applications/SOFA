@@ -8,7 +8,7 @@ namespace SOFA.Models
 {
     public class EnrollmentSection
     {
-        public String ID { get; set; }
+        public String Id { get; set; }
 
         public DateTime DateCreated { get; set; }
 
