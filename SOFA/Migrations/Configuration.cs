@@ -42,7 +42,7 @@ namespace SOFA.Migrations
 
         protected override void Seed(DBContext context)
         {
-            SOFAUser God = new SOFAUser();
+            /*SOFAUser God = new SOFAUser();
             Person Gods_Info = new Person();
             SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
             SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
@@ -73,7 +73,7 @@ namespace SOFA.Migrations
 
             sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
 
-            context.SaveChanges();
+            context.SaveChanges();*/
         }
     }
 }

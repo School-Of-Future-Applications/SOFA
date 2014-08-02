@@ -38,7 +38,7 @@ namespace SOFA.Models.ViewModels
         public string CourseCode { get; set; }
 
         [Required]
-        [Display(Name="Course Name")]
+        [Display(Name="Course name")]
         [StringLength(Course.COURSENAME_LENGTH)]
         public string CourseName { get; set; }
         

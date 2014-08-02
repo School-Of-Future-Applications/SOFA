@@ -50,7 +50,7 @@ namespace SOFA.Models
         public String GivenNames { get; set; }
 
         [Required]
-        [DisplayName("Last Name")]
+        [DisplayName("Last name")]
         [StringLength(50)]
         public String LastName { get; set; }
 
