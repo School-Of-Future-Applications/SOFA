@@ -189,6 +189,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -242,9 +243,19 @@
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\EmailSettings.cs" />
+    <Compile Include="Models\EnrollmentField.cs" />
+    <Compile Include="Models\EnrollmentFieldOption.cs" />
+    <Compile Include="Models\EnrollmentFormSection.cs" />
+    <Compile Include="Models\EnrollmentSection.cs" />
+    <Compile Include="Models\EnrollmentForm.cs" />
+    <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\FieldOption.cs" />
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\FormSection.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Section.cs" />
     <Compile Include="Models\SOFARole.cs" />
     <Compile Include="Models\SOFAUser.cs" />
     <Compile Include="Models\Timetable.cs" />

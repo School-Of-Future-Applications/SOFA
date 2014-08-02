@@ -6,9 +6,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models
 {
-    public class EnrollmentField : Field, IValidatableObject
+    public class EnrollmentForm : IValidatableObject
     {
-        public String Value { get; set; }
+
+        [Key]
+        public String ID { get; set; }
+
+        public String Name { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public virtual IEnumerable<EnrollmentFormSection> EnrollmentFormSections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
