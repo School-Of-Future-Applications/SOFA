@@ -5,7 +5,10 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class EnrollmentFormSection : FormSection
+    public class EnrollmentFormSection 
     {
+        public virtual EnrollmentSection Section { get; set; }
+
+        public virtual EnrollmentSection BelowOf { get; set; }
     }
 }
