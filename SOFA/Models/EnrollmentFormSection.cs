@@ -7,8 +7,8 @@ namespace SOFA.Models
 {
     public class EnrollmentFormSection 
     {
-        public virtual Section Section { get; set; }
+        public virtual EnrollmentSection Section { get; set; }
 
-        public virtual Section BelowOf { get; set; }
+        public virtual EnrollmentSection BelowOf { get; set; }
     }
 }

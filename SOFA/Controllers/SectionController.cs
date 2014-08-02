@@ -64,5 +64,10 @@ namespace SOFA.Controllers
                 return View();
             }
         }
+
+        public override Enum NavProviderTerm()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

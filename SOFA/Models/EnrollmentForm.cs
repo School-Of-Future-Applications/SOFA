@@ -10,7 +10,7 @@ namespace SOFA.Models
     {
 
         [Key]
-        public String ID { get; set; }
+        public String Id { get; set; }
 
         public String Name { get; set; }
 

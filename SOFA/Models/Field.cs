@@ -11,7 +11,7 @@ namespace SOFA
     public class Field : IValidatableObject
     {
         [Key]
-        public int ID { get; set; }
+        public String Id { get; set; }
 
         public string FieldType { get; set; }
 
