@@ -10,6 +10,15 @@ namespace SOFA
 {
     public class FieldOption : IValidatableObject
     {
+        #region OptionType Constants
+
+        public const String OPT_MIN_VALUE = "MIN_VALUE";
+        public const String OPT_MAX_VALUE = "MAX_VALUE";
+        public const String OPT_MAX_LENGTH = "MAX_LENGTH";
+        public const String OPT_NUMERIC = "NUMBER";
+        #endregion
+
+
         [Key]
         public string Id { get; set; }
         public string OptionType { get; set; }
