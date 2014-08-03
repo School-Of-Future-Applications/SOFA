@@ -10,14 +10,11 @@ namespace SOFA
 {
     public class Field : IValidatableObject
     {
-        #region FieldType Constants
-
+        
         public const String TYPE_TEXT_FIELD = "TEXT_FIELD";
         public const String TYPE_TEXT_BOX = "TEXT_BOX";
         public const String TYPE_DATE = "DATE";
         
-        #endregion
-
         [Key]
         public String Id { get; set; }
 

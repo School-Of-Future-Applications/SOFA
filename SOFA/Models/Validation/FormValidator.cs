@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models.Validation
 {
-    public class FormValidator
+    public static class FormValidator
     {
         /**
          * Validates the correctness of a form object.
