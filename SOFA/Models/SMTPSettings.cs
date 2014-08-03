@@ -74,7 +74,7 @@ namespace SOFA.Models
         [DefaultValue(false)]
         public bool TLS { get; set; }
 
-        [DisplayName("User Name")]
+        [DisplayName("User name")]
         public string UserName { get; set; }
 
         public static SMTPSettings FetchSMTPSettings()

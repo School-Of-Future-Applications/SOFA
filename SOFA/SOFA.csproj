@@ -189,6 +189,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -219,9 +220,11 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -242,14 +245,25 @@
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\EmailSettings.cs" />
+    <Compile Include="Models\EnrollmentField.cs" />
+    <Compile Include="Models\EnrollmentFieldOption.cs" />
+    <Compile Include="Models\EnrollmentFormSection.cs" />
+    <Compile Include="Models\EnrollmentSection.cs" />
+    <Compile Include="Models\EnrollmentForm.cs" />
+    <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\FieldOption.cs" />
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\FormSection.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Section.cs" />
     <Compile Include="Models\SOFARole.cs" />
     <Compile Include="Models\SOFAUser.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\Validation\AfterDate.cs" />
+    <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
@@ -320,7 +334,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Form\" />
     <Folder Include="Views\LineTime\" />
+    <Folder Include="Views\Section\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
