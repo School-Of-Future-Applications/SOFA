@@ -326,6 +326,7 @@
     <Content Include="Views\Shared\EditorTemplates\Time.cshtml">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="Views\Form\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -335,7 +336,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Form\" />
     <Folder Include="Views\LineTime\" />
     <Folder Include="Views\Section\" />
   </ItemGroup>

@@ -96,7 +96,7 @@ namespace SOFA.Infrastructure
                     {
                         {DashboardNavTerms.Forms
                         ,new NavInfo {actionName = "Index"
-                                     ,controllerName = "FormController"
+                                     ,controllerName = "Form"
                                      ,displayName = "Enrollment Forms"
                                      ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
                     }
