@@ -239,6 +239,7 @@
     <Compile Include="Infrastructure\NavUtil.cs" />
     <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
+    <Compile Include="Infrastructure\UUIDUtil.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
