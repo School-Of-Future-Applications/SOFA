@@ -6,12 +6,19 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
+using SOFA.Infrastructure;
+
 namespace SOFA
 {
     public class Section
     {
+        public Section()
+        {
+            Id = UUIDUtil.NewUUID();
+        }
+
         [Key]
-        public string ID { get; set; }
+        public string Id { get; set; }
 
         public DateTime DateCreated { get; set; }
 

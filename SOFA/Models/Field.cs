@@ -6,10 +6,17 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
+using SOFA.Infrastructure;
+
 namespace SOFA
 {
     public class Field : IValidatableObject
     {
+        public Field()
+        {
+            Id = UUIDUtil.NewUUID();
+        }
+
         [Key]
         public String Id { get; set; }
 
