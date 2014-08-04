@@ -11,7 +11,7 @@ namespace SOFA.Models.Validation
         /**
          * Validates the correctness of a form object.
          */
-        public IEnumerable<ValidationResult> ValidateForm(Form form)
+        public static IEnumerable<ValidationResult> ValidateForm(Form form)
         {
             //TODO
             return null;
@@ -20,9 +20,15 @@ namespace SOFA.Models.Validation
         /**
          * Validates the correctness of a Field and its FieldOptions.
          */
-        public IEnumerable<ValidationResult> ValidateField(Field field)
-        {
+        public static IEnumerable<ValidationResult> ValidateField(Field field)
+        { 
             //TODO
+            //Validate Field Type
+
+            //Validate option types
+
+            //Validate option types against field type
+
             return null;
         }
     }
