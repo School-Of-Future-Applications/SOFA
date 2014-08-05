@@ -19,13 +19,14 @@ namespace SOFA
         [Key]
         public String Id { get; set; }
 
+        
         public string FieldType { get; set; }
 
         public string PromptValue { get; set; }
 
-        public ICollection<FieldOption> FieldOptions;
+        public virtual ICollection<FieldOption> FieldOptions { get; set; }
 
-        public IEnumerable<String> FieldTypes()
+        public static IEnumerable<String> FieldTypes()
         {
             List<String> fieldTypes = new List<String>()
             {

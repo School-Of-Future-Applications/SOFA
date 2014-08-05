@@ -28,5 +28,18 @@ namespace SOFA
         {
             throw new NotImplementedException();
         }
+
+        public static IEnumerable<String> FieldOptionTypes()
+        {
+            List<String> optionTypes = new List<String>()
+            {
+                OPT_MIN_VALUE,
+                OPT_MAX_VALUE,
+                OPT_MAX_LENGTH,
+                OPT_MANDATORY
+            };
+
+            return optionTypes;
+        }
     }
 }

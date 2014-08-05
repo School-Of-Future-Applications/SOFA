@@ -24,12 +24,25 @@ namespace SOFA.Models.Validation
         { 
             //TODO
             //Validate Field Type
-
-            //Validate option types
-
+            if (!Field.FieldTypes().Contains(field.FieldType))
+            {
+                yield return new ValidationResult("Illegal field type", new List<String> { "FieldType" });
+            }            
             //Validate option types against field type
 
-            return null;
+            yield return null;
+        }
+
+        public static IEnumerable<ValidationResult> ValidateFieldOption(FieldOption fieldOption)
+        {
+            //Validate option types
+            if (!FieldOption.FieldOptionTypes().Contains(fieldOption.OptionType))
+            {
+                yield return new ValidationResult("Illegal option type,", new List<String> { "OptionType" });
+            }
+
+            //TODO: Validate option values vs. option type
+
         }
     }
 }
