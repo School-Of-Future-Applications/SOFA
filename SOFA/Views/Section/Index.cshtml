@@ -18,9 +18,38 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Section>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Sections</li>
+    </ol>
+    <h2>Sections</h2>
+    <buton class="btn btn-default">New Section</buton>
+</div>
+
+<div class="row">
+    @foreach(Section s in Model)
+    {
+        <div class="col-md-3 col-sm-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@s.Name</div>
+                <div class="panel-body">
+                    <p>
+                        <b>Section Id: </b>@s.Id<br/>
+                        <b>Date Created: </b>@s.DateCreated<br/>
+                        <b>Children Count: </b>@s.Fields.Count<br/>
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
 
