@@ -6,10 +6,17 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
+using SOFA.Infrastructure;
+
 namespace SOFA
 {
     public class Section
     {
+        public Section()
+        {
+            Id = UUIDUtil.NewUUID();
+        }
+
         [Key]
         public string Id { get; set; }
 

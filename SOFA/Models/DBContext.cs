@@ -22,6 +22,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
@@ -75,6 +76,11 @@ namespace SOFA.Models
         public static DBContext Create()
         {
             return new DBContext();
+        }
+
+        public void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
         }
     }
 }

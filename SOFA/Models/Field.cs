@@ -6,16 +6,26 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
+using SOFA.Infrastructure;
+
 namespace SOFA
 {
     public class Field : IValidatableObject
     {
+
         
         public const String TYPE_TEXT_FIELD = "TEXT_FIELD";
         public const String TYPE_TEXT_BOX = "TEXT_BOX";
         public const String TYPE_DATE = "DATE";
         public const String TYPE_FILE = "FILE";
         
+
+        public Field()
+        {
+            Id = UUIDUtil.NewUUID();
+        }
+
+
         [Key]
         public String Id { get; set; }
 

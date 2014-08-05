@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 using SOFA.Infrastructure;
+using SOFA.Models;
 
 namespace SOFA.Controllers
 {
@@ -11,17 +13,20 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Form/
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(String FormID = null)
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(Form form)
         {
             return View();
@@ -29,6 +34,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Form/Delete/5
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Delete(String FormID)
         {
             return View();
@@ -38,6 +44,7 @@ namespace SOFA.Controllers
         // POST: /Form/Delete/5
         [HttpPost]
         [ActionName("Delete")]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult DeletePost(String FormID)
         {
             return View();
@@ -45,7 +52,7 @@ namespace SOFA.Controllers
 
         public override Enum NavProviderTerm()
         {
-            throw new NotImplementedException();
+            return DashboardNavTerms.Forms;
         }
     }
 }
