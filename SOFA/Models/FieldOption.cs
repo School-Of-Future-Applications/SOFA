@@ -10,6 +10,14 @@ namespace SOFA
 {
     public class FieldOption : IValidatableObject
     {
+
+        public const String OPT_MIN_VALUE = "MIN_VALUE";
+        public const String OPT_MAX_VALUE = "MAX_VALUE";
+        public const String OPT_MAX_LENGTH = "MAX_LENGTH";
+        public const String OPT_NUMERIC = "NUMBER";
+        public const String OPT_MANDATORY = "MANDATORY";
+
+
         [Key]
         public string Id { get; set; }
         public string OptionType { get; set; }
@@ -19,6 +27,19 @@ namespace SOFA
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             throw new NotImplementedException();
+        }
+
+        public static IEnumerable<String> FieldOptionTypes()
+        {
+            List<String> optionTypes = new List<String>()
+            {
+                OPT_MIN_VALUE,
+                OPT_MAX_VALUE,
+                OPT_MAX_LENGTH,
+                OPT_MANDATORY
+            };
+
+            return optionTypes;
         }
     }
 }

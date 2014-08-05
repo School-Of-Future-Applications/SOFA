@@ -6,12 +6,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models.Validation
 {
-    public class FormValidator
+    public static class FormValidator
     {
         /**
          * Validates the correctness of a form object.
          */
-        public IEnumerable<ValidationResult> ValidateForm(Form form)
+        public static IEnumerable<ValidationResult> ValidateForm(Form form)
         {
             //TODO
             return null;
@@ -20,10 +20,29 @@ namespace SOFA.Models.Validation
         /**
          * Validates the correctness of a Field and its FieldOptions.
          */
-        public IEnumerable<ValidationResult> ValidateField(Field field)
-        {
+        public static IEnumerable<ValidationResult> ValidateField(Field field)
+        { 
             //TODO
-            return null;
+            //Validate Field Type
+            if (!Field.FieldTypes().Contains(field.FieldType))
+            {
+                yield return new ValidationResult("Illegal field type", new List<String> { "FieldType" });
+            }            
+            //Validate option types against field type
+
+            yield return null;
+        }
+
+        public static IEnumerable<ValidationResult> ValidateFieldOption(FieldOption fieldOption)
+        {
+            //Validate option types
+            if (!FieldOption.FieldOptionTypes().Contains(fieldOption.OptionType))
+            {
+                yield return new ValidationResult("Illegal option type,", new List<String> { "OptionType" });
+            }
+
+            //TODO: Validate option values vs. option type
+
         }
     }
 }
