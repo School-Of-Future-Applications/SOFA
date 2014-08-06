@@ -30,7 +30,6 @@ namespace SOFA
 
         [Key]
         public String Id { get; set; }
-
         
         public string FieldType { get; set; }
 
@@ -45,7 +44,9 @@ namespace SOFA
                 TYPE_TEXT_FIELD,
                 TYPE_TEXT_BOX,
                 TYPE_FILE,
-                TYPE_DATE
+                TYPE_DATE,
+                TYPE_DROPDOWN,
+                TYPE_INFO
             };
             
             return fieldTypes;

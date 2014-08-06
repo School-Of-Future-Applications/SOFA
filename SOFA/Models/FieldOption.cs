@@ -20,7 +20,7 @@ namespace SOFA
 
 
         [Key]
-        public string Id { get; set; }
+        public int Id { get; set; }
         public string OptionType { get; set; }
         public string OptionValue { get; set; }
         public virtual Field Field { get; set; }
