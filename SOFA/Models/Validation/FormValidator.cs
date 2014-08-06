@@ -30,7 +30,7 @@ namespace SOFA.Models.Validation
             }            
             //Validate option types against field type
 
-            yield return null;
+            yield break;
         }
 
         public static IEnumerable<ValidationResult> ValidateFieldOption(FieldOption fieldOption)
@@ -42,7 +42,35 @@ namespace SOFA.Models.Validation
             }
 
             //TODO: Validate option values vs. option type
+            String errormsg = "Invalid value set for option type {0}"; //Template error message for validation 
+            if (fieldOption.OptionType == FieldOption.OPT_MANDATORY && 
+                !isOptValid_MANDATORY(fieldOption.OptionValue))
+            {
+                yield return new ValidationResult(String.Format(errormsg, FieldOption.OPT_MANDATORY));
+            }
+            else if (fieldOption.OptionType == FieldOption.OPT_NUMERIC && 
+                !isOptValid_Numeric(fieldOption.OptionValue))
+            {
+                yield return new ValidationResult(String.Format(errormsg, FieldOption.OPT_NUMERIC));
+            }
 
+            yield break;
         }
+
+        #region Option Value Validators
+
+        private static Boolean isOptValid_Numeric(String value)
+        {
+            //TODO
+            return true;
+        }
+
+        private static Boolean isOptValid_MANDATORY(String value)
+        {
+            //TODO
+            return true;
+        }
+
+        #endregion
     }
 }

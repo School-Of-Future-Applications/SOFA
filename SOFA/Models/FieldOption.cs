@@ -18,6 +18,8 @@ namespace SOFA
         public const String OPT_MANDATORY = "MANDATORY";
         public const String OPT_RESPONSE = "RESPONSE";
 
+        public const String VAL_TRUE = "TRUE";
+
 
         [Key]
         public int Id { get; set; }
