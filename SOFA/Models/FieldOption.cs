@@ -16,6 +16,7 @@ namespace SOFA
         public const String OPT_MAX_LENGTH = "MAX_LENGTH";
         public const String OPT_NUMERIC = "NUMBER";
         public const String OPT_MANDATORY = "MANDATORY";
+        public const String OPT_RESPONSE = "RESPONSE";
 
 
         [Key]
@@ -36,7 +37,8 @@ namespace SOFA
                 OPT_MIN_VALUE,
                 OPT_MAX_VALUE,
                 OPT_MAX_LENGTH,
-                OPT_MANDATORY
+                OPT_MANDATORY,
+                OPT_RESPONSE
             };
 
             return optionTypes;

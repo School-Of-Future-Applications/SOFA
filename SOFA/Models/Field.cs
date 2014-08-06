@@ -18,6 +18,8 @@ namespace SOFA
         public const String TYPE_TEXT_BOX = "TEXT_BOX";
         public const String TYPE_DATE = "DATE";
         public const String TYPE_FILE = "FILE";
+        public const String TYPE_DROPDOWN = "DROPDOWN";
+        public const String TYPE_INFO = "INFORMATION";
         
 
         public Field()
