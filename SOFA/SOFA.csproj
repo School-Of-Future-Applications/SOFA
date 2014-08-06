@@ -327,6 +327,7 @@
       <SubType>Code</SubType>
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Section\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -337,7 +338,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\LineTime\" />
-    <Folder Include="Views\Section\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

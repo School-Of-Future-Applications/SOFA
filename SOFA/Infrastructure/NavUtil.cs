@@ -57,6 +57,7 @@ namespace SOFA.Infrastructure
         DepartmentCourse
        ,Forms
        ,None
+       ,Sections
        ,SystemConfig
        ,Timetabling
        ,UserAdmin
@@ -98,6 +99,12 @@ namespace SOFA.Infrastructure
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Form"
                                      ,displayName = "Enrollment Forms"
+                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
+
+                        ,{DashboardNavTerms.Sections
+                         ,new NavInfo {actionName = "Index"
+                                     ,controllerName = "Section"
+                                     ,displayName = "Enrollment Sections"
                                      ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
                     }
                 }
