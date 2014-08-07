@@ -51,6 +51,8 @@ namespace SOFA
 
         public virtual ICollection<FieldOption> FieldOptions { get; set; }
 
+        public virtual Section Section { get; set; }
+
               
         public static ICollection<String> FieldTypes()
         {

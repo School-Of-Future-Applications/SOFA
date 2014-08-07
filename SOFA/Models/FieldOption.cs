@@ -62,6 +62,7 @@ namespace SOFA
                 OPT_MIN_VALUE,
                 OPT_MAX_VALUE,
                 OPT_MAX_LENGTH,
+                OPT_NUMERIC,
                 OPT_MANDATORY,
                 OPT_RESPONSE
             };

@@ -117,26 +117,60 @@ namespace SOFA.Migrations
             fSectionB.Section = sectionB;
             fSectionB.BelowOf = sectionA;
 
+            context.Forms.Add(form);
+            context.SaveChanges();
+
             //Create fields
-            Field fieldA = new Field(Field.TYPE_TEXT_FIELD);
-            Field fieldB = new Field(Field.TYPE_TEXT_FIELD);
-            Field fieldC = new Field(Field.TYPE_TEXT_FIELD);
-            Field fieldD = new Field(Field.TYPE_TEXT_FIELD);
+            Field fieldA = new Field(Field.TYPE_TEXT_FIELD)
+            {
+                Section = sectionA
+            };
+            Field fieldB = new Field(Field.TYPE_TEXT_FIELD)
+            {
+                Section = sectionA
+            };
+            Field fieldC = new Field(Field.TYPE_TEXT_FIELD)
+            {
+                Section = sectionB
+            };
+            Field fieldD = new Field(Field.TYPE_TEXT_FIELD)
+            {
+                Section = sectionB
+            };
 
             //Add options to fields
-            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
+                {
+                    Field = fieldA
+                });
+            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
+                {
+                    Field = fieldB   
+                });
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC)
+                {
+                    Field = fieldC
+                });
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
+                {
+                    Field = fieldC
+                });
             
             //Add fields to sections
             sectionA.Fields.Add(fieldA);
             sectionA.Fields.Add(fieldB);
             sectionB.Fields.Add(fieldC);
             sectionB.Fields.Add(fieldD);
-            
-            context.Forms.Add(form);
+
+            context.Fields.AddRange(new List<Field>() 
+            {
+                fieldA,
+                fieldB,
+                fieldC,
+                fieldD
+            });
             context.SaveChanges();
+            
             
         }
     }

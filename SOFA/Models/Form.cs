@@ -15,6 +15,7 @@ namespace SOFA
         public Form()
         {
             Id = UUIDUtil.NewUUID();
+            FormSections = new List<FormSection>();
         }
 
         [Key]
@@ -22,7 +23,7 @@ namespace SOFA
 
         public string FormName {get; set;}
 
-        public ICollection<FormSection> FormSections { get; set; }
+        public virtual ICollection<FormSection> FormSections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
