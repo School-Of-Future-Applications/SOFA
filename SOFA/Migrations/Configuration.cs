@@ -139,22 +139,10 @@ namespace SOFA.Migrations
             };
 
             //Add options to fields
-            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
-                {
-                    Field = fieldA
-                });
-            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
-                {
-                    Field = fieldB   
-                });
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC)
-                {
-                    Field = fieldC
-                });
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY)
-                {
-                    Field = fieldC
-                });
+            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
             
             //Add fields to sections
             sectionA.Fields.Add(fieldA);
