@@ -42,39 +42,46 @@ namespace SOFA.Migrations
 
         protected override void Seed(DBContext context)
         {
-            SOFAUser God = new SOFAUser();
-            Person Gods_Info = new Person();
-            SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+            //IdentitySeed(context);            
+            FormSeed(context);            
+        }
+
+        private void IdentitySeed(DBContext context)
+        {
             SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
+            
+            if (sum.FindByEmail("chuck_norris@asskicking.com") == null)
+            {
+                SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+                SOFAUser God = new SOFAUser();
+                Person Gods_Info = new Person();
+                God.Active = true;
+                God.Email = "chuck_norris@asskicking.com";
+                God.EmailConfirmed = true;
+                God.UserName = "chuck_norris@asskicking.com";
 
-            God.Active = true;
-            God.Email = "chuck_norris@asskicking.com";
-            God.EmailConfirmed = true;
-            God.UserName = "chuck_norris@asskicking.com";
+                sum.Create(God, "chucknorris");
 
-            sum.Create(God, "chucknorris");
+                context.SaveChanges();
 
-            context.SaveChanges();
+                Gods_Info.GivenNames = "Carlos Ray";
+                Gods_Info.LastName = "Norris";
+                Gods_Info.Position = "Ass Kicker";
+                Gods_Info.Email = "chuck_norris@asskicking.com";
+                Gods_Info.User = God;
 
-            Gods_Info.GivenNames = "Carlos Ray";
-            Gods_Info.LastName = "Norris";
-            Gods_Info.Position = "Ass Kicker";
-            Gods_Info.Email = "chuck_norris@asskicking.com";
-            Gods_Info.User = God;
+                context.Persons.Add(Gods_Info);
+                context.SaveChanges();
 
-            context.Persons.Add(Gods_Info);
-            context.SaveChanges();
+                foreach (string role in SOFARole.SOFA_ROLES)
+                    if (!srm.RoleExists(role))
+                        srm.Create(new SOFARole(role));
 
-            foreach (string role in SOFARole.SOFA_ROLES)
-                if (!srm.RoleExists(role))
-                    srm.Create(new SOFARole(role));
+                context.SaveChanges();
 
-            context.SaveChanges();
-
-            sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
-
-            context.SaveChanges();
-            FormSeed(context);
+                sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
+                context.SaveChanges(); 
+            }
             
         }
 
@@ -86,11 +93,13 @@ namespace SOFA.Migrations
             {
                 FormName = "Seed Form",
             };
+            
+            
             FormSection fSectionA = new FormSection();
             FormSection fSectionB = new FormSection();
             form.FormSections.Add(fSectionA);
             form.FormSections.Add(fSectionB);
-
+            
             //Create Sections
             Section sectionA = new Section()
             {
@@ -127,9 +136,9 @@ namespace SOFA.Migrations
             sectionB.Fields.Add(fieldC);
             sectionB.Fields.Add(fieldD);
 
-            context.Forms.Add(form);
-            context.SaveChanges();
-
+            //context.Forms.Add(form);
+            //context.SaveChanges();
+            
         }
     }
 }
