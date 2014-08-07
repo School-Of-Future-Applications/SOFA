@@ -26,7 +26,7 @@ namespace SOFA
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new NotImplementedException();
+            return new List<ValidationResult>();
         }
     }
 }

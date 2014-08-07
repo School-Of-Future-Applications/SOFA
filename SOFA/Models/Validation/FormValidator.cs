@@ -36,7 +36,7 @@ namespace SOFA.Models.Validation
                     yield return new ValidationResult(
                             String.Format("{0} cannot be a constraint on a field of type {1}", 
                                           fo.OptionType, field.FieldType));
-                }
+                }                
             }
             yield break;
         }

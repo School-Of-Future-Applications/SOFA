@@ -27,12 +27,35 @@ namespace SOFA
         public string OptionValue { get; set; }
         public virtual Field Field { get; set; }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public FieldOption()
         {
-            throw new NotImplementedException();
+
+        }
+        
+        public FieldOption(String optionType) 
+        { 
+            if (!FieldOptionTypes().Contains(optionType))
+            {
+                throw new ArgumentException("Invalid option type");
+            } 
+            else
+            {
+                OptionType = optionType;
+            }
+            //Set default values, if any
+            if (optionType == OPT_MANDATORY || optionType == OPT_NUMERIC)
+            {
+                OptionValue = VAL_TRUE;
+            }
+
         }
 
-        public static IEnumerable<String> FieldOptionTypes()
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            return new List<ValidationResult>();
+        }
+
+        public static ICollection<String> FieldOptionTypes()
         {
             List<String> optionTypes = new List<String>()
             {

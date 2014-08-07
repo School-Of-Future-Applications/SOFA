@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
 using SOFA.Infrastructure;
+using SOFA.Models.Validation;
 
 namespace SOFA
 {
@@ -25,6 +26,19 @@ namespace SOFA
         public Field()
         {
             Id = UUIDUtil.NewUUID();
+            FieldOptions = new List<FieldOption>();
+        }
+
+        public Field(String fieldType) : this()
+        {
+            if (!FieldTypes().Contains(fieldType))
+            {
+                throw new ArgumentException("Invalid field type");
+            }
+            else
+            {
+                FieldType = fieldType;
+            }
         }
 
 
@@ -37,7 +51,8 @@ namespace SOFA
 
         public virtual ICollection<FieldOption> FieldOptions { get; set; }
 
-        public static IEnumerable<String> FieldTypes()
+              
+        public static ICollection<String> FieldTypes()
         {
             List<String> fieldTypes = new List<String>()
             {
@@ -54,7 +69,7 @@ namespace SOFA
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new NotImplementedException();
+            return new List<ValidationResult>();
         }
     }
 }
