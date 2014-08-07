@@ -26,7 +26,7 @@ namespace SOFA
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return new List<ValidationResult>();
+            yield return null;
         }
     }
 }

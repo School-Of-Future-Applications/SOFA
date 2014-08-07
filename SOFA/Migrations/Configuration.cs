@@ -42,8 +42,9 @@ namespace SOFA.Migrations
 
         protected override void Seed(DBContext context)
         {
-            //IdentitySeed(context);            
-            FormSeed(context);            
+            FormSeed(context); 
+            IdentitySeed(context);            
+                       
         }
 
         private void IdentitySeed(DBContext context)
@@ -87,14 +88,12 @@ namespace SOFA.Migrations
 
         private void FormSeed(DBContext context)
         {
-            //TODO Seed method for form meta data
             //Create form and form sections
             Form form = new Form()
             {
                 FormName = "Seed Form",
             };
-            
-            
+                     
             FormSection fSectionA = new FormSection();
             FormSection fSectionB = new FormSection();
             form.FormSections.Add(fSectionA);
@@ -135,9 +134,9 @@ namespace SOFA.Migrations
             sectionA.Fields.Add(fieldB);
             sectionB.Fields.Add(fieldC);
             sectionB.Fields.Add(fieldD);
-
-            //context.Forms.Add(form);
-            //context.SaveChanges();
+            
+            context.Forms.Add(form);
+            context.SaveChanges();
             
         }
     }
