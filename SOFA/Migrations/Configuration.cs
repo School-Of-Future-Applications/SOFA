@@ -74,6 +74,62 @@ namespace SOFA.Migrations
             sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
 
             context.SaveChanges();
+            FormSeed(context);
+            
+        }
+
+        private void FormSeed(DBContext context)
+        {
+            //TODO Seed method for form meta data
+            //Create form and form sections
+            Form form = new Form()
+            {
+                FormName = "Seed Form",
+            };
+            FormSection fSectionA = new FormSection();
+            FormSection fSectionB = new FormSection();
+            form.FormSections.Add(fSectionA);
+            form.FormSections.Add(fSectionB);
+
+            //Create Sections
+            Section sectionA = new Section()
+            {
+                DateCreated = DateTime.Now,
+                Name = "Section A"
+            };
+
+            Section sectionB = new Section()
+            {
+                DateCreated = DateTime.Now,
+                Name = "Section B"
+            };
+            //Set order of sections
+            fSectionA.Section = sectionA;
+            fSectionA.BelowOf = null;
+            fSectionB.Section = sectionB;
+            fSectionB.BelowOf = sectionA;
+
+            //Create fields
+            Field fieldA = new Field(Field.TYPE_TEXT_FIELD);
+            Field fieldB = new Field(Field.TYPE_TEXT_FIELD);
+            Field fieldC = new Field(Field.TYPE_TEXT_FIELD);
+            Field fieldD = new Field(Field.TYPE_TEXT_FIELD);
+
+            //Add options to fields
+            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
+            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            
+            //Add fields to sections
+            sectionA.Fields.Add(fieldA);
+            sectionA.Fields.Add(fieldB);
+            sectionB.Fields.Add(fieldC);
+            sectionB.Fields.Add(fieldD);
+
+            context.Forms.Add(form);
+            context.SaveChanges();
+
         }
     }
 }
