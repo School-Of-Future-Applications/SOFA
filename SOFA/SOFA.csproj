@@ -261,6 +261,7 @@
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\SOFARole.cs" />
     <Compile Include="Models\SOFAUser.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\Validation\AfterDate.cs" />
