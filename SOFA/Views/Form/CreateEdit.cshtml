@@ -4,7 +4,29 @@
     ViewBag.Title = "View1";
 }
 
-<h2>View1</h2>
+<script>
+    $(document).ready(function () {
+        $("#accordion").accordion(
+            {
+                header: "> div > h3"
+            }).
+            sortable({
+                axis: "y",
+                handle: "h3",
+                stop: function( event, ui ) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children( "h3" ).triggerHandler( "focusout" );
+ 
+                    // Refresh accordion to handle new order
+                    $( this ).accordion( "refresh" );
+                }
+            })
+    });
+        
+</script>
+
+<h2>Create Form</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -36,6 +58,13 @@
                 <input type="submit" value="Create" class="btn btn-default" />
             </div>
         </div>
+    </div>
+    <div id="accordion">
+        @foreach (FormSection s in Model.FormSections)
+        {
+            @Html.DisplayFor(m => s)
+        }
+        
     </div>
 }
 

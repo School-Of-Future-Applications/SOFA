@@ -22,7 +22,9 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult CreateEdit(String FormID = null)
         {
-            return View();
+            //TODO: Actual logic
+            Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
+            return View(form);
         }
 
         [HttpPost]
