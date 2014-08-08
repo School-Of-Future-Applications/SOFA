@@ -329,6 +329,11 @@
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
+    <Content Include="Views\Form\CreateEdit.cshtml" />
+    <Content Include="Views\Section\CreateEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
