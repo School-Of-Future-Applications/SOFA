@@ -20,6 +20,7 @@
 @model FormSection
           
 <div>
-    <h3>@Model.Section.Name</h3>
+    @Html.HiddenFor(Model => Model.Section.Id)
+    <h3>@Html.DisplayFor(Model => Model.Section.Name)</h3>
     <div>@Html.DisplayFor(model => model.Section)</div>
 </div>
