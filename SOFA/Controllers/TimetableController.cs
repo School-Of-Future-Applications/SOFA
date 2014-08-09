@@ -104,6 +104,23 @@ namespace SOFA.Controllers
             return RedirectToAction("Build", new { id = id });
         }
 
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult SetLineLabel(int id)
+        {
+            var line = this.DBCon().Lines.Where(l => l.Id == id).FirstOrDefault();
+            return PartialView("SetLineLabel", line);
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [HttpPost]
+        public ActionResult SetLineLabel(Line pline)
+        {
+            var line = this.DBCon().Lines.Where(l => l.Id == pline.Id).FirstOrDefault();
+            line.Label = pline.Label;
+            this.DBCon().SaveChanges();
+            return RedirectToAction("Build", new { id = line.Timetable.Id });
+        }
+
         //
         // GET: /Timetable/CreateLine
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
