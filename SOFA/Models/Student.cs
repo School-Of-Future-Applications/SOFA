@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class EnrollmentFieldOptions : FieldOptions
+    public class Student : Person
     {
     }
 }

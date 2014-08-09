@@ -22,6 +22,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Web;
 
@@ -48,9 +49,41 @@ namespace SOFA.Models
 
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
 
+        #region Enrollment 
+
+        public DbSet<Form> Forms { get; set; }
+
+        public DbSet<FormSection> FormSections { get; set; }
+
+        public DbSet<Section> Sections { get; set; }
+
+        public DbSet<Field> Fields { get; set; }
+
+        public DbSet<FieldOption> FieldOptions { get; set; }
+
+        public DbSet<EnrollmentForm> EnrollmentForms { get; set; }
+
+        public DbSet<EnrollmentFormSection> EnrollmentFormSections { get; set; }
+
+        public DbSet<EnrollmentSection> EnrollmentSections { get; set; }
+
+        public DbSet<EnrollmentField> EnrollmentFields { get; set; }
+
+        public DbSet<EnrollmentFieldOption> EnrollmentFieldOptions { get; set; }
+
+        #endregion
+
         public static DBContext Create()
         {
             return new DBContext();
         }
+
+        /*
+        public void  OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
+        }
+         */
+
     }
 }
