@@ -14,7 +14,7 @@ namespace SOFA.Controllers
         // GET: /Section/
         public ActionResult Index()
         {
-            return View();
+            return View(this.DBCon().Sections.ToList());
         }
 
         //
