@@ -1,151 +1,113 @@
-﻿using System;
+﻿/*
+ *  School Of Future Applications
+ *
+ *  Copyright (C) 2014  Terminal Coding
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
+using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
-    public class ClassBaseController : Controller
+    
+    public class ClassBaseController : DashBoardBaseController
     {
-        private DBContext db = new DBContext();
-        //
-        // GET: /ClassBase/
-        public ActionResult Index(int courseID = 1) //default value for debugging only
-        {
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);
-            if (course != null)
-            {
-                var classBases = db.ClassBases.Where(c => c.Course.Id == course.Id);
-                List<ClassBaseViewModel> viewModels = new List<ClassBaseViewModel>();
-                foreach (ClassBase c in classBases)
-                {
-                    viewModels.Add(new ClassBaseViewModel
-                    {
-                        Id = c.Id,
-                        ClassBaseCode = c.ClassBaseCode,
-                        YearLevel = c.YearLevel
-                    });
-                }
-                ViewBag.CourseID = course.Id;
-                ViewBag.CourseName = course.CourseName;
-                return View(viewModels.OrderBy(v => v.YearLevel));
-            }
-
-            return View();
-        }
-
         //
         // GET: /ClassBase/Create/5
-        public ActionResult Create(int courseID = 1) //default value for debugging only
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateEdit(int courseId = 0, int classBaseId = 0) //default value for debugging only
         {
-            var viewModel = new ClassBaseViewModel();
-            var course = db.Courses.FirstOrDefault(c => c.Id == courseID);                
-            if (course != null)
+            ClassBaseViewModel viewModel = null;
+            try
             {
-                viewModel.CourseID = course.Id;
-                viewModel.CourseName = course.CourseName;
+                if (classBaseId == 0)
+                {
+                    var course = this.DBCon().Courses.First(c => c.Id == courseId);
+                    viewModel = new ClassBaseViewModel(course);
+                }
+                else
+                {
+                    var classBase = this.DBCon().ClassBases.First(c => c.Id == classBaseId);
+                    viewModel = new ClassBaseViewModel(classBase);
+                }
                 return View(viewModel);
             }
-
-            return RedirectToAction("Index", new { courseID = courseID });
-            
+            catch
+            {
+                return RedirectToAction("Index", "Course", new { courseId = courseId });
+            }
         }
 
         //
         // POST: /ClassBase/Create
         [HttpPost]
-        public ActionResult Create(ClassBaseViewModel viewModel)
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateEdit(ClassBaseViewModel viewModel)
         {
-            var courses = db.Courses;
-            Course course = null;
-            if (courses.Count() > 0) 
+            ClassBase classBase = null;
+            try
             {
-                course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseID);                
+                if (!ModelState.IsValid)
+                    return View(viewModel);
+                if(viewModel.Id == 0)
+                {
+                    var course = this.DBCon().Courses.First(c => c.Id == viewModel.CourseID);
+                    classBase = new ClassBase();
+                    classBase.ClassBaseCode = viewModel.ClassBaseCode;
+                    classBase.YearLevel = viewModel.YearLevel;
+                    classBase.Course = course;
+                    this.DBCon().ClassBases.Add(classBase);
+                }
+                else
+                {
+                    classBase = this.DBCon().ClassBases.First(cb => cb.Id == viewModel.Id);
+                    classBase.ClassBaseCode = viewModel.ClassBaseCode;
+                    classBase.YearLevel = viewModel.YearLevel;
+                    this.DBCon().ClassBases.Attach(classBase);
+                    this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;    
+                }
+                this.DBCon().SaveChanges();
+                return RedirectToAction("Index", "Course", new { courseId = classBase.Course.Id });
             }
-            if (course == null) //Course hasn't been created or course list empty. Redirect back to add page.
+            catch
             {
-                ViewBag.ErrorMessage = "Please create a course before adding a Class Base";
-                return View(viewModel);
-            }            
-            if (ModelState.IsValid)
-            {
-                //Map the view model to the model and add it to the db
-                ClassBase classBase = viewModel.ToClassBase(course);
-                db.ClassBases.Add(classBase);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Course", new { courseId = viewModel.CourseID });
             }
-            return View(viewModel); //SS validation failed. Try again.
-        }
-
-        
-
-        //
-        // GET: /ClassBase/Edit/5
-        public ActionResult Edit(int id)
-        {
-            ClassBaseViewModel viewModel = new ClassBaseViewModel();
-            ClassBase classBase = db.ClassBases.FirstOrDefault(c => c.Id == id);
-            if (classBase != null)
-            {
-                viewModel.Id = classBase.Id;
-                viewModel.CourseID = classBase.Course.Id;
-                viewModel.CourseName = classBase.Course.CourseName;
-                viewModel.ClassBaseCode = classBase.ClassBaseCode;
-                viewModel.YearLevel = classBase.YearLevel;
-
-                return View(viewModel);
-            }
-
-            return RedirectToAction("Index", new { id = classBase.Course.Id });
-        }
-
-        //
-        // POST: /ClassBase/Edit
-        [HttpPost]
-        public ActionResult Edit(ClassBaseViewModel viewModel)
-        {
-           if (ModelState.IsValid)
-           {
-               Course course = db.Courses.FirstOrDefault(c => c.Id == viewModel.CourseID);
-               ClassBase cb = viewModel.ToClassBase(course);
-               db.ClassBases.Attach(cb);
-               db.Entry(cb).State = System.Data.Entity.EntityState.Modified;
-               db.SaveChanges();
-
-               return RedirectToAction("Index", new { id = viewModel.CourseID });
-           }
-           else
-           {
-               return View(viewModel); //Validation Failed. Try again.
-           }
         }
 
         //
         // GET: /ClassBase/Delete/5
-        public ActionResult Delete(int id)
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult Delete(int classBaseId)
         {
             return View();
         }
 
-        //
-        // POST: /ClassBase/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [NonAction]
+        public override Enum NavProviderTerm()
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return DashboardNavTerms.DepartmentCourse;
         }
     }
 }

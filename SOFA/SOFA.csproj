@@ -15,7 +15,7 @@
     <AssemblyName>SOFA</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44300</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
     <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
@@ -44,7 +44,37 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.0.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.0.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.2.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.2.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.2.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -88,6 +118,8 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\jquery.timepicker.css" />
+    <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -157,8 +189,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <None Include="Properties\PublishProfiles\sofadev.pubxml" />
+    <Content Include="ClassDiagram1.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
+    <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -166,6 +199,8 @@
     <Content Include="Scripts\jquery-2.1.0.min.js" />
     <Content Include="Scripts\jquery-2.1.0.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.timepicker.js" />
+    <Content Include="Scripts\jquery.timepicker.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.js" />
@@ -179,39 +214,75 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClassBaseController.cs" />
-    <Compile Include="Controllers\CourseViewController.cs" />
+    <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PersonController.cs" />
+    <Compile Include="Controllers\SectionController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
+    <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201405050424173_LineTime Changes.cs" />
-    <Compile Include="Migrations\201405050424173_LineTime Changes.Designer.cs">
-      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201405050431542_TimetabledClass changes.cs" />
-    <Compile Include="Migrations\201405050431542_TimetabledClass changes.Designer.cs">
-      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
-    </Compile>
+    <Compile Include="Infrastructure\DashBoardBaseController.cs" />
+    <Compile Include="Infrastructure\DBContextUtil.cs" />
+    <Compile Include="Infrastructure\HttpsBaseController.cs" />
+    <Compile Include="Infrastructure\IdentityEmail.cs" />
+    <Compile Include="Infrastructure\IdentityUtil.cs" />
+    <Compile Include="Infrastructure\NavUtil.cs" />
+    <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
+    <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
+    <Compile Include="Infrastructure\UUIDUtil.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\Department.cs" />
+    <Compile Include="Models\EmailSettings.cs" />
+    <Compile Include="Models\EnrollmentField.cs" />
+    <Compile Include="Models\EnrollmentFieldOption.cs" />
+    <Compile Include="Models\EnrollmentFormSection.cs" />
+    <Compile Include="Models\EnrollmentSection.cs" />
+    <Compile Include="Models\EnrollmentForm.cs" />
+    <Compile Include="Models\Field.cs" />
+    <Compile Include="Models\FieldOption.cs" />
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\FormSection.cs" />
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
-    <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\SOFARole.cs" />
+    <Compile Include="Models\SOFAUser.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
+    <Compile Include="Models\Validation\AfterDate.cs" />
+    <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
+    <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />
+    <Compile Include="Models\ViewModels\UserPasswordResetViewModel.cs" />
+    <Compile Include="Models\SMTPSettings.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassCreateEditViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetabledClassIndexViewModel.cs" />
     <Compile Include="Models\ViewModels\TimetableIndexViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config">
@@ -223,9 +294,7 @@
     <Content Include="Views\_DashboardLayout.cshtml" />
     <Content Include="Views\Timetable\Create.cshtml" />
     <Content Include="Views\Timetable\Index.cshtml" />
-    <Content Include="Views\ClassBase\Create.cshtml" />
-    <Content Include="Views\ClassBase\Edit.cshtml" />
-    <Content Include="Views\ClassBase\Index.cshtml" />
+    <Content Include="Views\ClassBase\CreateEdit.cshtml" />
     <Content Include="Views\Timetable\Build.cshtml" />
     <Content Include="Views\Shared\LineTimeCreate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\CustomIntDayOfWeek.cshtml" />
@@ -234,8 +303,38 @@
     <Content Include="Views\Department\Department.cshtml" />
     <Content Include="Views\Shared\TimetabledClassCreate.cshtml" />
     <Content Include="Views\Department\CreateEdit.cshtml" />
-    <Content Include="Views\_DepartmentLayout.cshtml" />
-    <Content Include="Views\Department\DepartmentSideBar.cshtml" />
+    <Content Include="Views\Course\CreateEdit.cshtml" />
+    <Content Include="Views\Course\Index.cshtml" />
+    <Content Include="Views\UserAdmin\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\String.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
+    <Content Include="Views\Login\UserLogin.cshtml" />
+    <Content Include="Views\Settings\Index.cshtml" />
+    <Content Include="Views\_SettingsLayout.cshtml" />
+    <Content Include="Views\Settings\EditSMTPSettings.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Int32.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
+    <Content Include="Views\Settings\EditEmailSettings.cshtml" />
+    <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
+    <Content Include="Views\Person\EditPerson.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />
+    <Content Include="Views\UserAdmin\NewUser.cshtml" />
+    <Content Include="Views\Shared\PersonFormComponents.cshtml" />
+    <Content Include="Views\UserAdmin\UserActivation.cshtml" />
+    <Content Include="Views\UserAdmin\UserPasswordReset.cshtml" />
+    <Content Include="Views\UserAdmin\UserRoleEdit.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Time.cshtml">
+      <SubType>Code</SubType>
+    </Content>
+    <Content Include="Views\Form\Index.cshtml" />
+    <Content Include="Views\Section\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
+    <Content Include="Views\Form\CreateEdit.cshtml" />
+    <Content Include="Views\Section\CreateEdit.cshtml" />
+    <Content Include="Views\Shared\SetLineLabel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -245,15 +344,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\CourseView\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201405050424173_LineTime Changes.resx">
-      <DependentUpon>201405050424173_LineTime Changes.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201405050431542_TimetabledClass changes.resx">
-      <DependentUpon>201405050431542_TimetabledClass changes.cs</DependentUpon>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

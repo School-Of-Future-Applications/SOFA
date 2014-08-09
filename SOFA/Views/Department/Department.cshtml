@@ -1,12 +1,61 @@
-﻿
+﻿@*
+ *  School Of Future Applications
+ *
+ *  Copyright (C) 2014  Terminal Coding
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *@
+
 @using SOFA.Models
 @model Department
 
 @{
-    Layout = "~/Views/_DepartmentLayout.cshtml";
 }
 
-<h2>@Model.DepartmentName</h2>
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li>@Html.ActionLink("Departments", "index")</li>
+        <li class="active">@Model.DepartmentName</li>
+    </ol>
+
+    <h2>
+        @Model.DepartmentName
+
+        <span class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
+                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
+                </li>
+            </ul>
+        </span>
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3>
+            @Model.DepartmentName Course List
+            <a class="btn btn-primary pull-right"
+               href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id})">Add Course</a>
+        </h3>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
@@ -16,30 +65,35 @@
                     <th>Course Code</th>
                     <th>Course Name</th>
                     <th>Class Count</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (Course c in Model.Courses)
+                @foreach (Course c in Model.Courses.Where(x => x.Deleted == false))
                 {
-                    <tr>
+                    <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
                         <td>@c.CourseCode</td>
                         <td>@c.CourseName</td>
                         <td>@c.ClassBases.Count()</td>
+                        <td align="right">
+                            @Html.ActionLink("Edit", "CreateEdit", "Course"
+                                            ,new { departmentId = Model.id, courseId = c.Id}, null)
+                        </td>
                     </tr>
                 }
             </tbody>
         </table>
-    </div>
-</div>
 
-@if (Model.Courses.Count == 0)
-{
-    <div class="row">
-        <div class="col-md-12">
+        @if (Model.Courses.Count == 0)
+        {
             <div class="jumbotron">
                 <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
-                <p class="text-center"><button type="button" class="btn btn-success btn-lg">Add Course</button></p>
+                <p class="text-center">
+                    @Html.ActionLink("Add Course", "CreateEdit", "Course"
+                                    , new { departmentID = Model.id }
+                                    , new { @class = "btn btn-primary btn-lg" })
+                </p>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
