@@ -18,7 +18,7 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
-@model SOFA.Models.LineTime
+@model SOFA.Models.Line
 
 
 @using (Html.BeginForm()) 
@@ -26,42 +26,19 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Line Time</h4>
+        <h4>Line</h4>
         <hr />
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Day,new { @class = "col-md-2" })
+            @Html.LabelFor(model => model.Label, new { @class = "col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Day, new SelectList(
-               new List<Object>{
-                new { value= 1, text = "Monday"},
-                new { value= 2, text = "Tuesday"},
-                new { value= 3, text = "Wednesday"},
-                new { value= 4, text = "Thursday"},
-                new { value= 5, text = "Friday"},
-                new { value= 6, text = "Saturday"},
-                new { value= 7, text = "Sunday"}
-               },"value","text"))
-                @Html.ValidationMessageFor(model => model.Day)
+                @Html.EditorFor(model => model.Label)
+                @Html.ValidationMessageFor(model => model.Label)
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTimeString, new { @class = "col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTimeString, "Time")
-                @Html.ValidationMessageFor(model => model.StartTimeString)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndTimeString, new { @class = "col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTimeString, "Time")
-                @Html.ValidationMessageFor(model => model.EndTimeString)
-            </div>
-        </div>
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -75,6 +52,6 @@
     @Html.ActionLink("Back to List", "Index")
 </div>
 
-<script src="~/Scripts/jquery-1.10.4.min.js"></script>
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
