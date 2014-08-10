@@ -52,6 +52,13 @@ namespace SOFA.Controllers
             return View();
         }
 
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public void UpdateSectionOrder(List<String> formSectionIDs)
+        {
+            //TODO
+        }
+
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.Forms;
