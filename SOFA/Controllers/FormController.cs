@@ -55,9 +55,14 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public void UpdateSectionOrder(List<String> formSectionIDs)
+        public void UpdateSectionOrder(List<String> SectionIDs)
         {
             //TODO
+            //Get list of form sections
+            
+            //For each ID:
+            //  Get formsection where id == section id
+            //  Update belowof to be section with ID prev in list
         }
 
         public override Enum NavProviderTerm()
