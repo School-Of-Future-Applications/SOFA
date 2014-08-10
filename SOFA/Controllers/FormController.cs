@@ -24,6 +24,7 @@ namespace SOFA.Controllers
         {
             //TODO: Actual logic
             Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
+            FormSection.Sort(form.FormSections);
             return View(form);
         }
 
