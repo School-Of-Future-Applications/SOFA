@@ -16,6 +16,10 @@ namespace SOFA.Models
 
         public DateTime DateCreated { get; set; }
 
+        public Student Student { get; set; }
+
+        public TimetabledClass Class { get; set; }
+
         public virtual IEnumerable<EnrollmentFormSection> EnrollmentFormSections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

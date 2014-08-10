@@ -13,6 +13,7 @@ namespace SOFA
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+  
         }
     }
 }

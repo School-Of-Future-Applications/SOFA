@@ -15,6 +15,7 @@ namespace SOFA.Models
         public Section()
         {
             Id = UUIDUtil.NewUUID();
+            Fields = new List<Field>();
             DateCreated = DateTime.Now;
         }
 

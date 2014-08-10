@@ -78,9 +78,12 @@ namespace SOFA.Models
             return new DBContext();
         }
 
-        public void OnModelCreating(DbModelBuilder modelBuilder)
+        /*
+        public void  OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
         }
+         */
+
     }
 }

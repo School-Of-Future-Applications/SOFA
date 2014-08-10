@@ -37,6 +37,13 @@
                 modal: true
             });
 
+            $("table a.setlinename").click(function (event) {
+                event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
+            });
+
             $("table a.addtime").click(function (event) {
                 event.preventDefault();
                 $('#my-dialog').load(this.href, function () {
@@ -130,7 +137,14 @@
 
             <tr>
                 <td>
-                    <b>Line @Html.DisplayFor(modelItem => lineid)</b>
+                    @if(line.Label.IsEmpty())
+                    { 
+                    <b>@Html.ActionLink("Line " + @Html.DisplayFor(modelItem => lineid), "SetLineLabel", new { id = line.Id }, new { @class = "setlinename" })</b>
+                    }
+                    else
+                    {
+                       <b>@Html.ActionLink(""+@Html.DisplayFor(modelItem => line.Label), "SetLineLabel", new { id = line.Id }, new { @class = "setlinename" })</b>
+                    }
                 </td>
 
                         <td>

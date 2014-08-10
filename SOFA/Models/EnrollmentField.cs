@@ -6,11 +6,32 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models
 {
-    public class EnrollmentField : Field, IValidatableObject
+    public class EnrollmentField : IValidatableObject
     {
+        [Key]
+        public int Id { get; set; }
+        public String FieldType { get; set; }
+        public String PromptValue { get; set; }
+        public virtual List<EnrollmentFieldOption> EnrollmentFieldOptions { get; set; }
         public String Value { get; set; }
 
-        public new IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        public EnrollmentField()
+        {
+            EnrollmentFieldOptions = new List<EnrollmentFieldOption>();
+        }
+
+        public EnrollmentField(Field field) : this()
+        {
+            FieldType = field.FieldType;
+            PromptValue = field.PromptValue;
+
+            foreach (FieldOption opt in field.FieldOptions)
+            {
+                EnrollmentFieldOptions.Add(new EnrollmentFieldOption(opt));                
+            }
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             throw new NotImplementedException();
         }
