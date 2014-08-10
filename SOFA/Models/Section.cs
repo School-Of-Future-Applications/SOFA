@@ -30,6 +30,7 @@ namespace SOFA.Models
 
         public DateTime DateCreated { get; set; }
 
+        [Display(Name = "Section Name")]
         public string Name { get; set; }
 
         public ICollection<Field> Fields;

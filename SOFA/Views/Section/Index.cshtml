@@ -68,6 +68,19 @@
                         <b>Date Created: </b>@s.DateCreated<br/>
                         <b>Children Count: </b>@s.Fields.Count<br/>
                     </p>
+
+                    <div class="btn-group pull-right">
+         
+                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }
+                                        ,new { @class = "btn btn-default" })
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -75,4 +88,3 @@
 </div>
 
 <div id="addsection-dialog"></div>
-

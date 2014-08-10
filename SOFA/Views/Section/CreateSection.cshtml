@@ -21,13 +21,12 @@
 @model SOFA.Models.Section
 
 @{
-    
 }
 
 @using(Html.BeginForm())
 {
     <div class="form-group">
-        @Html.LabelForModel("Section Name", new { @class = "control-label" })
+        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
         @Html.EditorFor(model => model.Name)
     </div>
     <input type="submit" class="btn btn-default pull-right" value="Add Section" />
