@@ -34,7 +34,6 @@ namespace SOFA.Controllers
     {  
         public ActionResult Index()
         {
-            ViewBag.NavItem = "Department & Courses";
             return View(this.DBCon().Departments.OrderBy(x => x.DepartmentName).ToList());
         }
 

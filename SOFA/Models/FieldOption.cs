@@ -6,11 +6,10 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 
-namespace SOFA
+namespace SOFA.Models
 {
     public class FieldOption : IValidatableObject
     {
-
         public const String OPT_MIN_VALUE = "MIN_VALUE";
         public const String OPT_MAX_VALUE = "MAX_VALUE";
         public const String OPT_MAX_LENGTH = "MAX_LENGTH";
