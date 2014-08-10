@@ -6,6 +6,7 @@
 
 <script>
     $(document).ready(function () {
+        var prev_sect_update = new Array();
         $("#accordion").accordion(
             {
                 header: "> div > h3"
@@ -16,8 +17,25 @@
                 stop: function( event, ui ) {
                     // IE doesn't register the blur when sorting
                     // so trigger focusout handlers to remove .ui-state-focus
-                    ui.item.children( "h3" ).triggerHandler( "focusout" );
-                    console.log(ui.item.find("input").first().val());
+                    ui.item.children("h3").triggerHandler("focusout");
+                    var sections = $("#accordion input").toArray();
+                    var $section_ids = new Array();
+                    $.each(sections, function(i) {
+                        $section_ids.push($(this).val());
+                    });
+                    //check if needs to be updated
+                    var equal = true;
+                    console.log($section_ids);
+                    $.each($section_ids, function (i) {
+                        if (!(this == prev_sect_update[i])) {
+                            equal = false;
+                            return false;
+                        }
+                    });
+                    if (equal) {
+                        console.log("equal");
+                    }
+                    prev_sect_update = $section_ids;
                     // Refresh accordion to handle new order
                     $( this ).accordion( "refresh" );
                 }
