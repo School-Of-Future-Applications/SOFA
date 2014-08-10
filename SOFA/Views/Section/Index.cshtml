@@ -27,12 +27,33 @@
     ViewBag.Title = "Index";
 }
 
+<script typeof="text/javascript">
+    $(document).ready(function () {
+  
+        $('#addsection-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+    
+        $(".addsection").click(function (event) {
+            event.preventDefault();
+            $('#addsection-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>
+
 <div class="page-header">
     <ol class="breadcrumb">
         <li class="active">Sections</li>
     </ol>
     <h2>Sections</h2>
-    <buton class="btn btn-default">New Section</buton>
+    @Html.ActionLink("New Section", "CreateSection", null
+                    ,new { @class = "btn btn-default addsection" })
+   
 </div>
 
 <div class="row">
@@ -52,4 +73,6 @@
         </div>
     }
 </div>
+
+<div id="addsection-dialog"></div>
 

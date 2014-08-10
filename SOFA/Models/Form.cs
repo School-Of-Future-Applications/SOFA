@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 
 using SOFA.Infrastructure;
 
-namespace SOFA
+namespace SOFA.Models
 {
     public class Form: IValidatableObject
     {

@@ -8,13 +8,20 @@ using System.Collections.Generic;
 
 using SOFA.Infrastructure;
 
-namespace SOFA
+namespace SOFA.Models
 {
     public class Section
     {
         public Section()
         {
             Id = UUIDUtil.NewUUID();
+            DateCreated = DateTime.Now;
+        }
+
+        public Section(String sectionName)
+            : this()
+        {
+            Name = sectionName;
         }
 
         [Key]
