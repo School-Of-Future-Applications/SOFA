@@ -27,7 +27,7 @@
 
 @using(Html.BeginForm())
 {
-    @if(Model != null)
+    if(Model != null)
     {
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.DateCreated)
