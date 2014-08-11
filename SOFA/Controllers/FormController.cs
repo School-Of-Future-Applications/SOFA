@@ -75,14 +75,38 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public void UpdateSectionOrder(List<String> SectionIDs)
+        public String UpdateSectionOrder(String formID, List<String> SectionIDs)
         {
-            //TODO
             //Get list of form sections
-            
+            ICollection<FormSection> fsections = this.DBCon().Forms.
+                                SingleOrDefault(f => f.Id == formID).FormSections;            
             //For each ID:
             //  Get formsection where id == section id
             //  Update belowof to be section with ID prev in list
+            for (int i = 0; i < SectionIDs.Count; i++)
+            {
+                FormSection fsection = fsections.
+                                        SingleOrDefault(f => f.SectionId == SectionIDs[i]);
+                if (fsection != null)
+                {
+                    if (i == 0) //Top of the list
+                    {
+                        fsection.BelowOf = null;
+                    } 
+                    else
+                    {
+                        Section below = this.DBCon().Sections.
+                                        SingleOrDefault(s => s.Id == SectionIDs[i - 1]);
+                        fsection.BelowOf = below;
+                    }
+                     
+                }
+                this.DBCon().FormSections.Attach(fsection);
+                this.DBCon().Entry(fsection).State = System.Data.Entity.EntityState.Modified;
+
+            }
+            this.DBCon().SaveChanges();
+            return "Success";
         }
 
         public override Enum NavProviderTerm()

@@ -1,4 +1,5 @@
-﻿@model SOFA.Form
+﻿@using SOFA.Models
+@model SOFA.Models.Form
 
 @{
     ViewBag.Title = "View1";
@@ -23,6 +24,8 @@
                     $.each(sections, function(i) {
                         $section_ids.push($(this).val());
                     });
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
                     //check if needs to be updated
                     var equal = true;
                     console.log($section_ids);
@@ -32,12 +35,18 @@
                             return false;
                         }
                     });
-                    if (equal) {
-                        console.log("equal");
+                    if (!equal) {
+                        console.log("posting");
+                        var $formID = $("#Id").val();
+                        $.post("CreateEdit/UpdateSectionOrder",
+                            {
+                                FormID : $formID,
+                                SectionIDs: $section_ids
+                            });
                     }
                     prev_sect_update = $section_ids;
-                    // Refresh accordion to handle new order
-                    $( this ).accordion( "refresh" );
+                    
+                    
                 }
             })
     });
@@ -56,11 +65,7 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Id, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Id)
-                @Html.ValidationMessageFor(model => model.Id)
-            </div>
+            @Html.HiddenFor(m => m.Id)
         </div>
 
         <div class="form-group">
@@ -73,9 +78,12 @@
 
     </div>
     <div id="accordion" class="form-group">
-        @foreach (FormSection s in Model.FormSections)
-        {
-            @Html.DisplayFor(m => s)
+        @if (Model.FormSections != null)
+        { 
+            foreach (FormSection s in Model.FormSections)
+            {
+                @Html.DisplayFor(m => s)
+            }
         }
         
     </div>
