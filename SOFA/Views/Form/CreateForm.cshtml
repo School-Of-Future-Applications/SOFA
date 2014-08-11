@@ -19,23 +19,24 @@
 *@
 
 @using SOFA.Models
-@model Section
+
+@model Form
 
 @{
-    string submitText = (Model == null ? "Save" : "Add Section");
+    string submitText = (Model == null ? "Save" : "Add Form");
 }
 
 @using(Html.BeginForm())
 {
-    @if(Model != null)
+    if(Model != null)
     {
         @Html.HiddenFor(model => model.Id)
-        @Html.HiddenFor(model => model.DateCreated)
+        @Html.HiddenFor(model => model.DateCreated)    
     }
     
     <div class="form-group">
-        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
-        @Html.EditorFor(model => model.Name)
+        @Html.LabelFor(model => model.FormName, new { @class = "control-label" })
+        @Html.EditorFor(model => model.FormName)
     </div>
     <input type="submit" class="btn btn-default pull-right" value="@submitText" />
 }
