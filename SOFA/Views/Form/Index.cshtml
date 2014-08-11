@@ -19,6 +19,9 @@
 *@
 
 @using System.Collections.Generic
+@using System.Web.Mvc
+
+@using SOFA.Infrastructure
 @using SOFA.Models
 
 @model List<Form>
@@ -58,22 +61,38 @@
 </div>
 
 <div class="row">
-    @foreach(Form f in Model)
+    @foreach (Form f in Model)
     {
         <div class="col-md-3 col-sm-5">
             <div class="panel panel-primary">
                 <div class="panel-heading">@f.FormName</div>
                 <div class="panel-body">
                     <p>
-                        <b>Form Id: </b>@f.Id<br/>
-                        <b>Date Created: </b>@f.DateCreatedString()<br/>
-                        <b>Last Modified: </b>@f.LastModifiedString()<br/>
-                        <b>Section Count: </b>@f.FormSections.Count<br/>
+                        <b>Form Id: </b>@f.Id<br />
+                        <b>Date Created: </b>@f.DateCreatedString()<br />
+                        <b>Last Modified: </b>@f.LastModifiedString()<br />
+                        <b>Section Count: </b>@f.FormSections.Count<br />
+                        <b>Form URL: </b>
+                        <input readonly type="text" class="form-control"
+                               value="@HttpContext.Current.EnrolmentFormUrl(f.Id)"><br />
                     </p>
+
+                    <div class="btn-group pull-right">
+
+                        @Html.ActionLink("Edit", "CreateEdit", "Form", new { FormId = f.Id }
+                                        , new { @class = "btn btn-default" })
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Preview</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     }
 </div>
-
 <div id="addform-dialog"></div>
