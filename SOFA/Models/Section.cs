@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 using SOFA.Infrastructure;
 
-namespace SOFA
+namespace SOFA.Models
 {
     public class Section
     {
@@ -16,13 +16,31 @@ namespace SOFA
         {
             Id = UUIDUtil.NewUUID();
             Fields = new List<Field>();
+            DateCreated = DateTime.Now;
+        }
+
+        public Section(String sectionName)
+            : this()
+        {
+            Name = sectionName;
         }
 
         [Key]
         public string Id { get; set; }
 
+        [Required]
         public DateTime DateCreated { get; set; }
 
+        public string DateCreatedString()
+        {
+            string date = "";
+            if (DateCreated != null)
+                date = DateCreated.ToString(DateTimeUtil.DATE_FORMAT);
+            return date;
+        }
+
+        [Required]
+        [Display(Name = "Section Name")]
         public string Name { get; set; }
 
         public ICollection<Field> Fields;

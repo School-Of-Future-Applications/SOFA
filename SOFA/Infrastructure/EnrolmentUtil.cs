@@ -22,16 +22,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace SOFA.Models
+namespace SOFA.Infrastructure
 {
-    public class Line
+    public static class EnrolmentUtil
     {
-        public int Id { get; set; }
-        public virtual ICollection<LineTime> LineTimes { get; set; }
-        public string Label { get; set; }
-
-        public virtual ICollection<TimetabledClass> TimetabledClasses { get; set; }
-        public virtual Timetable Timetable { get; set; }     
+        public static string EnrolmentFormUrl(this HttpContext @this, string formId)
+        {
+            UrlHelper urlHelp = new UrlHelper(@this.Request.RequestContext);
+            return urlHelp.Action("Enrol", "Enrolment", new { formId = formId }
+                                 ,@this.Request.Url.Scheme);
+        }
     }
 }

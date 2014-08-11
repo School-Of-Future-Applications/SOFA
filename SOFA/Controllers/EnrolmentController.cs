@@ -22,16 +22,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
-namespace SOFA.Models
+using SOFA.Infrastructure;
+
+namespace SOFA.Controllers
 {
-    public class Line
+    public class EnrolmentController : HttpsBaseController
     {
-        public int Id { get; set; }
-        public virtual ICollection<LineTime> LineTimes { get; set; }
-        public string Label { get; set; }
-
-        public virtual ICollection<TimetabledClass> TimetabledClasses { get; set; }
-        public virtual Timetable Timetable { get; set; }     
-    }
+        public ActionResult Enrol(string formId)
+        {
+            return View();
+        }
+	}
 }

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using SOFA.Infrastructure;
+using SOFA.Models;
 
 namespace SOFA.Controllers
 {
@@ -12,9 +13,10 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Section/
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
-            return View();
+            return View(this.DBCon().Sections.ToList());
         }
 
         //
@@ -41,6 +43,26 @@ namespace SOFA.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateSection()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateSection(Section section)
+        {
+            if (ModelState.IsValid)
+            {
+                this.DBCon().Sections.Add(section);
+                this.DBCon().SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else
+                return PartialView();
+        }
 
         //
         // GET: /Section/Delete/5

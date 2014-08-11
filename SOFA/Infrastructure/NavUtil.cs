@@ -98,13 +98,13 @@ namespace SOFA.Infrastructure
                         {DashboardNavTerms.Forms
                         ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Form"
-                                     ,displayName = "Enrollment Forms"
+                                     ,displayName = "Enrolment Forms"
                                      ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
 
                         ,{DashboardNavTerms.Sections
                          ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Section"
-                                     ,displayName = "Enrollment Sections"
+                                     ,displayName = "Enrolment Sections"
                                      ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
                     }
                 }

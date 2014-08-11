@@ -18,9 +18,73 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Section>
+
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<script typeof="text/javascript">
+    $(document).ready(function () {
+  
+        $('#addsection-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+    
+        $(".addsection").click(function (event) {
+            event.preventDefault();
+            $('#addsection-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>
 
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Sections</li>
+    </ol>
+    <h2>Sections</h2>
+    @Html.ActionLink("New Section", "CreateSection", null
+                    ,new { @class = "btn btn-default addsection" })
+   
+</div>
+
+<div class="row">
+    @foreach(Section s in Model)
+    {
+        <div class="col-md-3 col-sm-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@s.Name</div>
+                <div class="panel-body">
+                    <p>
+                        <b>Section Id: </b>@s.Id<br/>
+                        <b>Date Created: </b>@s.DateCreatedString()<br/>
+                        <b>Children Count: </b>@s.Fields.Count<br/>
+                    </p>
+
+                    <div class="btn-group pull-right">
+         
+                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }
+                                        ,new { @class = "btn btn-default" })
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="addsection-dialog"></div>

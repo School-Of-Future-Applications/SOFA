@@ -118,6 +118,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
+    <Content Include="Content\dialog.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -220,6 +221,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\EnrolmentController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -232,7 +234,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
+    <Compile Include="Infrastructure\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\DBContextUtil.cs" />
+    <Compile Include="Infrastructure\EnrolmentUtil.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\IdentityEmail.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
@@ -334,6 +338,9 @@
     <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
     <Content Include="Views\Form\CreateEdit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
+    <Content Include="Views\Shared\SetLineLabel.cshtml" />
+    <Content Include="Views\Section\CreateSection.cshtml" />
+    <Content Include="Views\Form\CreateForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -343,6 +350,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Enrolment\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>

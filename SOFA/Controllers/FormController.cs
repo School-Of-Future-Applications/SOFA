@@ -16,7 +16,7 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
-            return View();
+            return View(this.DBCon().Forms.ToList());
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
@@ -33,6 +33,26 @@ namespace SOFA.Controllers
         public ActionResult CreateEdit(Form form)
         {
             return View();
+        }
+
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateForm()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult CreateForm(Form form)
+        {
+            if(ModelState.IsValid)
+            {
+                this.DBCon().Forms.Add(form);
+                this.DBCon().SaveChanges();
+                return RedirectToAction("Index");
+            }
+            return PartialView();
         }
 
         //

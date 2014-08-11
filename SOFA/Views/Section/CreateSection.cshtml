@@ -18,17 +18,24 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
-@model System.String
+@using SOFA.Models
+@model Section
 
-@{      
-    Layout = null;
-
-    var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
+@{
+    string submitText = (Model == null ? "Save" : "Add Section");
 }
 
-@Html.TextBox("", Model
-             ,new RouteValueDictionary(validationAttributes)
-             {
-                { "class", "form-control" },
-                { "placeholder", ViewData["placeholder"] }
-             })
+@using(Html.BeginForm())
+{
+    if(Model != null)
+    {
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.DateCreated)
+    }
+    
+    <div class="form-group">
+        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+        @Html.EditorFor(model => model.Name)
+    </div>
+    <input type="submit" class="btn btn-default pull-right" value="@submitText" />
+}
