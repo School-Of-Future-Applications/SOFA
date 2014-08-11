@@ -233,6 +233,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Infrastructure\DashBoardBaseController.cs" />
+    <Compile Include="Infrastructure\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\DBContextUtil.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\IdentityEmail.cs" />
@@ -337,6 +338,7 @@
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
     <Content Include="Views\Section\CreateSection.cshtml" />
+    <Content Include="Views\Form\CreateForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
