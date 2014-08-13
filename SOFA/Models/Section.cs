@@ -28,8 +28,18 @@ namespace SOFA.Models
         [Key]
         public string Id { get; set; }
 
+        [Required]
         public DateTime DateCreated { get; set; }
 
+        public string DateCreatedString()
+        {
+            string date = "";
+            if (DateCreated != null)
+                date = DateCreated.ToString(DateTimeUtil.DATE_FORMAT);
+            return date;
+        }
+
+        [Required]
         [Display(Name = "Section Name")]
         public string Name { get; set; }
 

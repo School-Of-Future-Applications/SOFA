@@ -13,6 +13,7 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Section/
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
             return View(this.DBCon().Sections.ToList());
@@ -60,7 +61,7 @@ namespace SOFA.Controllers
                 return RedirectToAction("Index");
             }
             else
-                return View();
+                return PartialView();
         }
 
         //

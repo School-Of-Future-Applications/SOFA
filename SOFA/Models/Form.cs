@@ -16,14 +16,46 @@ namespace SOFA.Models
         {
             Id = UUIDUtil.NewUUID();
             FormSections = new List<FormSection>();
+            DateCreated = DateTime.Now;
+            LastModified = DateCreated;
+        }
+
+        public Form(string formName)
+            : this()
+        {
+            FormName = formName;
         }
 
         [Key]
         public string Id { get; set; }
 
+        [Required]
+        public DateTime DateCreated { get; set; }
+
+        public string DateCreatedString()
+        {
+            string date = "";
+            if (DateCreated != null)
+                date = DateCreated.ToString(DateTimeUtil.DATE_FORMAT);
+            return date;
+        }
+
+        [Required]
+        [Display(Name = "Form Name")]
         public string FormName {get; set;}
 
         public virtual ICollection<FormSection> FormSections { get; set; }
+
+        [Required]
+        public DateTime LastModified { get; set; }
+
+        public string LastModifiedString()
+        {
+            string date = "";
+            if (LastModified != null)
+                date = LastModified.ToString(DateTimeUtil.DATE_FORMAT);
+            return date;
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
