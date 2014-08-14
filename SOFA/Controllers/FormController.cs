@@ -19,8 +19,9 @@ namespace SOFA.Controllers
             return View(this.DBCon().Forms.ToList());
         }
 
+
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult CreateEdit(String FormID = null)
+        public ActionResult Edit(String FormID = null)
         {
             //TODO: Actual logic
             Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
@@ -30,7 +31,7 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult CreateEdit(Form form)
+        public ActionResult Edit(Form form)
         {
             return View();
         }
