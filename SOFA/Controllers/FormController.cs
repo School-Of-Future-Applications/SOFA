@@ -99,7 +99,7 @@ namespace SOFA.Controllers
             for (int i = 0; i < count; i++)
             {
                 FormSection fsection = fsections.
-                                        SingleOrDefault(f => f.SectionId == SectionIDs[i]);
+                                        SingleOrDefault(f => f.Section.Id == SectionIDs[i]);
                 if (fsection == null)
                 {
                     //Can't find form. Bail out.
@@ -111,6 +111,7 @@ namespace SOFA.Controllers
                 }
                 if (i == 0) //Top of the list
                 {
+                    
                     fsection.BelowOf = null;
                 }
                 else

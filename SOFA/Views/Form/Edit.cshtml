@@ -44,6 +44,9 @@
                             data: {
                                 FormID: $formID,
                                 SectionIDs: $section_ids
+                            },
+                            success: function(data, status, jqXHR) {
+                                console.log(data);
                             }
                         });                        
                     }

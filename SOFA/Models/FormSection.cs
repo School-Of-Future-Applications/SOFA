@@ -31,7 +31,7 @@ namespace SOFA.Models
         {
             List<FormSection> list = (List<FormSection>)formSections;
             //Find form section where below of == null. Put it at the top.
-            for (int i = 0; i < list.Count - 1; i++ )
+            for (int i = 0; i < list.Count; i++ )
             {
                 if (list[i].BelowOf == null)
                 {
