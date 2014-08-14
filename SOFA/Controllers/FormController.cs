@@ -76,43 +76,61 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public String UpdateSectionOrder(String formID, List<String> SectionIDs)
+        public JsonResult UpdateSectionOrder(String formID, string[] SectionIDs)
         {
+            
             //Get list of form sections
             Form form = this.DBCon().Forms.
                                 SingleOrDefault(f => f.Id == formID);
+            
             if (form == null)
             {
-                return "Fail";
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Form was unable to be updated as it could not be found."
+                });
             }
-            ICollection<FormSection> fsections = form.FormSections;            
+            ICollection<FormSection> fsections = form.FormSections;
             //For each ID:
             //  Get formsection where id == section id
             //  Update belowof to be section with ID prev in list
-            for (int i = 0; i < SectionIDs.Count; i++)
+            int count = SectionIDs.Count();
+            for (int i = 0; i < count; i++)
             {
                 FormSection fsection = fsections.
                                         SingleOrDefault(f => f.SectionId == SectionIDs[i]);
-                if (fsection != null)
+                if (fsection == null)
                 {
-                    if (i == 0) //Top of the list
-                    {
-                        fsection.BelowOf = null;
-                    } 
-                    else
-                    {
-                        Section below = this.DBCon().Sections.
-                                        SingleOrDefault(s => s.Id == SectionIDs[i - 1]);
-                        fsection.BelowOf = below;
-                    }
-                     
+                    //Can't find form. Bail out.
+                    return Json(new
+                        {
+                            Success = "False",
+                            Message = "Form section not found. Section order unable to be updated."
+                        });
                 }
+                if (i == 0) //Top of the list
+                {
+                    fsection.BelowOf = null;
+                }
+                else
+                {
+                    var aboveSectionID = SectionIDs[i - 1];
+                    Section below = this.DBCon().Sections.
+                                    SingleOrDefault(s => s.Id == aboveSectionID );
+                    fsection.BelowOf = below;
+                }                
                 this.DBCon().FormSections.Attach(fsection);
                 this.DBCon().Entry(fsection).State = System.Data.Entity.EntityState.Modified;
 
-            }
+            }            
+
             this.DBCon().SaveChanges();
-            return "Success";
+            return Json(new
+            {
+                Success = "True",
+                Message = "Form Saved."
+            });
         }
 
         public override Enum NavProviderTerm()

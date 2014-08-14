@@ -28,7 +28,6 @@
                     $(this).accordion("refresh");
                     //check if needs to be updated
                     var equal = true;
-                    console.log($section_ids);
                     $.each($section_ids, function (i) {
                         if (!(this == prev_sect_update[i])) {
                             equal = false;
@@ -36,13 +35,17 @@
                         }
                     });
                     if (!equal) {
-                        console.log("posting");
                         var $formID = $("#Id").val();
-                        $.post("CreateEdit/UpdateSectionOrder",
-                            {
-                                FormID : $formID,
+                        $.ajax({
+                            type: "POST",
+                            url: "UpdateSectionOrder",
+                            dataType: "json",
+                            traditional: true,
+                            data: {
+                                FormID: $formID,
                                 SectionIDs: $section_ids
-                            });
+                            }
+                        });                        
                     }
                     prev_sect_update = $section_ids;
                     
