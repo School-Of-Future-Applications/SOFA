@@ -78,8 +78,13 @@ namespace SOFA.Controllers
         public String UpdateSectionOrder(String formID, List<String> SectionIDs)
         {
             //Get list of form sections
-            ICollection<FormSection> fsections = this.DBCon().Forms.
-                                SingleOrDefault(f => f.Id == formID).FormSections;            
+            Form form = this.DBCon().Forms.
+                                SingleOrDefault(f => f.Id == formID);
+            if (form == null)
+            {
+                return "Fail";
+            }
+            ICollection<FormSection> fsections = form.FormSections;            
             //For each ID:
             //  Get formsection where id == section id
             //  Update belowof to be section with ID prev in list
