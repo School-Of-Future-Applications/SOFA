@@ -22,4 +22,12 @@
 
 @model SectionSelectViewModel
 
-@Html.DropDownListFor(m => m.SelectedSectionId, Model.SectionItems)
+<div class="form-group">
+    @Html.LabelFor(m => m.SectionItems, new { @class = "col-md-2 text-right" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(m => m.SelectedSectionId, Model.SectionItems, new { @class="dropdown col-md-8"} )
+    </div>
+</div>
+<div id="section" class="panel-primary">
+
+</div>

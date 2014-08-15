@@ -10,16 +10,16 @@
 
         var $dialog = $("#addSectionDialog").dialog({
             autoOpen: false,
-            height: 300,
-            width: 350,
+            width: 600,
             modal: true,
             resizeable: true,
+            title: "Add Section",
             buttons: {
                 "Add to form": function () {
 
                 },
                 Cancel: function () {
-                    dialog.dialog("close");
+                    $dialog.dialog("close");
                 }
             }
         });
@@ -85,8 +85,8 @@
         
 </script>
 
-<h2>Edit Form</h2>
-@Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class="addSectionLink"})
+<h2 class="r">Edit Form</h2>
+@Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class="addSectionLink pull-right"})
 
 @using (Html.BeginForm()) 
 {
