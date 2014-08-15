@@ -342,6 +342,7 @@
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
     <Content Include="Views\Section\CreateSection.cshtml" />
     <Content Include="Views\Form\CreateForm.cshtml" />
+    <Content Include="Views\Section\SectionIndexPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

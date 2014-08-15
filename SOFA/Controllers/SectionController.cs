@@ -88,6 +88,12 @@ namespace SOFA.Controllers
             }
         }
 
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult IndexPartial()
+        {
+            return View();
+        }
+
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.Sections;
