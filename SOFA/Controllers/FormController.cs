@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -76,12 +77,12 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public JsonResult UpdateSectionOrder(String formID, string[] SectionIDs)
+        public JsonResult UpdateSectionOrder(FormSectionOrderViewModel viewModel)
         {
             
             //Get list of form sections
             Form form = this.DBCon().Forms.
-                                SingleOrDefault(f => f.Id == formID);
+                                SingleOrDefault(f => f.Id == viewModel.FormId);
             
             if (form == null)
             {
@@ -95,11 +96,11 @@ namespace SOFA.Controllers
             //For each ID:
             //  Get formsection where id == section id
             //  Update belowof to be section with ID prev in list
-            int count = SectionIDs.Count();
+            int count = viewModel.SectionIds.Count();
             for (int i = 0; i < count; i++)
             {
                 FormSection fsection = fsections.
-                                        SingleOrDefault(f => f.Section.Id == SectionIDs[i]);
+                                        SingleOrDefault(f => f.Section.Id == viewModel.SectionIds[i]);
                 if (fsection == null)
                 {
                     //Can't find form. Bail out.
@@ -116,7 +117,7 @@ namespace SOFA.Controllers
                 }
                 else
                 {
-                    var aboveSectionID = SectionIDs[i - 1];
+                    var aboveSectionID = viewModel.SectionIds[i - 1];
                     Section below = this.DBCon().Sections.
                                     SingleOrDefault(s => s.Id == aboveSectionID );
                     fsection.BelowOf = below;
