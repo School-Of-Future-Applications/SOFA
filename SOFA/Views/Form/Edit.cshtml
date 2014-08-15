@@ -1,0 +1,95 @@
+﻿@using SOFA.Models
+@model SOFA.Models.Form
+
+@{
+    ViewBag.Title = "View1";
+}
+
+<script>
+    $(document).ready(function () {
+        var prev_sect_update = new Array();
+        $("#accordion").accordion(
+            {
+                header: "> div > h3"
+            }).
+            sortable({
+                axis: "y",
+                handle: "h3",
+                stop: function( event, ui ) {
+                    // IE doesn't register the blur when sorting
+                    // so trigger focusout handlers to remove .ui-state-focus
+                    ui.item.children("h3").triggerHandler("focusout");
+                    var sections = $("#accordion input").toArray();
+                    var $section_ids = new Array();
+                    $.each(sections, function(i) {
+                        $section_ids.push($(this).val());
+                    });
+                    // Refresh accordion to handle new order
+                    $(this).accordion("refresh");
+                    //check if needs to be updated
+                    var equal = true;
+                    $.each($section_ids, function (i) {
+                        if (!(this == prev_sect_update[i])) {
+                            equal = false;
+                            return false;
+                        }
+                    });
+                    if (!equal) {
+                        var $formID = $("#Id").val();
+                        $.ajax({
+                            type: "POST",
+                            url: "UpdateSectionOrder",
+                            dataType: "json",
+                            traditional: true,
+                            data: {
+                                FormID: $formID,
+                                SectionIDs: $section_ids
+                            },
+                            success: function(data, status, jqXHR) {
+                                console.log(data);
+                            }
+                        });                        
+                    }
+                    prev_sect_update = $section_ids;
+                    
+                    
+                }
+            })
+    });
+        
+</script>
+
+<h2>Edit Form</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@Html.DisplayFor(m => m.FormName)</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(m => m.Id)
+        </div>
+
+        
+
+    </div>
+    <div id="accordion" >
+        @if (Model.FormSections != null)
+        { 
+            foreach (FormSection s in Model.FormSections)
+            {
+                @Html.DisplayFor(m => s)
+            }
+        }
+        
+    </div>
+}
+
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

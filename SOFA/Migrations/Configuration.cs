@@ -96,9 +96,11 @@ namespace SOFA.Migrations
                      
             FormSection fSectionA = new FormSection();
             FormSection fSectionB = new FormSection();
+            FormSection fsectionC = new FormSection();
             form.FormSections.Add(fSectionA);
             form.FormSections.Add(fSectionB);
-            
+            form.FormSections.Add(fsectionC);
+
             //Create Sections
             Section sectionA = new Section()
             {
@@ -111,12 +113,18 @@ namespace SOFA.Migrations
                 DateCreated = DateTime.Now,
                 Name = "Section B"
             };
+            Section sectionC = new Section()
+            {
+                DateCreated = DateTime.Now,
+                Name = "Section C"
+            };
             //Set order of sections
             fSectionA.Section = sectionA;
             fSectionA.BelowOf = null;
             fSectionB.Section = sectionB;
             fSectionB.BelowOf = sectionA;
-
+            fsectionC.Section = sectionC;
+            fsectionC.BelowOf = sectionB;
             context.Forms.Add(form);
             context.SaveChanges();
 

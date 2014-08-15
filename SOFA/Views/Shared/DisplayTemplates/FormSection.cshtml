@@ -17,7 +17,10 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model FormSection
-
-<h4>@Model.Section.Name</h4>
-<div>@Html.DisplayFor(model => model.Section)</div>
+@model SOFA.Models.FormSection
+          
+<div class="">
+    @Html.HiddenFor(m => Model.Section.Id)
+    <h3>@Html.DisplayFor(Model => Model.Section.Name)</h3>
+    <div>@Html.DisplayFor(model => model.Section)</div>
+</div>
