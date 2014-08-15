@@ -7,6 +7,30 @@
 
 <script>
     $(document).ready(function () {
+
+        var $dialog = $("#addSectionDialog").dialog({
+            autoOpen: false,
+            height: 300,
+            width: 350,
+            modal: true,
+            resizeable: true,
+            buttons: {
+                "Add to form": function () {
+
+                },
+                Cancel: function () {
+                    dialog.dialog("close");
+                }
+            }
+        });
+
+        $("a.addSectionLink").click(function (event) {
+            event.preventDefault();
+            $dialog.load(this.href, function () {
+                $dialog.dialog('open');
+            });
+        });
+
         var prev_sect_update = new Array();
         $("#accordion").accordion(
             {
@@ -55,16 +79,19 @@
                     
                 }
             })
+        
+        
     });
         
 </script>
 
 <h2>Edit Form</h2>
+@Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class="addSectionLink"})
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-    
+        
     <div class="form-horizontal">
         <h4>@Html.DisplayFor(m => m.FormName)</h4>
         <hr />
@@ -89,6 +116,8 @@
     </div>
 }
 
+<div id="addSectionDialog">
+</div>
 
 <div>
     @Html.ActionLink("Back to List", "Index")
