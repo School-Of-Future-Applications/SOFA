@@ -20,7 +20,27 @@
 @model SOFA.Models.FormSection
           
 <div class="">
-    @Html.HiddenFor(m => Model.Section.Id)
-    <h3>@Html.DisplayFor(Model => Model.Section.Name)</h3>
-    <div>@Html.DisplayFor(model => model.Section)</div>
+    @Html.HiddenFor(m => m.SectionId)
+    
+    <h3>@Html.DisplayFor(m => m.Section.Name)</h3>
+    <div>
+        <div class="btn-group pull-right">
+
+        @Html.ActionLink("Edit", "Edit", "Section", null,
+                                                new { @class = "btn btn-default" })
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li>
+                @Ajax.ActionLink("Remove", "RemoveSection", new { FormId = Model.SectionId, SectionId = Model.SectionId}, null)
+            </li>
+        </ul>
+        </div>
+        <div>
+            @Html.DisplayFor(m => m.Section)
+        </div>
+    </div>
+
 </div>
