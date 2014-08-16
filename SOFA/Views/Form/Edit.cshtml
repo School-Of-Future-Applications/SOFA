@@ -86,7 +86,6 @@
 </script>
 
 <h2 class="r">Edit Form</h2>
-@Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class="addSectionLink pull-right"})
 
 @using (Html.BeginForm()) 
 {
@@ -95,6 +94,9 @@
     <div class="form-horizontal">
         <h4>@Html.DisplayFor(m => m.FormName)</h4>
         <hr />
+        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "addSectionLink pull-right" })
+
+
         @Html.ValidationSummary(true)
 
         <div class="form-group">
