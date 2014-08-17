@@ -2,7 +2,7 @@
 @model SOFA.Models.Form
 
 @{
-    ViewBag.Title = "View1";
+    ViewBag.Title = "Edit Form";
 }
 
 <script>
@@ -29,6 +29,43 @@
             $dialog.load(this.href, function () {
                 $dialog.dialog('open');
             });
+        });
+
+        var $removeDialog = $("#removeSectionDialog").dialog({
+            autoOpen: false,
+            width: 350,
+            modal: true,
+            title: "Remove Section",
+            buttons: {
+                "Remove": function () {
+                    var $activeIndex = $("#accordion").accordion("option", "active");
+                    var $activeDiv = $("#accordion").children("div").eq($activeIndex);
+                    var $sectid = $activeDiv.children("#s_SectionId").val();
+                     
+                    var $formid = $("#Id").val();
+                    console.log($sectid);
+                    $.post(
+                        "RemoveSection",
+                        {
+                            FormId: $formid,
+                            SectionId: $sectid
+                        },
+                        function () {
+                            $($activeDiv).remove();
+                        }
+                    );
+                    $removeDialog.dialog("close");
+
+                },
+                Cancel: function () {
+                    $removeDialog.dialog("close");
+                }
+            }
+        });
+
+        $("a.removeSectionLink").click(function (event) {
+            event.preventDefault();
+            $removeDialog.dialog('open');
         });
 
         var prev_sect_update = new Array();
@@ -119,7 +156,9 @@
     </div>
 }
 
-<div id="addSectionDialog">
+<div id="addSectionDialog"></div>
+<div id="removeSectionDialog">
+    <p><span class="glyphicon-warning-sign">Are you sure you want to remove this section from the form?</span></p>
 </div>
 
 <div>

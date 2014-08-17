@@ -75,6 +75,22 @@ namespace SOFA.Controllers
             return View();
         }
 
+        //
+        // POST: /Form/RemoveSection
+        [HttpPost]
+        [Authorize(Roles=SOFARole.AUTH_MODERATOR)]
+        public JsonResult RemoveSection(String FormId, String SectionId)
+        {
+            //TODO
+            //Get form sections and sort
+            //Link next formsection belowof to above 
+            //Delete FormSection
+            return Json(new
+                {
+
+                });
+        }
+        
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public JsonResult UpdateSectionOrder(FormSectionOrderViewModel viewModel)
