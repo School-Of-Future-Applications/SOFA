@@ -75,13 +75,71 @@ namespace SOFA.Controllers
             return View();
         }
 
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public JsonResult AddSection(String FormId, String SectionId)
+        {
+            //TODO
+            Form form = this.DBCon().Forms.SingleOrDefault(f => f.Id == FormId);
+            if (form == null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find form"
+                });
+            }
+            Section section = this.DBCon().Sections.
+                                SingleOrDefault(s => s.Id == SectionId);
+            if (section == null) 
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find section."
+                });
+            }
+            if (form.FormSections.SingleOrDefault(f => f.SectionId == SectionId)
+                        != null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "You cannot add a section twice to a form."
+                });
+            }
+            Section belowof = FormSection.Sort(form.FormSections)
+                                .ElementAt(form.FormSections.Count - 1).Section;
+
+            if (belowof == null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find above section."
+                });
+            }
+            FormSection formSection = new FormSection()
+            {
+                Section = section,
+                BelowOf = belowof
+            };
+            form.FormSections.Add(formSection);
+            this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+            this.DBCon().SaveChanges();
+            return Json(new
+                {
+                    Success = "True",
+                    Message = "Section added to form successfully"
+                });
+        }
+
         //
         // POST: /Form/RemoveSection
         [HttpPost]
         [Authorize(Roles=SOFARole.AUTH_MODERATOR)]
         public JsonResult RemoveSection(String FormId, String SectionId)
         {
-            //TODO
             //Get form sections and sort
             Form form = this.DBCon().Forms.SingleOrDefault(f => f.Id == FormId);
             if (form == null)

@@ -16,7 +16,16 @@
             title: "Add Section",
             buttons: {
                 "Add to form": function () {
-
+                    var SectionId = $("#SelectedSectionId").val();
+                    var formid = $("#Id").val();
+                    $.post(
+                        "AddSection",
+                        {
+                            SectionId: SectionId,
+                            FormId: formid
+                        }
+                    );
+                    $dialog.dialog("close");
                 },
                 Cancel: function () {
                     $dialog.dialog("close");
