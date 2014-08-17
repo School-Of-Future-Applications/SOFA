@@ -26,7 +26,7 @@ namespace SOFA.Controllers
         {
             //TODO: Actual logic
             Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
-            FormSection.Sort(form.FormSections);
+            form.FormSections = FormSection.Sort(form.FormSections);
             return View(form);
         }
 
@@ -83,11 +83,48 @@ namespace SOFA.Controllers
         {
             //TODO
             //Get form sections and sort
+            Form form = this.DBCon().Forms.SingleOrDefault(f => f.Id == FormId);
+            if (form == null)
+            {
+                return Json(new
+                    {
+                        Success = "False",
+                        Message = "Could not find form"
+                    });
+            }
+            var formSections = FormSection.Sort(form.FormSections).ToList();
+            var removeFormSection = formSections.SingleOrDefault(fs => fs.SectionId == SectionId);
+            if (removeFormSection == null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find section."
+                });
+            }
+            var removeIndex = formSections.IndexOf(removeFormSection);
             //Link next formsection belowof to above 
+            if (removeIndex != formSections.Count - 1)
+            {
+                if (removeIndex == 0)
+                {
+                    formSections[removeIndex + 1].BelowOf = null;                    
+                }
+                else  //Not the last section
+                {
+                    formSections[removeIndex + 1].BelowOf = removeFormSection.BelowOf;
+                }         
+            }
             //Delete FormSection
+            formSections.Remove(removeFormSection);
+            form.FormSections = formSections;
+            this.DBCon().Forms.Attach(form);
+            this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+            this.DBCon().SaveChanges();
             return Json(new
                 {
-
+                    Success = "True",
+                    Message = "Section removed successfully."
                 });
         }
         

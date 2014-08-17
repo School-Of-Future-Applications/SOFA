@@ -27,7 +27,7 @@ namespace SOFA.Models
         public virtual Section BelowOf { get; set; }
 
 
-        public static void Sort(IEnumerable<FormSection> formSections)
+        public static ICollection<FormSection> Sort(ICollection<FormSection> formSections)
         {
             List<FormSection> list = (List<FormSection>)formSections;
             //Find form section where below of == null. Put it at the top.
@@ -55,6 +55,7 @@ namespace SOFA.Models
                     }
                 }
             }
+            return list;
         }
     }
 }
