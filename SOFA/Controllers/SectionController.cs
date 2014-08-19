@@ -21,9 +21,12 @@ namespace SOFA.Controllers
 
         //
         // GET: /Section/Create
-        public ActionResult CreateEdit(String SectionID = null)
+        public ActionResult Edit(String SectionID = null)
         {
-            return View();
+            var section = this.DBCon().Sections.Where(s => s.Id == SectionID).FirstOrDefault();
+            //section.Fields = this.DBCon().Fields.Where(f => f.Section.Id == section.Id).ToArray();
+            //var line = this.DBCon().Lines.FirstOrDefault();
+            return View(section);
         }
 
         //
@@ -62,6 +65,19 @@ namespace SOFA.Controllers
             }
             else
                 return PartialView();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult AddField(string sectionId, string type, string prompt)
+        {
+            Section s = this.DBCon().Sections.Where(x => x.Id == sectionId).FirstOrDefault();
+            Field f = new Field(type);
+            f.PromptValue = prompt;
+            f.Section = s;
+            this.DBCon().Fields.Add(f);
+            this.DBCon().SaveChanges();
+            return Json(f.Id);
         }
 
         //

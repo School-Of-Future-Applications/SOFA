@@ -43,6 +43,6 @@ namespace SOFA.Models
         [Display(Name = "Section Name")]
         public string Name { get; set; }
 
-        public ICollection<Field> Fields;
+        public virtual ICollection<Field> Fields { get; set; }
     }
 }

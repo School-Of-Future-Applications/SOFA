@@ -1,0 +1,108 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model Section
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script typeof="text/javascript">
+    $(document).ready(function () {
+        $(".delement").draggable({
+            helper: "clone",
+            connectToSortable: ".panel-body",
+            stop: function (event, ui) {
+                //alert("test")
+            }
+        });
+        $("#designer").disableSelection();
+        $(".panel-body").sortable({
+            beforeStop: function (event, ui) {
+                if (ui.item.attr("id") == undefined) {
+                    ui.item.addClass("givingPrompt").removeClass("ui-draggable");
+                    ui.item.data("type", ui.item.html());
+                    $("#promptmodal").modal("show");
+                }
+            }
+        });
+        $("#saveprompt").on("click", function (event) {
+            $(".givingPrompt").html($("#prompt").val());
+            $.ajax({
+                type: "POST",
+                url: "/Section/AddField",
+                data: {
+                    "sectionId": '@Model.Id',
+                    "type": $(".givingPrompt").data("type"),
+                    "prompt": $("#prompt").val()
+                },
+            }).done(function (msg) {
+                $(".givingPrompt").removeClass("givingPrompt").attr("id",msg);
+            });
+            $("#prompt").val("");
+            $("#promptmodal").modal("hide");
+        });
+
+    });
+</script>
+
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Sections</li>
+        <li class="active">Edit</li>
+    </ol>
+    <h2>Edit Section</h2>
+   
+</div>
+<div class="panel panel-primary" style="float:left;width:80%">
+    <div class="panel-heading">@Model.Name</div>
+    <div class="panel-body">
+        @foreach (Field f in Model.Fields)
+        {
+            <div class="sdelement ui-widget-content" id=@f.Id style="display:block">@f.PromptValue</div>
+        }
+    </div>
+</div>
+<div id="designer" style="float:right;width:15%;text-align:left">
+    <div class="delement ui-widget-content" id="TEXT_FIELD">TEXT_FIELD</div>
+    <br />
+    <div class="delement ui-widget-content" id="TEXT_BOX">TEXT_BOX</div>
+    <br />
+    <div class="delement ui-widget-content" id="FILE">FILE</div>
+    <br />
+    <div class="delement ui-widget-content" id="DATE">DATE</div>
+    <br />
+    <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN</div>
+    <br />
+    <div class="delement ui-widget-content" id="INFO">INFO</div>
+</div>
+<div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
+    <div class="modal-content">
+        <div class="modal-body">
+            Prompt:@Html.Editor("prompt")
+            <div style="text-align:right">
+                <button id="saveprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
