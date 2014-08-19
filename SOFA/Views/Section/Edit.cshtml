@@ -20,8 +20,9 @@
 
 @using System.Collections.Generic
 @using SOFA.Models
+@using SOFA.Models.ViewModels
 
-@model Section
+@model SectionEditViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -44,6 +45,27 @@
                     ui.item.data("type", ui.item.html());
                     $("#promptmodal").modal("show");
                 }
+                
+            },
+            stop: function (event, ui) {
+                if (ui.item.hasClass("sdelement")) {
+                    var sfos = [];
+                    $(".sdelement").each(function () {
+                        var sfo = $(this).attr("id");
+                        sfos.push(sfo);
+                    });
+                    var post = { FieldIds: sfos };
+                    $.ajax({
+                        type: "POST",
+                        url: "/Section/SetSectionFieldOrder",
+                        data: post,
+                        dataType: "json",
+                        traditional: true,
+                    }).done(function (msg) {
+                        //alert("set");
+
+                    });
+                }
             }
         });
         $("#saveprompt").on("click", function (event) {
@@ -52,12 +74,28 @@
                 type: "POST",
                 url: "/Section/AddField",
                 data: {
-                    "sectionId": '@Model.Id',
+                    "sectionId": '@Model.Section.Id',
                     "type": $(".givingPrompt").data("type"),
                     "prompt": $("#prompt").val()
                 },
             }).done(function (msg) {
-                $(".givingPrompt").removeClass("givingPrompt").attr("id",msg);
+                $(".givingPrompt").removeClass("givingPrompt").attr("id", msg).removeClass("delement").addClass("sdelement");
+                var sfos = [];
+                $(".sdelement").each(function () {
+                    var sfo = $(this).attr("id");
+                    sfos.push(sfo);
+                });
+                var post = { FieldIds: sfos };
+                $.ajax({
+                    type: "POST",
+                    url: "/Section/SetSectionFieldOrder",
+                    data: post,
+                    dataType: "json",
+                    traditional: true,
+                }).done(function (msg) {
+                    //alert("set");
+
+                });
             });
             $("#prompt").val("");
             $("#promptmodal").modal("hide");
@@ -75,9 +113,9 @@
    
 </div>
 <div class="panel panel-primary" style="float:left;width:80%">
-    <div class="panel-heading">@Model.Name</div>
+    <div class="panel-heading">@Model.Section.Name</div>
     <div class="panel-body">
-        @foreach (Field f in Model.Fields)
+        @foreach (Field f in Model.OrderedFields)
         {
             <div class="sdelement ui-widget-content" id=@f.Id style="display:block">@f.PromptValue</div>
         }

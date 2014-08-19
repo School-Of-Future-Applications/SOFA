@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -23,10 +24,15 @@ namespace SOFA.Controllers
         // GET: /Section/Create
         public ActionResult Edit(String SectionID = null)
         {
-            var section = this.DBCon().Sections.Where(s => s.Id == SectionID).FirstOrDefault();
-            //section.Fields = this.DBCon().Fields.Where(f => f.Section.Id == section.Id).ToArray();
-            //var line = this.DBCon().Lines.FirstOrDefault();
-            return View(section);
+            SectionEditViewModel sevm = new SectionEditViewModel();
+            sevm.Section = this.DBCon().Sections.Where(s => s.Id == SectionID).FirstOrDefault();
+            var ofids = this.DBCon().SectionFieldOrders.Where(sfo => sfo.Section.Id == sevm.Section.Id).OrderBy(sfo => sfo.Order).Select(x => x.Field.Id).ToList();
+            sevm.OrderedFields = new List<Field>();
+            foreach(string id in ofids)
+            {
+                sevm.OrderedFields.Add(this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault());
+            }
+            return View(sevm);
         }
 
         //
@@ -78,6 +84,30 @@ namespace SOFA.Controllers
             this.DBCon().Fields.Add(f);
             this.DBCon().SaveChanges();
             return Json(f.Id);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult SetSectionFieldOrder(List<string> FieldIds)
+        {
+            for(int i = 0;i<FieldIds.Count();i++)
+            {
+                var fid = FieldIds[i];
+                var usfo = this.DBCon().SectionFieldOrders.Where(sfo => sfo.FieldID == fid).FirstOrDefault();
+                if(usfo != null)
+                {
+                    usfo.Order = i;
+                }
+                else
+                {
+                    usfo = new SectionFieldOrder();
+                    usfo.FieldID = fid;
+                    usfo.SectionID = this.DBCon().Fields.Where(f => f.Id == fid).FirstOrDefault().Section.Id;
+                    this.DBCon().SectionFieldOrders.Add(usfo);
+                }
+                this.DBCon().SaveChanges();
+            }
+            return Json(1);
         }
 
         //
