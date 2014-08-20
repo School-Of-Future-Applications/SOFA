@@ -26,7 +26,7 @@ namespace SOFA.Controllers
         {
             //TODO: Actual logic
             Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
-            form.FormSections = FormSection.Sort(form.FormSections);
+            form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
             return View(form);
         }
 
@@ -108,16 +108,24 @@ namespace SOFA.Controllers
                     Message = "You cannot add a section twice to a form."
                 });
             }
-            Section belowof = FormSection.Sort(form.FormSections)
+            Section belowof;
+            if (form.FormSections.Count > 0)
+            {
+                belowof = SOFA.Models.FormSection.Sort(form.FormSections)
                                 .ElementAt(form.FormSections.Count - 1).Section;
 
-            if (belowof == null)
-            {
-                return Json(new
+                if (belowof == null)
                 {
-                    Success = "False",
-                    Message = "Could not find above section."
-                });
+                    return Json(new
+                    {
+                        Success = "False",
+                        Message = "Could not find above section."
+                    });
+                }
+            }
+            else
+            {
+                belowof = null;
             }
             FormSection formSection = new FormSection()
             {
@@ -127,11 +135,26 @@ namespace SOFA.Controllers
             form.FormSections.Add(formSection);
             this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
             this.DBCon().SaveChanges();
+            
             return Json(new
                 {
                     Success = "True",
                     Message = "Section added to form successfully"
                 });
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public PartialViewResult FormSection(String FormId, String SectionId)
+        {
+            var formsection = this.DBCon().FormSections
+                                .SingleOrDefault(f => f.FormId == FormId
+                                                    && f.SectionId == SectionId);
+            if (formsection == null)
+            {
+                return null;
+            }
+
+            return PartialView("~/Views/Shared/DisplayTemplates/FormSection.cshtml", formsection);
         }
 
         //
@@ -150,7 +173,7 @@ namespace SOFA.Controllers
                         Message = "Could not find form"
                     });
             }
-            var formSections = FormSection.Sort(form.FormSections).ToList();
+            var formSections = SOFA.Models.FormSection.Sort(form.FormSections).ToList();
             var removeFormSection = formSections.SingleOrDefault(fs => fs.SectionId == SectionId);
             if (removeFormSection == null)
             {

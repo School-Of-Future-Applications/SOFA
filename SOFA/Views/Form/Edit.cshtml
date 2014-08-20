@@ -23,6 +23,22 @@
                         {
                             SectionId: SectionId,
                             FormId: formid
+                        },
+                        function (data) {
+                            if (data.Success === "True") {
+                                $.get(
+                                    "FormSection",
+                                    {
+                                        FormId: formid,
+                                        SectionId: SectionId
+                                    },
+                                    function (data) {
+                                        $accordion.append(data);
+                                        $accordion.accordion("refresh");
+                                    }
+                                );
+                            }
+                            
                         }
                     );
                     $dialog.dialog("close");
@@ -33,7 +49,7 @@
             }
         });
 
-        $("a.addSectionLink").click(function (event) {
+        $(".addSectionLink").on("click", function (event) {
             event.preventDefault();
             $dialog.load(this.href, function () {
                 $dialog.dialog('open');
@@ -47,8 +63,8 @@
             title: "Remove Section",
             buttons: {
                 "Remove": function () {
-                    var $activeIndex = $("#accordion").accordion("option", "active");
-                    var $activeDiv = $("#accordion").children("div").eq($activeIndex);
+                    var $activeIndex = $accordion.accordion("option", "active");
+                    var $activeDiv = $accordion.children("div").eq($activeIndex);
                     var $sectid = $activeDiv.children("#s_SectionId").val();
                      
                     var $formid = $("#Id").val();
@@ -72,16 +88,16 @@
             }
         });
 
-        $("a.removeSectionLink").click(function (event) {
+        $(document).on("click", ".removeSectionLink", function (event) {
             event.preventDefault();
             $removeDialog.dialog('open');
         });
 
         var prev_sect_update = new Array();
-        $("#accordion").accordion(
+        var $accordion = $("#accordion").accordion(
             {
                 header: "> div > h3",
-                heightStyle: "fill"
+                heightStyle: "content"
             }).
             sortable({
                 axis: "y",
@@ -96,7 +112,7 @@
                         $section_ids.push($(this).val());
                     });
                     // Refresh accordion to handle new order
-                    $(this).accordion("refresh");
+                    $accordion.accordion("refresh");
                     //check if needs to be updated
                     var equal = true;
                     $.each($section_ids, function (i) {
