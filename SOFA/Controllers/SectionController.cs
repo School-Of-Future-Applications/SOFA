@@ -92,7 +92,7 @@ namespace SOFA.Controllers
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult Section(string SectionId)
+        public ActionResult SectionPartial(string SectionId)
         {
             return View();
         }

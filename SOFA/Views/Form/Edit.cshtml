@@ -82,7 +82,7 @@
                             SectionId: $sectid
                         },
                         function (data) {
-                            if (data.Success === "False") {
+                            if (data.Success === "True") {
                                 $($activeDiv).remove();
                                 $accordion.accordion("refresh");
                             }
