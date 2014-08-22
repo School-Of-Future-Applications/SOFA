@@ -87,7 +87,7 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Preview", "Enrol", "Enrolment", new { formId = f.Id }, null)</li>
-                            <li><a href="#">Delete</a></li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { formId = f.Id })</li>
                         </ul>
                     </div>
                 </div>

@@ -64,8 +64,7 @@ namespace SOFA.Controllers
                 return PartialView();
         }
 
-        //
-        // GET: /Section/Delete/5
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Delete(string id)
         {
             Section sec = null;
