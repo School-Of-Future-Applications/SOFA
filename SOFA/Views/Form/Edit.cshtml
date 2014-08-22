@@ -37,6 +37,8 @@
                                         $accordion.accordion("refresh");
                                     }
                                 );
+                            } else {
+                                console.log(data.Message);
                             }
                             
                         }
@@ -63,7 +65,11 @@
             title: "Remove Section",
             buttons: {
                 "Remove": function () {
+                    var $accLength = $accordion.children("div").size();
                     var $activeIndex = $accordion.accordion("option", "active");
+                    if ($accLength == 1 && $activeIndex == 1) {
+                        $activeIndex = 0;
+                    }
                     var $activeDiv = $accordion.children("div").eq($activeIndex);
                     var $sectid = $activeDiv.children("#s_SectionId").val();
                      
@@ -75,8 +81,12 @@
                             FormId: $formid,
                             SectionId: $sectid
                         },
-                        function () {
-                            $($activeDiv).remove();
+                        function (data) {
+                            if (data.Success === "False") {
+                                $($activeDiv).remove();
+                                $accordion.accordion("refresh");
+                            }
+                            
                         }
                     );
                     $removeDialog.dialog("close");
@@ -169,6 +179,7 @@
         
 
     </div>
+    <div class="alert-danger"></div>
     <div id="accordion" >
         @if (Model.FormSections != null)
         { 
