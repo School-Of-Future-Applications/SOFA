@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,9 +61,17 @@ namespace SOFA.Controllers
         //
         // GET: /Form/Delete/5
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult Delete(String FormID)
+        public ActionResult Delete(String formId)
         {
-            return View();
+            Form form = null;
+            try
+            {
+                form = this.DBCon().Forms.Where(x => x.Id == formId).First();
+                this.DBCon().Entry(form).State = EntityState.Deleted;
+                this.DBCon().SaveChanges();
+            }
+            catch {}
+            return RedirectToAction("Index");
         }
 
         //
