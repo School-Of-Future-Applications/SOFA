@@ -7,7 +7,7 @@ using System.Web;
 
 namespace SOFA.Models
 {
-    public class EnrollmentFormSection 
+    public class EnrolmentFormSection 
     {
         [Key, Column(Order = 1)]
         public String EnrollmentFormId { get; set; }
@@ -15,7 +15,7 @@ namespace SOFA.Models
         [Key, Column(Order = 2)]
         public String EnrollmentSectionId { get; set; }
 
-        public virtual EnrollmentForm Form { get; set; }
+        public virtual EnrolmentForm Form { get; set; }
 
         public virtual EnrollmentSection Section { get; set; }
 
