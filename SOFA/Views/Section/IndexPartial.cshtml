@@ -17,23 +17,17 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model SOFA.Models.FormSection
-          
-<div class="">
-    @Html.HiddenFor(m => m.SectionId)
-    
-    <h3>@Html.DisplayFor(m => m.Section.Name)</h3>
-    <div>
-        <div class="pull-right">
 
-        @Html.ActionLink("Edit", "Edit", "Section")        
-        <a href="#" class="removeSectionLink">Remove</a>
-            
-        
-        </div>
-        <div>
-            @Html.DisplayFor(m => m.Section)
-        </div>
+@using SOFA.Models.ViewModels
+
+@model SectionSelectViewModel
+
+<div class="form-group">
+    @Html.LabelFor(m => m.SectionItems, new { @class = "col-md-2 text-right" })
+    <div class="col-md-10">
+        @Html.DropDownListFor(m => m.SelectedSectionId, Model.SectionItems, new { @class="dropdown col-md-8"} )
     </div>
+</div>
+<div id="section" class="panel-primary">
 
 </div>

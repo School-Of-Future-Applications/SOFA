@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -25,7 +26,7 @@ namespace SOFA.Controllers
         {
             //TODO: Actual logic
             Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
-            FormSection.Sort(form.FormSections);
+            form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
             return View(form);
         }
 
@@ -76,12 +77,146 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public JsonResult UpdateSectionOrder(String formID, string[] SectionIDs)
+        public JsonResult AddSection(String FormId, String SectionId)
+        {
+            //TODO
+            Form form = this.DBCon().Forms.SingleOrDefault(f => f.Id == FormId);
+            if (form == null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find form"
+                });
+            }
+            Section section = this.DBCon().Sections.
+                                SingleOrDefault(s => s.Id == SectionId);
+            if (section == null) 
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find section."
+                });
+            }
+            if (form.FormSections.SingleOrDefault(f => f.SectionId == SectionId)
+                        != null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "You cannot add a section twice to a form."
+                });
+            }
+            Section belowof;
+            if (form.FormSections.Count > 0)
+            {
+                belowof = SOFA.Models.FormSection.Sort(form.FormSections)
+                                .ElementAt(form.FormSections.Count - 1).Section;
+
+                if (belowof == null)
+                {
+                    return Json(new
+                    {
+                        Success = "False",
+                        Message = "Could not find above section."
+                    });
+                }
+            }
+            else
+            {
+                belowof = null;
+            }
+            FormSection formSection = new FormSection()
+            {
+                Section = section,
+                BelowOf = belowof
+            };
+            form.FormSections.Add(formSection);
+            this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+            this.DBCon().SaveChanges();
+            
+            return Json(new
+                {
+                    Success = "True",
+                    Message = "Section added to form successfully"
+                });
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public PartialViewResult FormSection(String FormId, String SectionId)
+        {
+            var formsection = this.DBCon().FormSections
+                                .SingleOrDefault(f => f.FormId == FormId
+                                                    && f.SectionId == SectionId);
+            if (formsection == null)
+            {
+                return null;
+            }
+
+            return PartialView("~/Views/Shared/DisplayTemplates/FormSection.cshtml", formsection);
+        }
+
+        //
+        // POST: /Form/RemoveSection
+        [HttpPost]
+        [Authorize(Roles=SOFARole.AUTH_MODERATOR)]
+        public JsonResult RemoveSection(String FormId, String SectionId)
+        {
+            //Get form sections and sort
+            Form form = this.DBCon().Forms.SingleOrDefault(f => f.Id == FormId);
+            if (form == null)
+            {
+                return Json(new
+                    {
+                        Success = "False",
+                        Message = "Could not find form"
+                    });
+            }
+            var formSections = SOFA.Models.FormSection.Sort(form.FormSections).ToList();
+            var removeFormSection = formSections.SingleOrDefault(fs => fs.SectionId == SectionId);
+            if (removeFormSection == null)
+            {
+                return Json(new
+                {
+                    Success = "False",
+                    Message = "Could not find section."
+                });
+            }
+            var removeIndex = formSections.IndexOf(removeFormSection);
+            //Link next formsection belowof to above 
+            if (removeIndex != formSections.Count - 1)
+            {
+                if (removeIndex == 0)
+                {
+                    formSections[removeIndex + 1].BelowOf = null;                    
+                }
+                else  //Not the last section
+                {
+                    formSections[removeIndex + 1].BelowOf = removeFormSection.BelowOf;
+                }         
+            }
+            //Delete FormSection
+            formSections.Remove(removeFormSection);
+            form.FormSections = formSections;
+            this.DBCon().Forms.Attach(form);
+            this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+            this.DBCon().SaveChanges();
+            return Json(new
+                {
+                    Success = "True",
+                    Message = "Section removed successfully."
+                });
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public JsonResult UpdateSectionOrder(FormSectionOrderViewModel viewModel)
         {
             
             //Get list of form sections
             Form form = this.DBCon().Forms.
-                                SingleOrDefault(f => f.Id == formID);
+                                SingleOrDefault(f => f.Id == viewModel.FormId);
             
             if (form == null)
             {
@@ -95,11 +230,11 @@ namespace SOFA.Controllers
             //For each ID:
             //  Get formsection where id == section id
             //  Update belowof to be section with ID prev in list
-            int count = SectionIDs.Count();
+            int count = viewModel.SectionIds.Count();
             for (int i = 0; i < count; i++)
             {
                 FormSection fsection = fsections.
-                                        SingleOrDefault(f => f.Section.Id == SectionIDs[i]);
+                                        SingleOrDefault(f => f.Section.Id == viewModel.SectionIds[i]);
                 if (fsection == null)
                 {
                     //Can't find form. Bail out.
@@ -116,7 +251,7 @@ namespace SOFA.Controllers
                 }
                 else
                 {
-                    var aboveSectionID = SectionIDs[i - 1];
+                    var aboveSectionID = viewModel.SectionIds[i - 1];
                     Section below = this.DBCon().Sections.
                                     SingleOrDefault(s => s.Id == aboveSectionID );
                     fsection.BelowOf = below;
@@ -133,6 +268,8 @@ namespace SOFA.Controllers
                 Message = "Form Saved."
             });
         }
+
+
 
         public override Enum NavProviderTerm()
         {
