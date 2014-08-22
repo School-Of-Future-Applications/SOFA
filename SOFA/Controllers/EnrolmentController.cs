@@ -32,7 +32,6 @@ namespace SOFA.Controllers
     {
         public ActionResult Enrol(string formId)
         {
-
             return View();
         }
 	}
