@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -82,6 +83,20 @@ namespace SOFA.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult IndexPartial()
+        {
+            var sections = this.DBCon().Sections.ToList();
+            return View(new SectionSelectViewModel(sections));
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult SectionPartial(string SectionId)
+        {
+            return View();
+        }
+
 
         public override Enum NavProviderTerm()
         {
