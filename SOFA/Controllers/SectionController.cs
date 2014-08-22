@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,7 +18,7 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
-            return View(this.DBCon().Sections.ToList());
+            return View(this.DBCon().Sections.OrderBy(x => x.DateCreated).ToList());
         }
 
         //
@@ -34,8 +35,6 @@ namespace SOFA.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -67,26 +66,22 @@ namespace SOFA.Controllers
 
         //
         // GET: /Section/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
-        }
-
-        //
-        // POST: /Section/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
+            Section sec = null;
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if(!Section.DEFAULT_SECTION_IDS.Contains(id))
+                {
+                    sec = this.DBCon().Sections.Where(x => x.Id == id).First();
+                    this.DBCon().Entry(sec).State = EntityState.Deleted;
+                    this.DBCon().SaveChanges();
+                }
             }
             catch
             {
-                return View();
             }
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]

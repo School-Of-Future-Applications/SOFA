@@ -61,9 +61,9 @@ namespace SOFA.Models
 
         public DbSet<FieldOption> FieldOptions { get; set; }
 
-        public DbSet<EnrollmentForm> EnrollmentForms { get; set; }
+        public DbSet<EnrolmentForm> EnrollmentForms { get; set; }
 
-        public DbSet<EnrollmentFormSection> EnrollmentFormSections { get; set; }
+        public DbSet<EnrolmentFormSection> EnrollmentFormSections { get; set; }
 
         public DbSet<EnrollmentSection> EnrollmentSections { get; set; }
 

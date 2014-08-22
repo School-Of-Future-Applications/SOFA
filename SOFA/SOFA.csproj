@@ -344,6 +344,7 @@
     <Content Include="Views\Section\CreateSection.cshtml" />
     <Content Include="Views\Form\CreateForm.cshtml" />
     <Content Include="Views\Section\IndexPartial.cshtml" />
+    <Content Include="Views\Enrolment\Enrol.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -353,7 +354,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Enrolment\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>

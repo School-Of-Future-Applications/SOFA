@@ -4,10 +4,18 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+using SOFA.Infrastructure;
+
 namespace SOFA.Models
 {
-    public class EnrollmentForm : IValidatableObject
+    public class EnrolmentForm : IValidatableObject
     {
+        public EnrolmentForm()
+        {
+            Id = UUIDUtil.NewUUID();
+            DateCreated = DateTime.Now;
+            EnrolmentFormSections = new List<EnrolmentFormSection>();
+        }
 
         [Key]
         public String Id { get; set; }
@@ -20,7 +28,7 @@ namespace SOFA.Models
 
         public TimetabledClass Class { get; set; }
 
-        public virtual IEnumerable<EnrollmentFormSection> EnrollmentFormSections { get; set; }
+        public virtual IEnumerable<EnrolmentFormSection> EnrolmentFormSections { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
