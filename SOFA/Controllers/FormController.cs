@@ -133,6 +133,7 @@ namespace SOFA.Controllers
                 BelowOf = belowof
             };
             form.FormSections.Add(formSection);
+            form.updateModified();
             this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
             this.DBCon().SaveChanges();
             
@@ -199,6 +200,7 @@ namespace SOFA.Controllers
             //Delete FormSection
             formSections.Remove(removeFormSection);
             form.FormSections = formSections;
+            form.updateModified();
             this.DBCon().Forms.Attach(form);
             this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
             this.DBCon().SaveChanges();
@@ -259,8 +261,9 @@ namespace SOFA.Controllers
                 this.DBCon().FormSections.Attach(fsection);
                 this.DBCon().Entry(fsection).State = System.Data.Entity.EntityState.Modified;
 
-            }            
+            }
 
+            form.updateModified();
             this.DBCon().SaveChanges();
             return Json(new
             {

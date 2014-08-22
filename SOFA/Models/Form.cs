@@ -57,6 +57,11 @@ namespace SOFA.Models
             return date;
         }
 
+        public void updateModified()
+        {
+            LastModified = DateTime.Now;
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             yield return null;
