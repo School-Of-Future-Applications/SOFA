@@ -46,7 +46,7 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return View();
+            return View(enrolForm);
         }
 	}
 }

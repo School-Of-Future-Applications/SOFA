@@ -9,11 +9,11 @@ namespace SOFA.Models
 {
     public class EnrolmentFormSection 
     {
-        public EnrolmentFormSection(EnrolmentForm eForm, FormSection section)
+        public EnrolmentFormSection(EnrolmentForm eForm, FormSection fSection)
         {
             EnrolmentFormId = eForm.EnrolmentFormId;
             EnrolmentForm = eForm;
-            fromFormSection(section);
+            fromFormSection(fSection);
         }
 
         [Key, Column(Order = 1)]
@@ -28,8 +28,9 @@ namespace SOFA.Models
 
         //public virtual EnrolmentSection BelowOf { get; set; }
 
-        private void fromFormSection(FormSection section)
+        private void fromFormSection(FormSection fSection)
         {
+            EnrolmentSection = new EnrolmentSection(fSection.Section);
         }
     }
 }

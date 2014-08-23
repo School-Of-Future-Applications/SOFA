@@ -39,6 +39,8 @@ namespace SOFA.Models
         private void fromForm(Form form)
         {
             Name = form.FormName;
+            foreach (FormSection sec in form.FormSections)
+                EnrolmentFormSections.Add(new EnrolmentFormSection(this, sec));
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
