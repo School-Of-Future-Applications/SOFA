@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -60,9 +61,17 @@ namespace SOFA.Controllers
         //
         // GET: /Form/Delete/5
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult Delete(String FormID)
+        public ActionResult Delete(String formId)
         {
-            return View();
+            Form form = null;
+            try
+            {
+                form = this.DBCon().Forms.Where(x => x.Id == formId).First();
+                this.DBCon().Entry(form).State = EntityState.Deleted;
+                this.DBCon().SaveChanges();
+            }
+            catch {}
+            return RedirectToAction("Index");
         }
 
         //
@@ -133,6 +142,7 @@ namespace SOFA.Controllers
                 BelowOf = belowof
             };
             form.FormSections.Add(formSection);
+            form.updateModified();
             this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
             this.DBCon().SaveChanges();
             
@@ -199,6 +209,7 @@ namespace SOFA.Controllers
             //Delete FormSection
             formSections.Remove(removeFormSection);
             form.FormSections = formSections;
+            form.updateModified();
             this.DBCon().Forms.Attach(form);
             this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
             this.DBCon().SaveChanges();
@@ -259,8 +270,9 @@ namespace SOFA.Controllers
                 this.DBCon().FormSections.Attach(fsection);
                 this.DBCon().Entry(fsection).State = System.Data.Entity.EntityState.Modified;
 
-            }            
+            }
 
+            form.updateModified();
             this.DBCon().SaveChanges();
             return Json(new
             {

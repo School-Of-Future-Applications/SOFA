@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models
 {
-    public class EnrollmentSection
+    public class EnrolmentSection
     {
         [Key]
         public int Id { get; set; }
@@ -15,6 +15,6 @@ namespace SOFA.Models
 
         public String SectionName { get; set; }
 
-        public virtual IEnumerable<EnrollmentField> EnrollmentFields { get; set; }
+        public virtual IEnumerable<EnrolmentField> EnrollmentFields { get; set; }
     }
 }
