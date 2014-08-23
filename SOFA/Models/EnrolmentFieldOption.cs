@@ -6,21 +6,21 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models
 {
-    public class EnrollmentFieldOption 
+    public class EnrolmentFieldOption 
     {
 
         [Key]
         public int Id { get; set; }
         public String OptionType { get; set; }
         public String OptionValue { get; set; }
-        public virtual EnrollmentField EnrollmentField { get; set; }
+        public virtual EnrolmentField EnrollmentField { get; set; }
 
-        public EnrollmentFieldOption()
+        public EnrolmentFieldOption()
         {
 
         }
 
-        public EnrollmentFieldOption(FieldOption fieldOption) : this()
+        public EnrolmentFieldOption(FieldOption fieldOption) : this()
         {
             OptionType = fieldOption.OptionType;
             OptionValue = fieldOption.OptionValue;

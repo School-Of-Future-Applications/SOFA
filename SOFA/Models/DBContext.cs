@@ -65,11 +65,11 @@ namespace SOFA.Models
 
         public DbSet<EnrolmentFormSection> EnrollmentFormSections { get; set; }
 
-        public DbSet<EnrollmentSection> EnrollmentSections { get; set; }
+        public DbSet<EnrolmentSection> EnrollmentSections { get; set; }
 
-        public DbSet<EnrollmentField> EnrollmentFields { get; set; }
+        public DbSet<EnrolmentField> EnrollmentFields { get; set; }
 
-        public DbSet<EnrollmentFieldOption> EnrollmentFieldOptions { get; set; }
+        public DbSet<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
 
         #endregion
 

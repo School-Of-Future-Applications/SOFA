@@ -6,28 +6,28 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SOFA.Models
 {
-    public class EnrollmentField : IValidatableObject
+    public class EnrolmentField : IValidatableObject
     {
         [Key]
         public int Id { get; set; }
         public String FieldType { get; set; }
         public String PromptValue { get; set; }
-        public virtual List<EnrollmentFieldOption> EnrollmentFieldOptions { get; set; }
+        public virtual List<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
         public String Value { get; set; }
 
-        public EnrollmentField()
+        public EnrolmentField()
         {
-            EnrollmentFieldOptions = new List<EnrollmentFieldOption>();
+            EnrollmentFieldOptions = new List<EnrolmentFieldOption>();
         }
 
-        public EnrollmentField(Field field) : this()
+        public EnrolmentField(Field field) : this()
         {
             FieldType = field.FieldType;
             PromptValue = field.PromptValue;
 
             foreach (FieldOption opt in field.FieldOptions)
             {
-                EnrollmentFieldOptions.Add(new EnrollmentFieldOption(opt));                
+                EnrollmentFieldOptions.Add(new EnrolmentFieldOption(opt));                
             }
         }
 
