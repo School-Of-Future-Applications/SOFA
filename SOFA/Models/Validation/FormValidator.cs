@@ -24,7 +24,7 @@ namespace SOFA.Models.Validation
         { 
             //TODO
             //Validate Field Type
-            if (!Field.FieldTypes().Contains(field.FieldType))
+            if (!Field.FIELD_TYPES.Contains(field.FieldType))
             {
                 yield return new ValidationResult("Illegal field type", new List<String> { "FieldType" });
             }            

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+using SOFA.Infrastructure;
+
 namespace SOFA.Models
 {
     public class EnrolmentField : IValidatableObject
     {
         [Key]
-        public int Id { get; set; }
+        public string EnrolmentFIeldId { get; set; }
         public String FieldType { get; set; }
         public String PromptValue { get; set; }
         public virtual List<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
@@ -17,10 +19,12 @@ namespace SOFA.Models
 
         public EnrolmentField()
         {
+            EnrolmentFIeldId = UUIDUtil.NewUUID();
             EnrollmentFieldOptions = new List<EnrolmentFieldOption>();
         }
 
-        public EnrolmentField(Field field) : this()
+        public EnrolmentField(Field field)
+            : this()
         {
             FieldType = field.FieldType;
             PromptValue = field.PromptValue;
@@ -33,6 +37,7 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
+            return null;
             throw new NotImplementedException();
         }
     }

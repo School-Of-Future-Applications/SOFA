@@ -119,6 +119,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\dialog.css" />
+    <Content Include="Content\enrolment.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -345,6 +346,8 @@
     <Content Include="Views\Form\CreateForm.cshtml" />
     <Content Include="Views\Section\IndexPartial.cshtml" />
     <Content Include="Views\Enrolment\Enrol.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
