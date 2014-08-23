@@ -39,12 +39,12 @@ namespace SOFA.Models
         private void fromForm(Form form)
         {
             Name = form.FormName;
-            
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new NotImplementedException();
+            return null;
+            //throw new NotImplementedException();
         }
     }
 }
