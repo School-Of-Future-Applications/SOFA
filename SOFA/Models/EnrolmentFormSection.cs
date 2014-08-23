@@ -26,11 +26,10 @@ namespace SOFA.Models
 
         public virtual EnrolmentSection EnrolmentSection { get; set; }
 
-        public virtual EnrolmentSection BelowOf { get; set; }
+        //public virtual EnrolmentSection BelowOf { get; set; }
 
         private void fromFormSection(FormSection section)
         {
-        
         }
     }
 }

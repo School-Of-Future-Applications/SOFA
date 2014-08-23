@@ -9,7 +9,7 @@ namespace SOFA.Models
     public class EnrolmentSection
     {
         [Key]
-        public int EnrolmentSectionId { get; set; }
+        public string EnrolmentSectionId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
