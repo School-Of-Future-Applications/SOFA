@@ -17,9 +17,9 @@ namespace SOFA.Models
 
         public virtual EnrolmentForm Form { get; set; }
 
-        public virtual EnrollmentSection Section { get; set; }
+        public virtual EnrolmentSection Section { get; set; }
 
         [Required]
-        public virtual EnrollmentSection BelowOf { get; set; }
+        public virtual EnrolmentSection BelowOf { get; set; }
     }
 }
