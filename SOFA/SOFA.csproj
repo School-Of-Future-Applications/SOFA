@@ -250,11 +250,11 @@
     <Compile Include="Models\DBContext.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\EmailSettings.cs" />
-    <Compile Include="Models\EnrollmentField.cs" />
-    <Compile Include="Models\EnrollmentFieldOption.cs" />
-    <Compile Include="Models\EnrollmentFormSection.cs" />
-    <Compile Include="Models\EnrollmentSection.cs" />
-    <Compile Include="Models\EnrollmentForm.cs" />
+    <Compile Include="Models\EnrolmentField.cs" />
+    <Compile Include="Models\EnrolmentFieldOption.cs" />
+    <Compile Include="Models\EnrolmentFormSection.cs" />
+    <Compile Include="Models\EnrolmentSection.cs" />
+    <Compile Include="Models\EnrolmentForm.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\FieldOption.cs" />
     <Compile Include="Models\Form.cs" />
