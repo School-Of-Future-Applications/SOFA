@@ -12,13 +12,19 @@ namespace SOFA.Models
     {
         public EnrolmentForm()
         {
-            Id = UUIDUtil.NewUUID();
+            EnrolmentFormId = UUIDUtil.NewUUID();
             DateCreated = DateTime.Now;
             EnrolmentFormSections = new List<EnrolmentFormSection>();
         }
 
+        public EnrolmentForm(Form form)
+            : this()
+        {
+            fromForm(form);
+        }
+
         [Key]
-        public String Id { get; set; }
+        public String EnrolmentFormId { get; set; }
 
         public String Name { get; set; }
 
@@ -28,7 +34,13 @@ namespace SOFA.Models
 
         public TimetabledClass Class { get; set; }
 
-        public virtual IEnumerable<EnrolmentFormSection> EnrolmentFormSections { get; set; }
+        public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
+
+        private void fromForm(Form form)
+        {
+            Name = form.FormName;
+            
+        }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {

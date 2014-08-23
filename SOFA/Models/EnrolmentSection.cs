@@ -9,12 +9,14 @@ namespace SOFA.Models
     public class EnrolmentSection
     {
         [Key]
-        public int Id { get; set; }
+        public int EnrolmentSectionId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public String SectionName { get; set; }
 
         public virtual IEnumerable<EnrolmentField> EnrollmentFields { get; set; }
+
+        public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
     }
 }

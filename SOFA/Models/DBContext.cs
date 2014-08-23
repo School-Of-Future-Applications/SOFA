@@ -78,12 +78,24 @@ namespace SOFA.Models
             return new DBContext();
         }
 
-        /*
         public void  OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Conventions.Remove<System.Data.Entity.ModelConfiguration.Conventions.ManyToManyCascadeDeleteConvention>();
-        }
-         */
+            modelBuilder.Entity<EnrolmentForm>()
+                .HasKey(eform => eform.EnrolmentFormId);
+            modelBuilder.Entity<EnrolmentSection>()
+                .HasKey(eSection => eSection.EnrolmentSectionId);
+            modelBuilder.Entity<EnrolmentFormSection>()
+                .HasKey(efSection => new { efSection.EnrolmentFormId
+                                         , efSection.EnrolmentSectionId });
 
+            modelBuilder.Entity<EnrolmentSection>()
+                .HasMany(eSection => eSection.EnrolmentFormSections)
+                .WithRequired(efSection => efSection.EnrolmentSection)
+                .HasForeignKey(efSection => efSection.EnrolmentSectionId);
+            modelBuilder.Entity<EnrolmentForm>()
+                .HasMany(eForm => eForm.EnrolmentFormSections)
+                .WithRequired(efSection => efSection.EnrolmentForm)
+                .HasForeignKey(efSection => efSection.EnrolmentFormId);
+        }
     }
 }
