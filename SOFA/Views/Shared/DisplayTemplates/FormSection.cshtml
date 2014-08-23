@@ -20,7 +20,7 @@
 @model SOFA.Models.FormSection
           
 <div class="accordion-div">
-    @Html.HiddenFor(m => m.SectionId)
+    @Html.HiddenFor(m => m.SectionId, new { @class = "sectionId" })
     
     <h3>@Html.DisplayFor(m => m.Section.Name)</h3>
     <div>
