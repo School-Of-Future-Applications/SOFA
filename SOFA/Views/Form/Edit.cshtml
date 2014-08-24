@@ -70,8 +70,8 @@
                     if ($accLength == 1 && $activeIndex == 1) {
                         $activeIndex = 0;
                     }
-                    var $activeDiv = $accordion.children("div").eq($activeIndex);
-                    var $sectid = $activeDiv.children("#s_SectionId").val();
+                    var $activeDiv = $(".accordion-div").eq($activeIndex);
+                    var $sectid = $activeDiv.find(".sectionId").val();
                      
                     var $formid = $("#Id").val();
                     console.log($sectid);
@@ -183,10 +183,7 @@
     <div id="accordion" >
         @if (Model.FormSections != null)
         { 
-            foreach (FormSection s in Model.FormSections)
-            {
-                @Html.DisplayFor(m => s)
-            }
+            @Html.DisplayFor(m => m.FormSections)
         }
         
     </div>
