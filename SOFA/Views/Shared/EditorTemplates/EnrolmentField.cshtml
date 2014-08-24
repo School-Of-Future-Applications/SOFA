@@ -19,22 +19,26 @@
 *@
 
 @using SOFA.Models
+@model EnrolmentField
 
-@model EnrolmentSection
+<style>
+    .label-align {
+        text-align: right;
+    }
+</style>
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        @Model.SectionName
-    </div>
-    <div class="panel-body">
-        @foreach(EnrolmentField field in Model.EnrolmentFields)
-        {
-            <div class="row">
-                <div class="col-xs-12">
-                    @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentField.cshtml"
-                                 ,field)
-                </div>
+<div class="form-group">
+    @switch(Model.FieldType)
+    {
+        case Field.TYPE_TEXT_FIELD:
+            @Html.LabelFor(model => model.Value, Model.PromptValue
+                          ,new { @class = "control-label col-xs-2 label-align" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.Value)
             </div>
-        }
-    </div>
+            break;
+
+        default:
+            break;
+    }
 </div>
