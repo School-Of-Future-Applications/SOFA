@@ -348,6 +348,7 @@
     <Content Include="Views\Enrolment\Enrol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
