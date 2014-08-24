@@ -21,6 +21,24 @@
 @using SOFA.Models
 @model EnrolmentField
 
-<div class="col-xs-4">
-    @Model.FieldType
+<style>
+    .label-align {
+        text-align: right;
+    }
+</style>
+
+<div class="form-group">
+    @switch(Model.FieldType)
+    {
+        case Field.TYPE_TEXT_FIELD:
+            @Html.LabelFor(model => model.Value, Model.PromptValue
+                          ,new { @class = "control-label col-xs-2 label-align" })
+            <div class="col-xs-10">
+                @Html.EditorFor(model => model.Value)
+            </div>
+            break;
+
+        default:
+            break;
+    }
 </div>

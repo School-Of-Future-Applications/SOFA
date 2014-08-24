@@ -124,19 +124,23 @@ namespace SOFA.Migrations
             //Create fields
             Field fieldA = new Field(Field.TYPE_TEXT_FIELD)
             {
-                Section = sectionCourse
+                Section = sectionCourse,
+                PromptValue = "Field A"
             };
             Field fieldB = new Field(Field.TYPE_TEXT_FIELD)
             {
-                Section = sectionCourse
+                Section = sectionCourse,
+                PromptValue = "Field B"
             };
             Field fieldC = new Field(Field.TYPE_TEXT_FIELD)
             {
-                Section = sectionStudent
+                Section = sectionStudent,
+                PromptValue = "Field C"
             };
             Field fieldD = new Field(Field.TYPE_TEXT_FIELD)
             {
-                Section = sectionStudent
+                Section = sectionStudent,
+                PromptValue = "Field D"
             };
 
             //Add options to fields
