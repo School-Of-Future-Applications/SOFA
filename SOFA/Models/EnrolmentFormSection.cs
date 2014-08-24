@@ -9,17 +9,28 @@ namespace SOFA.Models
 {
     public class EnrolmentFormSection 
     {
+        public EnrolmentFormSection(EnrolmentForm eForm, FormSection fSection)
+        {
+            EnrolmentFormId = eForm.EnrolmentFormId;
+            EnrolmentForm = eForm;
+            fromFormSection(fSection);
+        }
+
         [Key, Column(Order = 1)]
-        public String EnrollmentFormId { get; set; }
+        public String EnrolmentFormId { get; set; }
 
         [Key, Column(Order = 2)]
-        public String EnrollmentSectionId { get; set; }
+        public String EnrolmentSectionId { get; set; }
 
-        public virtual EnrolmentForm Form { get; set; }
+        public virtual EnrolmentForm EnrolmentForm { get; set; }
 
-        public virtual EnrolmentSection Section { get; set; }
+        public virtual EnrolmentSection EnrolmentSection { get; set; }
 
-        [Required]
-        public virtual EnrolmentSection BelowOf { get; set; }
+        //public virtual EnrolmentSection BelowOf { get; set; }
+
+        private void fromFormSection(FormSection fSection)
+        {
+            EnrolmentSection = new EnrolmentSection(fSection.Section);
+        }
     }
 }

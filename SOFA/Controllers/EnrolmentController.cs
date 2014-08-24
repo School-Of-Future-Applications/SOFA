@@ -38,13 +38,15 @@ namespace SOFA.Controllers
             try
             {
                 fromForm = this.DBCon().Forms.Where(x => x.Id == formId).First();
-                
+                enrolForm = new EnrolmentForm(fromForm);
+                this.DBCon().EnrolmentForms.Add(enrolForm);
+                this.DBCon().SaveChanges();
             }
             catch
             {
                 return new HttpNotFoundResult();
             }
-            return View();
+            return View(enrolForm);
         }
 	}
 }

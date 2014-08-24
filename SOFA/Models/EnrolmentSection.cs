@@ -4,17 +4,41 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
+using SOFA.Infrastructure;
+
 namespace SOFA.Models
 {
     public class EnrolmentSection
     {
+        public EnrolmentSection()
+        {
+            EnrolmentSectionId = UUIDUtil.NewUUID();
+            EnrolmentFields = new List<EnrolmentField>();
+            DateCreated = DateTime.Now;
+        }
+
+        public EnrolmentSection(Section section)
+            : this()
+        {
+            fromSection(section);
+        }
+
         [Key]
-        public int Id { get; set; }
+        public string EnrolmentSectionId { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public String SectionName { get; set; }
 
-        public virtual IEnumerable<EnrolmentField> EnrollmentFields { get; set; }
+        public virtual ICollection<EnrolmentField> EnrolmentFields { get; set; }
+
+        public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
+
+        private void fromSection(Section section)
+        {
+            SectionName = section.Name;
+            foreach (Field f in section.Fields)
+                EnrolmentFields.Add(new EnrolmentField(f));
+        }
     }
 }

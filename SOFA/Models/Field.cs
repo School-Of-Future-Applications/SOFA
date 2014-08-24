@@ -13,13 +13,33 @@ namespace SOFA.Models
 {
     public class Field : IValidatableObject
     {   
-        public const String TYPE_TEXT_FIELD = "TEXT_FIELD";
-        public const String TYPE_TEXT_BOX = "TEXT_BOX";
+        public const String TYPE_TEXT_MULTI = "TEXT_MULTI";
+        public const String TYPE_TEXT_SINGLE = "TEXT_SINGLE";
         public const String TYPE_DATE = "DATE";
         public const String TYPE_FILE = "FILE";
         public const String TYPE_DROPDOWN = "DROPDOWN";
         public const String TYPE_INFO = "INFORMATION";
-        
+
+        public static List<String> FIELD_TYPES = new List<String>()
+            {
+                 TYPE_TEXT_MULTI
+                ,TYPE_TEXT_SINGLE
+                ,TYPE_DATE
+                ,TYPE_FILE
+                ,TYPE_DROPDOWN
+                ,TYPE_INFO
+            };
+
+        [Key]
+        public String Id { get; set; }
+
+        public string FieldType { get; set; }
+
+        public string PromptValue { get; set; }
+
+        public virtual ICollection<FieldOption> FieldOptions { get; set; }
+
+        public virtual Section Section { get; set; }
 
         public Field()
         {
@@ -29,7 +49,7 @@ namespace SOFA.Models
 
         public Field(String fieldType) : this()
         {
-            if (!FieldTypes().Contains(fieldType))
+            if (!FIELD_TYPES.Contains(fieldType))
             {
                 throw new ArgumentException("Invalid field type");
             }
@@ -37,34 +57,6 @@ namespace SOFA.Models
             {
                 FieldType = fieldType;
             }
-        }
-
-
-        [Key]
-        public String Id { get; set; }
-        
-        public string FieldType { get; set; }
-
-        public string PromptValue { get; set; }
-
-        public virtual ICollection<FieldOption> FieldOptions { get; set; }
-
-        public virtual Section Section { get; set; }
-
-              
-        public static ICollection<String> FieldTypes()
-        {
-            List<String> fieldTypes = new List<String>()
-            {
-                TYPE_TEXT_FIELD,
-                TYPE_TEXT_BOX,
-                TYPE_FILE,
-                TYPE_DATE,
-                TYPE_DROPDOWN,
-                TYPE_INFO
-            };
-            
-            return fieldTypes;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

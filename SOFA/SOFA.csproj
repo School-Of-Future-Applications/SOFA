@@ -119,6 +119,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\dialog.css" />
+    <Content Include="Content\enrolment.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -252,9 +253,9 @@
     <Compile Include="Models\EmailSettings.cs" />
     <Compile Include="Models\EnrolmentField.cs" />
     <Compile Include="Models\EnrolmentFieldOption.cs" />
-    <Compile Include="Models\EnrolmentForm.cs" />
     <Compile Include="Models\EnrolmentFormSection.cs" />
     <Compile Include="Models\EnrolmentSection.cs" />
+    <Compile Include="Models\EnrolmentForm.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\FieldOption.cs" />
     <Compile Include="Models\Form.cs" />
@@ -345,6 +346,9 @@
     <Content Include="Views\Form\CreateForm.cshtml" />
     <Content Include="Views\Section\IndexPartial.cshtml" />
     <Content Include="Views\Enrolment\Enrol.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
