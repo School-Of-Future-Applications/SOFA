@@ -44,15 +44,20 @@
 <body>
     <div class="container">
 
-        @foreach(EnrolmentFormSection efSection in Model.EnrolmentFormSections)
+        @using (Html.BeginForm("#", "#", FormMethod.Post
+                              ,new { @class = "form-horizontal" }))
         {
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    @Html.EditorFor(m => efSection)
-                </div>
-            </div>   
+            foreach(EnrolmentFormSection efSection in Model.EnrolmentFormSections)
+            {
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        @Html.EditorFor(m => efSection)
+                    </div>
+                </div>   
+            }
+            
+            <input type="submit" class="btn btn-primary" value="Submit" />
         }
-
     </div>
 </body>
 </html>

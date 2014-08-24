@@ -30,15 +30,31 @@
 <div class="form-group">
     @switch(Model.FieldType)
     {
-        case Field.TYPE_TEXT_FIELD:
+        case Field.TYPE_TEXT_SINGLE:
             @Html.LabelFor(model => model.Value, Model.PromptValue
                           ,new { @class = "control-label col-xs-2 label-align" })
             <div class="col-xs-10">
-                @Html.EditorFor(model => model.Value)
+                @Html.EditorFor(model => model.Value, new { @class = "form-control" })
             </div>
             break;
 
+        case Field.TYPE_TEXT_MULTI:
+            @Html.LabelFor(model => model.Value, Model.PromptValue
+                           ,new { @class = "control-label col-xs-2 label-align" })
+            <div class="col-xs-10">
+                @Html.TextAreaFor(model => model.Value, new { @class = "form-control" })
+            </div>
+            break;  
+            
+        case Field.TYPE_INFO:
+            @Html.LabelFor(model => model.PromptValue, Model.PromptValue
+                             ,new { @class = "col-xs-12 control-label" })
+            break;
+            
         default:
+            <div class="col-xs-12">
+                Not Implemented
+            </div>
             break;
     }
 </div>
