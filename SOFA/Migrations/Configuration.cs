@@ -122,25 +122,35 @@ namespace SOFA.Migrations
             context.SaveChanges();
 
             //Create fields
-            Field fieldA = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
             {
                 Section = sectionCourse,
                 PromptValue = "Field A"
             };
-            Field fieldB = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
             {
                 Section = sectionCourse,
                 PromptValue = "Field B"
             };
-            Field fieldC = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
             {
                 Section = sectionStudent,
                 PromptValue = "Field C"
             };
-            Field fieldD = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
             {
                 Section = sectionStudent,
                 PromptValue = "Field D"
+            };
+            Field fieldE = new Field(Field.TYPE_INFO)
+            {
+                Section = sectionStudent,
+                PromptValue = "This is a infor box. It will have lots and lots of test and we want to see what this looks like. Lots of text to inform a stupid student is the goal of life. So read on young ones read on. Remeber if its not on its not on."
+            };
+            Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
+            {
+                Section = sectionStudent,
+                PromptValue = "Enter some multi text"
             };
 
             //Add options to fields
@@ -153,6 +163,8 @@ namespace SOFA.Migrations
             sectionCourse.Fields.Add(fieldA);
             sectionCourse.Fields.Add(fieldB);
             sectionStudent.Fields.Add(fieldC);
+            sectionStudent.Fields.Add(fieldE);
+            sectionStudent.Fields.Add(fieldF);
             sectionStudent.Fields.Add(fieldD);
 
             context.Fields.AddRange(new List<Field>() 

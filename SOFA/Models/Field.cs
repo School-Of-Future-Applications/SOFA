@@ -13,8 +13,8 @@ namespace SOFA.Models
 {
     public class Field : IValidatableObject
     {   
-        public const String TYPE_TEXT_FIELD = "TEXT_FIELD";
-        public const String TYPE_TEXT_BOX = "TEXT_BOX";
+        public const String TYPE_TEXT_MULTI = "TEXT_MULTI";
+        public const String TYPE_TEXT_SINGLE = "TEXT_SINGLE";
         public const String TYPE_DATE = "DATE";
         public const String TYPE_FILE = "FILE";
         public const String TYPE_DROPDOWN = "DROPDOWN";
@@ -22,8 +22,8 @@ namespace SOFA.Models
 
         public static List<String> FIELD_TYPES = new List<String>()
             {
-                 TYPE_TEXT_FIELD
-                ,TYPE_TEXT_BOX
+                 TYPE_TEXT_MULTI
+                ,TYPE_TEXT_SINGLE
                 ,TYPE_DATE
                 ,TYPE_FILE
                 ,TYPE_DROPDOWN
