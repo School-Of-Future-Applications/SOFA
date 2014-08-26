@@ -192,6 +192,10 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
+    <Content Include="ClassDiagram3.cd" />
+    <Content Include="ClassDiagram4.cd" />
+    <Content Include="ClassDiagram5.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
