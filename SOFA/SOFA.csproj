@@ -332,8 +332,12 @@
     <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\Form\FieldViewModel.cs" />
     <Compile Include="Models\ViewModels\Form\FormSectionOrderViewModel.cs" />
+    <Compile Include="Models\ViewModels\Form\FormSectionViewModel.cs" />
+    <Compile Include="Models\ViewModels\Form\FormViewModel.cs" />
     <Compile Include="Models\ViewModels\Form\SectionSelectViewModel.cs" />
+    <Compile Include="Models\ViewModels\Form\SectionViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
     <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
     <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />

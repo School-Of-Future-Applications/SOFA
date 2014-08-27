@@ -7,5 +7,9 @@ namespace SOFA.Models.ViewModels.Form
 {
     public class FormSectionViewModel
     {
+        public SectionViewModel Section { get; set; }
+
+        public SectionViewModel BelowOf { get; set; }
+
     }
 }
