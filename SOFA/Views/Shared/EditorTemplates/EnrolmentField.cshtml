@@ -46,6 +46,10 @@
             </div>
             break;  
             
+        case Field.TYPE_DATE:
+            @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentFieldDate.cshtml", Model)
+            break;
+            
         case Field.TYPE_INFO:
             @Html.LabelFor(model => model.PromptValue, Model.PromptValue
                              ,new { @class = "col-xs-12 control-label" })

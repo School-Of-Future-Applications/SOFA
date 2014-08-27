@@ -152,6 +152,11 @@ namespace SOFA.Migrations
                 Section = sectionStudent,
                 PromptValue = "Enter some multi text"
             };
+            Field fieldG = new Field(Field.TYPE_DATE)
+            {
+                Section = sectionStudent,
+                PromptValue = "Birthday"
+            };
 
             //Add options to fields
             fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
@@ -166,6 +171,7 @@ namespace SOFA.Migrations
             sectionStudent.Fields.Add(fieldE);
             sectionStudent.Fields.Add(fieldF);
             sectionStudent.Fields.Add(fieldD);
+            sectionStudent.Fields.Add(fieldG);
 
             context.Fields.AddRange(new List<Field>() 
             {
