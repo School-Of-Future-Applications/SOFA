@@ -9,6 +9,10 @@ namespace SOFA.Models
 {
     public class EnrolmentFormSection 
     {
+        public EnrolmentFormSection()
+        {
+        }
+
         public EnrolmentFormSection(EnrolmentForm eForm, FormSection fSection)
         {
             EnrolmentFormId = eForm.EnrolmentFormId;
