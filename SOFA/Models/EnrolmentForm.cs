@@ -15,6 +15,8 @@ namespace SOFA.Models
             EnrolmentFormId = UUIDUtil.NewUUID();
             DateCreated = DateTime.Now;
             EnrolmentFormSections = new List<EnrolmentFormSection>();
+            //Student = new Student();
+            Class = new TimetabledClass();
         }
 
         public EnrolmentForm(Form form)
@@ -30,7 +32,7 @@ namespace SOFA.Models
 
         public DateTime DateCreated { get; set; }
 
-        public Student Student { get; set; }
+        //public Student Student { get; set; }
 
         public TimetabledClass Class { get; set; }
 

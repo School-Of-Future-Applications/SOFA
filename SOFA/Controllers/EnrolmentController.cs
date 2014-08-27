@@ -20,6 +20,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,6 +33,7 @@ namespace SOFA.Controllers
 {
     public class EnrolmentController : HttpsBaseController
     {
+        [HttpGet]
         public ActionResult Enrol(string formId)
         {
             Form fromForm = null;
@@ -42,11 +45,27 @@ namespace SOFA.Controllers
                 this.DBCon().EnrolmentForms.Add(enrolForm);
                 this.DBCon().SaveChanges();
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
             catch
             {
                 return new HttpNotFoundResult();
             }
             return View(enrolForm);
+        }
+
+        [HttpPost]
+        public ActionResult Enrol(EnrolmentForm eForm)
+        {
+            return View(eForm);
         }
 	}
 }
