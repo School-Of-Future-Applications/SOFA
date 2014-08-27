@@ -16,6 +16,7 @@ namespace SOFA.Models.Validation
 
         public static IEnumerable<ValidationResult> ValidateField(EnrolmentField field)
         {
+            //Test value against field type
             if (field.FieldType.Equals(Field.TYPE_DATE) &&
                 !IsValidDate(field))
             {
@@ -25,6 +26,20 @@ namespace SOFA.Models.Validation
                     });
             }
             
+            //Test value against option types
+            var optionTypes = field.EnrollmentFieldOptions.Select(f => f.OptionType).ToList();
+            foreach (var ot in optionTypes)
+            {
+                if (ot.Equals(FieldOption.OPT_MANDATORY) &&
+                    !IsValidMandatory(field))
+                {
+                    yield return new ValidationResult("Field is mandatory", new List<String>()
+                        {
+                            "Value"
+                        });
+                }
+
+            }
             yield break;
         }
 
@@ -50,7 +65,8 @@ namespace SOFA.Models.Validation
 
         private static Boolean IsValidMandatory(EnrolmentField field)
         {
-            if (field.Value.Trim().Count() > 0)
+            if (field.Value != null &&
+                field.Value.Trim().Count() > 0)
             {
                 return true;
             }
