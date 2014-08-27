@@ -45,8 +45,7 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return null;
-            //throw new NotImplementedException();
+            return SOFA.Models.Validation.EnrolmentValidator.ValidateForm(this);
         }
     }
 }
