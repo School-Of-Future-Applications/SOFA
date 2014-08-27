@@ -34,7 +34,7 @@ namespace SOFA.Controllers
     public class EnrolmentController : HttpsBaseController
     {
         [HttpGet]
-        public ActionResult Enrol(string formId)
+        public ActionResult NewEnrolment(string formId)
         {
             Form fromForm = null;
             EnrolmentForm enrolForm = null;
@@ -59,7 +59,23 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return View(enrolForm);
+            return RedirectToAction("Enrol", "Enrolment"
+                                   ,new { enrolmentFormId = enrolForm.EnrolmentFormId });
+        }
+
+        [HttpGet]
+        public ActionResult Enrol(String enrolmentFormId)
+        {
+            EnrolmentForm eForm = null;
+            try
+            {
+                eForm = this.DBCon().EnrolmentForms.Where(x => x.EnrolmentFormId == enrolmentFormId).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(eForm);
         }
 
         [HttpPost]
