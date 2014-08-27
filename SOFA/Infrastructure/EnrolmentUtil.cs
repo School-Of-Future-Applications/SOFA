@@ -31,7 +31,7 @@ namespace SOFA.Infrastructure
         public static string EnrolmentFormUrl(this HttpContext @this, string formId)
         {
             UrlHelper urlHelp = new UrlHelper(@this.Request.RequestContext);
-            return urlHelp.Action("Enrol", "Enrolment", new { formId = formId }
+            return urlHelp.Action("NewEnrolment", "Enrolment", new { formId = formId }
                                  ,@this.Request.Url.Scheme);
         }
     }

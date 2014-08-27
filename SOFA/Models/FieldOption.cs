@@ -7,6 +7,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using SOFA.Models.Validation;
 
+using SOFA.Infrastructure;
+
 namespace SOFA.Models
 {
     public class FieldOption : IValidatableObject
@@ -20,19 +22,19 @@ namespace SOFA.Models
 
         public const String VAL_TRUE = "TRUE";
 
-
         [Key]
-        public int Id { get; set; }
+        public string FieldOptionId { get; set; }
         public string OptionType { get; set; }
         public string OptionValue { get; set; }
         public virtual Field Field { get; set; }
 
         public FieldOption()
         {
-
+            FieldOptionId = UUIDUtil.NewUUID();
         }
         
         public FieldOption(String optionType) 
+            : this()
         { 
             if (!FieldOptionTypes().Contains(optionType))
             {
