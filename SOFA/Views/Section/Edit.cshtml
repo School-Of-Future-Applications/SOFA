@@ -30,6 +30,10 @@
 
 <script typeof="text/javascript">
     $(document).ready(function () {
+        $("#editPrompt").on("click", function () {
+            $(this).parent().parent().parent().addClass("givingPrompt");
+            $("#promptmodal").modal("show");
+        });
         $(".delement").draggable({
             helper: "clone",
             connectToSortable: ".panel-body",
@@ -69,7 +73,9 @@
             }
         });
         $("#saveprompt").on("click", function (event) {
-            $(".givingPrompt").html($("#prompt").val());
+            $(".givingPrompt").data("prompt", $("#prompt").val());
+            //$(".givingPrompt").html($(".givingPrompt").data("prompt") + "<br />" + $(".givingPrompt").data("type"))
+            $(".givingPrompt").find("#promptValue").html($(".givingPrompt").data("prompt"));
             $.ajax({
                 type: "POST",
                 url: "/Section/AddField",
@@ -116,15 +122,33 @@
     <div class="panel-heading">@Model.Section.Name</div>
     <div class="panel-body">
         @foreach (Field f in Model.OrderedFields)
-        {
-            <div class="sdelement ui-widget-content" id=@f.Id style="display:block">@f.PromptValue</div>
-        }
+{
+    <div class="sdelement panel panel-primary" id=@f.Id>
+        <div class="panel-heading"><center>@f.FieldType</center></div>
+        <div class="panel-body">
+            @foreach(FieldOption fo in @f.FieldOptions)
+            {
+                <span style="float:left;width:10%">@fo.OptionType</span>
+                <span style="float:right;width:10%">@fo.OptionValue</span>
+            }
+        </div>
+        <hr />
+        <div class="panel-body">
+            <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
+            <span style="float:right;width:10%"><div id="editPrompt"><a href="#">Edit Prompt</a></div></span>
+            <script typeof="text/javascript">
+                $('#@f.Id').data("prompt", "@f.PromptValue");
+                $('#@f.Id').data("type", "@f.FieldType");
+            </script>
+        </div>
+    </div>
+}
     </div>
 </div>
 <div id="designer" style="float:right;width:15%;text-align:left">
-    <div class="delement ui-widget-content" id="TEXT_FIELD">TEXT_FIELD</div>
+    <div class="delement ui-widget-content" id="TEXT_MULTI">TEXT_MULTI</div>
     <br />
-    <div class="delement ui-widget-content" id="TEXT_BOX">TEXT_BOX</div>
+    <div class="delement ui-widget-content" id="TEXT_SINGLE">TEXT_SINGLE</div>
     <br />
     <div class="delement ui-widget-content" id="FILE">FILE</div>
     <br />
@@ -132,7 +156,7 @@
     <br />
     <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN</div>
     <br />
-    <div class="delement ui-widget-content" id="INFO">INFO</div>
+    <div class="delement ui-widget-content" id="INFORMATION">INFORMATION</div>
 </div>
 <div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
     <div class="modal-content">
