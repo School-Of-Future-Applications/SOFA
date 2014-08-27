@@ -26,9 +26,19 @@ namespace SOFA.Controllers
         public ActionResult Edit(String FormID = null)
         {
             //TODO: Actual logic
-            Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
-            form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
-            return View(form);
+            try
+            {
+                var form = this.DBCon().Forms.Single(f => f.Id == FormID);
+                form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
+
+                return View(form);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+            
+            
         }
 
         [HttpPost]
