@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using SOFA.Infrastructure;
+using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
@@ -57,9 +58,14 @@ namespace SOFA.Models
             return date;
         }
 
+        public void updateModified()
+        {
+            LastModified = DateTime.Now;
+        }
+
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            yield return null;
+            return FormValidator.ValidateForm(this);
         }
     }
 }

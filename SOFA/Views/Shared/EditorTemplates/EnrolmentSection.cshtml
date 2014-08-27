@@ -17,4 +17,24 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model SOFA.Models.Section
+
+@using SOFA.Models
+
+@model EnrolmentSection
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @Model.SectionName
+    </div>
+    <div class="panel-body">
+        @foreach(EnrolmentField field in Model.EnrolmentFields)
+        {
+            <div class="row">
+                <div class="col-xs-12">
+                    @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentField.cshtml"
+                                 ,field)
+                </div>
+            </div>
+        }
+    </div>
+</div>

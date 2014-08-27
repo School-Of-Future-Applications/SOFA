@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,15 +18,15 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Index()
         {
-            return View(this.DBCon().Sections.ToList());
+            return View(this.DBCon().Sections.OrderBy(x => x.DateCreated).ToList());
         }
 
         //
         // GET: /Section/Create
-        public ActionResult Edit(String SectionID = null)
+        public ActionResult Edit(String sectionID = null)
         {
             SectionEditViewModel sevm = new SectionEditViewModel();
-            sevm.Section = this.DBCon().Sections.Where(s => s.Id == SectionID).FirstOrDefault();
+            sevm.Section = this.DBCon().Sections.Where(s => s.Id == sectionID).FirstOrDefault();
             var ofids = this.DBCon().SectionFieldOrders.Where(sfo => sfo.Section.Id == sevm.Section.Id).OrderBy(sfo => sfo.Order).Select(x => x.Field.Id).ToList();
             sevm.OrderedFields = new List<Field>();
             foreach(string id in ofids)
@@ -42,8 +43,6 @@ namespace SOFA.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -110,29 +109,38 @@ namespace SOFA.Controllers
             return Json(1);
         }
 
-        //
-        // GET: /Section/Delete/5
-        public ActionResult Delete(int id)
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult Delete(string id)
+        {
+            Section sec = null;
+            try
+            {
+                if(!Section.DEFAULT_SECTION_IDS.Contains(id))
+                {
+                    sec = this.DBCon().Sections.Where(x => x.Id == id).First();
+                    this.DBCon().Entry(sec).State = EntityState.Deleted;
+                    this.DBCon().SaveChanges();
+                }
+            }
+            catch
+            {
+            }
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult IndexPartial()
+        {
+            var sections = this.DBCon().Sections.ToList();
+            return View(new SectionSelectViewModel(sections));
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult SectionPartial(string SectionId)
         {
             return View();
         }
 
-        //
-        // POST: /Section/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         public override Enum NavProviderTerm()
         {

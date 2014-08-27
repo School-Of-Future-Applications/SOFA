@@ -14,7 +14,7 @@ namespace SOFA.Models.Validation
         public static IEnumerable<ValidationResult> ValidateForm(Form form)
         {
             //TODO
-            return null;
+            yield return null;
         }
 
         /**
@@ -24,7 +24,7 @@ namespace SOFA.Models.Validation
         { 
             //TODO
             //Validate Field Type
-            if (!Field.FieldTypes().Contains(field.FieldType))
+            if (!Field.FIELD_TYPES.Contains(field.FieldType))
             {
                 yield return new ValidationResult("Illegal field type", new List<String> { "FieldType" });
             }            

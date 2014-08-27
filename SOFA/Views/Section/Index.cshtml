@@ -59,8 +59,9 @@
 <div class="row">
     @foreach(Section s in Model)
     {
+        bool isDefault = Section.DEFAULT_SECTION_IDS.Contains(s.Id);
         <div class="col-md-3 col-sm-5">
-            <div class="panel panel-primary">
+            <div class="panel @(isDefault ? "panel-success" : "panel-primary")">
                 <div class="panel-heading">@s.Name</div>
                 <div class="panel-body">
                     <p>
@@ -69,18 +70,21 @@
                         <b>Children Count: </b>@s.Fields.Count<br/>
                     </p>
 
-                    <div class="btn-group pull-right">
+                    @if(!isDefault)
+                    {
+                        <div class="btn-group pull-right">
          
-                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }
-                                        ,new { @class = "btn btn-default" })
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                            <span class="sr-only">Toggle Dropdown</span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Delete</a></li>
-                        </ul>
-                    </div>
+                            @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }
+                                            ,new { @class = "btn btn-default" })
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Delete", "Delete", new { id = s.Id })</li>
+                            </ul>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

@@ -25,6 +25,7 @@ using System.Web;
 using System.Web.Mvc;
 
 using SOFA.Infrastructure;
+using SOFA.Models;
 
 namespace SOFA.Controllers
 {
@@ -32,7 +33,20 @@ namespace SOFA.Controllers
     {
         public ActionResult Enrol(string formId)
         {
-            return View();
+            Form fromForm = null;
+            EnrolmentForm enrolForm = null;
+            try
+            {
+                fromForm = this.DBCon().Forms.Where(x => x.Id == formId).First();
+                enrolForm = new EnrolmentForm(fromForm);
+                this.DBCon().EnrolmentForms.Add(enrolForm);
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(enrolForm);
         }
 	}
 }

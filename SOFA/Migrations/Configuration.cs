@@ -94,48 +94,63 @@ namespace SOFA.Migrations
                 FormName = "Seed Form",
             };
                      
-            FormSection fSectionA = new FormSection();
-            FormSection fSectionB = new FormSection();
-            form.FormSections.Add(fSectionA);
-            form.FormSections.Add(fSectionB);
+            FormSection fSectionCourse = new FormSection();
+            FormSection fSectionStudent = new FormSection();
+            form.FormSections.Add(fSectionCourse);
+            form.FormSections.Add(fSectionStudent);
             
             //Create Sections
-            Section sectionA = new Section()
+            Section sectionCourse = new Section()
             {
                 DateCreated = DateTime.Now,
-                Name = "Section A"
+                Name = Section.COURSE_SECTION_NAME
             };
-
-            Section sectionB = new Section()
+            sectionCourse.Id = Section.COURSE_SECTION_ID;
+            Section sectionStudent = new Section()
             {
                 DateCreated = DateTime.Now,
-                Name = "Section B"
+                Name = Section.STUDENT_SECTION_NAME
             };
+            sectionStudent.Id = Section.STUDENT_SECTION_ID;
             //Set order of sections
-            fSectionA.Section = sectionA;
-            fSectionA.BelowOf = null;
-            fSectionB.Section = sectionB;
-            fSectionB.BelowOf = sectionA;
+            fSectionCourse.Section = sectionCourse;
+            fSectionCourse.BelowOf = null;
+            fSectionStudent.Section = sectionStudent;
+            fSectionStudent.BelowOf = sectionCourse;
 
             context.Forms.Add(form);
             context.SaveChanges();
 
             //Create fields
-            Field fieldA = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
             {
-                Section = sectionA
+                Section = sectionCourse,
+                PromptValue = "Field A"
             };
-            Field fieldB = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
             {
-                Section = sectionA
+                Section = sectionCourse,
+                PromptValue = "Field B"
             };
-            Field fieldC = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
             {
-                Section = sectionB
+                Section = sectionStudent,
+                PromptValue = "Field C"
             };
-            Field fieldD = new Field(Field.TYPE_TEXT_FIELD)
+            Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
             {
-                Section = sectionB
+                Section = sectionStudent,
+                PromptValue = "Field D"
+            };
+            Field fieldE = new Field(Field.TYPE_INFO)
+            {
+                Section = sectionStudent,
+                PromptValue = "This is a infor box. It will have lots and lots of test and we want to see what this looks like. Lots of text to inform a stupid student is the goal of life. So read on young ones read on. Remeber if its not on its not on."
+            };
+            Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
+            {
+                Section = sectionStudent,
+                PromptValue = "Enter some multi text"
             };
 
             //Add options to fields
@@ -145,10 +160,12 @@ namespace SOFA.Migrations
             fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
             
             //Add fields to sections
-            sectionA.Fields.Add(fieldA);
-            sectionA.Fields.Add(fieldB);
-            sectionB.Fields.Add(fieldC);
-            sectionB.Fields.Add(fieldD);
+            sectionCourse.Fields.Add(fieldA);
+            sectionCourse.Fields.Add(fieldB);
+            sectionStudent.Fields.Add(fieldC);
+            sectionStudent.Fields.Add(fieldE);
+            sectionStudent.Fields.Add(fieldF);
+            sectionStudent.Fields.Add(fieldD);
 
             context.Fields.AddRange(new List<Field>() 
             {

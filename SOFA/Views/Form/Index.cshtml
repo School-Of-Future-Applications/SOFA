@@ -79,15 +79,15 @@
 
                     <div class="btn-group pull-right">
 
-                        @Html.ActionLink("Edit", "CreateEdit", "Form", new { FormId = f.Id }
+                        @Html.ActionLink("Edit", "Edit", "Form", new { FormId = f.Id }
                                         , new { @class = "btn btn-default" })
                         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Preview</a></li>
-                            <li><a href="#">Delete</a></li>
+                            <li>@Html.ActionLink("Preview", "Enrol", "Enrolment", new { formId = f.Id }, null)</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { formId = f.Id })</li>
                         </ul>
                     </div>
                 </div>
