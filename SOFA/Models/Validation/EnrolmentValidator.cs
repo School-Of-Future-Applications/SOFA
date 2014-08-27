@@ -11,12 +11,21 @@ namespace SOFA.Models.Validation
     {
         public static IEnumerable<ValidationResult> ValidateForm(EnrolmentForm form)
         {
-            yield return null;
+            yield return ValidationResult.Success;
         }
 
         public static IEnumerable<ValidationResult> ValidateField(EnrolmentField field)
         {
-            yield return null;
+            if (field.FieldType.Equals(Field.TYPE_DATE) &&
+                !IsValidDate(field))
+            {
+                yield return new ValidationResult("Not a valid date", new List<String>()
+                    {
+                        "FieldType"
+                    });
+            }
+            
+            yield break;
         }
 
         #region Data Type Validation
@@ -26,7 +35,7 @@ namespace SOFA.Models.Validation
             try
             {
                 var culture = CultureInfo.CurrentCulture;
-                DateTime.ParseExact(field.Value, "dd/mm/yyyy", culture);
+                DateTime.Parse(field.Value, culture);
                 return true;
             }
             catch
