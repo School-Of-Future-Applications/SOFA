@@ -61,7 +61,7 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return new List<ValidationResult>();
+            return FormValidator.ValidateField(this);
         }
     }
 }

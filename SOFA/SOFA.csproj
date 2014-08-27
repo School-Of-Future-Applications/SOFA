@@ -195,6 +195,10 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="ClassDiagram1.cd" />
+    <Content Include="ClassDiagram2.cd" />
+    <Content Include="ClassDiagram3.cd" />
+    <Content Include="ClassDiagram4.cd" />
+    <Content Include="ClassDiagram5.cd" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -324,6 +328,7 @@
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Models\TimetabledClass.cs" />
     <Compile Include="Models\Validation\AfterDate.cs" />
+    <Compile Include="Models\Validation\EnrolmentValidator.cs" />
     <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
