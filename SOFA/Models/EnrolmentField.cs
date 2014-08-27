@@ -5,6 +5,7 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 using SOFA.Infrastructure;
+using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
@@ -37,8 +38,7 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return null;
-            throw new NotImplementedException();
+            return EnrolmentValidator.ValidateField(this);
         }
     }
 }

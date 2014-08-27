@@ -14,7 +14,7 @@ namespace SOFA.Models.Validation
         public static IEnumerable<ValidationResult> ValidateForm(Form form)
         {
             //TODO
-            return null;
+            yield return null;
         }
 
         /**

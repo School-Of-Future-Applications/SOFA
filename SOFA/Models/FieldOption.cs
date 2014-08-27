@@ -5,6 +5,7 @@ using System.Web.Services.Protocols;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
@@ -51,7 +52,7 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return new List<ValidationResult>();
+            return FormValidator.ValidateFieldOption(this);
         }
 
         public static ICollection<String> FieldOptionTypes()

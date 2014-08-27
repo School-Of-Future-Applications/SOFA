@@ -143,14 +143,24 @@ namespace SOFA.Controllers
             };
             form.FormSections.Add(formSection);
             form.updateModified();
-            this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
-            this.DBCon().SaveChanges();
-            
-            return Json(new
+            if (this.TryValidateModel(form))
+            {
+                this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().SaveChanges();
+                return Json(new
                 {
                     Success = "True",
                     Message = "Section added to form successfully"
                 });
+            }
+            else return Json(new
+            {
+                Success = "False",
+                Message = "Form failed to validate."
+            });
+            
+            
+            
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
