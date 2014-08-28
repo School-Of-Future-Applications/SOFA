@@ -30,7 +30,7 @@
 
 <script typeof="text/javascript">
     $(document).ready(function () {
-        $("#editPrompt").on("click", function () {
+        $(".editPrompt").on("click", function () {
             $(this).parent().parent().parent().addClass("givingPrompt");
             $("#promptmodal").modal("show");
         });
@@ -42,14 +42,16 @@
             }
         });
         $("#designer").disableSelection();
-        $(".panel-body").sortable({
+        $("#sortablebodymain").sortable({
             beforeStop: function (event, ui) {
-                if (ui.item.attr("id") == undefined) {
+                if (ui.item.attr("id") == undefined)
+                {
+                    ui.item.addClass("panel panel-primary");
                     ui.item.addClass("givingPrompt").removeClass("ui-draggable");
                     ui.item.data("type", ui.item.html());
                     $("#promptmodal").modal("show");
                 }
-                
+
             },
             stop: function (event, ui) {
                 if (ui.item.hasClass("sdelement")) {
@@ -76,11 +78,12 @@
             $(".givingPrompt").data("prompt", $("#prompt").val());
             //$(".givingPrompt").html($(".givingPrompt").data("prompt") + "<br />" + $(".givingPrompt").data("type"))
             $(".givingPrompt").find("#promptValue").html($(".givingPrompt").data("prompt"));
-            $.ajax({
-                type: "POST",
-                url: "/Section/AddField",
-                data: {
-                    "sectionId": '@Model.Section.Id',
+            if (!$(".givingPrompt").hasClass("sdelement")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Section/AddField",
+                    data: {
+                        "sectionId": '@Model.Section.Id',
                     "type": $(".givingPrompt").data("type"),
                     "prompt": $("#prompt").val()
                 },
@@ -103,6 +106,20 @@
 
                 });
             });
+            }
+            else
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "/Section/EditFieldPrompt",
+                    data: {
+                        "fieldId": $(".givingPrompt").attr("id"),
+                        "prompt": $("#prompt").val()
+                    },
+                }).done(function (msg) {
+                    $(".givingPrompt").removeClass("givingPrompt");
+                });
+            }
             $("#prompt").val("");
             $("#promptmodal").modal("hide");
         });
@@ -120,7 +137,7 @@
 </div>
 <div class="panel panel-primary" style="float:left;width:80%">
     <div class="panel-heading">@Model.Section.Name</div>
-    <div class="panel-body">
+    <div id="sortablebodymain" class="panel-body">
         @foreach (Field f in Model.OrderedFields)
 {
     <div class="sdelement panel panel-primary" id=@f.Id>
@@ -135,7 +152,7 @@
         <hr />
         <div class="panel-body">
             <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
-            <span style="float:right;width:10%"><div id="editPrompt"><a href="#">Edit Prompt</a></div></span>
+            <span style="float:right;width:10%"><span class="editPrompt"><a href="#">Edit Prompt</a></span></span>
             <script typeof="text/javascript">
                 $('#@f.Id').data("prompt", "@f.PromptValue");
                 $('#@f.Id').data("type", "@f.FieldType");
@@ -159,9 +176,20 @@
     <div class="delement ui-widget-content" id="INFORMATION">INFORMATION</div>
 </div>
 <div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
-    <div class="modal-content">
+    <div class="modal-content" style="position:fixed">
         <div class="modal-body">
             Prompt:@Html.Editor("prompt")
+            <div style="text-align:right">
+                <button id="saveprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="optionprompt" class="modal-dialog" style="display:none;z-index:1050">
+    <div class="modal-content" style="position:fixed">
+        <div class="modal-body">
+            @Html.Hidden("optionPromptId")
+            Option:@Html.DropDownList("optionType", new SelectList(FieldOption.FieldOptionTypes().Select(x => new KeyValuePair<string, string>(x, x)), "Key", "Value"))
             <div style="text-align:right">
                 <button id="saveprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
             </div>

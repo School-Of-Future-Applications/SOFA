@@ -87,6 +87,16 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EditFieldPrompt(string fieldId, string prompt)
+        {
+            Field f = this.DBCon().Fields.Where(x => x.Id == fieldId).FirstOrDefault();
+            f.PromptValue = prompt;
+            this.DBCon().SaveChanges();
+            return Json(f.Id);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult SetSectionFieldOrder(List<string> FieldIds)
         {
             for(int i = 0;i<FieldIds.Count();i++)
