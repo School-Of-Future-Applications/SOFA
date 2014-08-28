@@ -20,13 +20,17 @@ namespace SOFA.Models.ViewModels.FormViewModels
 
         public SectionViewModel(Section section) : this()
         {
-            Id = section.Id;
-            Name = section.Name;
-            foreach (var f in section.Fields)
+            if (section != null)
             {
-                var ef = new EnrolmentField(f);
-                Fields.Add(new FieldViewModel(ef));
+                Id = section.Id;
+                Name = section.Name;
+                foreach (var f in section.Fields)
+                {
+                    var ef = new EnrolmentField(f);
+                    Fields.Add(new FieldViewModel(ef));
+                }
             }
+
         }
 
     }
