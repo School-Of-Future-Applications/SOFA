@@ -145,7 +145,7 @@ namespace SOFA.Migrations
             Field fieldE = new Field(Field.TYPE_INFO)
             {
                 Section = sectionStudent,
-                PromptValue = "This is some long text. This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text."
+                PromptValue = "This is a info box. It will have lots and lots of text."
             };
             Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
             {

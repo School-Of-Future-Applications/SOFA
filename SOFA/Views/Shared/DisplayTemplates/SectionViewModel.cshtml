@@ -17,23 +17,18 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model SOFA.Models.FormSection
-          
-<div class="accordion-div">
-    @Html.HiddenFor(m => m.SectionId, new { @class = "sectionId" })
-    
-    <h3>@Html.DisplayFor(m => m.Section.Name)</h3>
-    <div>
-        <div class="pull-right">
 
-        @Html.ActionLink("Edit", "Edit", "Section")        
-        <a href="#" class="removeSectionLink">Remove</a>
-            
-        
-        </div>
-        <div>
-            @Html.DisplayFor(m => m.Section)
-        </div>
-    </div>
+@using SOFA.Models.ViewModels.FormViewModels
 
+@model SOFA.Models.ViewModels.FormViewModels.SectionViewModel
+
+<div class="">
+    @foreach(FieldViewModel field in Model.Fields)
+        {
+        <div class="row">
+            <div class="col-xs-12">
+                @Html.DisplayFor(m => field)
+            </div>
+        </div>
+        }
 </div>

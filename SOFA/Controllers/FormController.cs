@@ -8,6 +8,7 @@ using System.Web.Mvc;
 using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
+using SOFA.Models.ViewModels.FormViewModels;
 
 namespace SOFA.Controllers
 {
@@ -26,9 +27,19 @@ namespace SOFA.Controllers
         public ActionResult Edit(String FormID = null)
         {
             //TODO: Actual logic
-            Form form = this.DBCon().Forms.FirstOrDefault(); //Editing
-            form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
-            return View(form);
+            try
+            {
+                var form = this.DBCon().Forms.Single(f => f.Id == FormID);
+                form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
+                var viewModel = new FormViewModel(form);
+                return View(viewModel);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+            
+            
         }
 
         [HttpPost]
@@ -173,8 +184,8 @@ namespace SOFA.Controllers
             {
                 return null;
             }
-
-            return PartialView("~/Views/Shared/DisplayTemplates/FormSection.cshtml", formsection);
+            var formSectionVM = new FormSectionViewModel(formsection);
+            return PartialView("~/Views/Shared/DisplayTemplates/FormSectionViewModel.cshtml", formSectionVM);
         }
 
         //
