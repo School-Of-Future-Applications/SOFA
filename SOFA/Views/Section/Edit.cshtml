@@ -1,0 +1,170 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using SOFA.Models
+@using SOFA.Models.ViewModels
+
+@model SectionEditViewModel
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<script typeof="text/javascript">
+    $(document).ready(function () {
+        $("#editPrompt").on("click", function () {
+            $(this).parent().parent().parent().addClass("givingPrompt");
+            $("#promptmodal").modal("show");
+        });
+        $(".delement").draggable({
+            helper: "clone",
+            connectToSortable: ".panel-body",
+            stop: function (event, ui) {
+                //alert("test")
+            }
+        });
+        $("#designer").disableSelection();
+        $(".panel-body").sortable({
+            beforeStop: function (event, ui) {
+                if (ui.item.attr("id") == undefined) {
+                    ui.item.addClass("givingPrompt").removeClass("ui-draggable");
+                    ui.item.data("type", ui.item.html());
+                    $("#promptmodal").modal("show");
+                }
+                
+            },
+            stop: function (event, ui) {
+                if (ui.item.hasClass("sdelement")) {
+                    var sfos = [];
+                    $(".sdelement").each(function () {
+                        var sfo = $(this).attr("id");
+                        sfos.push(sfo);
+                    });
+                    var post = { FieldIds: sfos };
+                    $.ajax({
+                        type: "POST",
+                        url: "/Section/SetSectionFieldOrder",
+                        data: post,
+                        dataType: "json",
+                        traditional: true,
+                    }).done(function (msg) {
+                        //alert("set");
+
+                    });
+                }
+            }
+        });
+        $("#saveprompt").on("click", function (event) {
+            $(".givingPrompt").data("prompt", $("#prompt").val());
+            //$(".givingPrompt").html($(".givingPrompt").data("prompt") + "<br />" + $(".givingPrompt").data("type"))
+            $(".givingPrompt").find("#promptValue").html($(".givingPrompt").data("prompt"));
+            $.ajax({
+                type: "POST",
+                url: "/Section/AddField",
+                data: {
+                    "sectionId": '@Model.Section.Id',
+                    "type": $(".givingPrompt").data("type"),
+                    "prompt": $("#prompt").val()
+                },
+            }).done(function (msg) {
+                $(".givingPrompt").removeClass("givingPrompt").attr("id", msg).removeClass("delement").addClass("sdelement");
+                var sfos = [];
+                $(".sdelement").each(function () {
+                    var sfo = $(this).attr("id");
+                    sfos.push(sfo);
+                });
+                var post = { FieldIds: sfos };
+                $.ajax({
+                    type: "POST",
+                    url: "/Section/SetSectionFieldOrder",
+                    data: post,
+                    dataType: "json",
+                    traditional: true,
+                }).done(function (msg) {
+                    //alert("set");
+
+                });
+            });
+            $("#prompt").val("");
+            $("#promptmodal").modal("hide");
+        });
+
+    });
+</script>
+
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Sections</li>
+        <li class="active">Edit</li>
+    </ol>
+    <h2>Edit Section</h2>
+   
+</div>
+<div class="panel panel-primary" style="float:left;width:80%">
+    <div class="panel-heading">@Model.Section.Name</div>
+    <div class="panel-body">
+        @foreach (Field f in Model.OrderedFields)
+{
+    <div class="sdelement panel panel-primary" id=@f.Id>
+        <div class="panel-heading"><center>@f.FieldType</center></div>
+        <div class="panel-body">
+            @foreach(FieldOption fo in @f.FieldOptions)
+            {
+                <span style="float:left;width:10%">@fo.OptionType</span>
+                <span style="float:right;width:10%">@fo.OptionValue</span>
+            }
+        </div>
+        <hr />
+        <div class="panel-body">
+            <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
+            <span style="float:right;width:10%"><div id="editPrompt"><a href="#">Edit Prompt</a></div></span>
+            <script typeof="text/javascript">
+                $('#@f.Id').data("prompt", "@f.PromptValue");
+                $('#@f.Id').data("type", "@f.FieldType");
+            </script>
+        </div>
+    </div>
+}
+    </div>
+</div>
+<div id="designer" style="float:right;width:15%;text-align:left">
+    <div class="delement ui-widget-content" id="TEXT_MULTI">TEXT_MULTI</div>
+    <br />
+    <div class="delement ui-widget-content" id="TEXT_SINGLE">TEXT_SINGLE</div>
+    <br />
+    <div class="delement ui-widget-content" id="FILE">FILE</div>
+    <br />
+    <div class="delement ui-widget-content" id="DATE">DATE</div>
+    <br />
+    <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN</div>
+    <br />
+    <div class="delement ui-widget-content" id="INFORMATION">INFORMATION</div>
+</div>
+<div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
+    <div class="modal-content">
+        <div class="modal-body">
+            Prompt:@Html.Editor("prompt")
+            <div style="text-align:right">
+                <button id="saveprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>

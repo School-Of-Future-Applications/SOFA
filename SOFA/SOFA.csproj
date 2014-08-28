@@ -322,6 +322,7 @@
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\SectionFieldOrder.cs" />
     <Compile Include="Models\SOFARole.cs" />
     <Compile Include="Models\SOFAUser.cs" />
     <Compile Include="Models\Student.cs" />
@@ -332,6 +333,7 @@
     <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
+    <Compile Include="Models\ViewModels\SectionEditViewModel.cs" />
     <Compile Include="Models\ViewModels\FormSectionOrderViewModel.cs" />
     <Compile Include="Models\ViewModels\SectionSelectViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
@@ -403,6 +405,7 @@
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
     <Content Include="Views\Section\CreateSection.cshtml" />
     <Content Include="Views\Form\CreateForm.cshtml" />
+    <Content Include="Views\Section\Edit.cshtml" />
     <Content Include="Views\Section\IndexPartial.cshtml" />
     <Content Include="Views\Enrolment\Enrol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
@@ -418,6 +421,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Enrolment\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>

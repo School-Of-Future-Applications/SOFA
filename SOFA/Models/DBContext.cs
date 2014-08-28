@@ -59,6 +59,8 @@ namespace SOFA.Models
 
         public DbSet<Field> Fields { get; set; }
 
+        public DbSet<SectionFieldOrder> SectionFieldOrders { get; set; }
+
         public DbSet<FieldOption> FieldOptions { get; set; }
 
         public DbSet<EnrolmentForm> EnrolmentForms { get; set; }
