@@ -22,7 +22,7 @@ namespace SOFA.Models.ViewModels.FormViewModels
 
         public FieldViewModel(EnrolmentField field) : this()
         {
-            FieldId = field.EnrolmentFIeldId;
+            FieldId = field.EnrolmentFieldId;
             FieldType = field.FieldType;
             PromptValue = field.PromptValue;
             Value = field.Value;

@@ -13,13 +13,13 @@ namespace SOFATests.FormViewModels
         {
             EnrolmentField field = new EnrolmentField()
             {
-                EnrolmentFIeldId = "id",
+                EnrolmentFieldId = "id",
                 FieldType = Field.TYPE_DATE,
                 PromptValue = "Date",
                 Value = null
             };
             FieldViewModel fvm = new FieldViewModel(field);
-            var testExpr = fvm.FieldId == field.EnrolmentFIeldId &&
+            var testExpr = fvm.FieldId == field.EnrolmentFieldId &&
                             fvm.FieldType == field.FieldType &&
                             fvm.PromptValue == field.PromptValue &&
                             fvm.Value == field.Value;

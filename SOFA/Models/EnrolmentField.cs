@@ -12,7 +12,7 @@ namespace SOFA.Models
     public class EnrolmentField : IValidatableObject
     {
         [Key]
-        public string EnrolmentFIeldId { get; set; }
+        public string EnrolmentFieldId { get; set; }
         public String FieldType { get; set; }
         public String PromptValue { get; set; }
         public virtual List<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
@@ -20,7 +20,7 @@ namespace SOFA.Models
 
         public EnrolmentField()
         {
-            EnrolmentFIeldId = UUIDUtil.NewUUID();
+            EnrolmentFieldId = UUIDUtil.NewUUID();
             EnrollmentFieldOptions = new List<EnrolmentFieldOption>();
         }
 
