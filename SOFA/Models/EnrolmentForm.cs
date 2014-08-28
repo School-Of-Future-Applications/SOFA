@@ -40,9 +40,14 @@ namespace SOFA.Models
 
         private void fromForm(Form form)
         {
+            Dictionary<string, EnrolmentSection> sectionTransform = new Dictionary<string, EnrolmentSection>();
             Name = form.FormName;
+
             foreach (FormSection sec in form.FormSections)
-                EnrolmentFormSections.Add(new EnrolmentFormSection(this, sec));
+                sectionTransform.Add(sec.SectionId, new EnrolmentSection(sec.Section));
+
+            foreach (FormSection sec in form.FormSections)
+                EnrolmentFormSections.Add(new EnrolmentFormSection(this, sec, sectionTransform));
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
