@@ -51,6 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FormViewModels\FormViewModelTests.cs" />
+    <Compile Include="FormViewModels\FormSectionViewModelTests.cs" />
+    <Compile Include="FormViewModels\SectionViewModelTests.cs" />
+    <Compile Include="FormViewModels\FieldViewModelTests.cs" />
     <Compile Include="Validation\EnrolmentValidationUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

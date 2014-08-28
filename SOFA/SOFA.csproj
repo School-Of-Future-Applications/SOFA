@@ -332,8 +332,12 @@
     <Compile Include="Models\Validation\FormValidator.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
-    <Compile Include="Models\ViewModels\FormSectionOrderViewModel.cs" />
-    <Compile Include="Models\ViewModels\SectionSelectViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\FieldViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\FormSectionOrderViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\FormSectionViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\FormViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\SectionSelectViewModel.cs" />
+    <Compile Include="Models\ViewModels\FormViewModels\SectionViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
     <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
     <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />
@@ -395,9 +399,9 @@
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FieldViewModel.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
@@ -409,6 +413,7 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldDate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

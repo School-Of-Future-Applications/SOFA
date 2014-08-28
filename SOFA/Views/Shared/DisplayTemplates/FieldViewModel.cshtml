@@ -17,8 +17,11 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
+
+@using SOFA.Models.ViewModels.FormViewModels
 @using SOFA.Models;
-@model SOFA.Models.Field
+
+@model SOFA.Models.ViewModels.FormViewModels.FieldViewModel
 
 <style>
     .label-align {
@@ -46,7 +49,7 @@
             break;
 
         case Field.TYPE_DATE:
-        @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentFieldDate.cshtml", Model)
+        @Html.Partial("~/Views/Shared/DisplayTemplates/FieldViewModelDate.cshtml", Model)
             break;
 
         case Field.TYPE_INFO:
