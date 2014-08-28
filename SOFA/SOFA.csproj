@@ -401,7 +401,7 @@
     <Content Include="Views\Section\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FieldViewModel.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
@@ -413,6 +413,7 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldDate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

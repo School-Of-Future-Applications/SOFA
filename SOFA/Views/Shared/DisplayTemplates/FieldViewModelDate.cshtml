@@ -20,15 +20,25 @@
 
 @using SOFA.Models.ViewModels.FormViewModels
 
-@model SOFA.Models.ViewModels.FormViewModels.SectionViewModel
+@model FieldViewModel
 
-<div class="">
-    @foreach(FieldViewModel field in Model.Fields)
-        {
-        <div class="row">
-            <div class="col-xs-12">
-                @Html.DisplayFor(m => field)
-            </div>
-        </div>
-        }
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+
+<div class="col-xs-10">
+    <div class="input-group date" id="@Model.FieldId">
+        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        console.log("Herrow");
+        $('#@Model.FieldId').datetimepicker({
+            pickTime: false
+        });
+    });
+</script>
