@@ -145,7 +145,7 @@ namespace SOFA.Migrations
             Field fieldE = new Field(Field.TYPE_INFO)
             {
                 Section = sectionStudent,
-                PromptValue = "This is a infor box. It will have lots and lots of test and we want to see what this looks like. Lots of text to inform a stupid student is the goal of life. So read on young ones read on. Remeber if its not on its not on."
+                PromptValue = "This is some long text. This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text.This is some long text."
             };
             Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
             {
