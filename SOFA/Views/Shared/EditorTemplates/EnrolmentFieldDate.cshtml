@@ -25,7 +25,7 @@
                            , new { @class = "control-label col-xs-2 label-align" })
 
 <div class="col-xs-10">
-    <div class="input-group date" id="@Model.EnrolmentFIeldId">
+    <div class="input-group date" id="@Model.EnrolmentFieldId">
         @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy" })
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
@@ -36,7 +36,7 @@
 <script type="text/javascript">
     $(function () {
         console.log("Herrow");
-        $('#@Model.EnrolmentFIeldId').datetimepicker({
+        $('#@Model.EnrolmentFieldId').datetimepicker({
             pickTime: false
         });
     });
