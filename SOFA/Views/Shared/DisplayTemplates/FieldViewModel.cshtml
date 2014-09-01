@@ -36,7 +36,7 @@
             @Html.LabelFor(model => model.Value, Model.PromptValue
                           , new { @class = "control-label col-xs-2 label-align" })
             <div class="col-xs-10">
-                @Html.EditorFor(model => model.Value, new { @class = "form-control" })
+                @Html.EditorFor(model => model.Value, new { @class = "form-control disabled" })
             </div>
             break;
 
@@ -44,7 +44,7 @@
         @Html.LabelFor(model => model.Value, Model.PromptValue
                            , new { @class = "control-label col-xs-2 label-align" })
         <div class="col-xs-10">
-            @Html.TextAreaFor(model => model.Value, new { @class = "form-control" })
+            @Html.TextAreaFor(model => model.Value, new { @class = "form-control disabled" })
         </div>
             break;
 
