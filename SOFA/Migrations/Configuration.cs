@@ -49,40 +49,8 @@ namespace SOFA.Migrations
 
         private void IdentitySeed(DBContext context)
         {
-            SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
-            
-            if (sum.FindByEmail("chuck_norris@asskicking.com") == null)
-            {
-                SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
-                SOFAUser God = new SOFAUser();
-                Person Gods_Info = new Person();
-                God.Active = true;
-                God.Email = "chuck_norris@asskicking.com";
-                God.EmailConfirmed = true;
-                God.UserName = "chuck_norris@asskicking.com";
-
-                sum.Create(God, "chucknorris");
-
-                context.SaveChanges();
-
-                Gods_Info.GivenNames = "Carlos Ray";
-                Gods_Info.LastName = "Norris";
-                Gods_Info.Position = "Ass Kicker";
-                Gods_Info.Email = "chuck_norris@asskicking.com";
-                Gods_Info.User = God;
-
-                context.Persons.Add(Gods_Info);
-                context.SaveChanges();
-
-                foreach (string role in SOFARole.SOFA_ROLES)
-                    if (!srm.RoleExists(role))
-                        srm.Create(new SOFARole(role));
-
-                context.SaveChanges();
-
-                sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
-                context.SaveChanges(); 
-            }
+            SeedSysAdmin(context);
+            SeedClient(context);
             
         }
 
@@ -184,5 +152,84 @@ namespace SOFA.Migrations
             
             
         }
+
+        private void SeedSysAdmin(DBContext context)
+        {
+            SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
+
+            if (sum.FindByEmail("chuck_norris@asskicking.com") == null)
+            {
+                SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+                SOFAUser God = new SOFAUser();
+                Person Gods_Info = new Person();
+                God.Active = true;
+                God.Email = "chuck_norris@asskicking.com";
+                God.EmailConfirmed = true;
+                God.UserName = "chuck_norris@asskicking.com";
+
+                sum.Create(God, "chucknorris");
+
+                context.SaveChanges();
+
+                Gods_Info.GivenNames = "Carlos Ray";
+                Gods_Info.LastName = "Norris";
+                Gods_Info.Position = "Ass Kicker";
+                Gods_Info.Email = "chuck_norris@asskicking.com";
+                Gods_Info.User = God;
+
+                context.Persons.Add(Gods_Info);
+                context.SaveChanges();
+
+                foreach (string role in SOFARole.SOFA_ROLES)
+                    if (!srm.RoleExists(role))
+                        srm.Create(new SOFARole(role));
+
+                context.SaveChanges();
+
+                sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
+                context.SaveChanges();
+            }
+            
+        }
+
+        private void SeedClient(DBContext context)
+        {
+            SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
+
+            if (sum.FindByEmail("kgoug13@eq.edu.au") == null)
+            {
+                SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+                SOFAUser Client = new SOFAUser();
+                Person Client_Info = new Person();
+                Client.Active = true;
+                Client.Email = "kgoug13@eq.edu.au";
+                Client.EmailConfirmed = true;
+                Client.UserName = "kgoug13@eq.edu.au";
+
+                sum.Create(Client, "chucknorris");
+
+                context.SaveChanges();
+
+                Client_Info.GivenNames = "Kathie";
+                Client_Info.LastName = "Gough";
+                Client_Info.Position = "Client";
+                Client_Info.Email = "kgoug13@eq.edu.au";
+                Client_Info.User = Client;
+
+                context.Persons.Add(Client_Info);
+                context.SaveChanges();
+
+                foreach (string role in SOFARole.SOFA_ROLES)
+                    if (!srm.RoleExists(role))
+                        srm.Create(new SOFARole(role));
+
+                context.SaveChanges();
+
+                sum.AddToRole(Client.Id, SOFARole.SOFAADMIN_ROLE);
+                context.SaveChanges();
+            }
+        }
     }
+
+ 
 }

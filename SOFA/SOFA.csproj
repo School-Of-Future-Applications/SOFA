@@ -123,6 +123,7 @@
     <Content Include="Content\dialog.css" />
     <Content Include="Content\enrolment.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\FormEdit.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -194,11 +195,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
-    <Content Include="ClassDiagram3.cd" />
-    <Content Include="ClassDiagram4.cd" />
-    <Content Include="ClassDiagram5.cd" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -426,7 +422,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Enrolment\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>
