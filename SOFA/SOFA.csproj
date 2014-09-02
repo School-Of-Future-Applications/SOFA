@@ -123,6 +123,7 @@
     <Content Include="Content\dialog.css" />
     <Content Include="Content\enrolment.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\FormEdit.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />

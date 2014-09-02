@@ -22,11 +22,11 @@
 
 @model SOFA.Models.ViewModels.FormViewModels.FormSectionViewModel
           
-<div class="accordion-div">
+<div class="accordion-div panel panel-primary">
     @Html.HiddenFor(m => m.Section.Id, new { @class = "sectionId" })
     
-    <h3>@Html.DisplayFor(m => m.Section.Name)</h3>
-    <div>
+    <h3 class="panel-heading">@Html.DisplayFor(m => m.Section.Name)</h3>
+    <div class="panel-body">
         <div class="pull-right margin-bottom">
 
         @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)        
