@@ -17,3 +17,20 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
+
+
+<div id="delete-modal" class="modal hide fade in">
+    <div id="delete-modal-content"></div>
+</div> 
+
+<script>
+    $(".delete-link").click(function () {
+        $("#delete-modal-content").load(this.href, function () {
+            $("#delete-modal").modal({
+                backdrop: 'static',
+                keyboard: true
+            }, 'show');
+
+        });
+    });
+</script>

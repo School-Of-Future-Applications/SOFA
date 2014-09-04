@@ -87,7 +87,7 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Preview", "NewEnrolment", "Enrolment", new { formId = f.Id }, null)</li>
-                            <li>@Html.ActionLink("Delete", "Delete", new { formId = f.Id })</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { formId = f.Id }, new { @class = "delete-link" })</li>
                         </ul>
                     </div>
                 </div>
@@ -96,3 +96,4 @@
     }
 </div>
 <div id="addform-dialog"></div>
+@Html.Partial("DeleteConfirmationModal")
