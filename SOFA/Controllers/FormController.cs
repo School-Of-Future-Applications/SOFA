@@ -89,10 +89,18 @@ namespace SOFA.Controllers
         //
         // POST: /Form/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult DeletePost(String formId)
         {
+            try
+            {
+                Form form = this.DBCon().Forms.Single(f => f.Id == formId);
+                this.DBCon().Entry(form).State = EntityState.Deleted;
+                this.DBCon().SaveChanges();
+            }
+            catch { }
             return RedirectToAction("Index");
         }
 
