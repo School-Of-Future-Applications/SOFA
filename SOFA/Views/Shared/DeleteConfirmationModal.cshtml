@@ -19,17 +19,21 @@
 *@
 
 
-<div id="delete-modal" class="modal hide fade in">
-    <div id="delete-modal-content"></div>
+<div id="delete-modal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content" id="delete-modal-content"></div>
+    </div>
 </div> 
 
 <script>
-    $(".delete-link").click(function () {
+    $(".delete-link").click(function (e) {
+        e.preventDefault();
         $("#delete-modal-content").load(this.href, function () {
             $("#delete-modal").modal({
                 backdrop: 'static',
                 keyboard: true
             }, 'show');
+            return false;
 
         });
     });

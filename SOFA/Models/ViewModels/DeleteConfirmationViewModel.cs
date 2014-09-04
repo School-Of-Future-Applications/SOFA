@@ -47,5 +47,11 @@ namespace SOFA.Models.ViewModels
 
         //The confirmation message displayed 
         public string ConfirmationText { get; set; }
+
+
+        public DeleteConfirmationViewModel()
+        {
+            RouteValues = new RouteValueDictionary();
+        }
     }
 }
