@@ -40,7 +40,7 @@ namespace SOFA.Models.ViewModels
         public string DeleteController { get; set; }
 
         //The route dictionary values to be passed to the post method.
-        public RouteValueDictionary RouteValues { get; set; }
+        public IDictionary<string, object> RouteValues { get; set; }
 
         //The text displayed in the header of the modal.
         public string HeaderText { get; set; }
@@ -51,7 +51,7 @@ namespace SOFA.Models.ViewModels
 
         public DeleteConfirmationViewModel()
         {
-            RouteValues = new RouteValueDictionary();
+            RouteValues = new Dictionary<string, object>();
         }
     }
 }

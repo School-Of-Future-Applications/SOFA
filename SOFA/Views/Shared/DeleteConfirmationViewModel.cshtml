@@ -31,6 +31,7 @@
                         FormMethod.Post, new { @class = "modal-form form-horizontal"}))
 {
     @Html.ValidationSummary()
+
     
     <div class="modal-body">
         <div>
@@ -42,9 +43,9 @@
     </div>
     
     <div class="modal-footer">
-        @Ajax.ActionLink("Delete", Model.DeleteAction, Model.DeleteController, Model.RouteValues, 
-                            null,
-                            new { @class = "btn btn-danger"})
+        @Ajax.ActionLink("Delete", Model.DeleteAction, Model.DeleteController, new RouteValueDictionary(Model.RouteValues),
+        new AjaxOptions() { HttpMethod = "POST" } , 
+        new Dictionary<string, object>(){ { "class", "btn btn-danger" } })
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                             
     </div>

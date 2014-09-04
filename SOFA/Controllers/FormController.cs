@@ -79,10 +79,10 @@ namespace SOFA.Controllers
             {
                 DeleteAction = "Delete",
                 DeleteController = "Form",
-                HeaderText = "Confirm form deletion",
+                HeaderText = "Confirm Form Deletion",
                 ConfirmationText = "Are you sure you want to delete this Form?",
             };
-            dcvm.RouteValues.Add("formId", formId);
+            dcvm.RouteValues.Add("FormId", formId);
             return PartialView("DeleteConfirmationViewModel", dcvm);
         }
 
@@ -91,9 +91,9 @@ namespace SOFA.Controllers
         [HttpPost]
         [ActionName("Delete")]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult DeletePost(String FormID)
+        public ActionResult DeletePost(String formId)
         {
-            return View();
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
