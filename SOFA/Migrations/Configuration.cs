@@ -56,99 +56,105 @@ namespace SOFA.Migrations
 
         private void FormSeed(DBContext context)
         {
-            //Create form and form sections
-            Form form = new Form()
+            List<Section> DBSections = context.Sections.ToList();
+            if (!DBSections.Any(s => s.Id == Section.STUDENT_SECTION_ID ||
+                                    s.Id == Section.COURSE_SECTION_ID))
             {
-                FormName = "Seed Form",
-            };
-                     
-            FormSection fSectionCourse = new FormSection();
-            FormSection fSectionStudent = new FormSection();
-            form.FormSections.Add(fSectionCourse);
-            form.FormSections.Add(fSectionStudent);
-            
-            //Create Sections
-            Section sectionCourse = new Section()
-            {
-                DateCreated = DateTime.Now,
-                Name = Section.COURSE_SECTION_NAME
-            };
-            sectionCourse.Id = Section.COURSE_SECTION_ID;
-            Section sectionStudent = new Section()
-            {
-                DateCreated = DateTime.Now,
-                Name = Section.STUDENT_SECTION_NAME
-            };
-            sectionStudent.Id = Section.STUDENT_SECTION_ID;
-            //Set order of sections
-            fSectionCourse.Section = sectionCourse;
-            fSectionCourse.BelowOf = null;
-            fSectionStudent.Section = sectionStudent;
-            fSectionStudent.BelowOf = sectionCourse;
+                //Create form and form sections
+                Form form = new Form()
+                {
+                    FormName = "Seed Form",
+                };
 
-            context.Forms.Add(form);
-            context.SaveChanges();
+                FormSection fSectionCourse = new FormSection();
+                FormSection fSectionStudent = new FormSection();
+                form.FormSections.Add(fSectionCourse);
+                form.FormSections.Add(fSectionStudent);
 
-            //Create fields
-            Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionCourse,
-                PromptValue = "Field A"
-            };
-            Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionCourse,
-                PromptValue = "Field B"
-            };
-            Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionStudent,
-                PromptValue = "Field C"
-            };
-            Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionStudent,
-                PromptValue = "Field D"
-            };
-            Field fieldE = new Field(Field.TYPE_INFO)
-            {
-                Section = sectionStudent,
-                PromptValue = "This is a info box. It will have lots and lots of text."
-            };
-            Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
-            {
-                Section = sectionStudent,
-                PromptValue = "Enter some multi text"
-            };
-            Field fieldG = new Field(Field.TYPE_DATE)
-            {
-                Section = sectionStudent,
-                PromptValue = "Birthday"
-            };
+                //Create Sections
+                Section sectionCourse = new Section()
+                {
+                    DateCreated = DateTime.Now,
+                    Name = Section.COURSE_SECTION_NAME
+                };
+                sectionCourse.Id = Section.COURSE_SECTION_ID;
+                Section sectionStudent = new Section()
+                {
+                    DateCreated = DateTime.Now,
+                    Name = Section.STUDENT_SECTION_NAME
+                };
+                sectionStudent.Id = Section.STUDENT_SECTION_ID;
+                //Set order of sections
+                fSectionCourse.Section = sectionCourse;
+                fSectionCourse.BelowOf = null;
+                fSectionStudent.Section = sectionStudent;
+                fSectionStudent.BelowOf = sectionCourse;
 
-            //Add options to fields
-            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            
-            //Add fields to sections
-            sectionCourse.Fields.Add(fieldA);
-            sectionCourse.Fields.Add(fieldB);
-            sectionStudent.Fields.Add(fieldC);
-            sectionStudent.Fields.Add(fieldE);
-            sectionStudent.Fields.Add(fieldF);
-            sectionStudent.Fields.Add(fieldD);
-            sectionStudent.Fields.Add(fieldG);
+                context.Forms.Add(form);
+                context.SaveChanges();
 
-            context.Fields.AddRange(new List<Field>() 
+                //Create fields
+                Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionCourse,
+                    PromptValue = "Field A"
+                };
+                Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionCourse,
+                    PromptValue = "Field B"
+                };
+                Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Field C"
+                };
+                Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Field D"
+                };
+                Field fieldE = new Field(Field.TYPE_INFO)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "This is a info box. It will have lots and lots of text."
+                };
+                Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Enter some multi text"
+                };
+                Field fieldG = new Field(Field.TYPE_DATE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Birthday"
+                };
+
+                //Add options to fields
+                fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+                fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+                fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
+                fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+
+                //Add fields to sections
+                sectionCourse.Fields.Add(fieldA);
+                sectionCourse.Fields.Add(fieldB);
+                sectionStudent.Fields.Add(fieldC);
+                sectionStudent.Fields.Add(fieldE);
+                sectionStudent.Fields.Add(fieldF);
+                sectionStudent.Fields.Add(fieldD);
+                sectionStudent.Fields.Add(fieldG);
+
+                context.Fields.AddRange(new List<Field>() 
             {
                 fieldA,
                 fieldB,
                 fieldC,
                 fieldD
             });
-            context.SaveChanges();
+                context.SaveChanges();
+            }
+            
             
             
         }
