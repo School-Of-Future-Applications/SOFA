@@ -23,6 +23,9 @@ namespace SOFA.Models.ViewModels
         public RouteValueDictionary RouteValues { get; set; }
 
         //The text displayed in the header of the modal.
-        public string ModalHeaderText { get; set; }
+        public string HeaderText { get; set; }
+
+        //The confirmation message displayed 
+        public string ConfirmationText { get; set; }
     }
 }
