@@ -40,7 +40,7 @@
             <ul class="dropdown-menu" role="menu">
                 <li>
                     @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
-                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
+                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id }, new { @class = "delete-link" })
                 </li>
             </ul>
         </span>
@@ -97,3 +97,4 @@
         }
     </div>
 </div>
+@Html.Partial("DeleteConfirmationModal")
