@@ -27,6 +27,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -68,14 +69,29 @@ namespace SOFA.Controllers
         }
 
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
-        public ActionResult Delete(int? departmentId)
+        public ActionResult Delete(int departmentId)
+        {
+            DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "Delete",
+                DeleteController = "Department",
+                HeaderText = "Confirm Department Deletion",
+                ConfirmationText = "Are you sure you want to delete this department?"
+            };
+            dcvm.RouteValues.Add("departmentId", departmentId);
+
+            return PartialView("DeleteConfirmationViewModel", dcvm);
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeletePost(int departmentId)
         {
             Department dep = null;
             try
             {
-                if (departmentId == null)
-                    throw new Exception();
-
                 dep = this.DBCon().Departments.Where(x => x.id == departmentId).First();
                 dep.Deleted = true;
                 this.DBCon().Entry(dep).State = EntityState.Modified;
