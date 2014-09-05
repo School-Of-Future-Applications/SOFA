@@ -143,6 +143,18 @@ namespace SOFA.Controllers
         [ActionName("Delete")]
         public ActionResult DeletePost(int courseId)
         {
+            try
+            {
+                Course course = this.DBCon().Courses.
+                                    Single(c => c.Id == courseId);
+                course.Deleted = true;
+                this.DBCon().Entry(course).State = System.Data.Entity.
+                                                    EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+            }
+            catch { }
+
             return RedirectToAction("Index");
         }
 
