@@ -29,6 +29,22 @@ namespace SOFA.Models.ViewModels
     /**
      * A view model for a reusable delete confirmation
      * modal.
+     * 
+     * HOW TO USE:
+     * 
+     * VIEW:
+     * Render the DeleteConfirmationModal partial view in your view.
+     * Apply the css class "delete-link" to the delete link/button.
+     *  
+     * CONTROLLER:
+     *  * HTTPGET:
+     *  Create a DeleteConfirmationViewModel. Place the required ids
+     *  in the RouteValues dictionary. Return the DeleteConfirmationViewModel
+     *  partial view.
+     *  
+     *  * HTTPPOST:
+     *  The parameters must match the keys placed in the RouteValues object.
+     *  Delete object as per normal.  
      */
     public class DeleteConfirmationViewModel
     {
