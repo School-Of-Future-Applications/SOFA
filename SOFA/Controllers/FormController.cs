@@ -9,6 +9,7 @@ using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
 using SOFA.Models.ViewModels.FormViewModels;
+using System.Web.Routing;
 
 namespace SOFA.Controllers
 {
@@ -74,25 +75,33 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Delete(String formId)
         {
-            Form form = null;
-            try
+            DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
             {
-                form = this.DBCon().Forms.Where(x => x.Id == formId).First();
-                this.DBCon().Entry(form).State = EntityState.Deleted;
-                this.DBCon().SaveChanges();
-            }
-            catch {}
-            return RedirectToAction("Index");
+                DeleteAction = "Delete",
+                DeleteController = "Form",
+                HeaderText = "Confirm Form Deletion",
+                ConfirmationText = "Are you sure you want to delete this Form?",
+            };
+            dcvm.RouteValues.Add("FormId", formId);
+            return PartialView("DeleteConfirmationViewModel", dcvm);
         }
 
         //
         // POST: /Form/Delete/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         [ActionName("Delete")]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult DeletePost(String FormID)
+        public ActionResult DeletePost(String formId)
         {
-            return View();
+            try
+            {
+                Form form = this.DBCon().Forms.Single(f => f.Id == formId);
+                this.DBCon().Entry(form).State = EntityState.Deleted;
+                this.DBCon().SaveChanges();
+            }
+            catch { }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
