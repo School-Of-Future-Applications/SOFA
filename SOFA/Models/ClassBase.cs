@@ -42,9 +42,10 @@ namespace SOFA.Models
         [StringLength(ClassBase.YEARLEVEL_LENGTH)]
         public String YearLevel { get; set; }
 
+        public bool Deleted { get; set; }
+                
         public virtual Course Course { get; set; }
-
-
+        
         public virtual List<TimetabledClass> TimetabledClasses{ get; set; }
 
         public ClassBase()
