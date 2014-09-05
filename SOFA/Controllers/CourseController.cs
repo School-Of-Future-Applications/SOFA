@@ -137,6 +137,8 @@ namespace SOFA.Controllers
             return PartialView("DeleteConfirmationViewModel", dcvm);
         }
 
+        //
+        // POST: /Course/Delete
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
