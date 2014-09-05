@@ -35,7 +35,9 @@ namespace SOFA.Controllers
     {  
         public ActionResult Index()
         {
-            return View(this.DBCon().Departments.OrderBy(x => x.DepartmentName).ToList());
+            return View(this.DBCon().Departments.
+                Where(d => !d.Deleted).
+                OrderBy(x => x.DepartmentName).ToList());
         }
 
         [HttpGet]
