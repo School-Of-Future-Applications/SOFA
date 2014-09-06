@@ -120,6 +120,46 @@ namespace SOFA.Controllers
             }
         }
 
+        //
+        // GET: /Course/Delete
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult Delete(int courseId)
+        {
+            var dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "Delete",
+                DeleteController = "Course",
+                HeaderText = "Confirm Course Deletion",
+                ConfirmationText = "Are you sure you want to delete this course?"
+            };
+            dcvm.RouteValues.Add("courseId", courseId);
+
+            return PartialView("DeleteConfirmationViewModel", dcvm);
+        }
+
+        //
+        // POST: /Course/Delete
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [ActionName("Delete")]
+        public ActionResult DeletePost(int courseId)
+        {
+            try
+            {
+                Course course = this.DBCon().Courses.
+                                    Single(c => c.Id == courseId);
+                course.Deleted = true;
+                this.DBCon().Entry(course).State = System.Data.Entity.
+                                                    EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+            }
+            catch { }
+
+            return RedirectToAction("Index");
+        }
+
         [NonAction]
         public override Enum NavProviderTerm()
         {
