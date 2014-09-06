@@ -51,6 +51,7 @@ namespace SOFA.Migrations
         {
             SeedSysAdmin(context);
             SeedClient(context);
+
             
         }
 
@@ -235,6 +236,8 @@ namespace SOFA.Migrations
                 context.SaveChanges();
             }
         }
+
+        
     }
 
  
