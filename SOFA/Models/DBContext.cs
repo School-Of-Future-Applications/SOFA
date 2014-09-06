@@ -30,7 +30,7 @@ namespace SOFA.Models
 {
     public class DBContext : IdentityDbContext<SOFAUser>
     {
-        public DBContext() : base("DefaultConnection")
+        public DBContext() : base("DefaultConnection",throwIfV1Schema:false)
         { }
 
         public DbSet<Department> Departments { get; set; }
