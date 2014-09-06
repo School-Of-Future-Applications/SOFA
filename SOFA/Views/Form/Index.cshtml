@@ -1,0 +1,100 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using System.Web.Mvc
+
+@using SOFA.Infrastructure
+@using SOFA.Models
+
+@model List<Form>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script typeof="text/javascript">
+    $(document).ready(function () {
+
+        $('#addform-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+
+        $(".addform").click(function (event) {
+            event.preventDefault();
+            $('#addform-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>
+
+
+
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Forms</li>
+    </ol>
+    <h2>Forms</h2>
+    @Html.ActionLink("New Form", "CreateForm", null
+                    ,new { @class = "btn btn-default addform" })
+</div>
+
+<div class="row">
+    @foreach (Form f in Model)
+    {
+        <div class="col-md-3 col-sm-5">
+            <div class="panel panel-primary">
+                <div class="panel-heading">@f.FormName</div>
+                <div class="panel-body">
+                    <p>
+                        <b>Form Id: </b>@f.Id<br />
+                        <b>Date Created: </b>@f.DateCreatedString()<br />
+                        <b>Last Modified: </b>@f.LastModifiedString()<br />
+                        <b>Section Count: </b>@f.FormSections.Count<br />
+                        <b>Form URL: </b>
+                        <input readonly type="text" class="form-control"
+                               value="@HttpContext.Current.EnrolmentFormUrl(f.Id)"><br />
+                    </p>
+
+                    <div class="btn-group pull-right">
+
+                        @Html.ActionLink("Edit", "Edit", "Form", new { FormId = f.Id }
+                                        , new { @class = "btn btn-default" })
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Preview", "NewEnrolment", "Enrolment", new { formId = f.Id }, null)</li>
+                            <li>@Html.ActionLink("Delete", "Delete", new { formId = f.Id }, new { @class = "delete-link" })
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div id="addform-dialog"></div>
+@Html.Partial("DeleteConfirmationModal")

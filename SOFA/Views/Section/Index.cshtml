@@ -1,0 +1,95 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Section>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<script typeof="text/javascript">
+    $(document).ready(function () {
+  
+        $('#addsection-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+    
+        $(".addsection").click(function (event) {
+            event.preventDefault();
+            $('#addsection-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>
+
+<div class="page-header">
+    <ol class="breadcrumb">
+        <li class="active">Sections</li>
+    </ol>
+    <h2>Sections</h2>
+    @Html.ActionLink("New Section", "CreateSection", null
+                    ,new { @class = "btn btn-default addsection" })
+   
+</div>
+
+<div class="row">
+    @foreach(Section s in Model)
+    {
+        bool isDefault = Section.DEFAULT_SECTION_IDS.Contains(s.Id);
+        <div class="col-md-3 col-sm-5">
+            <div class="panel @(isDefault ? "panel-success" : "panel-primary")">
+                <div class="panel-heading">@s.Name</div>
+                <div class="panel-body">
+                    <p>
+                        <b>Section Id: </b>@s.Id<br/>
+                        <b>Date Created: </b>@s.DateCreatedString()<br/>
+                        <b>Children Count: </b>@s.Fields.Count<br/>
+                    </p>
+
+                    @if(!isDefault)
+                    {
+                        <div class="btn-group pull-right">
+         
+                            @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }
+                                            ,new { @class = "btn btn-default" })
+                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only">Toggle Dropdown</span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                    <li>@Html.ActionLink("Delete", "Delete", new { id = s.Id }, new { @class = "delete-link" })</li>
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="addsection-dialog"></div>
+@Html.Partial("DeleteConfirmationModal")

@@ -1,0 +1,73 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<Person>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="page-header">
+    <h2>
+        User Administration
+
+        <span class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
+            </button>
+        </span>
+    </h2>
+</div>
+ 
+<div class="row">
+    <div class="col-md-1">
+        <div class="btn-group-vertical btn-group-vertical-max-wdith">
+            @Html.ActionLink("Add New User", "NewUser", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+    <div class="col-md-11">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>User Id</th>
+                    <th>User Name</th>
+                    <th>Full Name</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(Person p in Model)
+                {
+                    <tr onclick="location.href='@Url.Action("UserAdmin", "UserAdmin"
+                                                           ,new { personId = p.Id })'"
+                        class=@(!p.User.Active ? "danger" : "")>
+                        <td>@p.User.Id</td>
+                        <td>@p.User.UserName</td>
+                        <td>@p.FullName()</td>
+                        <td>@p.Position</td>
+                    </tr>
+                }
+            </tbody>
+        </table>@* End of Person table. *@
+    </div>
+</div>

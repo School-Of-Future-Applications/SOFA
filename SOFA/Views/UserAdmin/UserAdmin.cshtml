@@ -1,0 +1,139 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Infrastructure;
+@using SOFA.Models
+
+@model Person
+
+@{
+    SOFAUser currentUser = Html.CurrentUser();
+    ViewBag.Title = "UserAdmin";
+}
+
+<div class="page-header">
+    <h2>User Profile</h2>
+</div>
+
+<div class="row">
+
+    <div class="col-md-12">
+        <div class="panel @(!Model.User.Active ? "panel-danger" : "panel-primary")">
+
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    System Login Information
+                </h4>
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    @if (Html.UserManager().IsInRoles(currentUser.Id, SOFARole.AUTH_SOFAADMIN))
+                    {
+                    <div class="btn-group">
+                       
+                        @if(!Model.User.Active)
+                        {
+                            @Html.ActionLink("Activate", "ActiveUser"
+                                            ,new { userId = Model.User.Id
+                                                 , active = true }
+                                            ,new { @class = "btn btn-default" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Deactivate", "ActiveUser"
+                                            ,new { userId = Model.User.Id}
+                                            ,new { @class = "btn btn-default" })                            
+                        }
+                    </div>
+                    }
+                    
+                    @if(currentUser.Id == Model.User.Id)
+                    {
+                    <div class="btn-group">
+                        @Html.ActionLink("Reset Password", "UserPasswordReset"
+                                        ,new { userId = Model.User.Id }
+                                        ,new { @class = "btn btn-default" })
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <p>
+                    <b>@Html.LabelFor(model => model.User.UserName):</b>
+                        @Html.DisplayFor(model => model.User.UserName)<br />
+                    <b>@Html.LabelFor(model => model.User.EmailConfirmed):</b>
+                        @Html.DisplayFor(model => model.User.EmailConfirmed)<br />
+                    <b>@Html.LabelFor(model => model.User.AccessFailedCount):</b>
+                        @Html.DisplayFor(model => model.User.AccessFailedCount)
+                </p>
+            </div>
+        </div>
+    </div>
+
+    @if(Html.UserManager().IsInRoles(currentUser.Id, SOFARole.AUTH_SOFAADMIN))
+    {
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    Role Membership
+                </h4>
+            </div>
+            <div class="panel-body">
+                @Html.Action("UserRoleEdit", "UserAdmin", new { userId = Model.User.Id })
+            </div>
+        </div>
+    </div>
+    }
+
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading clearfix">
+                <h4 class="panel-title pull-left" style="padding-top: 7.5px;">
+                    Personal Information
+                </h4>
+                <div class="btn-toolbar pull-right" role="toolbar">
+                    <div class="btn-group">
+                        @Html.ActionLink("Edit", "EditPerson", "Person"
+                                        ,new { personId = Model.Id }
+                                        ,new { @class = "btn btn-default" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel-body">
+                <p>
+                    <b>@Html.LabelFor(model => model.GivenNames):</b>
+                        @Html.DisplayFor(model => model.GivenNames)<br />
+                    <b>@Html.LabelFor(model => model.LastName):</b>
+                        @Html.DisplayFor(model => model.LastName)<br />
+                    <b>@Html.LabelFor(model => model.Position):</b>
+                        @Html.DisplayFor(model => model.Position)<br />
+                    <b>@Html.LabelFor(model => model.Email):</b>
+                        @Html.DisplayFor(model => model.Email)<br />
+                    <b>@Html.LabelFor(model => model.PhoneNumber):</b>
+                        @Html.DisplayFor(model => model.PhoneNumber)<br />
+                    <b>@Html.LabelFor(model => model.MobileNumber):</b>
+                        @Html.DisplayFor(model => model.MobileNumber)<br />
+                </p>
+            </div>
+        </div> 
+    </div>
+
+</div>

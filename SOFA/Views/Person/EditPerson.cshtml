@@ -1,0 +1,49 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+
+@model Person
+
+@{
+    ViewBag.Title = "EditPerson";
+}
+
+<div class="page-header">
+    <h2>Edit - @Model.FullName()</h2>
+</div>
+
+<div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        @Html.ValidationSummary()
+
+        @using (Html.BeginForm("EditPerson", "Person", FormMethod.Post
+                              ,new { @class = "form-horizontal" }))
+        {
+            @Html.Partial("PersonFormComponents", Model)
+                        
+            <div class="form-group">
+                <div class="col-sm-9 col-sm-offset-3">
+                    <input type="submit" class="btn btn-default" value="Save Person" />
+                </div>
+            </div>                                                                       
+        }
+    </div>
+</div>

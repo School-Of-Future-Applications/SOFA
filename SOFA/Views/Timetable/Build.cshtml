@@ -1,4 +1,24 @@
-﻿@model SOFA.Models.Timetable
+﻿@*
+ *  School Of Future Applications
+ *
+ *  Copyright (C) 2014  Terminal Coding
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *@
+
+@model SOFA.Models.Timetable
 
 @{
     ViewBag.Title = "Build";
@@ -15,6 +35,13 @@
                 width: 600,
                 resizable: true,
                 modal: true
+            });
+
+            $("table a.setlinename").click(function (event) {
+                event.preventDefault();
+                $('#my-dialog').load(this.href, function () {
+                    $(this).dialog('open');
+                });
             });
 
             $("table a.addtime").click(function (event) {
@@ -97,6 +124,7 @@
         @{
     var timetable = Model; ;
     var timetableLines = Model.Lines;
+    var lineid = 0;
         }
             <hr />
 
@@ -104,9 +132,19 @@
         <table class="table">
             @foreach (var line in timetableLines)
             { 
+
+           lineid++;
+
             <tr>
                 <td>
-                    <b>Line @Html.DisplayFor(modelItem => line.Id)</b>
+                    @if(line.Label.IsEmpty())
+                    { 
+                    <b>@Html.ActionLink("Line " + @Html.DisplayFor(modelItem => lineid), "SetLineLabel", new { id = line.Id }, new { @class = "setlinename" })</b>
+                    }
+                    else
+                    {
+                       <b>@Html.ActionLink(""+@Html.DisplayFor(modelItem => line.Label), "SetLineLabel", new { id = line.Id }, new { @class = "setlinename" })</b>
+                    }
                 </td>
 
                         <td>

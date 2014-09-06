@@ -11,6 +11,10 @@
    display: none;
 }
 
+.btn-group-vertical-max-wdith {
+    width: 100%;
+}
+
 @media (min-width: 768px) {
   .sidebar, .list-sidebar {
     position: fixed;
@@ -54,7 +58,24 @@
   background-color: #428bca;
 }
 
+.nav-sidebar > .heading {
+  padding-left: 10px;
+  color: #000000;
+  background-color: #b8b8b8;
+}
+
 .main {
   padding-top: 40px;
 }
 
+.table-hover tbody tr:hover > td {
+    cursor: pointer;
+}
+
+.table-hover tbody tr.lasthidden td:last-child {
+    visibility: hidden;
+}
+
+.table-hover tbody tr.lasthidden:hover td:last-child {
+      visibility: visible;
+} 
