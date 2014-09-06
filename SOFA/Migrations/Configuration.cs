@@ -50,9 +50,7 @@ namespace SOFA.Migrations
         private void IdentitySeed(DBContext context)
         {
             SeedSysAdmin(context);
-            SeedClient(context);
-
-            
+            SeedClient(context);   
         }
 
         private void FormSeed(DBContext context)
@@ -155,9 +153,6 @@ namespace SOFA.Migrations
             });
                 context.SaveChanges();
             }
-            
-            
-            
         }
 
         private void SeedSysAdmin(DBContext context)

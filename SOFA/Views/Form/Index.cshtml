@@ -49,7 +49,14 @@
     });
 </script>
 
-
+<style>
+    @****
+     * Bootstrap readonly cursor fix
+     ****@
+    .form-control[readonly] {
+        cursor: auto;
+    }
+</style>
 
 <div class="page-header">
     <ol class="breadcrumb">
@@ -73,7 +80,7 @@
                         <b>Last Modified: </b>@f.LastModifiedString()<br />
                         <b>Section Count: </b>@f.FormSections.Count<br />
                         <b>Form URL: </b>
-                        <input readonly type="text" class="form-control"
+                        <input readonly="readonly" type="text" class="form-control"
                                value="@HttpContext.Current.EnrolmentFormUrl(f.Id)"><br />
                     </p>
 
