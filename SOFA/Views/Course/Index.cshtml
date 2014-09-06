@@ -82,7 +82,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (ClassBase cb in Model.ClassBases)
+            @foreach (ClassBase cb in Model.ClassBases.Where(c => !c.Deleted))
             {
                 <tr class="lasthidden">
                     <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
@@ -90,7 +90,10 @@
                     <td align="right">
                         @Html.ActionLink("Edit", "CreateEdit", "ClassBase"
                                         ,new { courseId = cb.Course.Id, classBaseId = cb.Id }
-                                        ,null)
+                                        ,null) | 
+                        @Html.ActionLink("Delete", "Delete", "ClassBase",
+                                        new { classBaseId = cb.Id },
+                                        new { @class = "delete-link" } )
                     </td>
                 </tr>
             }
