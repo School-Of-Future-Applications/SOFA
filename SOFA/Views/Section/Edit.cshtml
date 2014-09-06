@@ -48,7 +48,8 @@
                 {
                     ui.item.addClass("panel panel-primary");
                     ui.item.addClass("givingPrompt").removeClass("ui-draggable");
-                    ui.item.data("type", ui.item.html());
+                    ui.item.data("type", ui.item.find(".elType").html());
+                    ui.item.append("test");
                     $("#promptmodal").modal("show");
                 }
 
@@ -163,17 +164,17 @@
     </div>
 </div>
 <div id="designer" style="float:right;width:15%;text-align:left">
-    <div class="delement ui-widget-content" id="TEXT_MULTI">TEXT_MULTI</div>
+    <div class="delement ui-widget-content" id="TEXT_MULTI">TEXT_MULTI<span class="elType" style="display:none">TEXT_MULTI</span></div>
     <br />
-    <div class="delement ui-widget-content" id="TEXT_SINGLE">TEXT_SINGLE</div>
+    <div class="delement ui-widget-content" id="TEXT_SINGLE">TEXT_SINGLE<span class="elType" style="display:none">TEXT_SINGLE</span></div>
     <br />
-    <div class="delement ui-widget-content" id="FILE">FILE</div>
+    <div class="delement ui-widget-content" id="FILE">FILE<span class="elType" style="display:none">FILE</span></div>
     <br />
-    <div class="delement ui-widget-content" id="DATE">DATE</div>
+    <div class="delement ui-widget-content" id="DATE">DATE<span class="elType" style="display:none">DATE</span></div>
     <br />
-    <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN</div>
+    <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN<span class="elType" style="display:none">DROPDOWN</span></div>
     <br />
-    <div class="delement ui-widget-content" id="INFORMATION">INFORMATION</div>
+    <div class="delement ui-widget-content" id="INFORMATION">INFORMATION<span class="elType" style="display:none">INFORMATION</span></div>
 </div>
 <div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
     <div class="modal-content" style="position:fixed">
