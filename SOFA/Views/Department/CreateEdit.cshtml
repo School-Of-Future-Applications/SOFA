@@ -57,15 +57,15 @@
                 }
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentName, "Department Name"
-                                  , new { @class = "control-label col-sm-4" })
-                    <div class="col-sm-8">
+                                  , new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-6">
                         @Html.EditorFor(model => model.DepartmentName)
                         @Html.ValidationMessageFor(model => model.DepartmentName)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-sm-1 col-sm-offset-4">
+                    <div class="col-sm-1 col-sm-offset-7">
                         <input type="submit" class="btn btn-default" value="@ViewBag.SubmitTxt" />
                     </div>
                 </div>
