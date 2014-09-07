@@ -43,6 +43,7 @@ namespace SOFA.Models
         public DateTime DateCreated { get; set; }
 
         [Required]
+        [StringLength(250)]
         [Display(Name = "Section Name")]
         public string Name { get; set; }
 

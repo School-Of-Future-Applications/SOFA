@@ -42,6 +42,7 @@ namespace SOFA.Models
         }
 
         [Required]
+        [StringLength(250)]
         [Display(Name = "Form Name")]
         public string FormName {get; set;}
 
