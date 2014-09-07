@@ -51,6 +51,7 @@
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/jquery-ui-1.10.4.min.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/nav-sidebar.js"></script>
 
    <title>@ViewBag.Title</title>
 
@@ -86,7 +87,7 @@
 </head>
 <body>
 
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -113,11 +114,11 @@
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            @Html.DashboardNavigation();
+        <div class="col-sm-1 sidebar">
+           @Html.DashboardNavigation()
         </div>
 
-        <div class="col-sm-9 col-md-10 col-sm-offset-3 col-md-offset-2">
+        <div class="col-sm-11 col-sm-offset-1">
             <div class="main">
                 @RenderBody()
             </div>
@@ -130,5 +131,5 @@
 
 @if (IsSectionDefined("datepicker"))
 {
-    @RenderSection("datepicker");
+    @RenderSection("datepicker")
 }
