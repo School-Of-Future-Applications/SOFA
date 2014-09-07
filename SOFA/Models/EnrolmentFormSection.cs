@@ -33,6 +33,9 @@ namespace SOFA.Models
 
         public virtual EnrolmentSection BelowOf { get; set; }
 
+       
+        
+        
         public static ICollection<EnrolmentFormSection> Sort(ICollection<EnrolmentSection> enrolmentSections)
         {
             List<EnrolmentFormSection> list = (List<EnrolmentFormSection>)enrolmentSections;
@@ -68,7 +71,7 @@ namespace SOFA.Models
                                     ,Dictionary<string, EnrolmentSection> sectionTransform)
         {
             EnrolmentSection newSection = sectionTransform[fSection.SectionId];
-            EnrolmentSectionId = newSection.EnrolmentSectionId;
+            EnrolmentSectionId = newSection.Id;
             EnrolmentSection = newSection;
             if (fSection.BelowOf != null)
                 BelowOf = sectionTransform[fSection.BelowOf.Id];
