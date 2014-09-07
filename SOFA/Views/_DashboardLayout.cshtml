@@ -55,7 +55,7 @@
    <title>@ViewBag.Title</title>
 
    <script type="text/javascript">
-            jQuery.validator.setDefaults({
+            $.validator.setDefaults({
                 highlight: function (element, errorClass, validClass) {
                     if (element.type === 'radio') {
                         this.findByName(element.name).addClass(errorClass).removeClass(validClass);
