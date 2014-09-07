@@ -36,7 +36,7 @@ namespace SOFA.Models
        
         
         
-        public static ICollection<EnrolmentFormSection> Sort(ICollection<EnrolmentSection> enrolmentSections)
+        public static ICollection<EnrolmentFormSection> Sort(ICollection<EnrolmentFormSection> enrolmentSections)
         {
             List<EnrolmentFormSection> list = (List<EnrolmentFormSection>)enrolmentSections;
             //Find form section where below of == null. Put it at the top.

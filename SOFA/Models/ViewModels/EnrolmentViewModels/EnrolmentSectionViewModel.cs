@@ -1,0 +1,48 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace SOFA.Models.ViewModels.EnrolmentViewModels
+{
+    public class EnrolmentSectionViewModel : IValidatableObject
+    {
+        public string SectionId { get; set; }
+
+        public string FormId { get; set; }
+
+        public DateTime DateCreated { get; set; }
+
+        public int SectionNumber { get; set; }
+
+        public int TotalSections { get; set; }
+
+        public ICollection<EnrolmentField> EnrolmentFields { get; set; }
+
+        /* Constructors */
+        public EnrolmentSectionViewModel()
+        {
+
+        }
+
+        public EnrolmentSectionViewModel(EnrolmentSection section, string formId) : this()
+        {
+            FormId = formId;
+            SectionId = section.Id;
+            DateCreated = section.DateCreated;
+            EnrolmentFields = section.EnrolmentFields;
+        }
+        
+        /* Conversion method */
+        public EnrolmentSection toEnrolmentSection()
+        {
+            return new EnrolmentSection();
+        }
+
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

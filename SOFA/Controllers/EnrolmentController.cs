@@ -59,12 +59,16 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
+            EnrolmentSection firstSection = EnrolmentFormSection.Sort(enrolForm.EnrolmentFormSections).
+                                                First().EnrolmentSection;
             return RedirectToAction("Enrol", "Enrolment"
-                                   ,new { enrolmentFormId = enrolForm.EnrolmentFormId });
+                                   ,new { sectionId = firstSection.Id,
+                                          formId = enrolForm.EnrolmentFormId });
         }
 
+        /* Thoms old Enrol method
         [HttpGet]
-        public ActionResult Enrol(String enrolmentFormId)
+        public ActionResult Enrol(String enrolmentFormId, string enrolmentSectionId)
         {
             EnrolmentForm eForm = null;
             try
@@ -76,6 +80,13 @@ namespace SOFA.Controllers
                 return new HttpNotFoundResult();
             }
             return View(eForm);
+        }
+
+         */
+
+        public ActionResult Enrol(string sectionId, string formId)
+        {
+            return View();
         }
 
         [HttpPost]
