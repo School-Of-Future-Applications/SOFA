@@ -120,6 +120,11 @@
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\dialog.css" />
     <Content Include="Content\enrolment.css" />
+    <Content Include="Content\images\date.png" />
+    <Content Include="Content\images\dropdown.png" />
+    <Content Include="Content\images\file.png" />
+    <Content Include="Content\images\info.png" />
+    <Content Include="Content\images\text.png" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
