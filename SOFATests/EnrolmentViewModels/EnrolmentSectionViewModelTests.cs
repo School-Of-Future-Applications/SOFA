@@ -8,19 +8,42 @@ namespace SOFATests.EnrolmentViewModels
     [TestClass]
     public class EnrolmentSectionViewModelTests
     {
-        [TestMethod]
-        public void EnrolmentSection_Contructor()
+        private EnrolmentSection eSection;
+        private EnrolmentSectionViewModel esvm;
+
+        [TestInitialize]
+        public void InitialiseTest()
         {
-            EnrolmentSection es = new EnrolmentSection();
-            es.Id = "abc-123";
-            es.SectionName = "Test Section Name";
-            es.DateCreated = DateTime.Now;
+            eSection = new EnrolmentSection();
+            eSection.Id = "abc-123";
+            eSection.SectionName = "Test Section Name";
+            eSection.DateCreated = DateTime.Now;
 
-            EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(es);
+            esvm = new EnrolmentSectionViewModel();
+            esvm.SectionId = "abc-123";
+            esvm.SectionName = "Test Section Name";
+            esvm.DateCreated = DateTime.Now;
+        }
 
-            Assert.AreEqual(es.Id, esvm.SectionId, "Ids aren't equal");
-            Assert.AreEqual(es.SectionName, esvm.SectionName, "Section name isn't equal");
-            Assert.AreEqual(es.DateCreated, esvm.DateCreated, "Date created isn't equal");
+        [TestMethod]
+        public void EnrolmentSectionVM_Contructor()
+        {
+            EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(eSection);
+
+            Assert.AreEqual(eSection.Id, esvm.SectionId, "Ids aren't equal");
+            Assert.AreEqual(eSection.SectionName, esvm.SectionName, "Section name isn't equal");
+            Assert.AreEqual(eSection.DateCreated, esvm.DateCreated, "Date created isn't equal");
+        }
+
+        [TestMethod]
+        public void EnrolmentSection_Conversion()
+        {
+            EnrolmentSection es = this.esvm.toEnrolmentSection();
+
+            Assert.AreEqual(this.esvm.SectionId, es.Id);
+            Assert.AreEqual(this.esvm.SectionName, es.SectionName);
+            Assert.AreEqual(this.esvm.DateCreated, es.DateCreated);
+
         }
     }
 }

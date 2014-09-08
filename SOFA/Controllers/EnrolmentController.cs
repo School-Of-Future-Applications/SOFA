@@ -112,9 +112,30 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        public ActionResult Enrol(EnrolmentForm eForm)
+        public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
-            return View(eForm);
+
+            return RedirectToAction("Index", "Form");
+        }
+
+        private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SaveClassSelectSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SavePreqSection(EnrolmentSectionViewModel esvm)
+        {
+
         }
 	}
 }
