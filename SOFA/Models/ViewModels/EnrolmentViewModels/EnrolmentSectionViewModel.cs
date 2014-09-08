@@ -39,8 +39,14 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
         /* Conversion method */
         public EnrolmentSection toEnrolmentSection()
         {
-            //TODO
-            return new EnrolmentSection();
+            var enrolSection = new EnrolmentSection()
+            {
+                Id = this.SectionId,
+                SectionName = this.SectionName,
+                DateCreated = this.DateCreated,
+                EnrolmentFields = this.EnrolmentFields
+            };
+            return enrolSection;
         }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
