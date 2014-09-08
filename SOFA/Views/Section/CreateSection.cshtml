@@ -25,6 +25,8 @@
     string submitText = (Model == null ? "Save" : "Add Section");
 }
 
+@Html.ValidationSummary()
+
 @using(Html.BeginForm())
 {
     if(Model != null)
@@ -36,6 +38,13 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Name, new { @class = "control-label" })
         @Html.EditorFor(model => model.Name)
+        @Html.ValidationMessageFor(model => model.Name)
     </div>
     <input type="submit" class="btn btn-default pull-right" value="@submitText" />
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($(this));
+    });
+</script>
