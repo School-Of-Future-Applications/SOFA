@@ -39,6 +39,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
         /* Conversion method */
         public EnrolmentSection toEnrolmentSection()
         {
+            //TODO
             return new EnrolmentSection();
         }
 
