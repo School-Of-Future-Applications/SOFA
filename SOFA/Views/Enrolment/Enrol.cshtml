@@ -64,7 +64,18 @@
             
             <div class="row">
                 <div class="col-md-1 col-md-offset-9">
-                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    @{
+                        string buttonText;
+                        if (Model.SectionNumber == Model.TotalSections)
+                        {
+                            buttonText = "Submit";
+                        }
+                        else
+                        {
+                            buttonText = "Continue";
+                        }
+                    }
+                    <input type="submit" class="btn btn-primary" value="@buttonText" />
                 </div>
             </div>
         }
