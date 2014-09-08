@@ -122,6 +122,11 @@
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\dialog.css" />
     <Content Include="Content\enrolment.css" />
+    <Content Include="Content\images\date.png" />
+    <Content Include="Content\images\dropdown.png" />
+    <Content Include="Content\images\file.png" />
+    <Content Include="Content\images\info.png" />
+    <Content Include="Content\images\text.png" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\FormEdit.css" />
     <Content Include="Content\jquery.timepicker.css" />
@@ -450,7 +455,9 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>49572</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:49408/</IISUrl>
+          <IISUrl>https://localhost:44300/</IISUrl>
+          <OverrideIISAppRootUrl>True</OverrideIISAppRootUrl>
+          <IISAppRootUrl>https://localhost:44300/</IISAppRootUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
