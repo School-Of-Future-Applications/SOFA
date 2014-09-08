@@ -24,15 +24,19 @@
 @{
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li>@Html.ActionLink("Departments", "index")</li>
         <li class="active">@Model.DepartmentName</li>
     </ol>
+</div>
 
-    <h2>
+<div class="row">
+    <h2 class="col-sm-6">
         @Model.DepartmentName
-
+    </h2>
+    <h2 class="col-sm-6">
         <span class="btn-group pull-right">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
@@ -67,13 +71,16 @@
             <div class="tab-pane fade in active" id="courses">
 
                 <div class="row">
-                    <div class="col-sm-12">
-                        <h3>
-                            @Model.DepartmentName Course List
-                            <a class="btn btn-primary pull-right"
-                               href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id })">Add Course</a>
-                        </h3>
-                    </div>
+                    <h3 class="col-sm-6">
+                        @Model.DepartmentName Course List
+                    </h3>
+                    <h3 class="col-sm-6">
+                        <a class="btn btn-primary btn-labeled pull-right" 
+                           href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id })">
+                            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+                            Add Course
+                        </a>
+                    </h3>
                 </div>
 
                 <div class="row">
