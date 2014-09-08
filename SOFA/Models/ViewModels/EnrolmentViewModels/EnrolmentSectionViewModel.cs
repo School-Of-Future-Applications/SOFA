@@ -14,6 +14,8 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 
         public DateTime DateCreated { get; set; }
 
+        public string SectionName { get; set; }
+
         public int SectionNumber { get; set; }
 
         public int TotalSections { get; set; }
@@ -26,12 +28,12 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 
         }
 
-        public EnrolmentSectionViewModel(EnrolmentSection section, string formId) : this()
+        public EnrolmentSectionViewModel(EnrolmentSection section) : this()
         {
-            FormId = formId;
             SectionId = section.Id;
             DateCreated = section.DateCreated;
             EnrolmentFields = section.EnrolmentFields;
+            SectionName = section.SectionName;
         }
         
         /* Conversion method */

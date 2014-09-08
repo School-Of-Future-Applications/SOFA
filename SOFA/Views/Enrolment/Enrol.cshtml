@@ -49,20 +49,18 @@
     <title>SOFA Enrolment</title>
 </head>
 <body>
-    <div class="container">
 
+    <div class="container">
         @using (Html.BeginForm("Enrol", "Enrolment", FormMethod.Post
                               ,new { @class = "form-horizontal" }))
         {
-            @Html.HiddenFor(model => model.EnrolmentFormId)
-            foreach(EnrolmentFormSection efSection in Model.EnrolmentFormSections)
-            {
-                <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        @Html.EditorFor(m => efSection)
-                    </div>
-                </div>   
-            }
+            @Html.HiddenFor(model => model.FormId)
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    @Html.EditorFor(m => m)
+                </div>
+            </div>   
+
             
             <div class="row">
                 <div class="col-md-1 col-md-offset-9">

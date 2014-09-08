@@ -28,6 +28,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels.EnrolmentViewModels;
 
 namespace SOFA.Controllers
 {
@@ -86,7 +87,28 @@ namespace SOFA.Controllers
 
         public ActionResult Enrol(string sectionId, string formId)
         {
-            return View();
+            try
+            {
+                //Verify section belongs to form
+                EnrolmentForm form = this.DBCon().EnrolmentForms
+                                        .Single(f => f.EnrolmentFormId == formId);
+                EnrolmentFormSection formSection = form.EnrolmentFormSections
+                                            .Single(efs => efs.EnrolmentSectionId == sectionId);
+                EnrolmentSection section = formSection.EnrolmentSection;
+                EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(section);
+                esvm.SectionNumber = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
+                                        ToList().IndexOf(formSection) + 1;
+                esvm.TotalSections = form.EnrolmentFormSections.Count;
+                esvm.FormId = formId;
+
+                return View(esvm);
+
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            
         }
 
         [HttpPost]

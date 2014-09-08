@@ -19,13 +19,18 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model EnrolmentSection
+@model EnrolmentSectionViewModel
 
 <div class="panel panel-primary">
     <div class="panel-heading">
         @Model.SectionName
+        <span class="pull-right">
+            @Model.SectionNumber/@Model.TotalSections
+        </span>
     </div>
+
     <div class="panel-body">
         @foreach(EnrolmentField field in Model.EnrolmentFields)
         {
