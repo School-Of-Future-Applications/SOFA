@@ -3,6 +3,19 @@
   * Sidebar CSS
   */
 
+body {
+    background-color: #f6f6f6;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom-style: solid;
+    border-bottom-color: #d9d3d3;
+    border-bottom-width: 1px;
+}
+
 .sidebar {
   display: none;
 }
@@ -114,7 +127,7 @@
 }
 
 .main {
-  padding-top: 40px;
+  padding-top: 50px;
 }
 
 .table-hover tbody tr:hover > td {
@@ -127,4 +140,22 @@
 
 .table-hover tbody tr.lasthidden:hover td:last-child {
       visibility: visible;
-} 
+}
+
+.btn.btn-labeled {
+    position: relative;
+}
+.btn.btn-labeled .btn-label {
+    display: block;
+    float: left;
+    margin: -8px 12px -8px -13px;
+    padding: 8px 10px;
+    position: relative;
+    background: rgba(0, 0, 0, .06);
+    line-height: 15px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+.btn.btn-labeled .btn-label.icon {
+    font-size: 14px;
+}
