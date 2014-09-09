@@ -51,7 +51,9 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            throw new NotImplementedException();
+            //TODO
+            yield return ValidationResult.Success;
+           
         }
     }
 }

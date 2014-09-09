@@ -114,8 +114,52 @@ namespace SOFA.Controllers
         [HttpPost]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
+            if (ModelState.IsValid)
+            {
+                if (esvm.SectionName.Equals(Section.STUDENT_SECTION_NAME))
+                {
+                    SaveStudentDetailsSection(esvm);
+                }
+                else if (esvm.SectionName.Equals(Section.COURSE_SECTION_NAME))
+                {
+                    SaveClassSelectSection(esvm);
+                }
+                else
+                {
+                    SaveEnrolmentSection(esvm);
+                }
 
-            return RedirectToAction("Index", "Form");
+                //Get the next section id
+                if (esvm.SectionNumber < esvm.TotalSections)
+                {
+                    try
+                    {
+                        var formsections = this.DBCon().EnrolmentForms.
+                                            Single(f => f.EnrolmentFormId == esvm.FormId).
+                                            EnrolmentFormSections;
+                        var nextSection = EnrolmentFormSection.Sort(formsections).
+                                                ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
+                        return RedirectToAction("Enrol", new
+                        {
+                            sectionId = nextSection.Id,
+                            formId = esvm.FormId
+                        });
+                    }
+                    catch
+                    {
+                        return View(esvm);
+                    }
+                    
+                    
+                }
+                else
+                {
+                    //TODO Form Completion
+                    return new HttpNotFoundResult();
+                }
+            }
+            
+            return View(esvm); 
         }
 
         private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
