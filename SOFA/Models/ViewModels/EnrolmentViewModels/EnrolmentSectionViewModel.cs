@@ -20,20 +20,23 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 
         public int TotalSections { get; set; }
 
-        public ICollection<EnrolmentField> EnrolmentFields { get; set; }
+        public ICollection<EnrolmentFieldViewModel> EnrolmentFields { get; set; }
 
         /* Constructors */
         public EnrolmentSectionViewModel()
         {
-
+            EnrolmentFields = new List<EnrolmentFieldViewModel>();
         }
 
         public EnrolmentSectionViewModel(EnrolmentSection section) : this()
         {
             SectionId = section.Id;
             DateCreated = section.DateCreated;
-            EnrolmentFields = section.EnrolmentFields;
             SectionName = section.SectionName;
+            foreach (var field in section.EnrolmentFields)
+            {
+                EnrolmentFields.Add(field as EnrolmentFieldViewModel);
+            }
         }
         
         /* Conversion method */
@@ -44,8 +47,13 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
                 Id = this.SectionId,
                 SectionName = this.SectionName,
                 DateCreated = this.DateCreated,
-                EnrolmentFields = this.EnrolmentFields
             };
+            var eFields = new List<EnrolmentField>();
+            foreach (var efvm in this.EnrolmentFields)
+            {
+                eFields.Add(efvm.toEnrolmentField());
+            }
+            enrolSection.EnrolmentFields = eFields;
             return enrolSection;
         }
 
