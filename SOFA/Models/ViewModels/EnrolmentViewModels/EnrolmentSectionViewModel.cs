@@ -6,7 +6,7 @@ using System.Web;
 
 namespace SOFA.Models.ViewModels.EnrolmentViewModels
 {
-    public class EnrolmentSectionViewModel : IValidatableObject
+    public class EnrolmentSectionViewModel 
     {
         public string SectionId { get; set; }
 
@@ -37,7 +37,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
         }
         
         /* Conversion method */
-        public EnrolmentSection toEnrolmentSection()
+        public virtual EnrolmentSection toEnrolmentSection()
         {
             var enrolSection = new EnrolmentSection()
             {
@@ -49,11 +49,6 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
             return enrolSection;
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            //TODO
-            yield return ValidationResult.Success;
-           
-        }
+
     }
 }

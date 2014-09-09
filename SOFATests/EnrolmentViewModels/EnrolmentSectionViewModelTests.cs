@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SOFA.Models;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
+using System.Collections.Generic;
 
 namespace SOFATests.EnrolmentViewModels
 {
@@ -26,7 +27,7 @@ namespace SOFATests.EnrolmentViewModels
         }
 
         [TestMethod]
-        public void EnrolmentSectionVM_Contructor()
+        public void EnrolmentSectionVM_Contructor_Equal_Values_Test()
         {
             EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(eSection);
 
@@ -36,7 +37,7 @@ namespace SOFATests.EnrolmentViewModels
         }
 
         [TestMethod]
-        public void EnrolmentSection_Conversion()
+        public void EnrolmentSectionVM_Conversion_Values_Equal_Test()
         {
             EnrolmentSection es = this.esvm.toEnrolmentSection();
 
@@ -44,6 +45,27 @@ namespace SOFATests.EnrolmentViewModels
             Assert.AreEqual(this.esvm.SectionName, es.SectionName);
             Assert.AreEqual(this.esvm.DateCreated, es.DateCreated);
 
+        }
+
+        [TestMethod]
+        public void EnrolmentSectionVM_Constructor_FieldVM_Conversion_NotNULL_Test()
+        {
+            EnrolmentField eField = new EnrolmentField()
+            {
+                FieldType = Field.TYPE_TEXT_SINGLE,
+                PromptValue = "Test prompt",
+                Value = "Test Value"
+            };
+            eField.EnrollmentFieldOptions.Add(new EnrolmentFieldOption()
+                {
+                     OptionType = FieldOption.OPT_MANDATORY,
+                     OptionValue = "TRUE"
+                });
+            this.eSection.EnrolmentFields.Add(eField);
+            EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(this.eSection);
+
+            var vmFields = esvm.EnrolmentFields;
+            Assert.IsNotNull(vmFields.GetEnumerator().MoveNext());
         }
     }
 }
