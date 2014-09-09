@@ -10,6 +10,20 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
     public class EnrolmentFieldViewModel : EnrolmentField, IValidatableObject
     {
 
+        public EnrolmentFieldViewModel()
+        {
+            this.EnrollmentFieldOptions = new List<EnrolmentFieldOption>();
+        }
+
+        public EnrolmentFieldViewModel(EnrolmentField field) : base()
+        {
+            this.EnrolmentFieldId = field.EnrolmentFieldId;
+            this.FieldType = field.FieldType;
+            this.PromptValue = field.PromptValue;
+            this.Value = field.Value;
+            this.EnrollmentFieldOptions = field.EnrollmentFieldOptions;
+        }
+
         public EnrolmentField toEnrolmentField()
         {
             var eField = new EnrolmentField()

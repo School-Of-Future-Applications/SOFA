@@ -21,25 +21,25 @@
 @using SOFA.Models
 @using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model EnrolmentSectionViewModel
+@model EnrolmentFieldViewModel
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        @Model.SectionName
-        <span class="pull-right">
-            @Model.SectionNumber/@Model.TotalSections
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+
+<div class="col-xs-10">
+    <div class="input-group date" id="@Model.EnrolmentFieldId">
+        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy" })
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
         </span>
     </div>
-
-    <div class="panel-body">
-        @foreach(EnrolmentFieldViewModel field in Model.EnrolmentFields)
-        {
-            <div class="row">
-                <div class="col-xs-12">
-                    @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentFieldViewModel.cshtml"
-                                 ,field)
-                </div>
-            </div>
-        }
-    </div>
 </div>
+
+<script type="text/javascript">
+    $(function () {
+        console.log("Herrow");
+        $('#@Model.EnrolmentFieldId').datetimepicker({
+            pickTime: false
+        });
+    });
+</script>

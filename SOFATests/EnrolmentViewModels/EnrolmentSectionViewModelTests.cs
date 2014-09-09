@@ -64,8 +64,8 @@ namespace SOFATests.EnrolmentViewModels
             this.eSection.EnrolmentFields.Add(eField);
             EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(this.eSection);
 
-            var vmFields = esvm.EnrolmentFields;
-            Assert.IsNotNull(vmFields.GetEnumerator().MoveNext());
+            var vmFields = (List<EnrolmentFieldViewModel>) esvm.EnrolmentFields;
+            Assert.IsNotNull(vmFields[0]);
         }
     }
 }

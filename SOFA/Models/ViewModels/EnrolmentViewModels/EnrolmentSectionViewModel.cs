@@ -35,7 +35,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
             SectionName = section.SectionName;
             foreach (var field in section.EnrolmentFields)
             {
-                EnrolmentFields.Add(field as EnrolmentFieldViewModel);
+                EnrolmentFields.Add(new EnrolmentFieldViewModel(field));
             }
         }
         
