@@ -117,6 +117,25 @@ namespace SOFA.Controllers
             return View(dep);
         }
 
+        
+        public ActionResult PendingEnrolments(int departmentId)
+        {
+            List<EnrolmentForm> pendingEnrolments = null;
+
+            try
+            {
+                pendingEnrolments = this.DBCon().EnrolmentForms
+                    .Where(x => x.Class.ClassBase.Course.Department.id == departmentId)
+                    .Include(x => x.Class.ClassBase.Course).ToList();
+            }
+            catch
+            {
+
+            }
+
+            return PartialView(pendingEnrolments);
+        }
+
         [NonAction]
         public override Enum NavProviderTerm()
         {

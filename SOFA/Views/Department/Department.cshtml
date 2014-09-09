@@ -54,12 +54,15 @@
 <div class="row">
     <div class="col-sm-12">
 
-        <ul class="nav nav-tabs" role="tablist">
+        <ul class="nav nav-pills" role="tablist">
             <li class="active">
                 <a href="#courses" role="tab" data-toggle="tab">Courses</a>
             </li>
             <li>
-                <a href="#penrolments" role="tab" data-toggle="tab">Pending Enrolments</a>
+                <a href="#penrolments" role="tab" data-toggle="tab">
+                    Pending Enrolments
+                    <span class="badge">10</span>
+                </a>
             </li>
         </ul>
 
@@ -129,7 +132,7 @@
              * Courses Tab Pane
              ********************@
             <div class="tab-pane fade active" id="penrolments">
-                <h2>Herrow</h2>
+                @Html.Action("PendingEnrolments", "Department", new { departmentId = Model.id })
             </div>
 
         </div>@* End Of Tab Content *@
