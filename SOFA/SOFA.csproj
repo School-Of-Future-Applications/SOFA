@@ -427,6 +427,8 @@
     <Content Include="Views\Department\PendingEnrolment.cshtml" />
     <Content Include="Views\Enrolment\EnrolmentForm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Student.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentForm.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TimetabledClass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
