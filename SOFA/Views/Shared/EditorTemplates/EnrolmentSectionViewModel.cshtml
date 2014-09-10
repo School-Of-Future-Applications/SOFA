@@ -23,6 +23,11 @@
 
 @model EnrolmentSectionViewModel
 
+@Html.HiddenFor(m => m.SectionId)
+@Html.HiddenFor(m => m.SectionName)
+@Html.HiddenFor(m => m.SectionNumber)
+@Html.HiddenFor(m => m.TotalSections)
+
 <div class="panel panel-primary">
     <div class="panel-heading">
         @Model.SectionName
@@ -32,14 +37,6 @@
     </div>
 
     <div class="panel-body">
-        @foreach(EnrolmentFieldViewModel field in Model.EnrolmentFields)
-        {
-            <div class="row">
-                <div class="col-xs-12">
-                    @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentFieldViewModel.cshtml"
-                                 ,field)
-                </div>
-            </div>
-        }
+        @Html.EditorFor(m => m.EnrolmentFields)
     </div>
 </div>

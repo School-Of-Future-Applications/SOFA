@@ -23,6 +23,10 @@
 
 @model EnrolmentFieldViewModel
 
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+
 @Html.LabelFor(model => model.Value, Model.PromptValue
                            , new { @class = "control-label col-xs-2 label-align" })
 
