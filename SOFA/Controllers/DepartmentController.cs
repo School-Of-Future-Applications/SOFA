@@ -105,7 +105,8 @@ namespace SOFA.Controllers
                 return RedirectToAction("Department", new { departmentId = departmentId });
             }
         }
-       
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Department(int? departmentId)
         {
             if (departmentId == null)
@@ -117,7 +118,27 @@ namespace SOFA.Controllers
             return View(dep);
         }
 
-        
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult PendingEnrolment(int departmentId, string enrolmentFormId)
+        {
+            PendingEnrolmentViewModel vm = new PendingEnrolmentViewModel();
+
+            try
+            {
+                vm.Department = this.DBCon().Departments
+                    .Where(x => x.id == departmentId).First();
+                vm.EnrolmentForm = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == enrolmentFormId)
+                    .Include(x => x.Student).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(vm);
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult PendingEnrolments(int departmentId)
         {
             List<EnrolmentForm> pendingEnrolments = null;

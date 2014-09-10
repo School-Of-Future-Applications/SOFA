@@ -159,3 +159,32 @@ body {
 .btn.btn-labeled .btn-label.icon {
     font-size: 14px;
 }
+
+/* Panels */
+
+.panel-success2 {
+    border-color: #5ebd5e;
+}
+
+.panel-success2 > .panel-heading {
+    color: white;
+    background-color: #5ebd5e;
+}
+
+/* Person Name Circles */
+
+.initial-circle {
+    color: #888888;
+    background-color: #f7f7f7;
+    border-radius: 50%;
+    font-size: 22px;
+    margin-bottom: 25px;
+    margin-top: 100px;
+    padding: 20px;
+}
+
+/* Info Tables */
+
+table.info-grid td {
+    padding: 5px;
+}

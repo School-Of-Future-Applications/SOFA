@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
@@ -82,6 +83,32 @@ namespace SOFA.Controllers
         public ActionResult Enrol(EnrolmentForm eForm)
         {
             return View(eForm);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormId(string enrolmentFormId)
+        {
+            EnrolmentForm ef = null;
+
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == enrolmentFormId)
+                    .Include(x => x.Student).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return EnrolmentForm(ef);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm)
+        {
+            return PartialView("EnrolmentForm", enrolmentForm);
         }
 	}
 }
