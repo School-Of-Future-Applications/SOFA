@@ -27,11 +27,15 @@
 @Html.HiddenFor(m => m.FieldType)
 @Html.HiddenFor(m => m.PromptValue)
 
+
+
 @Html.LabelFor(model => model.Value, Model.PromptValue
                            , new { @class = "control-label col-xs-2 label-align" })
 
 <div class="col-xs-10">
+    @Html.ValidationMessageFor(m => m.Value)
     <div class="input-group date" id="@Model.EnrolmentFieldId">
+        
         @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy" })
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
