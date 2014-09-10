@@ -32,7 +32,7 @@ namespace SOFA.Models
 
         public DateTime DateCreated { get; set; }
 
-        //public Student Student { get; set; }
+        public Student Student { get; set; }
 
         public TimetabledClass Class { get; set; }
 
