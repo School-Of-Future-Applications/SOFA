@@ -17,4 +17,28 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model SOFA.Models.Section
+
+@using SOFA.Models.ViewModels.FormViewModels
+
+@model FieldViewModel
+
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+
+<div class="col-xs-10">
+    <div class="input-group date" id="@Model.FieldId">
+        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    
+        console.log("Herrow");
+        $('#@Model.FieldId').datetimepicker({
+            pickTime: false
+        });
+    
+</script>

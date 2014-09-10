@@ -24,15 +24,19 @@
 @{
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li>@Html.ActionLink("Departments", "index")</li>
         <li class="active">@Model.DepartmentName</li>
     </ol>
+</div>
 
-    <h2>
+<div class="row">
+    <h2 class="col-sm-6">
         @Model.DepartmentName
-
+    </h2>
+    <h2 class="col-sm-6">
         <span class="btn-group pull-right">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
@@ -40,7 +44,7 @@
             <ul class="dropdown-menu" role="menu">
                 <li>
                     @Html.ActionLink("Edit Department", "CreateEdit", new { departmentId = Model.id })
-                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id })
+                    @Html.ActionLink("Delete Department", "Delete", new { departmentId = Model.id }, new { @class = "delete-link" })
                 </li>
             </ul>
         </span>
@@ -49,51 +53,89 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <h3>
-            @Model.DepartmentName Course List
-            <a class="btn btn-primary pull-right"
-               href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id})">Add Course</a>
-        </h3>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-md-12">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Course Code</th>
-                    <th>Course Name</th>
-                    <th>Class Count</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (Course c in Model.Courses.Where(x => x.Deleted == false))
-                {
-                    <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
-                        <td>@c.CourseCode</td>
-                        <td>@c.CourseName</td>
-                        <td>@c.ClassBases.Count()</td>
-                        <td align="right">
-                            @Html.ActionLink("Edit", "CreateEdit", "Course"
-                                            ,new { departmentId = Model.id, courseId = c.Id}, null)
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <ul class="nav nav-pills" role="tablist">
+            <li class="active">
+                <a href="#courses" role="tab" data-toggle="tab">Courses</a>
+            </li>
+            <li>
+                <a href="#penrolments" role="tab" data-toggle="tab">
+                    Pending Enrolments
+                    <span class="badge">10</span>
+                </a>
+            </li>
+        </ul>
 
-        @if (Model.Courses.Count == 0)
-        {
-            <div class="jumbotron">
-                <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
-                <p class="text-center">
-                    @Html.ActionLink("Add Course", "CreateEdit", "Course"
+        <div class="tab-content">
+
+            @********************
+             * Courses Tab Pane
+             ********************@
+            <div class="tab-pane fade in active" id="courses">
+
+                <div class="row">
+                    <h3 class="col-sm-6">
+                        @Model.DepartmentName Course List
+                    </h3>
+                    <h3 class="col-sm-6">
+                        <a class="btn btn-primary btn-labeled pull-right" 
+                           href="@Url.Action("CreateEdit", "Course", new { departmentID = Model.id })">
+                            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+                            Add Course
+                        </a>
+                    </h3>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Course Code</th>
+                                    <th>Course Name</th>
+                                    <th>Class Count</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Course c in Model.Courses.Where(x => x.Deleted == false))
+                                {
+                                    <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "Course", new { courseID = c.Id })'">
+                                        <td>@c.CourseCode</td>
+                                        <td>@c.CourseName</td>
+                                        <td>@c.ClassBases.Count()</td>
+                                        <td align="right">
+                                            @Html.ActionLink("Edit", "CreateEdit", "Course"
+                                            , new { departmentId = Model.id, courseId = c.Id }, null)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                        @if (Model.Courses.Count == 0)
+                        {
+                            <div class="jumbotron">
+                                <h2 class="text-center">@Model.DepartmentName Has No Courses!</h2>
+                                <p class="text-center">
+                                    @Html.ActionLink("Add Course", "CreateEdit", "Course"
                                     , new { departmentID = Model.id }
                                     , new { @class = "btn btn-primary btn-lg" })
-                </p>
+                                </p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>@* End Of Courses Tab *@
+
+            @********************
+             * Courses Tab Pane
+             ********************@
+            <div class="tab-pane fade active" id="penrolments">
+                @Html.Action("PendingEnrolments", "Department", new { departmentId = Model.id })
             </div>
-        }
+
+        </div>@* End Of Tab Content *@
     </div>
 </div>
+@Html.Partial("DeleteConfirmationModal")

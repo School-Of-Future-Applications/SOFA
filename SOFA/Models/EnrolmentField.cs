@@ -38,7 +38,8 @@ namespace SOFA.Models
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
-            return EnrolmentValidator.ValidateField(this);
+            return null;
+           // return EnrolmentValidator.ValidateField(this);
         }
     }
 }

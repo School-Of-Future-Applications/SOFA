@@ -26,9 +26,12 @@
     string submitText = (Model == null ? "Save" : "Add Form");
 }
 
-@using(Html.BeginForm())
+@Html.ValidationSummary()
+
+@using (Html.BeginForm("CreateForm", "Form", FormMethod.Post
+                      ,new { id = "createForm" }))
 {
-    if(Model != null)
+    if (Model != null)
     {
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.DateCreated)    
@@ -37,6 +40,13 @@
     <div class="form-group">
         @Html.LabelFor(model => model.FormName, new { @class = "control-label" })
         @Html.EditorFor(model => model.FormName)
+        @Html.ValidationMessageFor(model => model.FormName)
     </div>
     <input type="submit" class="btn btn-default pull-right" value="@submitText" />
 }
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($(this));
+    });
+</script>

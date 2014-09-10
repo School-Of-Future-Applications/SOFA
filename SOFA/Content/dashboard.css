@@ -3,6 +3,19 @@
   * Sidebar CSS
   */
 
+body {
+    background-color: #f6f6f6;
+}
+
+.breadcrumb {
+    background-color: transparent;
+    margin-bottom: 0px;
+    border-radius: 0px;
+    border-bottom-style: solid;
+    border-bottom-color: #d9d3d3;
+    border-bottom-width: 1px;
+}
+
 .sidebar {
   display: none;
 }
@@ -16,56 +29,105 @@
 }
 
 @media (min-width: 768px) {
-  .sidebar, .list-sidebar {
+  .sidebar {
     position: fixed;
     top: 51px;
     bottom: 0;
     left: 0;
     z-index: 1000;
     display: block;
-    padding: 20px;
     overflow-x: hidden;
     overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #f5f5f5;
+    background-color: #23272d;
     border-right: 1px solid #eee;
   }
-
-  .list-sidebar {
-     border-left-style: solid;
-     border-left-width: thin;
-    }
 }
 
 /* Sidebar navigation */
 
-.nav-heading {
-    margin-top: -20px;
-    padding-top: 5px;
-    padding-bottom: 5px;
-}
-
 .nav-sidebar {
   margin-right: -21px; /* 20px padding + 1px border */
-  margin-bottom: 20px;
   margin-left: -20px;
 }
-.nav-sidebar > li > a {
-  padding-right: 20px;
-  padding-left: 20px;
-}
-.nav-sidebar > .active > a {
-  color: #fff;
-  background-color: #428bca;
+
+.nav-sidebar > li.ni {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 0px;
 }
 
-.nav-sidebar > .heading {
-  padding-left: 10px;
-  color: #000000;
-  background-color: #b8b8b8;
+.nav-sidebar > li.ni > a {
+    color: #808b9c;
+    font-size: 13px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.nav-sidebar > li.ni > a > i {
+    margin-right: 10px;
+}
+
+.nav-sidebar > li.ni.nis {
+    background-color: #292d35;
+}
+
+/* Active */
+.nav-sidebar > li.ni.active {
+    background-color: #181b1f;
+    padding-left: 11px;
+    border-left-style: solid;
+    border-left-width: 9px;
+    border-left-color:  #1a7ab9;
+}
+
+.nav-sidebar > li.ni.active > a {
+    color: white;
+}
+
+.nav-sidebar > li.ni.nir.active {
+    background-color: #23272d;
+    padding-left: 20px;
+    border-left-style: none;
+}
+
+.nav-sidebar > li.ni.nir.active > a {
+    color: white;
+}
+
+.nav-sidebar > li.ni.nir.active > a > i{
+    color: white;
+}
+
+.nav-sidebar > li.ni.active > a > i {
+    color: #1a7ab9;
+}
+
+
+/* Mouse Hovering */
+
+.nav-sidebar > li.ni:hover {
+    cursor: pointer;
+    padding-left: 11px;
+    border-left-style: solid;
+    border-left-width: 9px;
+    border-left-color:  #1a7ab9;
+}
+
+.nav-sidebar > li.ni.nir.active:hover {
+    padding-left: 11px;
+    border-left-style: solid;
+    border-left-width: 9px;
+    border-left-color:  #1a7ab9;
+}
+
+.nav-sidebar > li.ni:hover > a {
+    color: white;
+    background-color: transparent;
 }
 
 .main {
-  padding-top: 40px;
+  padding-top: 50px;
 }
 
 .table-hover tbody tr:hover > td {
@@ -78,4 +140,22 @@
 
 .table-hover tbody tr.lasthidden:hover td:last-child {
       visibility: visible;
-} 
+}
+
+.btn.btn-labeled {
+    position: relative;
+}
+.btn.btn-labeled .btn-label {
+    display: block;
+    float: left;
+    margin: -8px 12px -8px -13px;
+    padding: 8px 10px;
+    position: relative;
+    background: rgba(0, 0, 0, .06);
+    line-height: 15px;
+    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
+}
+.btn.btn-labeled .btn-label.icon {
+    font-size: 14px;
+}

@@ -1,0 +1,60 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models.ViewModels;
+
+@model DeleteConfirmationViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4>@Html.DisplayFor(m => m.HeaderText)</h4>
+</div>
+
+@using (Html.BeginForm(Model.DeleteAction, Model.DeleteController,
+                        FormMethod.Post, new { @class = "modal-form form-horizontal"}))
+{
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+
+    
+    <div class="modal-body">
+        <div>
+            <div class="form-group">
+                @foreach (var key in Model.RouteValues.Keys)
+                {
+                    <input type="hidden" name="@key" value="@Model.RouteValues[key]" />
+                }
+                
+            </div>
+            <p>@Model.ConfirmationText</p>
+        </div>
+    </div>
+    
+    <div class="modal-footer">
+        <button class="btn btn-danger"  type="submit">
+            <span class="glyphicon glyphicon-trash"></span> Delete
+        </button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                            
+    </div>
+
+    
+
+}

@@ -41,7 +41,20 @@ namespace SOFATests
         [TestMethod]
         public void MandFieldValidTest()
         {
-
+            // Test NULL value
+            EnrolmentField field = new EnrolmentField()
+            {
+                FieldType = Field.TYPE_TEXT_SINGLE,
+                Value = " Valid value"
+            };
+            field.EnrollmentFieldOptions.Add(new EnrolmentFieldOption
+                {
+                    OptionType = FieldOption.OPT_MANDATORY
+                }
+            );
+            List<ValidationResult> results = EnrolmentValidator.ValidateField(field).ToList();
+            var resultExpr = results.Count == 0 || results[0] == ValidationResult.Success;
+            Assert.IsTrue(resultExpr, "Field passed validation but shouldn't have.");
         }
 
         [TestMethod]
@@ -64,6 +77,7 @@ namespace SOFATests
             //Test whitespace value
             field.Value = "    ";
             results = EnrolmentValidator.ValidateField(field).ToList();
+            resultExpr = results.Count == 0 || results[0] == ValidationResult.Success;
             Assert.IsFalse(resultExpr, "Field passed validation but shouldn't have.");
         }
     

@@ -17,4 +17,18 @@
     * along with this program; if not, write to the Free Software
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
-@model SOFA.Models.Field
+
+@using SOFA.Models.ViewModels.FormViewModels
+
+@model SOFA.Models.ViewModels.FormViewModels.SectionViewModel
+
+<div class="">
+    @foreach(FieldViewModel field in Model.Fields)
+        {
+        <div class="row">
+            <div class="col-xs-12 margin-bottom">                
+                @Html.DisplayFor(m => field)
+            </div>
+        </div>
+        }
+</div>

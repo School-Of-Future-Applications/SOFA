@@ -20,6 +20,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -31,7 +33,8 @@ namespace SOFA.Controllers
 {
     public class EnrolmentController : HttpsBaseController
     {
-        public ActionResult Enrol(string formId)
+        [HttpGet]
+        public ActionResult NewEnrolment(string formId)
         {
             Form fromForm = null;
             EnrolmentForm enrolForm = null;
@@ -42,11 +45,43 @@ namespace SOFA.Controllers
                 this.DBCon().EnrolmentForms.Add(enrolForm);
                 this.DBCon().SaveChanges();
             }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}", validationError.PropertyName, validationError.ErrorMessage);
+                    }
+                }
+            }
             catch
             {
                 return new HttpNotFoundResult();
             }
-            return View(enrolForm);
+            return RedirectToAction("Enrol", "Enrolment"
+                                   ,new { enrolmentFormId = enrolForm.EnrolmentFormId });
+        }
+
+        [HttpGet]
+        public ActionResult Enrol(String enrolmentFormId)
+        {
+            EnrolmentForm eForm = null;
+            try
+            {
+                eForm = this.DBCon().EnrolmentForms.Where(x => x.EnrolmentFormId == enrolmentFormId).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(eForm);
+        }
+
+        [HttpPost]
+        public ActionResult Enrol(EnrolmentForm eForm)
+        {
+            return View(eForm);
         }
 	}
 }

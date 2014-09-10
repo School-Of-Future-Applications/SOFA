@@ -1,0 +1,64 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using System.Collections.Generic
+@using SOFA.Models
+
+@model List<EnrolmentForm>
+
+@{
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h3>Pending Enrolments</h3>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date Created</th>
+                    <th>Enrolment Form</th>
+                    <th>Course</th>
+                    <th>Class Base</th>
+                    <th>Class</th>
+                    <th>Year Level</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach(EnrolmentForm ef in Model)
+                {
+                    <tr>
+                        <td>@ef.DateCreated</td>
+                        <td>@ef.Name</td>
+                        <td>@ef.Class.ClassBase.Course.CourseCode / @ef.Class.ClassBase.Course.CourseName</td>
+                        <td>@ef.Class.ClassBase.ClassBaseCode</td>
+                        <td>@ef.Class.DisplayName</td>
+                        <td>@ef.Class.ClassBase.YearLevel</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

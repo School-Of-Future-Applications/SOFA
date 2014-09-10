@@ -27,6 +27,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -34,7 +35,9 @@ namespace SOFA.Controllers
     {  
         public ActionResult Index()
         {
-            return View(this.DBCon().Departments.OrderBy(x => x.DepartmentName).ToList());
+            return View(this.DBCon().Departments.
+                Where(d => !d.Deleted).
+                OrderBy(x => x.DepartmentName).ToList());
         }
 
         [HttpGet]
@@ -68,14 +71,29 @@ namespace SOFA.Controllers
         }
 
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
-        public ActionResult Delete(int? departmentId)
+        public ActionResult Delete(int departmentId)
+        {
+            DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "Delete",
+                DeleteController = "Department",
+                HeaderText = "Confirm Department Deletion",
+                ConfirmationText = "Are you sure you want to delete this department?"
+            };
+            dcvm.RouteValues.Add("departmentId", departmentId);
+
+            return PartialView("DeleteConfirmationViewModel", dcvm);
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [ActionName("Delete")]
+        public ActionResult DeletePost(int departmentId)
         {
             Department dep = null;
             try
             {
-                if (departmentId == null)
-                    throw new Exception();
-
                 dep = this.DBCon().Departments.Where(x => x.id == departmentId).First();
                 dep.Deleted = true;
                 this.DBCon().Entry(dep).State = EntityState.Modified;
@@ -97,6 +115,25 @@ namespace SOFA.Controllers
                             .FirstOrDefault();
             ViewBag.DepartmentId = dep.id;
             return View(dep);
+        }
+
+        
+        public ActionResult PendingEnrolments(int departmentId)
+        {
+            List<EnrolmentForm> pendingEnrolments = null;
+
+            try
+            {
+                pendingEnrolments = this.DBCon().EnrolmentForms
+                    .Where(x => x.Class.ClassBase.Course.Department.id == departmentId)
+                    .Include(x => x.Class.ClassBase.Course).ToList();
+            }
+            catch
+            {
+
+            }
+
+            return PartialView(pendingEnrolments);
         }
 
         [NonAction]

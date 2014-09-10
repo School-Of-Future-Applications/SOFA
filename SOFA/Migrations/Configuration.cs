@@ -49,8 +49,116 @@ namespace SOFA.Migrations
 
         private void IdentitySeed(DBContext context)
         {
+            SeedSysAdmin(context);
+            SeedClient(context);   
+        }
+
+        private void FormSeed(DBContext context)
+        {
+            List<Section> DBSections = context.Sections.ToList();
+            if (!DBSections.Any(s => s.Id == Section.STUDENT_SECTION_ID ||
+                                    s.Id == Section.COURSE_SECTION_ID))
+            {
+                //Create form and form sections
+                Form form = new Form()
+                {
+                    FormName = "Seed Form",
+                };
+
+                FormSection fSectionCourse = new FormSection();
+                FormSection fSectionStudent = new FormSection();
+                form.FormSections.Add(fSectionCourse);
+                form.FormSections.Add(fSectionStudent);
+
+                //Create Sections
+                Section sectionCourse = new Section()
+                {
+                    DateCreated = DateTime.Now,
+                    Name = Section.COURSE_SECTION_NAME
+                };
+                sectionCourse.Id = Section.COURSE_SECTION_ID;
+                Section sectionStudent = new Section()
+                {
+                    DateCreated = DateTime.Now,
+                    Name = Section.STUDENT_SECTION_NAME
+                };
+                sectionStudent.Id = Section.STUDENT_SECTION_ID;
+                //Set order of sections
+                fSectionCourse.Section = sectionCourse;
+                fSectionCourse.BelowOf = null;
+                fSectionStudent.Section = sectionStudent;
+                fSectionStudent.BelowOf = sectionCourse;
+
+                context.Forms.Add(form);
+                context.SaveChanges();
+
+                //Create fields
+                Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionCourse,
+                    PromptValue = "Field A"
+                };
+                Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionCourse,
+                    PromptValue = "Field B"
+                };
+                Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Field C"
+                };
+                Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Field D"
+                };
+                Field fieldE = new Field(Field.TYPE_INFO)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "This is a info box. It will have lots and lots of text."
+                };
+                Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Enter some multi text"
+                };
+                Field fieldG = new Field(Field.TYPE_DATE)
+                {
+                    Section = sectionStudent,
+                    PromptValue = "Birthday"
+                };
+
+                //Add options to fields
+                fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+                fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+                fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
+                fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+
+                //Add fields to sections
+                sectionCourse.Fields.Add(fieldA);
+                sectionCourse.Fields.Add(fieldB);
+                sectionStudent.Fields.Add(fieldC);
+                sectionStudent.Fields.Add(fieldE);
+                sectionStudent.Fields.Add(fieldF);
+                sectionStudent.Fields.Add(fieldD);
+                sectionStudent.Fields.Add(fieldG);
+
+                context.Fields.AddRange(new List<Field>() 
+            {
+                fieldA,
+                fieldB,
+                fieldC,
+                fieldD
+            });
+                context.SaveChanges();
+            }
+        }
+
+        private void SeedSysAdmin(DBContext context)
+        {
             SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
-            
+
             if (sum.FindByEmail("chuck_norris@asskicking.com") == null)
             {
                 SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
@@ -81,102 +189,51 @@ namespace SOFA.Migrations
                 context.SaveChanges();
 
                 sum.AddToRole(God.Id, SOFARole.SYSADMIN_ROLE);
-                context.SaveChanges(); 
+                context.SaveChanges();
             }
             
         }
 
-        private void FormSeed(DBContext context)
+        private void SeedClient(DBContext context)
         {
-            //Create form and form sections
-            Form form = new Form()
-            {
-                FormName = "Seed Form",
-            };
-                     
-            FormSection fSectionCourse = new FormSection();
-            FormSection fSectionStudent = new FormSection();
-            form.FormSections.Add(fSectionCourse);
-            form.FormSections.Add(fSectionStudent);
-            
-            //Create Sections
-            Section sectionCourse = new Section()
-            {
-                DateCreated = DateTime.Now,
-                Name = Section.COURSE_SECTION_NAME
-            };
-            sectionCourse.Id = Section.COURSE_SECTION_ID;
-            Section sectionStudent = new Section()
-            {
-                DateCreated = DateTime.Now,
-                Name = Section.STUDENT_SECTION_NAME
-            };
-            sectionStudent.Id = Section.STUDENT_SECTION_ID;
-            //Set order of sections
-            fSectionCourse.Section = sectionCourse;
-            fSectionCourse.BelowOf = null;
-            fSectionStudent.Section = sectionStudent;
-            fSectionStudent.BelowOf = sectionCourse;
+            SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
 
-            context.Forms.Add(form);
-            context.SaveChanges();
+            if (sum.FindByEmail("kgoug13@eq.edu.au") == null)
+            {
+                SOFARoleManager srm = new SOFARoleManager(new RoleStore<SOFARole>(context));
+                SOFAUser Client = new SOFAUser();
+                Person Client_Info = new Person();
+                Client.Active = true;
+                Client.Email = "kgoug13@eq.edu.au";
+                Client.EmailConfirmed = true;
+                Client.UserName = "kgoug13@eq.edu.au";
 
-            //Create fields
-            Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionCourse,
-                PromptValue = "Field A"
-            };
-            Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionCourse,
-                PromptValue = "Field B"
-            };
-            Field fieldC = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionStudent,
-                PromptValue = "Field C"
-            };
-            Field fieldD = new Field(Field.TYPE_TEXT_SINGLE)
-            {
-                Section = sectionStudent,
-                PromptValue = "Field D"
-            };
-            Field fieldE = new Field(Field.TYPE_INFO)
-            {
-                Section = sectionStudent,
-                PromptValue = "This is a infor box. It will have lots and lots of test and we want to see what this looks like. Lots of text to inform a stupid student is the goal of life. So read on young ones read on. Remeber if its not on its not on."
-            };
-            Field fieldF = new Field(Field.TYPE_TEXT_MULTI)
-            {
-                Section = sectionStudent,
-                PromptValue = "Enter some multi text"
-            };
+                sum.Create(Client, "chucknorris");
 
-            //Add options to fields
-            fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_NUMERIC));
-            fieldC.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-            
-            //Add fields to sections
-            sectionCourse.Fields.Add(fieldA);
-            sectionCourse.Fields.Add(fieldB);
-            sectionStudent.Fields.Add(fieldC);
-            sectionStudent.Fields.Add(fieldE);
-            sectionStudent.Fields.Add(fieldF);
-            sectionStudent.Fields.Add(fieldD);
+                context.SaveChanges();
 
-            context.Fields.AddRange(new List<Field>() 
-            {
-                fieldA,
-                fieldB,
-                fieldC,
-                fieldD
-            });
-            context.SaveChanges();
-            
-            
+                Client_Info.GivenNames = "Kathie";
+                Client_Info.LastName = "Gough";
+                Client_Info.Position = "Client";
+                Client_Info.Email = "kgoug13@eq.edu.au";
+                Client_Info.User = Client;
+
+                context.Persons.Add(Client_Info);
+                context.SaveChanges();
+
+                foreach (string role in SOFARole.SOFA_ROLES)
+                    if (!srm.RoleExists(role))
+                        srm.Create(new SOFARole(role));
+
+                context.SaveChanges();
+
+                sum.AddToRole(Client.Id, SOFARole.SOFAADMIN_ROLE);
+                context.SaveChanges();
+            }
         }
+
+        
     }
+
+ 
 }

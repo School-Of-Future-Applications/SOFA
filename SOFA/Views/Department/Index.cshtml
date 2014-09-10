@@ -26,34 +26,46 @@
 @{
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li class="active">Departments</li>
     </ol>
-    <h2>Departments</h2>
-    @Html.ActionLink("New Department", "CreateEdit", null, new { @class = "btn btn-default" })
+</div>
+
+<div class="row">
+    <h2 class="col-sm-6">
+        Departments
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("CreateEdit", "Department")" class="btn btn-primary btn-labeled pull-right" >
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            Create Department
+        </a>
+    </h2>
 </div>
 
 <div class="row">
 
-    @foreach(Department d in Model)
+    @foreach (Department d in Model)
     {
-        <div class="col-md-3 col-sm-5">
+        <div class="col-sm-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">@d.DepartmentName</div>
                 <div class="panel-body">
+
                     <p>
-                        <b>Department Id: </b>@d.id<br/>
-                        <b>No of Courses: </b>@d.Courses.Count<br/>
+                        <b>Department Id: </b>@d.id<br />
+                        <b>No of Courses: </b>@d.Courses.Count<br />
                     </p>
-                    
+
                     <div>
                         @Html.ActionLink("View", "Department", new { departmentId = d.id }
-                                        ,new { @class = "btn btn-default btn-sm pull-right"})
+                                , new { @class = "btn btn-default btn-sm pull-right" })
                     </div>
                 </div>
             </div>
-        </div>       
+        </div>
     }
- 
+
 </div>

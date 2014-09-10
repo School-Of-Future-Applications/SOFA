@@ -101,8 +101,43 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Delete(int classBaseId)
         {
-            return View();
+            var dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "Delete",
+                DeleteController = "ClassBase",
+                HeaderText = "Confirm Class Base Deletion",
+                ConfirmationText = "Are you sure you want to delete this class base?"
+            };
+            dcvm.RouteValues.Add("classBaseId", classBaseId);
+            return PartialView("DeleteConfirmationViewModel", dcvm);           
         }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult DeletePost(int classBaseId)
+        {
+            var courseId = this.DBCon().ClassBases.
+                Single(cb => cb.Id == classBaseId).
+                Course.Id;
+            try
+            {
+                ClassBase cb = this.DBCon().ClassBases.
+                                Single(c => c.Id == classBaseId);
+                cb.Deleted = true;
+                this.DBCon().Entry(cb).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                return RedirectToAction("Index", "Course" ,new { courseId = courseId });
+            }
+            catch
+            {
+                return RedirectToAction("Index", "Department");
+            }
+     
+        }
+
 
         [NonAction]
         public override Enum NavProviderTerm()

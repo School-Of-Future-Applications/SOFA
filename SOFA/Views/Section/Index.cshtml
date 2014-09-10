@@ -81,7 +81,7 @@
                                 <span class="sr-only">Toggle Dropdown</span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                    <li>@Html.ActionLink("Delete", "Delete", new { id = s.Id })</li>
+                                    <li>@Html.ActionLink("Delete", "Delete", new { id = s.Id }, new { @class = "delete-link" })</li>
                             </ul>
                         </div>
                     }
@@ -92,3 +92,4 @@
 </div>
 
 <div id="addsection-dialog"></div>
+@Html.Partial("DeleteConfirmationModal")

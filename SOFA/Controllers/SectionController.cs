@@ -120,13 +120,31 @@ namespace SOFA.Controllers
             return Json(1);
         }
 
+
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Delete(string id)
+        {
+            DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "Delete",
+                DeleteController = "Section",
+                HeaderText = "Confirm Section Deletion",
+                ConfirmationText = "Are you sure you wish to delete this Section?"
+            };
+            dcvm.RouteValues.Add("id", id);
+
+            return PartialView("DeleteConfirmationViewModel", dcvm); 
+        }
+
+        [HttpPost]
+        [ActionName("Delete")]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult DeletePost(string id)
         {
             Section sec = null;
             try
             {
-                if(!Section.DEFAULT_SECTION_IDS.Contains(id))
+                if (!Section.DEFAULT_SECTION_IDS.Contains(id))
                 {
                     sec = this.DBCon().Sections.Where(x => x.Id == id).First();
                     this.DBCon().Entry(sec).State = EntityState.Deleted;

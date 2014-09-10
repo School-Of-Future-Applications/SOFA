@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOFA", "SOFA\SOFA.csproj", "{E1F9F873-2C87-4E16-8848-BB67E99658DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOFATests", "..\..\..\..\..\Documents\Visual Studio 2013\Projects\SOFATests\SOFATests.csproj", "{C86D0B88-D714-44AA-A4ED-946DFF1451DF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SOFATests", "SOFATests\SOFATests.csproj", "{C86D0B88-D714-44AA-A4ED-946DFF1451DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

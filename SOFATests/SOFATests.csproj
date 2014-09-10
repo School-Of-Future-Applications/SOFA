@@ -51,11 +51,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="FormViewModels\FormViewModelTests.cs" />
+    <Compile Include="FormViewModels\FormSectionViewModelTests.cs" />
+    <Compile Include="FormViewModels\SectionViewModelTests.cs" />
+    <Compile Include="FormViewModels\FieldViewModelTests.cs" />
     <Compile Include="Validation\EnrolmentValidationUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Dropbox\UNI\Semester 1, 2014\Industry Project\SOFA\SOFA\SOFA.csproj">
+    <ProjectReference Include="..\SOFA\SOFA.csproj">
       <Project>{e1f9f873-2c87-4e16-8848-bb67e99658dc}</Project>
       <Name>SOFA</Name>
     </ProjectReference>
