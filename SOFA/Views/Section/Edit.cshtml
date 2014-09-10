@@ -34,6 +34,30 @@
             $(this).parent().parent().parent().addClass("givingPrompt");
             $("#promptmodal").modal("show");
         });
+        $(".editOptions").on("click", function () {
+            var post = $(this).data("id");
+            $.ajax({
+                type: "POST",
+                url: "/Section/GetFieldOptionsForId",
+                data: {"id": post},
+                dataType: "html",
+                traditional: true,
+                success: function (data) {
+                    alert(data);
+                    $("#optioncontent").html(data);
+                },
+                error: function (request, status, error) {
+                    alert(error);
+                }
+            }).done(function (msg) {
+                //alert(msg);
+                //$(this).find(".optioncontent").html(msg);
+
+            });
+            $(this).find(".optioncontent").html();
+            $(this).parent().parent().parent().addClass("givingOptions");
+            $("#optionmodal").modal("show");
+        });
         $(".delement").draggable({
             helper: "clone",
             connectToSortable: ".panel-body",
@@ -154,6 +178,7 @@
     <div class="sdelement panel panel-primary" id=@f.Id>
         <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
         <div class="panel-body">
+            <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
             @foreach(FieldOption fo in @f.FieldOptions)
             {
                 <span style="float:left;width:10%">@fo.OptionType</span>
@@ -205,13 +230,14 @@
         </div>
     </div>
 </div>
-<div id="optionprompt" class="modal-dialog" style="display:none;z-index:1050">
+<div id="optionmodal" class="modal-dialog" style="display:none;z-index:1050">
     <div class="modal-content" style="position:fixed">
         <div class="modal-body">
-            @Html.Hidden("optionPromptId")
-            Option:@Html.DropDownList("optionType", new SelectList(FieldOption.FieldOptionTypes().Select(x => new KeyValuePair<string, string>(x, x)), "Key", "Value"))
+            <div id="optioncontent">
+
+            </div>
             <div style="text-align:right">
-                <button id="saveprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
+                <button id="saveoptionprompt" type="button" class="btn btn-primary" style="margin-top:5px">Save changes</button>
             </div>
         </div>
     </div>

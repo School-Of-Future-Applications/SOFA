@@ -97,6 +97,14 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult GetFieldOptionsForId(string id)
+        {
+            Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
+            return PartialView("EditFieldValidation", f);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult SetSectionFieldOrder(List<string> FieldIds)
         {
             for(int i = 0;i<FieldIds.Count();i++)

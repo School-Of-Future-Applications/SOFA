@@ -31,10 +31,9 @@
         @Html.ValidationSummary(true)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Label, new { @class = "col-md-2" })
+            @Html.LabelFor(model => model.FieldType, new { @class = "col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Label)
-                @Html.ValidationMessageFor(model => model.Label)
+
             </div>
         </div>
 
