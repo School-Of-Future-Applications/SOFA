@@ -46,6 +46,7 @@
             <div class="col-xs-10">
                 
                 @Html.EditorFor(model => model.Value, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Value)
             </div>
             break;
 
@@ -55,6 +56,7 @@
                            ,new { @class = "control-label col-xs-2 label-align" })
             <div class="col-xs-10">
                 @Html.TextAreaFor(model => model.Value, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Value)
             </div>
             break;  
             

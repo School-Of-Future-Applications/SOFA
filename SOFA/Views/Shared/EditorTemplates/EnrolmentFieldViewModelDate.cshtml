@@ -33,7 +33,6 @@
                            , new { @class = "control-label col-xs-2 label-align" })
 
 <div class="col-xs-10">
-    @Html.ValidationMessageFor(m => m.Value)
     <div class="input-group date" id="@Model.EnrolmentFieldId">
         
         @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy" })
@@ -41,6 +40,9 @@
             <span class="glyphicon glyphicon-calendar"></span>
         </span>
     </div>
+    @Html.ValidationMessageFor(m => m.Value)
+
+
 </div>
 
 <script type="text/javascript">
