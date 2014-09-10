@@ -46,9 +46,20 @@
             beforeStop: function (event, ui) {
                 if (ui.item.attr("id") == undefined)
                 {
-                    ui.item.addClass("panel panel-primary");
+                    ui.item.addClass("panel panel-primary").removeClass("ui-widget-content");
                     ui.item.addClass("givingPrompt").removeClass("ui-draggable");
-                    ui.item.data("type", ui.item.html());
+                    ui.item.data("type", ui.item.find(".elType").html());
+                    //ui.item.append(ui.item.data("type"));
+                    ui.item.html("");
+                    ui.item.append("<div class='panel-heading'><center>" + ui.item.data("type") + "</center></div>");
+                    ui.item.append("<div class='panel-body'></div>");
+                    ui.item.append("<hr>")
+                    ui.item.append("<div class='panel-body'><span style='float:left;width:10%'>Prompt:</span><span id='promptValue'></span>\
+                                    <span style='float:right;width:10%'><span class='editPrompt'><a href='#'>Edit Prompt</a></span></span></div>");
+                    $(".editPrompt").on("click", function () {
+                        $(this).parent().parent().parent().addClass("givingPrompt");
+                        $("#promptmodal").modal("show");
+                    });
                     $("#promptmodal").modal("show");
                 }
 
@@ -162,18 +173,26 @@
 }
     </div>
 </div>
-<div id="designer" style="float:right;width:15%;text-align:left">
-    <div class="delement ui-widget-content" id="TEXT_MULTI">TEXT_MULTI</div>
-    <br />
-    <div class="delement ui-widget-content" id="TEXT_SINGLE">TEXT_SINGLE</div>
-    <br />
-    <div class="delement ui-widget-content" id="FILE">FILE</div>
-    <br />
-    <div class="delement ui-widget-content" id="DATE">DATE</div>
-    <br />
-    <div class="delement ui-widget-content" id="DROPDOWN">DROPDOWN</div>
-    <br />
-    <div class="delement ui-widget-content" id="INFORMATION">INFORMATION</div>
+<style>
+    .delement {
+        border: 1px solid #428bca /*{borderColorContent}*/;
+        background: #ffffff /*{bgColorContent}*/ url(images/ui-bg_flat_75_ffffff_40x100.png) /*{bgImgUrlContent}*/ 50% /*{bgContentXPos}*/ 50% /*{bgContentYPos}*/ repeat-x /*{bgContentRepeat}*/;
+        color: #222222 /*{fcContent}*/;
+        padding: 5px;
+        margin-bottom: -1px;
+    }
+    .delement img {
+        height: 16px;
+        width: 16px;
+    }
+</style>
+<div id="designer" style="float:right;width:18%;text-align:left">
+    <div class="delement" id="TEXT_MULTI"><img src="~/Content/images/text.png" /> Multi Line Text<span class="elType" style="display:none">TEXT_MULTI</span></div>
+    <div class="delement" id="TEXT_SINGLE"><img src="~/Content/images/text.png" /> Single Text<span class="elType" style="display:none">TEXT_SINGLE</span></div>
+    <div class="delement" id="FILE"><img src="~/Content/images/file.png" /> File<span class="elType" style="display:none">FILE</span></div>
+    <div class="delement" id="DATE"><img src="~/Content/images/date.png" /> Date<span class="elType" style="display:none">DATE</span></div>
+    <div class="delement" id="DROPDOWN"><img src="~/Content/images/dropdown.png" /> Dropdown<span class="elType" style="display:none">DROPDOWN</span></div>
+    <div class="delement" id="INFORMATION"><img src="~/Content/images/info.png" /> Information<span class="elType" style="display:none">INFORMATION</span></div>
 </div>
 <div id="promptmodal" class="modal-dialog" style="display:none;z-index:1050">
     <div class="modal-content" style="position:fixed">

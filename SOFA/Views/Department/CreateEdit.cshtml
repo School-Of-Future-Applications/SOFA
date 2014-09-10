@@ -28,18 +28,22 @@
     ViewBag.SubmitTxt = (@Model == null ? "Add Department" : "Save Department");
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li>@Html.ActionLink("Departments", "index")</li>
-        @if(@Model != null)
+        @if (@Model != null)
         {
             <li>
                 @Html.ActionLink(Model.DepartmentName, "Department"
-                                ,new { departmentId = Model.id })
+                                , new { departmentId = Model.id })
             </li>
         }
         <li class="active">@ViewBag.HeadingTitle</li>
     </ol>
+</div>
+
+<div class="col-sm-12">
     <h2>@ViewBag.HeadingTitle</h2>
 </div>
 
@@ -57,16 +61,16 @@
                 }
                 <div class="form-group">
                     @Html.LabelFor(model => model.DepartmentName, "Department Name"
-                                  , new { @class = "control-label col-sm-4" })
-                    <div class="col-sm-8">
+                                  , new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-6">
                         @Html.EditorFor(model => model.DepartmentName)
                         @Html.ValidationMessageFor(model => model.DepartmentName)
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <div class="col-sm-1 col-sm-offset-4">
-                        <input type="submit" class="btn btn-default" value="@ViewBag.SubmitTxt" />
+                    <div class="col-sm-3 col-sm-offset-6">
+                        <input type="submit" class="btn btn-success pull-right" value="@ViewBag.SubmitTxt" />
                     </div>
                 </div>
             }

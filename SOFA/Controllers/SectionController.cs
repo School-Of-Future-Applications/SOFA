@@ -111,6 +111,7 @@ namespace SOFA.Controllers
                 {
                     usfo = new SectionFieldOrder();
                     usfo.FieldID = fid;
+                    usfo.Order = i;
                     usfo.SectionID = this.DBCon().Fields.Where(f => f.Id == fid).FirstOrDefault().Section.Id;
                     this.DBCon().SectionFieldOrders.Add(usfo);
                 }
