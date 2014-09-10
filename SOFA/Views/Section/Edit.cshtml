@@ -51,7 +51,7 @@
                     ui.item.data("type", ui.item.find(".elType").html());
                     //ui.item.append(ui.item.data("type"));
                     ui.item.html("");
-                    ui.item.append("<div class='panel-heading'><center>" + ui.item.data("type") + "</center></div>");
+                    ui.item.append("<div class='panel-heading' style='cursor: pointer;'><center>" + ui.item.data("type") + "</center></div>");
                     ui.item.append("<div class='panel-body'></div>");
                     ui.item.append("<hr>")
                     ui.item.append("<div class='panel-body'><span style='float:left;width:10%'>Prompt:</span><span id='promptValue'></span>\
@@ -152,7 +152,7 @@
         @foreach (Field f in Model.OrderedFields)
 {
     <div class="sdelement panel panel-primary" id=@f.Id>
-        <div class="panel-heading"><center>@f.FieldType</center></div>
+        <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
         <div class="panel-body">
             @foreach(FieldOption fo in @f.FieldOptions)
             {
@@ -180,6 +180,7 @@
         color: #222222 /*{fcContent}*/;
         padding: 5px;
         margin-bottom: -1px;
+        cursor: pointer;
     }
     .delement img {
         height: 16px;
