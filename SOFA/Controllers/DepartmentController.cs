@@ -129,7 +129,8 @@ namespace SOFA.Controllers
                     .Where(x => x.id == departmentId).First();
                 vm.EnrolmentForm = this.DBCon().EnrolmentForms
                     .Where(x => x.EnrolmentFormId == enrolmentFormId)
-                    .Include(x => x.Student).First();
+                    .Include(x => x.Student)
+                    .Include(x => x.Class).First();
             }
             catch
             {

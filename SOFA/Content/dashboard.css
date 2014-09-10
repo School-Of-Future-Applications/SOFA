@@ -162,6 +162,24 @@ body {
 
 /* Panels */
 
+.panel-orange2 {
+    border-color: #f4b04f;
+}
+
+.panel-orange2 > .panel-heading {
+    color: white;
+    background-color: #f4b04f;
+}
+
+.panel-primary2 {
+    border-color: #5bc0de;
+}
+
+.panel-primary2 > .panel-heading {
+    color: white;
+    background-color: #5bc0de;
+}
+
 .panel-success2 {
     border-color: #5ebd5e;
 }
