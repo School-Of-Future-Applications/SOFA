@@ -433,7 +433,7 @@
     <Content Include="Views\Shared\DisplayTemplates\Student.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentForm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimetabledClass.cshtml" />
-
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldOption.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
