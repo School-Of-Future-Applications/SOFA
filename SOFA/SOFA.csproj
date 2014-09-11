@@ -324,6 +324,10 @@
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Prefab\Fields\StudentFields.cs" />
+    <Compile Include="Models\Prefab\PrefabField.cs" />
+    <Compile Include="Models\Prefab\PrefabSection.cs" />
+    <Compile Include="Models\Prefab\Sections\StudentDetailsPrefabSection.cs" />
     <Compile Include="Models\Section.cs" />
     <Compile Include="Models\SectionFieldOrder.cs" />
     <Compile Include="Models\SOFARole.cs" />

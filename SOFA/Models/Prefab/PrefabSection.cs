@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SOFA.Models;
 
 namespace SOFA.Models.Prefab
 {
-    interface IPrefabField
+    interface PrefabSection
     {
-        public string GetId();
+        string GetId();
 
-        public string GetName();
+        string GetName();
 
-        public Field GetField();
+        Section GetSection();
 
     }
 }
