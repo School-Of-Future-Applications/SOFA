@@ -19,6 +19,8 @@ namespace SOFA.Models
         public const String OPT_NUMERIC = "NUMBER";
         public const String OPT_MANDATORY = "MANDATORY";
         public const String OPT_RESPONSE = "RESPONSE";
+
+        /* Used to reference field id from enrolment field */
         public const String OPT_UUID = "UUID";
 
         public const String VAL_TRUE = "TRUE";
