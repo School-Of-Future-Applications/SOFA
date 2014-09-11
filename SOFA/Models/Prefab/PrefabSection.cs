@@ -16,16 +16,6 @@ namespace SOFA.Models.Prefab
         protected string Id;
         protected string Name;
 
-        public virtual string GetId()
-        {
-            return Id;
-        }
-
-        public virtual string GetName()
-        {
-            return Name;
-        }
-
         public abstract Section GetSection();
 
     }
