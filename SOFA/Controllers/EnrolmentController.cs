@@ -113,6 +113,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
             if (ModelState.IsValid)
