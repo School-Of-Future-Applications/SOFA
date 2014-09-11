@@ -19,6 +19,7 @@ namespace SOFA.Models
         public const String OPT_NUMERIC = "NUMBER";
         public const String OPT_MANDATORY = "MANDATORY";
         public const String OPT_RESPONSE = "RESPONSE";
+        public const String OPT_UUID = "UUID";
 
         public const String VAL_TRUE = "TRUE";
 
@@ -66,7 +67,8 @@ namespace SOFA.Models
                 OPT_MAX_LENGTH,
                 OPT_NUMERIC,
                 OPT_MANDATORY,
-                OPT_RESPONSE
+                OPT_RESPONSE,
+                OPT_UUID
             };
 
             return optionTypes;
