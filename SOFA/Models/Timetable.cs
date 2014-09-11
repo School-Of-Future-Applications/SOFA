@@ -37,7 +37,7 @@ namespace SOFA.Models
         public String TimetableCode { get; set; }
 
         [StringLength(255)]
-        [Display(Name="name")]
+        [Display(Name="Name")]
         [Required]
         public String TimetableIdentifier { get; set; }
 
