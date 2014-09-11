@@ -7,13 +7,29 @@ using SOFA.Models;
 
 namespace SOFA.Models.Prefab
 {
-    interface PrefabSection
+    public abstract class PrefabSection
     {
-        string GetId();
+        private const string STUDENT_DETAILS = "a9bd91b0-29b5-11e4-8c21-0800200c9a66";
 
-        string GetName();
+        private string Id;
+        private string Name;
 
-        Section GetSection();
+        public PrefabSection(string id)
+        {
+            this.Id = id;
+        }
+
+        public virtual string GetId()
+        {
+            return Id;
+        }
+
+        public virtual string GetName()
+        {
+            return Name;
+        }
+
+        public abstract Section GetSection();
 
     }
 }

@@ -58,4 +58,33 @@ namespace SOFA.Models.Prefab.Fields
             return this.field;
         }
     }
+
+    public class Email : PrefabField
+    {
+        private const string PROMPT = "Email";
+        private const string FIELDTYPE = Field.TYPE_TEXT_SINGLE;
+
+        public Email(string id)
+            : base(id)
+        {
+
+        }
+
+        private Field field;
+
+        public override Field GetField()
+        {
+            if (this.field == null)
+            {
+                this.field = new Field();
+                this.field.Id = this.GetId();
+                this.field.PromptValue = this.GetPromptValue();
+                this.field.FieldType = FIELDTYPE;
+                this.field.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            }
+
+            return this.field;
+        }
+    }
+    
 }
