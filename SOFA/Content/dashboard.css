@@ -206,3 +206,7 @@ body {
 table.info-grid td {
     padding: 5px;
 }
+
+.center-row{
+    margin: auto;
+}

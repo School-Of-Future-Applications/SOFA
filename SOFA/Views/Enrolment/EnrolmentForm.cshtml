@@ -45,6 +45,23 @@
 
 <div class="row">
     <div class="col-sm-12">
-       
+       <div class="btn-toolbar" role="toolbar">
+           <div class="btn-group">
+               <button type="button" class="btn btn-default">Left</button>
+               <button type="button" class="btn btn-default">Middle</button>
+               <button type="button" class="btn btn-default">Right</button>
+           </div>
+       </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-offset-3 col-sm-6">
+
+        @foreach(EnrolmentFormSection efs in Model.EnrolmentFormSections)
+        {
+            @Html.DisplayFor(model => efs.EnrolmentSection)
+        }
+
     </div>
 </div>
