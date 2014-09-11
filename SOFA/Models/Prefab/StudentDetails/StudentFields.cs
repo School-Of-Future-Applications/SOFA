@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace SOFA.Models.Prefab.Fields
+namespace SOFA.Models.Prefab.StudentDetails
 {
     public class FirstName : PrefabField
     {
@@ -12,8 +12,9 @@ namespace SOFA.Models.Prefab.Fields
 
         private Field field;
 
-        public FirstName(string id) : base(id)
+        public FirstName()
         {
+            this.Id = PrefabField.FIRSTNAME;
             this.Prompt = PROMPT;
         }
 
@@ -37,9 +38,10 @@ namespace SOFA.Models.Prefab.Fields
         private const string PROMPT = "Last Name";
         private const string FIELDTYPE = Field.TYPE_TEXT_SINGLE;
         
-        public LastName(string id) : base(id)
+        public LastName()
         {
-
+            this.Id = PrefabField.LASTNAME;
+            this.Prompt = PROMPT;
         }
 
         private Field field;
@@ -64,10 +66,10 @@ namespace SOFA.Models.Prefab.Fields
         private const string PROMPT = "Email";
         private const string FIELDTYPE = Field.TYPE_TEXT_SINGLE;
 
-        public Email(string id)
-            : base(id)
+        public Email()
         {
-
+            this.Id = PrefabField.STUDENT_EMAIL;
+            this.Prompt = PROMPT;
         }
 
         private Field field;

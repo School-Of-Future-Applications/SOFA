@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using SOFA.Models.Prefab;
 
-namespace SOFA.Models.Prefab
+namespace SOFA.Models.Prefab.StudentDetails
 {
     public class StudentDetailsPrefabSection : PrefabSection
     {
@@ -12,8 +13,9 @@ namespace SOFA.Models.Prefab
 
         private Section section;
 
-        public StudentDetailsPrefabSection(string id) : base(id)
+        public StudentDetailsPrefabSection()
         {
+            Id = PrefabSection.STUDENT_DETAILS;
             Name = NAME;
         }
 
@@ -24,8 +26,12 @@ namespace SOFA.Models.Prefab
                 section = new Section();
                 section.Id = Id;
                 section.Name = NAME;
+                var fieldfactory = new PrefabFieldFactory();
+                section.Fields.Add(fieldfactory.Get(PrefabField.FIRSTNAME).GetField());
                 
             }
+
+            return section;
         }
     }
 }

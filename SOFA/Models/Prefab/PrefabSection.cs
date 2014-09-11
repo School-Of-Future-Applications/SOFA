@@ -16,11 +16,6 @@ namespace SOFA.Models.Prefab
         protected string Id;
         protected string Name;
 
-        public PrefabSection(string id)
-        {
-            this.Id = id;
-        }
-
         public virtual string GetId()
         {
             return Id;
