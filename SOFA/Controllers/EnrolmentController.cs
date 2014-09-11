@@ -29,6 +29,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels.EnrolmentViewModels;
 
 namespace SOFA.Controllers
 {
@@ -60,12 +61,16 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
+            EnrolmentSection firstSection = EnrolmentFormSection.Sort(enrolForm.EnrolmentFormSections).
+                                                First().EnrolmentSection;
             return RedirectToAction("Enrol", "Enrolment"
-                                   ,new { enrolmentFormId = enrolForm.EnrolmentFormId });
+                                   ,new { sectionId = firstSection.Id,
+                                          formId = enrolForm.EnrolmentFormId });
         }
 
+        /* Thoms old Enrol method
         [HttpGet]
-        public ActionResult Enrol(String enrolmentFormId)
+        public ActionResult Enrol(String enrolmentFormId, string enrolmentSectionId)
         {
             EnrolmentForm eForm = null;
             try
@@ -79,10 +84,104 @@ namespace SOFA.Controllers
             return View(eForm);
         }
 
-        [HttpPost]
-        public ActionResult Enrol(EnrolmentForm eForm)
+         */
+
+        public ActionResult Enrol(string sectionId, string formId)
         {
-            return View(eForm);
+            try
+            {
+                //Verify section belongs to form
+                EnrolmentForm form = this.DBCon().EnrolmentForms
+                                        .Single(f => f.EnrolmentFormId == formId);
+                EnrolmentFormSection formSection = form.EnrolmentFormSections
+                                            .Single(efs => efs.EnrolmentSectionId == sectionId);
+                EnrolmentSection section = formSection.EnrolmentSection;
+                EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(section);
+                esvm.SectionNumber = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
+                                        ToList().IndexOf(formSection) + 1;
+                esvm.TotalSections = form.EnrolmentFormSections.Count;
+                esvm.FormId = formId;
+
+                return View(esvm);
+
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Enrol(EnrolmentSectionViewModel esvm)
+        {
+            if (ModelState.IsValid)
+            {
+                if (esvm.SectionName.Equals(Section.STUDENT_SECTION_NAME))
+                {
+                    SaveStudentDetailsSection(esvm);
+                }
+                else if (esvm.SectionName.Equals(Section.COURSE_SECTION_NAME))
+                {
+                    SaveClassSelectSection(esvm);
+                }
+                else
+                {
+                    SaveEnrolmentSection(esvm);
+                }
+
+                //Get the next section id
+                if (esvm.SectionNumber < esvm.TotalSections)
+                {
+                    try
+                    {
+                        var formsections = this.DBCon().EnrolmentForms.
+                                            Single(f => f.EnrolmentFormId == esvm.FormId).
+                                            EnrolmentFormSections;
+                        var nextSection = EnrolmentFormSection.Sort(formsections).
+                                                ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
+                        return RedirectToAction("Enrol", new
+                        {
+                            sectionId = nextSection.Id,
+                            formId = esvm.FormId
+                        });
+                    }
+                    catch
+                    {
+                        return View(esvm);
+                    }
+                    
+                    
+                }
+                else
+                {
+                    //TODO Form Completion
+                    return new HttpNotFoundResult();
+                }
+            }
+            
+            return View(esvm); 
+        }
+
+        private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SaveClassSelectSection(EnrolmentSectionViewModel esvm)
+        {
+
+        }
+
+        private void SavePreqSection(EnrolmentSectionViewModel esvm)
+        {
+
         }
 
         [HttpGet]

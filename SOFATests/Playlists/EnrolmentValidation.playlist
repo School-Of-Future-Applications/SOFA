@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="SOFATests.EnrolmentValidationUnitTest.Valid_Mandatory_Field_Test" /><Add Test="SOFATests.EnrolmentValidationUnitTest.Invalid_Mandatory_Field_Test" /><Add Test="SOFATests.EnrolmentValidationUnitTest.Invalid_Culture_Date_Field_Test" /><Add Test="SOFATests.EnrolmentValidationUnitTest.Valid_Date_Field_Test" /></Playlist>

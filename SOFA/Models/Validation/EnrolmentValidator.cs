@@ -22,7 +22,7 @@ namespace SOFA.Models.Validation
             {
                 yield return new ValidationResult("Not a valid date", new List<String>()
                     {
-                        "FieldType"
+                        "Value"
                     });
             }
             

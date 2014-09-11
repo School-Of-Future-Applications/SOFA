@@ -208,7 +208,7 @@ namespace SOFA.Migrations
                 Client.EmailConfirmed = true;
                 Client.UserName = "kgoug13@eq.edu.au";
 
-                sum.Create(Client, "chucknorris");
+                sum.Create(Client, "kgoug13");
 
                 context.SaveChanges();
 
