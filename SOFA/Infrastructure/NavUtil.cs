@@ -116,7 +116,7 @@ namespace SOFA.Infrastructure
                 {
                     sectionName = "Forms"
                     ,glyphicon="glyphicon-list-alt"
-                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR
+                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN
                     ,navItems = new Dictionary<Enum,NavInfo>
                     {
                         {DashboardNavTerms.Forms
@@ -124,14 +124,14 @@ namespace SOFA.Infrastructure
                                      ,controllerName = "Form"
                                      ,glyphicon = null
                                      ,displayName = "Enrolment Forms"
-                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
+                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN}}
 
                         ,{DashboardNavTerms.Sections
                          ,new NavInfo {actionName = "Index"
                                      ,controllerName = "Section"
                                      ,glyphicon = null
                                      ,displayName = "Enrolment Sections"
-                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_MODERATOR}}
+                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_SOFAADMIN}}
                     }
                 }
             }
