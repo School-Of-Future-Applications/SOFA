@@ -18,6 +18,7 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using SOFA.Models
 @using SOFA.Models.ViewModels.FormViewModels
 
 @model SOFA.Models.ViewModels.FormViewModels.FormSectionViewModel
@@ -29,7 +30,10 @@
     <div class="panel-body">
         <div class="pull-right margin-bottom">
 
-        @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)        
+        @if(!Section.DEFAULT_SECTION_IDS.Contains(Model.Section.Id))
+        {
+            @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)   
+        }        
         <a href="#" class="removeSectionLink">Remove</a>
             
         
