@@ -337,6 +337,8 @@
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\DeleteConfirmationViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentFieldViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FieldViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FormSectionOrderViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FormSectionViewModel.cs" />
@@ -418,18 +420,21 @@
     <Content Include="Views\Section\IndexPartial.cshtml" />
     <Content Include="Views\Enrolment\Enrol.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EnrolmentSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldDate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDate.cshtml" />
     <Content Include="Views\Department\PendingEnrolments.cshtml" />
     <Content Include="Views\Department\PendingEnrolment.cshtml" />
     <Content Include="Views\Enrolment\EnrolmentForm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Student.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentForm.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TimetabledClass.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldOption.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentSection.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -9,7 +9,7 @@ using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
-    public class EnrolmentField : IValidatableObject
+    public class EnrolmentField 
     {
         [Key]
         public string EnrolmentFieldId { get; set; }
@@ -36,10 +36,5 @@ namespace SOFA.Models
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            return null;
-           // return EnrolmentValidator.ValidateField(this);
-        }
     }
 }
