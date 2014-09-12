@@ -386,7 +386,7 @@
     <Content Include="Views\Shared\DisplayTemplates\CustomDoubleTimeOfDay.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Department\Department.cshtml" />
-    <Content Include="Views\Shared\TimetabledClassCreate.cshtml" />
+    <Content Include="Views\Timetable\TimetabledClassCreate.cshtml" />
     <Content Include="Views\Department\CreateEdit.cshtml" />
     <Content Include="Views\Course\CreateEdit.cshtml" />
     <Content Include="Views\Course\Index.cshtml" />
