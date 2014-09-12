@@ -17,14 +17,14 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Form/
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Index()
         {
             return View(this.DBCon().Forms.ToList());
         }
 
 
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Edit(String FormID = null)
         {
             //TODO: Actual logic
@@ -44,21 +44,21 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Edit(Form form)
         {
             return View();
         }
 
         [HttpGet]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult CreateForm()
         {
             return PartialView();
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult CreateForm(Form form)
         {
             if(ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Form/Delete/5
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Delete(String formId)
         {
             DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
@@ -91,7 +91,7 @@ namespace SOFA.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Delete")]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult DeletePost(String formId)
         {
             try
@@ -105,7 +105,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public JsonResult AddSection(String FormId, String SectionId)
         {
             //TODO
@@ -183,7 +183,7 @@ namespace SOFA.Controllers
             
         }
 
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public PartialViewResult FormSection(String FormId, String SectionId)
         {
             var formsection = this.DBCon().FormSections
@@ -200,7 +200,7 @@ namespace SOFA.Controllers
         //
         // POST: /Form/RemoveSection
         [HttpPost]
-        [Authorize(Roles=SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public JsonResult RemoveSection(String FormId, String SectionId)
         {
             //Get form sections and sort
@@ -251,7 +251,7 @@ namespace SOFA.Controllers
         }
         
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public JsonResult UpdateSectionOrder(FormSectionOrderViewModel viewModel)
         {
             
@@ -310,8 +310,6 @@ namespace SOFA.Controllers
                 Message = "Form Saved."
             });
         }
-
-
 
         public override Enum NavProviderTerm()
         {
