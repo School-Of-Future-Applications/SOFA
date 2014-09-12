@@ -10,10 +10,23 @@ namespace SOFA.Models.Prefab
     {
         public  PrefabField Get(string fieldId)
         {
-            PrefabField field;
-            if (fieldId.Equals(PrefabField.FIRSTNAME))
-                return new FirstName();
-            return null;
+            switch (fieldId)
+            {
+                case PrefabField.FIRSTNAME:
+                    return new FirstName();
+                case PrefabField.LASTNAME:
+                    return new LastName();
+                case PrefabField.PHONE_NUMBER:
+                    return new PhoneNumber();
+                case PrefabField.MOBILE_NUMBER:
+                    return new MobileNumber();
+                case PrefabField.STUDENT_EMAIL:
+                    return new Email();
+                default:
+                    throw new ArgumentOutOfRangeException("Unknown prefab field");
+
+            }
+
         }
     }
 }
