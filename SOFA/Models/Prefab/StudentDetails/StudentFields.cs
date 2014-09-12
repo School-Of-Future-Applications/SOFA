@@ -88,5 +88,64 @@ namespace SOFA.Models.Prefab.StudentDetails
             return this.field;
         }
     }
+
+    public class PhoneNumber : PrefabField
+    {
+        private const string PROMPT = "Phone Number";
+        private const string FIELDTYPE = Field.TYPE_TEXT_SINGLE;
+
+        private Field field;
+
+        public PhoneNumber()
+        {
+            this.Id = PrefabField.PHONE_NUMBER;
+            this.Prompt = PROMPT;
+        }
+
+        public override Field GetField()
+        {
+            if (this.field == null)
+            {
+                this.field = new Field();
+                this.field.Id = this.GetId();
+                this.field.PromptValue = this.GetPromptValue();
+                this.field.FieldType = FIELDTYPE;
+                this.field.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            }
+
+            return this.field;
+        }
+
+
+    }
+
+    public class MobileNumber : PrefabField
+    {
+        private const string PROMPT = "Mobile Number";
+        private const string FIELDTYPE = Field.TYPE_TEXT_SINGLE;
+
+        private Field field;
+
+        public MobileNumber()
+        {
+            this.Id = PrefabField.MOBILE_NUMBER;
+            this.Prompt = PROMPT;
+        }
+
+        public override Field GetField()
+        {
+            if (this.field == null)
+            {
+                this.field = new Field();
+                this.field.Id = this.GetId();
+                this.field.PromptValue = this.GetPromptValue();
+                this.field.FieldType = FIELDTYPE;
+                this.field.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
+            }
+
+            return this.field;
+        }
+
+    }
     
 }

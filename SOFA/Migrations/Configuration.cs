@@ -44,11 +44,11 @@ namespace SOFA.Migrations
         protected override void Seed(DBContext context)
         {
             FormSeed(context); 
-            IdentitySeed(context);            
+            UserSeed(context);            
                        
         }
 
-        private void IdentitySeed(DBContext context)
+        private void UserSeed(DBContext context)
         {
             SeedSysAdmin(context);
             SeedClient(context);   
@@ -120,6 +120,8 @@ namespace SOFA.Migrations
             }
         }
 
+        
+        
         private void SeedSysAdmin(DBContext context)
         {
             SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));

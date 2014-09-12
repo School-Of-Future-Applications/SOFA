@@ -451,8 +451,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\Prefab\Fields\" />
-    <Folder Include="Models\Prefab\Sections\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>
