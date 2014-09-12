@@ -119,9 +119,7 @@ namespace SOFA.Migrations
                 context.SaveChanges();
             }
         }
-
-        
-        
+               
         private void SeedSysAdmin(DBContext context)
         {
             SOFAUserManager sum = new SOFAUserManager(new UserStore<SOFAUser>(context));
