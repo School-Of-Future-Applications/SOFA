@@ -166,7 +166,10 @@ namespace SOFA.Controllers
 
         private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
         {
-
+            EnrolmentSection eSection = esvm.toEnrolmentSection();
+            this.DBCon().EnrolmentSections.Attach(eSection);
+            this.DBCon().Entry(eSection).State = EntityState.Modified;
+            this.DBCon().SaveChanges();
         }
 
         private void SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
