@@ -15,7 +15,16 @@ namespace SOFA.Models.Prefab
 
         protected string Id;
         protected string Prompt;
+
+        public virtual string GetId()
+        {
+            return this.Id;
+        }
         
+        public virtual string GetPromptValue()
+        {
+            return this.Prompt;
+        }
        
         public abstract Field GetField();
 
