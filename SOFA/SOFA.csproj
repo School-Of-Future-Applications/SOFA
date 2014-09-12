@@ -326,6 +326,8 @@
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\Prefab\PrefabFieldFactory.cs" />
     <Compile Include="Models\Prefab\PrefabSectionFactory.cs" />
+    <Compile Include="Models\Prefab\StandardSection\StandardSection.cs" />
+    <Compile Include="Models\Prefab\StandardSection\StandardSectionFields.cs" />
     <Compile Include="Models\Prefab\StudentDetails\StudentFields.cs" />
     <Compile Include="Models\Prefab\PrefabField.cs" />
     <Compile Include="Models\Prefab\PrefabSection.cs" />
