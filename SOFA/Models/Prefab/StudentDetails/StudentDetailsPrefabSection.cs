@@ -27,7 +27,11 @@ namespace SOFA.Models.Prefab.StudentDetails
                 section.Id = Id;
                 section.Name = NAME;
                 var fieldfactory = new PrefabFieldFactory();
-                section.Fields.Add(fieldfactory.Get(PrefabField.FIRSTNAME).GetField());
+                section.Fields.Add(fieldfactory.Get(PrefabField.FIRSTNAME));
+                section.Fields.Add(fieldfactory.Get(PrefabField.LASTNAME));
+                section.Fields.Add(fieldfactory.Get(PrefabField.PHONE_NUMBER));
+                section.Fields.Add(fieldfactory.Get(PrefabField.MOBILE_NUMBER));
+                section.Fields.Add(fieldfactory.Get(PrefabField.STUDENT_EMAIL));
                 
             }
 
