@@ -16,7 +16,7 @@ namespace SOFA.Models.Prefab.StudentDetails
         public StudentDetailsPrefabSection()
         {
             Id = PrefabSection.STUDENT_DETAILS;
-            Name = NAME;
+            Name = NAME;            
         }
 
         public override Section GetSection()
@@ -26,6 +26,7 @@ namespace SOFA.Models.Prefab.StudentDetails
                 section = new Section();
                 section.Id = Id;
                 section.Name = NAME;
+                section.DateCreated = DateTime.Now;
                 var fieldfactory = new PrefabFieldFactory();
                 section.Fields.Add(fieldfactory.Get(PrefabField.FIRSTNAME));
                 section.Fields.Add(fieldfactory.Get(PrefabField.LASTNAME));

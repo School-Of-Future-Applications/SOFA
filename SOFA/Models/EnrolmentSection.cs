@@ -37,6 +37,7 @@ namespace SOFA.Models
         private void fromSection(Section section)
         {
             SectionName = section.Name;
+            DateCreated = DateTime.Now;
             foreach (Field f in section.Fields)
                 EnrolmentFields.Add(new EnrolmentField(f));
         }

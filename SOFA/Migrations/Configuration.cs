@@ -83,9 +83,9 @@ namespace SOFA.Migrations
                 fSectionCourse.Section = sectionCourse;
                 fSectionCourse.BelowOf = sectionStudent;
                 fSectionStudent.Section = sectionStudent;
-                fSectionStudent.BelowOf = null;
+                fSectionStudent.BelowOf = sectionStandard;
                 fSectionStandard.Section = sectionStandard;
-                fSectionStandard.BelowOf = sectionCourse;
+                fSectionStandard.BelowOf = null;
 
 
                 context.Forms.Add(form);

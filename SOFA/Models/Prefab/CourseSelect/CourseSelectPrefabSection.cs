@@ -24,6 +24,7 @@ namespace SOFA.Models.Prefab.CourseSelect
                 this.section = new Section();
                 section.Id = this.Id;
                 section.Name = this.Name;
+                section.DateCreated = DateTime.Now;
 
                 PrefabFieldFactory factory = new PrefabFieldFactory();
 

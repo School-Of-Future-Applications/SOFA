@@ -15,7 +15,7 @@ namespace SOFA.Models.Prefab.StandardSection
        public TestField_A()
        {
            this.Id = PrefabField.TESTFIELD_A;
-           this.Prompt = PrefabField.TESTDATEFIELD_A;
+           this.Prompt = PROMPT;
        }
        
        public override Field GetField()
