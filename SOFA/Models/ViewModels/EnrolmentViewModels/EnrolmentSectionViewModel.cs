@@ -10,6 +10,8 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
     {
         public string SectionId { get; set; }
 
+        public string OriginalSectionId { get; set; }
+
         public string FormId { get; set; }
 
         public DateTime DateCreated { get; set; }
@@ -33,6 +35,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
             SectionId = section.Id;
             DateCreated = section.DateCreated;
             SectionName = section.SectionName;
+            OriginalSectionId = section.OriginalSectionId;
             foreach (var field in section.EnrolmentFields)
             {
                 EnrolmentFields.Add(new EnrolmentFieldViewModel(field));
@@ -47,6 +50,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
                 Id = this.SectionId,
                 SectionName = this.SectionName,
                 DateCreated = this.DateCreated,
+                OriginalSectionId = this.OriginalSectionId
             };
             var eFields = new List<EnrolmentField>();
             foreach (var efvm in this.EnrolmentFields)

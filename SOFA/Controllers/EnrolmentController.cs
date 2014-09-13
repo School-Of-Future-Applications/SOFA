@@ -119,7 +119,7 @@ namespace SOFA.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (esvm.SectionId.Equals(PrefabSection.STUDENT_DETAILS))
+                if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     SaveStudentDetailsSection(esvm);
                 }
