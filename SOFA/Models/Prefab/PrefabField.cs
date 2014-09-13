@@ -15,6 +15,9 @@ namespace SOFA.Models.Prefab
         public const string PHONE_NUMBER = "28a7c0e8-ea47-49da-98f7-546d66a641db";
         public const string MOBILE_NUMBER = "8970bec8-f49f-4d32-b231-6c7c8fa59dfb";
 
+        /* Course Select Fields */
+        public const string CLASS_SELECT = "7677bdf6-24ad-47b9-b6a5-129cf1a93ddc";
+
         /* StandardSection fields */
         public const string TESTFIELD_A = "TESTFIELD_A_ID";
         public const string TESTDATEFIELD_A = "TESTDATEFIELD_ID";

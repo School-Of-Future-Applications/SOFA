@@ -70,7 +70,7 @@ namespace SOFA.Migrations
                 Section sectionStudent = sectionFactory.Get(PrefabSection.STUDENT_DETAILS);
                 Section sectionCourse = sectionFactory.Get(PrefabSection.COURSE_SELECT);
                 Section sectionStandard = sectionFactory.Get(PrefabSection.STANDARD_SECTION);
-                
+
                 FormSection fSectionCourse = new FormSection();
                 FormSection fSectionStudent = new FormSection();
                 FormSection fSectionStandard = new FormSection();
@@ -78,7 +78,7 @@ namespace SOFA.Migrations
                 form.FormSections.Add(fSectionStudent);
                 form.FormSections.Add(fSectionStandard);
 
-                
+
                 //Set order of sections
                 fSectionCourse.Section = sectionCourse;
                 fSectionCourse.BelowOf = sectionStudent;
@@ -86,39 +86,12 @@ namespace SOFA.Migrations
                 fSectionStudent.BelowOf = null;
                 fSectionStandard.Section = sectionStandard;
                 fSectionStandard.BelowOf = sectionCourse;
-               
+
 
                 context.Forms.Add(form);
                 context.SaveChanges();
-
-                //Create fields
-                Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
-                {
-                    Section = sectionCourse,
-                    PromptValue = "Field A"
-                };
-                Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
-                {
-                    Section = sectionCourse,
-                    PromptValue = "Field B"
-                };
-
-                //Add options to fields
-                fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-                fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-
-                //Add fields to sections
-                sectionCourse.Fields.Add(fieldA);
-                sectionCourse.Fields.Add(fieldB);
-
-
-                context.Fields.AddRange(new List<Field>() 
-            {
-                fieldA,
-                fieldB,
-            });
-                context.SaveChanges();
             }
+
         }
                
         private void SeedSysAdmin(DBContext context)

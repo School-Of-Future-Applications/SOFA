@@ -5,13 +5,13 @@ using System.Web;
 
 namespace SOFA.Models.Prefab.StandardSection
 {
-    public class StandardSection : PrefabSection
+    public class StandardPrefabSection : PrefabSection
     {
         public const string NAME = "Standard Section";
 
         private Section section;
 
-        public StandardSection()
+        public StandardPrefabSection()
         {
             this.Id = PrefabSection.STANDARD_SECTION;
             this.Name = NAME;
