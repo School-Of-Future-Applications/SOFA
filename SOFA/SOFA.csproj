@@ -324,8 +324,12 @@
     <Compile Include="Models\Line.cs" />
     <Compile Include="Models\LineTime.cs" />
     <Compile Include="Models\Person.cs" />
+    <Compile Include="Models\Prefab\CourseSelect\CourseSelectFields.cs" />
+    <Compile Include="Models\Prefab\CourseSelect\CourseSelectPrefabSection.cs" />
     <Compile Include="Models\Prefab\PrefabFieldFactory.cs" />
     <Compile Include="Models\Prefab\PrefabSectionFactory.cs" />
+    <Compile Include="Models\Prefab\StandardSection\StandardPrefabSection.cs" />
+    <Compile Include="Models\Prefab\StandardSection\StandardSectionFields.cs" />
     <Compile Include="Models\Prefab\StudentDetails\StudentFields.cs" />
     <Compile Include="Models\Prefab\PrefabField.cs" />
     <Compile Include="Models\Prefab\PrefabSection.cs" />

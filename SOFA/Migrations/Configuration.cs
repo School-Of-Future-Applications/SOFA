@@ -57,8 +57,9 @@ namespace SOFA.Migrations
         private void FormSeed(DBContext context)
         {
             List<Section> DBSections = context.Sections.ToList();
-            if (!DBSections.Any(s => s.Id == Section.STUDENT_SECTION_ID ||
-                                    s.Id == Section.COURSE_SECTION_ID))
+            if (!DBSections.Any(s => s.Id == PrefabSection.STUDENT_DETAILS ||
+                                    s.Id == PrefabSection.COURSE_SELECT ||
+                                    s.Id == PrefabSection.STANDARD_SECTION))
             {
                 //Create form and form sections
                 Form form = new Form()
@@ -67,57 +68,30 @@ namespace SOFA.Migrations
                 };
                 PrefabSectionFactory sectionFactory = new PrefabSectionFactory();
                 Section sectionStudent = sectionFactory.Get(PrefabSection.STUDENT_DETAILS);
-                
+                Section sectionCourse = sectionFactory.Get(PrefabSection.COURSE_SELECT);
+                Section sectionStandard = sectionFactory.Get(PrefabSection.STANDARD_SECTION);
+
                 FormSection fSectionCourse = new FormSection();
                 FormSection fSectionStudent = new FormSection();
+                FormSection fSectionStandard = new FormSection();
                 form.FormSections.Add(fSectionCourse);
                 form.FormSections.Add(fSectionStudent);
+                form.FormSections.Add(fSectionStandard);
 
-                //Create Sections
-                Section sectionCourse = new Section()
-                {
-                    DateCreated = DateTime.Now,
-                    Name = Section.COURSE_SECTION_NAME
-                };
-                sectionCourse.Id = Section.COURSE_SECTION_ID;
 
                 //Set order of sections
                 fSectionCourse.Section = sectionCourse;
-                fSectionCourse.BelowOf = null;
+                fSectionCourse.BelowOf = sectionStudent;
                 fSectionStudent.Section = sectionStudent;
-                fSectionStudent.BelowOf = sectionCourse;
+                fSectionStudent.BelowOf = sectionStandard;
+                fSectionStandard.Section = sectionStandard;
+                fSectionStandard.BelowOf = null;
+
 
                 context.Forms.Add(form);
                 context.SaveChanges();
-
-                //Create fields
-                Field fieldA = new Field(Field.TYPE_TEXT_SINGLE)
-                {
-                    Section = sectionCourse,
-                    PromptValue = "Field A"
-                };
-                Field fieldB = new Field(Field.TYPE_TEXT_SINGLE)
-                {
-                    Section = sectionCourse,
-                    PromptValue = "Field B"
-                };
-
-                //Add options to fields
-                fieldA.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-                fieldB.FieldOptions.Add(new FieldOption(FieldOption.OPT_MANDATORY));
-
-                //Add fields to sections
-                sectionCourse.Fields.Add(fieldA);
-                sectionCourse.Fields.Add(fieldB);
-
-
-                context.Fields.AddRange(new List<Field>() 
-            {
-                fieldA,
-                fieldB,
-            });
-                context.SaveChanges();
             }
+
         }
                
         private void SeedSysAdmin(DBContext context)

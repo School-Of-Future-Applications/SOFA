@@ -30,6 +30,7 @@ using System.Web.Mvc;
 using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
+using SOFA.Models.Prefab;
 
 namespace SOFA.Controllers
 {
@@ -118,11 +119,11 @@ namespace SOFA.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (esvm.SectionName.Equals(Section.STUDENT_SECTION_NAME))
+                if (esvm.SectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     SaveStudentDetailsSection(esvm);
                 }
-                else if (esvm.SectionName.Equals(Section.COURSE_SECTION_NAME))
+                else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
                 {
                     SaveClassSelectSection(esvm);
                 }
