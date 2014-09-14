@@ -197,13 +197,13 @@ namespace SOFA.Controllers
         private bool SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
         {
             StudentEnrolmentSectionViewModel studentVM = esvm as StudentEnrolmentSectionViewModel;
-            var student = studentVM.Student;
-            
-            //Transfer student details to fields
-
-            //Attach student to form
+            var student = studentVM.Student;          
             try
             {
+                //Transfer student details to fields
+                
+
+                //Attach student to form
                 var form = this.DBCon().EnrolmentForms.
                             Single(f => f.EnrolmentFormId == studentVM.FormId);
                 this.DBCon().Students.Add(student);
