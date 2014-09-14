@@ -200,8 +200,27 @@ namespace SOFA.Controllers
             var student = studentVM.Student;          
             try
             {
+                var section = this.DBCon().EnrolmentSections.
+                                Single(s => s.Id == studentVM.SectionId);
                 //Transfer student details to fields
-                
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId.Equals(PrefabField.FIRSTNAME)).
+                    Value = student.GivenNames;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.LASTNAME).
+                    Value = student.LastName;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.STUDENT_EMAIL).
+                    Value = student.Email;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.MOBILE_NUMBER).
+                    Value = student.MobileNumber;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.PHONE_NUMBER).
+                    Value = student.PhoneNumber;
+                this.DBCon().EnrolmentSections.Attach(section);
+                this.DBCon().Entry(section).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
 
                 //Attach student to form
                 var form = this.DBCon().EnrolmentForms.
