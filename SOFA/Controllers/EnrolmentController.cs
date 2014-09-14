@@ -89,6 +89,7 @@ namespace SOFA.Controllers
 
         public ActionResult Enrol(string sectionId, string formId)
         {
+            EnrolmentSectionViewModel esvm;
             try
             {
                 //Verify section belongs to form
@@ -97,7 +98,15 @@ namespace SOFA.Controllers
                 EnrolmentFormSection formSection = form.EnrolmentFormSections
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
-                EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(section);
+                if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
+                {
+                    esvm = new StudentEnrolmentSectionViewModel(section);
+                } 
+                else
+                {
+                    esvm = new EnrolmentSectionViewModel(section);
+
+                }
                 esvm.SectionNumber = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                         ToList().IndexOf(formSection) + 1;
                 esvm.TotalSections = form.EnrolmentFormSections.Count;
