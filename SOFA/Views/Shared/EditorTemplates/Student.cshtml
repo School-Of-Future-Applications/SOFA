@@ -1,0 +1,43 @@
+﻿@using SOFA.Models
+
+@model Student
+
+
+<div class="form-group">
+    @Html.LabelFor(m => m.GivenNames, new { @class = "control-label col-xs-2 label-align" })
+    <div class="col-xs-10">
+        @Html.EditorFor(m => m.GivenNames, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.GivenNames)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.LastName, new { @class = "control-label col-xs-2 label-align" })
+    <div class="col-xs-10">
+        @Html.EditorFor(m => m.LastName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.LastName)
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Email, new { @class = "control-label col-xs-2 label-align" })
+    <div class="col-xs-10">
+        @Html.EditorFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label col-xs-2 label-align" })
+    <div class="col-xs-10">
+        @Html.EditorFor(m => m.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PhoneNumber)
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.MobileNumber, new { @class = "control-label col-xs-2 label-align" })
+    <div class="col-xs-10">
+        @Html.EditorFor(m => m.MobileNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.MobileNumber)
+    </div>
+</div>
