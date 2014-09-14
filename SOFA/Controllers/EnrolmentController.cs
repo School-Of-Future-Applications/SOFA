@@ -89,6 +89,7 @@ namespace SOFA.Controllers
 
         public ActionResult Enrol(string sectionId, string formId)
         {
+            EnrolmentSectionViewModel esvm;
             try
             {
                 //Verify section belongs to form
@@ -97,7 +98,15 @@ namespace SOFA.Controllers
                 EnrolmentFormSection formSection = form.EnrolmentFormSections
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
-                EnrolmentSectionViewModel esvm = new EnrolmentSectionViewModel(section);
+                if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
+                {
+                    esvm = new StudentEnrolmentSectionViewModel(section);
+                } 
+                else
+                {
+                    esvm = new EnrolmentSectionViewModel(section);
+
+                }
                 esvm.SectionNumber = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                         ToList().IndexOf(formSection) + 1;
                 esvm.TotalSections = form.EnrolmentFormSections.Count;
@@ -117,75 +126,128 @@ namespace SOFA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
-            if (ModelState.IsValid)
+            bool saveSuccessful;
+            if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
             {
-                if (esvm.SectionId.Equals(PrefabSection.STUDENT_DETAILS))
-                {
-                    SaveStudentDetailsSection(esvm);
-                }
-                else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
-                {
-                    SaveClassSelectSection(esvm);
-                }
-                else
-                {
-                    SaveEnrolmentSection(esvm);
-                }
+                saveSuccessful = SaveStudentDetailsSection(esvm);
+            }
+            else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
+            {
+                saveSuccessful = SaveClassSelectSection(esvm);
+            }
+            else
+            {
+                saveSuccessful = SaveEnrolmentSection(esvm);
+            }
 
-                //Get the next section id
-                if (esvm.SectionNumber < esvm.TotalSections)
+            //Save not successful - send model back to view
+            if (!saveSuccessful)
+                return View(esvm);
+
+            //Get the next section id
+            if (esvm.SectionNumber < esvm.TotalSections)
+            {
+                try
                 {
-                    try
+                    var formsections = this.DBCon().EnrolmentForms.
+                                        Single(f => f.EnrolmentFormId == esvm.FormId).
+                                        EnrolmentFormSections;
+                    var nextSection = EnrolmentFormSection.Sort(formsections).
+                                            ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
+                    return RedirectToAction("Enrol", new
                     {
-                        var formsections = this.DBCon().EnrolmentForms.
-                                            Single(f => f.EnrolmentFormId == esvm.FormId).
-                                            EnrolmentFormSections;
-                        var nextSection = EnrolmentFormSection.Sort(formsections).
-                                                ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
-                        return RedirectToAction("Enrol", new
-                        {
-                            sectionId = nextSection.Id,
-                            formId = esvm.FormId
-                        });
-                    }
-                    catch
-                    {
-                        return View(esvm);
-                    }
-                    
-                    
+                        sectionId = nextSection.Id,
+                        formId = esvm.FormId
+                    });
                 }
-                else
+                catch
                 {
-                    //TODO Form Completion
                     return new HttpNotFoundResult();
                 }
+                    
+                    
+            }
+            else
+            {
+                //TODO Form Completion
+                return new HttpNotFoundResult();
             }
             
-            return View(esvm); 
+        }
+            
+        
+
+
+        private bool SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        {
+            if (ModelState.IsValid)
+            {
+                EnrolmentSection eSection = esvm.toEnrolmentSection();
+                this.DBCon().EnrolmentSections.Attach(eSection);
+                this.DBCon().Entry(eSection).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                return true;
+            }
+
+            return false;
+            
         }
 
-        private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        private bool SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
         {
-            EnrolmentSection eSection = esvm.toEnrolmentSection();
-            this.DBCon().EnrolmentSections.Attach(eSection);
-            this.DBCon().Entry(eSection).State = EntityState.Modified;
-            this.DBCon().SaveChanges();
+            StudentEnrolmentSectionViewModel studentVM = esvm as StudentEnrolmentSectionViewModel;
+            var student = studentVM.Student;          
+            try
+            {
+                var section = this.DBCon().EnrolmentSections.
+                                Single(s => s.Id == studentVM.SectionId);
+                //Transfer student details to fields
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId.Equals(PrefabField.FIRSTNAME)).
+                    Value = student.GivenNames;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.LASTNAME).
+                    Value = student.LastName;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.STUDENT_EMAIL).
+                    Value = student.Email;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.MOBILE_NUMBER).
+                    Value = student.MobileNumber;
+                section.EnrolmentFields.
+                    Single(e => e.OriginalFieldId == PrefabField.PHONE_NUMBER).
+                    Value = student.PhoneNumber;
+                this.DBCon().EnrolmentSections.Attach(section);
+                this.DBCon().Entry(section).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                //Attach student to form
+                var form = this.DBCon().EnrolmentForms.
+                            Single(f => f.EnrolmentFormId == studentVM.FormId);
+                this.DBCon().Students.Add(student);
+                form.Student = student;
+                this.DBCon().EnrolmentForms.Attach(form);
+                this.DBCon().Entry(form).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+           }
+           catch
+           {
+                return false;
+           }
+
+            return true;
+
         }
 
-        private void SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
+        private bool SaveClassSelectSection(EnrolmentSectionViewModel esvm)
         {
-
+            return true;
         }
 
-        private void SaveClassSelectSection(EnrolmentSectionViewModel esvm)
+        private bool SavePreqSection(EnrolmentSectionViewModel esvm)
         {
-
-        }
-
-        private void SavePreqSection(EnrolmentSectionViewModel esvm)
-        {
-
+            return true;
         }
 
         [HttpGet]

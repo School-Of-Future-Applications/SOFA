@@ -21,7 +21,7 @@
 @using SOFA.Models
 @using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model EnrolmentSectionViewModel
+@model StudentEnrolmentSectionViewModel
 
 @Html.HiddenFor(m => m.SectionId)
 @Html.HiddenFor(m => m.SectionName)
@@ -30,6 +30,7 @@
 @Html.HiddenFor(m => m.SectionNumber)
 @Html.HiddenFor(m => m.TotalSections)
 
+@Html.HiddenFor(m => m.Student.Id)
 
 <div class="panel panel-primary">
     <div class="panel-heading">
@@ -39,8 +40,10 @@
         </span>
     </div>
 
-    <div class="panel-body">        
+    <div class="panel-body">
+        @Html.EditorFor(m => m.Student)
 
-        @Html.EditorFor(m => m.EnrolmentFields)
+
     </div>
+
 </div>

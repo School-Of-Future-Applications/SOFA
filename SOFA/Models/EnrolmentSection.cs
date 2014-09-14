@@ -30,6 +30,8 @@ namespace SOFA.Models
 
         public String SectionName { get; set; }
 
+        public String OriginalSectionId { get; set; }
+
         public virtual ICollection<EnrolmentField> EnrolmentFields { get; set; }
 
         //public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
@@ -38,6 +40,7 @@ namespace SOFA.Models
         {
             SectionName = section.Name;
             DateCreated = DateTime.Now;
+            OriginalSectionId = section.Id;
             foreach (Field f in section.Fields)
                 EnrolmentFields.Add(new EnrolmentField(f));
         }

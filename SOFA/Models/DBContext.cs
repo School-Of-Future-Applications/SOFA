@@ -45,6 +45,8 @@ namespace SOFA.Models
 
         public DbSet<Person> Persons { get; set; }
 
+        public DbSet<Student> Students { get; set; }
+
         public DbSet<Timetable> Timetables { get; set; }
 
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
