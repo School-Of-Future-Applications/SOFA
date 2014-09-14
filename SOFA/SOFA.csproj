@@ -350,6 +350,7 @@
     <Compile Include="Models\ViewModels\DeleteConfirmationViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentFieldViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentSectionViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\StudentEnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FieldViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FormSectionOrderViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FormSectionViewModel.cs" />
@@ -447,6 +448,7 @@
     <Content Include="Views\Shared\DisplayTemplates\TimetabledClass.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldOption.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentSection.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\StudentEnrolmentSectionViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
