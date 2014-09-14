@@ -126,75 +126,87 @@ namespace SOFA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
-            if (ModelState.IsValid)
+            bool saveSuccessful;
+            if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
             {
-                if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
-                {
-                    SaveStudentDetailsSection(esvm);
-                }
-                else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
-                {
-                    SaveClassSelectSection(esvm);
-                }
-                else
-                {
-                    SaveEnrolmentSection(esvm);
-                }
+                saveSuccessful = SaveStudentDetailsSection(esvm);
+            }
+            else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
+            {
+                saveSuccessful = SaveClassSelectSection(esvm);
+            }
+            else
+            {
+                saveSuccessful = SaveEnrolmentSection(esvm);
+            }
 
-                //Get the next section id
-                if (esvm.SectionNumber < esvm.TotalSections)
+            //Save not successful - send model back to view
+            if (!saveSuccessful)
+                return View(esvm);
+
+            //Get the next section id
+            if (esvm.SectionNumber < esvm.TotalSections)
+            {
+                try
                 {
-                    try
+                    var formsections = this.DBCon().EnrolmentForms.
+                                        Single(f => f.EnrolmentFormId == esvm.FormId).
+                                        EnrolmentFormSections;
+                    var nextSection = EnrolmentFormSection.Sort(formsections).
+                                            ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
+                    return RedirectToAction("Enrol", new
                     {
-                        var formsections = this.DBCon().EnrolmentForms.
-                                            Single(f => f.EnrolmentFormId == esvm.FormId).
-                                            EnrolmentFormSections;
-                        var nextSection = EnrolmentFormSection.Sort(formsections).
-                                                ElementAt(esvm.SectionNumber).EnrolmentSection; //SectionNumber is 1-based
-                        return RedirectToAction("Enrol", new
-                        {
-                            sectionId = nextSection.Id,
-                            formId = esvm.FormId
-                        });
-                    }
-                    catch
-                    {
-                        return View(esvm);
-                    }
-                    
-                    
+                        sectionId = nextSection.Id,
+                        formId = esvm.FormId
+                    });
                 }
-                else
+                catch
                 {
-                    //TODO Form Completion
                     return new HttpNotFoundResult();
                 }
+                    
+                    
+            }
+            else
+            {
+                //TODO Form Completion
+                return new HttpNotFoundResult();
             }
             
-            return View(esvm); 
+        }
+            
+        
+
+
+        private bool SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        {
+            if (ModelState.IsValid)
+            {
+                EnrolmentSection eSection = esvm.toEnrolmentSection();
+                this.DBCon().EnrolmentSections.Attach(eSection);
+                this.DBCon().Entry(eSection).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                return true;
+            }
+
+            return false;
+            
         }
 
-        private void SaveEnrolmentSection(EnrolmentSectionViewModel esvm)
+        private bool SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
         {
-            EnrolmentSection eSection = esvm.toEnrolmentSection();
-            this.DBCon().EnrolmentSections.Attach(eSection);
-            this.DBCon().Entry(eSection).State = EntityState.Modified;
-            this.DBCon().SaveChanges();
+            return true;
         }
 
-        private void SaveStudentDetailsSection(EnrolmentSectionViewModel esvm)
+        private bool SaveClassSelectSection(EnrolmentSectionViewModel esvm)
         {
-
+            return true;
         }
 
-        private void SaveClassSelectSection(EnrolmentSectionViewModel esvm)
+        private bool SavePreqSection(EnrolmentSectionViewModel esvm)
         {
-
-        }
-
-        private void SavePreqSection(EnrolmentSectionViewModel esvm)
-        {
-
+            return true;
         }
 
         [HttpGet]

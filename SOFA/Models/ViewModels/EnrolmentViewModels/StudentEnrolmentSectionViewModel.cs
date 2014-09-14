@@ -9,8 +9,13 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
     {
         public Student Student { get; set; }
 
+        public StudentEnrolmentSectionViewModel(): base()
+        { }
+
         public StudentEnrolmentSectionViewModel(EnrolmentSection section): base(section)
         { }
+
+        
 
     }
 }
