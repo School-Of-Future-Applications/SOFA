@@ -25,6 +25,10 @@
     ViewBag.Title = "Create";
 }
 
+<script src="~/Scripts/moment.min.js"></script>
+<link rel="stylesheet" href="~/Content/bootstrap-datetimepicker.min.css" />
+<script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+
 <div class="row">
     <ol class="breadcrumb">
         You are here:
@@ -64,7 +68,7 @@
                 </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group" id="activedatepicker">
                 @Html.LabelFor(model => model.ActiveDate, new { @class = "control-label col-sm-3" })
                 <div class="col-sm-6">
                     @Html.EditorFor(model => model.ActiveDate)
@@ -72,7 +76,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="expirydatepicker">
                 @Html.LabelFor(model => model.ExpiryDate, new { @class = "control-label col-sm-3" })
                 <div class="col-sm-6">
                     @Html.EditorFor(model => model.ExpiryDate)
@@ -90,6 +94,18 @@
 </div>
 
 <script type="text/javascript">
+    $('div.input-group.date').datetimepicker({
+        format: "DD/MM/YYYY",
+        pickTime: false
+    });
+
+    $("#activedatepicker > div > div.date").on("dp.change", function (e) {
+        $('#expirydatepicker > div > div.date').data("DateTimePicker").setMinDate(e.date);
+    });
+    $("#expirydatepicker > div > div.date").on("dp.change", function (e) {
+        $('#activedatepicker > div > div.date').data("DateTimePicker").setMaxDate(e.date);
+    });
+
     $(document).ready(function () {
         $(function () {
             $.validator.addMethod('date',
@@ -106,10 +122,6 @@
                 }
                 return ok;
             })
-        });
-
-        $(".datepicker").datepicker({
-            dateFormat: "dd/mm/yy"
         });
     });
 </script>
