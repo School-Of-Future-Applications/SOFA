@@ -307,6 +307,7 @@
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Infrastructure\UUIDUtil.cs" />
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Binders\EnrolmentSectionVMBinder.cs" />
     <Compile Include="Models\ClassBase.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\DBContext.cs" />
