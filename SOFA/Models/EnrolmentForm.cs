@@ -32,9 +32,9 @@ namespace SOFA.Models
 
         public DateTime DateCreated { get; set; }
 
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
 
-        public TimetabledClass Class { get; set; }
+        public virtual TimetabledClass Class { get; set; }
 
         public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
 

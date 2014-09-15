@@ -21,6 +21,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
             this.FieldType = field.FieldType;
             this.PromptValue = field.PromptValue;
             this.Value = field.Value;
+            this.OriginalFieldId = field.OriginalFieldId;
             this.EnrollmentFieldOptions = field.EnrollmentFieldOptions;
         }
 
@@ -32,6 +33,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
                 PromptValue = this.PromptValue,
                 Value = this.Value,
                 FieldType = this.FieldType,
+                OriginalFieldId = this.OriginalFieldId,
                 EnrollmentFieldOptions = this.EnrollmentFieldOptions
             };
 
