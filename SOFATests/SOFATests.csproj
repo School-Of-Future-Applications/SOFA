@@ -37,6 +37,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\SOFA\bin\System.Web.Mvc.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -56,6 +60,7 @@
     <Compile Include="FormViewModels\FormSectionViewModelTests.cs" />
     <Compile Include="FormViewModels\SectionViewModelTests.cs" />
     <Compile Include="FormViewModels\FieldViewModelTests.cs" />
+    <Compile Include="ModelBinders\EnrolmentSectionVMBinderTests.cs" />
     <Compile Include="Validation\EnrolmentValidationUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -64,6 +69,9 @@
       <Project>{e1f9f873-2c87-4e16-8848-bb67e99658dc}</Project>
       <Name>SOFA</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
