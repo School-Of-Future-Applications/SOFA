@@ -6,6 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Specialized;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
 using SOFA.Models.Binders;
+using SOFA.Models.Prefab;
 
 namespace SOFATests.ModelBinders
 {
@@ -15,11 +16,42 @@ namespace SOFATests.ModelBinders
     [TestClass]
     public class EnrolmentSectionVMBinderTests
     {
+        private EnrolmentSectionViewModel esvm;
+        private StudentEnrolmentSectionViewModel sesv;
+        private NameValueCollection mockFormCollection;
+        
+
         public EnrolmentSectionVMBinderTests()
         {
-            //
-            // TODO: Add constructor logic here
-            //
+            this.esvm = new EnrolmentSectionViewModel();
+            var properties = esvm.GetType().GetProperties();
+
+            //Get properties but make sure they're strings
+            String firstPropertyName, secondPropertyName;
+            firstPropertyName = secondPropertyName = String.Empty;
+            for (int i = 0; i < properties.Length; i++)
+            {
+                if (properties[i].PropertyType.Equals(typeof(String)))
+                {
+                    if (firstPropertyName.Equals(String.Empty))
+                    {
+                        firstPropertyName = properties[i].Name;
+                    }
+                    else
+                    {
+                        secondPropertyName = properties[i].Name;
+                        break;
+                    }
+
+                }
+            }
+
+            this.mockFormCollection = new NameValueCollection()
+            {
+                { firstPropertyName , "TestFirstProperty" },
+                { secondPropertyName, "TestSecondProperty"}
+
+            };
         }
 
         private TestContext testContextInstance;
@@ -68,38 +100,9 @@ namespace SOFATests.ModelBinders
          */
         [TestMethod]
         public void BaseModelReturnsAsBaseModel()
-        {
-            var esvm = new EnrolmentSectionViewModel();
-            var properties = esvm.GetType().GetProperties();
+        {            
 
-            //Get properties but make sure they're strings
-            String firstPropertyName, secondPropertyName;
-            firstPropertyName = secondPropertyName = String.Empty;
-            for (int i = 0; i < properties.Length; i++)
-            {
-                if (properties[i].PropertyType.Equals(typeof(String)))
-                {
-                    if (firstPropertyName.Equals(String.Empty))
-                    {
-                        firstPropertyName = properties[i].Name;
-                    }
-                    else
-                    {
-                        secondPropertyName = properties[i].Name;
-                        break;
-                    }
-
-                }
-            }
-
-            var formCollection = new NameValueCollection()
-            {
-                { firstPropertyName , "TestFirstProperty" },
-                { secondPropertyName, "TestSecondProperty"}
-
-            };
-
-            var valueProvider = new NameValueCollectionValueProvider(formCollection, null);
+            var valueProvider = new NameValueCollectionValueProvider(mockFormCollection, null);
             var metadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(EnrolmentSectionViewModel));
             var bindingContext = new ModelBindingContext()
             {
@@ -116,5 +119,29 @@ namespace SOFATests.ModelBinders
             Assert.IsNotInstanceOfType(bindedModel, typeof(StudentEnrolmentSectionViewModel));
 
         }
+
+        [TestMethod]
+        public void StudentModelReturnsStudentModel()
+        {
+
+            this.mockFormCollection.Add("OriginalSectionId", PrefabSection.STUDENT_DETAILS);
+            var valueProvider = new NameValueCollectionValueProvider(mockFormCollection, null);
+            var metadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(EnrolmentSectionViewModel));
+            var bindingContext = new ModelBindingContext()
+            {
+                ModelName = "",
+                ValueProvider = valueProvider,
+                ModelMetadata = metadata
+            };
+            var controllerContext = new ControllerContext();
+            var binder = new EnrolmentSectionVMBinder();
+
+            var bindedModel = binder.BindModel(controllerContext, bindingContext);
+
+            Assert.IsInstanceOfType(bindedModel, typeof(EnrolmentSectionViewModel));
+            Assert.IsNotInstanceOfType(bindedModel, typeof(StudentEnrolmentSectionViewModel));
+
+        }
+
     }
 }
