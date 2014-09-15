@@ -450,6 +450,7 @@
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\StudentEnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Student.cshtml" />
+    <Content Include="Views\ClassBase\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

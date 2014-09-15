@@ -33,6 +33,12 @@ namespace SOFA.Controllers
     
     public class ClassBaseController : DashBoardBaseController
     {
+
+        public ActionResult Index(int classBaseId)
+        {
+            return View();
+        }
+
         //
         // GET: /ClassBase/Create/5
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
