@@ -100,7 +100,7 @@ namespace SOFATests.ModelBinders
             };
 
             var valueProvider = new NameValueCollectionValueProvider(formCollection, null);
-            var metadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(EnrolmentFieldViewModel));
+            var metadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(EnrolmentSectionViewModel));
             var bindingContext = new ModelBindingContext()
             {
                 ModelName = "",
@@ -113,6 +113,7 @@ namespace SOFATests.ModelBinders
             var bindedModel = binder.BindModel(controllerContext, bindingContext);
 
             Assert.IsInstanceOfType(bindedModel, typeof(EnrolmentSectionViewModel));
+            Assert.IsNotInstanceOfType(bindedModel, typeof(StudentEnrolmentSectionViewModel));
 
         }
     }
