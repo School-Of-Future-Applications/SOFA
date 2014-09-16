@@ -291,6 +291,7 @@
     <Compile Include="Controllers\SectionController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
+    <Compile Include="Controllers\TimetabledClassController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -451,6 +452,7 @@
     <Content Include="Views\Shared\EditorTemplates\StudentEnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Student.cshtml" />
     <Content Include="Views\ClassBase\Index.cshtml" />
+    <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
