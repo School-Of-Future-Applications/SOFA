@@ -14,6 +14,8 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
         public IEnumerable<SelectListItem> CourseSelect { get; set; }
 
         public IEnumerable<SelectListItem> YearLevelSelect { get; set; }
+
+        public int SelectedClassId { get; set; }
                 
         public CourseEnrolmentSectionViewModel(): base()
         { }
