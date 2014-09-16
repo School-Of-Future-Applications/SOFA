@@ -82,7 +82,8 @@
             <tbody>
                 @foreach(TimetabledClass tc in Model.TimetabledClasses)
                 {
-                    <tr>
+                    <tr onclick="location.href='@Url.Action("TimetabledClass", "TimetabledClass"
+                                                           ,new { timetabledClassId = tc.Id })'">
                         <td>@tc.Id</td>
                         <td>@tc.DisplayName</td>
                         <td>@tc.Line.Id - @tc.Line.Label</td>
