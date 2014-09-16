@@ -45,11 +45,20 @@
     </div>
 
     <div class="panel-body">
-        @Html.LabelFor(model => model.DepartmentSelect, new { @class = "control-label col-xs-2 label-align" })
         <div class="col-xs-10">
-            @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, "Select a Department" , new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.SelectedDepartment)
         </div>
+        <div class="col-xs-10">
+            @Html.DropDownListFor(m => m.SelectedCourse, Model.CourseSelect, "Select a Course", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SelectedCourse)
+        </div>
+        <div class="col-xs-10">
+            @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SelectedYearLevel)
+        </div>
+
+
      
 
 
