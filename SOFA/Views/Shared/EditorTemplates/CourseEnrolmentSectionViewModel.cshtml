@@ -40,15 +40,15 @@
 
     <div class="panel-body">
         <div class="col-xs-10">
-            @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, "Select a Department" , new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, "Select a Department" , new { @class = "form-control department-select" })
             @Html.ValidationMessageFor(m => m.SelectedDepartment)
         </div>
         <div class="col-xs-10">
-            @Html.DropDownListFor(m => m.SelectedCourse, Model.CourseSelect, "Select a Course", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.SelectedCourse, Model.CourseSelect, "Select a Course", new { @class = "form-control course-select" })
             @Html.ValidationMessageFor(m => m.SelectedCourse)
         </div>
         <div class="col-xs-10">
-            @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control" })
+            @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control yearlevel-select" })
             @Html.ValidationMessageFor(m => m.SelectedYearLevel)
         </div>
 
@@ -58,3 +58,4 @@
 
     </div>
 </div>
+<script src="~/Scripts/class-select.js"></script>
