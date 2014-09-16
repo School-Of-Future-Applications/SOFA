@@ -102,6 +102,11 @@ namespace SOFA.Controllers
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
                 } 
+                else if (section.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
+                {
+                    var departments = this.DBCon().Departments.ToList();
+                    esvm = new CourseEnrolmentSectionViewModel(section, departments);
+                }
                 else
                 {
                     esvm = new EnrolmentSectionViewModel(section);

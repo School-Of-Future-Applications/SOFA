@@ -18,6 +18,12 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+<style>
+    .course-select-drop-down {
+        min-width: 600px;
+    }
+</style>
+
 @using SOFA.Models
 @using SOFA.Models.ViewModels.EnrolmentViewModels
 
@@ -29,3 +35,23 @@
 @Html.HiddenFor(m => m.OriginalSectionId)
 @Html.HiddenFor(m => m.SectionNumber)
 @Html.HiddenFor(m => m.TotalSections)
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        @Model.SectionName
+        <span class="pull-right">
+            @Model.SectionNumber/@Model.TotalSections
+        </span>
+    </div>
+
+    <div class="panel-body">
+        @Html.LabelFor(model => model.DepartmentSelect, new { @class = "control-label col-xs-2 label-align" })
+        <div class="col-xs-10">
+            @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.SelectedDepartment)
+        </div>
+     
+
+
+    </div>
+</div>
