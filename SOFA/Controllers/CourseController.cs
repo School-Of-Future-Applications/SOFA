@@ -45,7 +45,7 @@ namespace SOFA.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet]        
         public JsonResult CourseIndex_Json(int departmentId)
         {
             try
@@ -66,7 +66,7 @@ namespace SOFA.Controllers
                         Name = c.CourseName
                     });
                 }
-                return Json(courseIdNameList);
+                return Json(courseIdNameList, JsonRequestBehavior.AllowGet);
 
             }
             catch
