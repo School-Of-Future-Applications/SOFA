@@ -146,7 +146,21 @@ namespace SOFA.Controllers
 
         public JsonResult ClassBaseYearLevels_JSON(int courseId)
         {
-            return null;
+            try
+            {
+                var classBases = this.DBCon().Courses.
+                                    Single(c => c.Id == courseId).ClassBases.
+                                    Where(cb => cb.TimetabledClasses.Count > 0);
+                var yearLevels = classBases.Select(cb => cb.YearLevel).ToList();
+                return Json(yearLevels, JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new
+                    {
+                        Success = false
+                    });
+            }
         }
 
 
