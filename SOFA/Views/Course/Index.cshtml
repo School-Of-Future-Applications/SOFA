@@ -94,7 +94,7 @@
         <tbody>
             @foreach (ClassBase cb in Model.ClassBases.Where(c => !c.Deleted))
             {
-                <tr class="lasthidden">
+                <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "ClassBase", new { classBaseId = cb.Id })'">
                     <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
                     <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
                     <td align="right">
