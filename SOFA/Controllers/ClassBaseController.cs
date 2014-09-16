@@ -144,6 +144,11 @@ namespace SOFA.Controllers
      
         }
 
+        public JsonResult ClassBaseYearLevels_JSON(int courseId)
+        {
+            return null;
+        }
+
 
         [NonAction]
         public override Enum NavProviderTerm()
