@@ -12,14 +12,19 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
     {
         public int SelectedDepartment { get; set; }
 
-        [Display(Name = "Select Department")]
+        [Display(Name = "Department")]
         public SelectList DepartmentSelect { get; set; }
 
         
         public int SelectedCourse { get; set; }
+
+        [Display(Name = "Course")]
         public SelectList CourseSelect { get; set; }
 
+
         public string SelectedYearLevel { get; set; }
+
+        [Display(Name = "Year Level")]
         public SelectList YearLevelSelect { get; set; }
 
         [Required(ErrorMessage = "You must select a class")]

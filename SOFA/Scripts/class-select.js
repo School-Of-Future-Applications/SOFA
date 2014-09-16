@@ -21,10 +21,7 @@
                         $.each(data, function (i, entry) {
                             $courseSelect.append("<option value=\"" + entry.Id + "\">" + entry.Name + "</option>");
                         });
-
-                    }
-                    
-                    
+                    }    
                 }
             );
         } 

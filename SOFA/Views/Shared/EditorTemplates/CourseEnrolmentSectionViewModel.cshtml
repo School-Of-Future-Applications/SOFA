@@ -39,17 +39,17 @@
     </div>
 
     <div class="panel-body">
-        <div class="col-xs-10">
+        <div class="col-xs-10 form-group">
+            @Html.LabelFor(m => m.DepartmentSelect)
             @Html.DropDownListFor(m => m.SelectedDepartment, Model.DepartmentSelect, "Select a Department" , new { @class = "form-control department-select" })
-            @Html.ValidationMessageFor(m => m.SelectedDepartment)
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-10 form-group">
+            @Html.LabelFor(m => m.CourseSelect)
             @Html.DropDownListFor(m => m.SelectedCourse, Model.CourseSelect, "Select a Course", new { @class = "form-control course-select" })
-            @Html.ValidationMessageFor(m => m.SelectedCourse)
         </div>
-        <div class="col-xs-10">
+        <div class="col-xs-10 form-group">
+            @Html.LabelFor(m => m.YearLevelSelect)
             @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control yearlevel-select" })
-            @Html.ValidationMessageFor(m => m.SelectedYearLevel)
         </div>
 
 
