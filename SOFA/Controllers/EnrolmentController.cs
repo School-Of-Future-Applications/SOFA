@@ -102,6 +102,14 @@ namespace SOFA.Controllers
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
                 } 
+                else if (section.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
+                {
+                    //Get all departments where
+                    List<Department> departments = this.DBCon().Departments.
+                                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                                        ToList();
+                    esvm = new CourseEnrolmentSectionViewModel(section, departments);
+                }
                 else
                 {
                     esvm = new EnrolmentSectionViewModel(section);
@@ -275,5 +283,9 @@ namespace SOFA.Controllers
         {
             return PartialView("EnrolmentForm", enrolmentForm);
         }
+        
+        
 	}
+
+    
 }
