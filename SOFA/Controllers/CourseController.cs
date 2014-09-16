@@ -45,30 +45,39 @@ namespace SOFA.Controllers
             }
         }
 
-        public JsonResult Index(int departmentId)
+        [HttpGet]
+        public JsonResult CourseIndex_Json(int departmentId)
         {
             try
             {
                 var courses = this.DBCon().Departments.
                                 Single(d => d.id == departmentId).
                                 Courses.ToList();
+                if (courses.Count == 0)
+                {
+                    throw new Exception();
+                }
                 var courseIdNameList = new List<object>();
                 foreach (Course c in courses)
                 {
                     courseIdNameList.Add(new
-                        {
-                            Id = c.Id,
-                            Name = c.CourseName
-                        });
+                    {
+                        Id = c.Id,
+                        Name = c.CourseName
+                    });
                 }
                 return Json(courseIdNameList);
 
             }
             catch
             {
-                return null;
+                return Json(new
+                {
+                    Success = false
+                }, JsonRequestBehavior.AllowGet);
             }
         }
+        
 
         //
         // GET: /Course/Create

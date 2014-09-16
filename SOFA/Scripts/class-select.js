@@ -5,6 +5,18 @@
         var deptId = $(this).val();
         if (deptId != "") {
             //Get courses and append to course select
+            $.get(
+                "/Course/CourseIndex_Json",
+                { departmentId: deptId },
+                function (data) {
+                    console.log(data);
+                    foreach (entry in data)
+                    {
+                        ;
+                    }
+                    
+                }
+            );
         }
     });
 
