@@ -42,5 +42,7 @@ namespace SOFA.Models
 
         [StringLength(100)]
         public String DisplayName { get; set; }
+
+        public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
     }
 }
