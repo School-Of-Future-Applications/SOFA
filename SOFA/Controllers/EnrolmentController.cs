@@ -303,7 +303,8 @@ namespace SOFA.Controllers
                         {
                             lcdm = new LineClassDisplayModel()
                             {
-                                LineDisplayName = tc.Line.Label
+                                LineDisplayName = tc.Line.Label,
+                                Times = tc.Line.LineTimes.ToList()
                             };
                             lines.Add(lcdm);
                         }
