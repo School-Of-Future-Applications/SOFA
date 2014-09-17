@@ -10,11 +10,16 @@
         $(".yearlevel-select").append("<option value>Select a Year Level</option>");
         if (deptId != "") {
             //Get courses and append to course select
-            $.get(
-                "/Course/CourseIndex_Json",
-                { departmentId: deptId },
+            $.ajax({
+                url : "/Course/CourseIndex_Json",
+                data: { departmentId: deptId },
+                type : "GET",
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success :
                 function (data) {
-                    if (data.Success == null) {                        
+                    console.log(data);
+                    if (data.Success == null) {
                         $courseSelect.empty();
                         $courseSelect.append("<option value>Select a Course</option>");
                         $.each(data, function (i, entry) {
@@ -22,7 +27,7 @@
                         });
                     }    
                 }
-            );
+            });
         } 
     });
 

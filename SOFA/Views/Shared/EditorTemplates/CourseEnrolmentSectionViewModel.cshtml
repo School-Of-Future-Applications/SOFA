@@ -51,7 +51,9 @@
             @Html.LabelFor(m => m.YearLevelSelect)
             @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control yearlevel-select" })
         </div>
-
+        <div class="col-xs-10 form-group" >
+            @Ajax.ActionLink("View Timetable", "", "ClassSelectController", null, new { @class = "btn btn-primary"})
+        </div>
 
     </div>
 </div>

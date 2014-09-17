@@ -10,24 +10,24 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 {
     public class CourseEnrolmentSectionViewModel : EnrolmentSectionViewModel
     {
+        [Required]
         public int SelectedDepartment { get; set; }
 
         [Display(Name = "Department")]
         public SelectList DepartmentSelect { get; set; }
 
-        
+        [Required]
         public int SelectedCourse { get; set; }
 
         [Display(Name = "Course")]
         public SelectList CourseSelect { get; set; }
 
-
+        [Required]
         public string SelectedYearLevel { get; set; }
 
         [Display(Name = "Year Level")]
         public SelectList YearLevelSelect { get; set; }
 
-        [Required(ErrorMessage = "You must select a class")]
         public int SelectedClassId { get; set; }
                 
         public CourseEnrolmentSectionViewModel(): base()
@@ -45,6 +45,8 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
             CourseSelect = new SelectList(Enumerable.Empty<SelectListItem>());
             YearLevelSelect = new SelectList(Enumerable.Empty<SelectListItem>());
         }
+
+        
 
 
 
