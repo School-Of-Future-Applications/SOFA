@@ -148,18 +148,24 @@ namespace SOFA.Controllers
         {
             try
             {
-                var classBases = this.DBCon().Courses.
+                var allClassBases = this.DBCon().Courses.
                                     Single(c => c.Id == courseId).ClassBases.
                                     Where(cb => cb.TimetabledClasses.Count > 0);
-                var yearLevels = classBases.Select(cb => cb.YearLevel).ToList();
-                return Json(yearLevels, JsonRequestBehavior.AllowGet);
+                var currentClassBases = allClassBases.Where(cb => cb.TimetabledClasses.
+                                            Any(tc => tc.Line.Timetable.ActiveDate < DateTime.Now &&
+                                                    tc.Line.Timetable.ExpiryDate > DateTime.Now)).ToList();
+                if (currentClassBases.Count == 0)
+                {
+                    throw new Exception();
+                }
+                return Json(currentClassBases.Select(cb => cb.YearLevel), JsonRequestBehavior.AllowGet);
             }
             catch
             {
                 return Json(new
                     {
                         Success = false
-                    });
+                    }, JsonRequestBehavior.AllowGet);
             }
         }
 
