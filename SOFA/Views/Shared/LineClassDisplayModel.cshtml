@@ -27,7 +27,21 @@
     <br />
     @foreach (LineClassDisplayModel displayModel in Model.Lines)
     {
-        <h4>@Html.DisplayFor(x => displayModel.LineDisplayName)</h4>
+        <h4 class="text-center">@Html.DisplayFor(x => displayModel.LineDisplayName)</h4>
+        <p class="text-center">
+            @foreach (var time in displayModel.Times)
+            {
+                @Html.DisplayFor(t => time.Day, "CustomIntDayOfWeek")
+                @Html.DisplayFor(t => time.StartTime, "CustomDoubleTimeOfDay") 
+                <span>-</span>
+                @Html.DisplayFor(t => time.EndTime, "CustomDoubleTimeOfDay")
+                if (time != displayModel.Times[displayModel.Times.Count - 1])
+                {
+                    <span> | </span>
+                }
+                    
+            }
+        </p>
         <table class="table">
             @foreach (var tc in displayModel.Classes)
             {
