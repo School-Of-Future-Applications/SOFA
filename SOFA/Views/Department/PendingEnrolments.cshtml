@@ -49,7 +49,9 @@
             <tbody>
                 @foreach(EnrolmentForm ef in Model)
                 {
-                    <tr>
+                    <tr onclick="location.href='@Url.Action("PendingEnrolment", "Department"
+                                                           ,new { departmentId = ef.Class.ClassBase.Course.Department.id
+                                                                , enrolmentFormId = ef.EnrolmentFormId })'" >
                         <td>@ef.DateCreated</td>
                         <td>@ef.Name</td>
                         <td>@ef.Class.ClassBase.Course.CourseCode / @ef.Class.ClassBase.Course.CourseName</td>

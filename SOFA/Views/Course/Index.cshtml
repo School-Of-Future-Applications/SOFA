@@ -25,18 +25,23 @@
     ViewBag.Title = "Index";
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li>@Html.ActionLink("Departments", "index", "Department")</li>
         <li>
             @Html.ActionLink(Model.Department.DepartmentName, "Department", "Department"
-                            ,new { departmentId = Model.Department.id }, null)
+                            , new { departmentId = Model.Department.id }, null)
         </li>
         <li class="active">@Model.CourseName</li>
     </ol>
-    <h2>
-        @Model.CourseName
+</div>
 
+<div class="row">
+    <h2 class="col-sm-6">
+        @Model.CourseName
+    </h2>
+    <h2 class="col-sm-6">
         <span class="btn-group pull-right">
             <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
                 <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
@@ -47,8 +52,7 @@
                                     , new
                                     {
                                         departmentId = Model.Department.id
-                                     ,
-                                        courseId = Model.Id
+                                       ,courseId = Model.Id
                                     })
                     @Html.ActionLink("Delete Course", "Delete", new { courseId = Model.Id },
                                                     new { @class = "delete-link" })
@@ -56,23 +60,29 @@
             </ul>
         </span>
     </h2>
-
-    <b>Course Code:</b> @Model.CourseCode
 </div>
 
 <div class="row">
     <div class="col-sm-12">
-        <h3>
-            @Model.CourseName Class Base List
-            @Html.ActionLink("Add Class Base", "CreateEdit", "ClassBase"
-                        , new { courseId = Model.Id }
-                        , new { @class = "btn btn-primary pull-right" })
-        </h3>
+        <b>Course Code:</b> @Model.CourseCode
     </div>
 </div>
 
 <div class="row">
-    <div class="col-md-12">
+    <h3 class="col-sm-6">
+        @Model.CourseName Class Base List
+    </h3>
+    <h3 class="col-sm-6">
+        <a class="btn btn-primary btn-labeled pull-right"
+           href="@Url.Action("CreateEdit", "ClassBase", new { courseId = Model.Id })">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            Add Class Base
+        </a>
+    </h3>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
       <table class="table table-hover">
          <thead>
             <tr>
@@ -84,7 +94,7 @@
         <tbody>
             @foreach (ClassBase cb in Model.ClassBases.Where(c => !c.Deleted))
             {
-                <tr class="lasthidden">
+                <tr class="lasthidden" onclick="location.href='@Url.Action("Index", "ClassBase", new { classBaseId = cb.Id })'">
                     <td>@Html.DisplayFor(model => cb.ClassBaseCode)</td>
                     <td>@Html.DisplayFor(modelItem => cb.YearLevel)</td>
                     <td align="right">

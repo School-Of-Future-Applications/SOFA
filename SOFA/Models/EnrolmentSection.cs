@@ -12,7 +12,7 @@ namespace SOFA.Models
     {
         public EnrolmentSection()
         {
-            EnrolmentSectionId = UUIDUtil.NewUUID();
+            Id = UUIDUtil.NewUUID();
             EnrolmentFields = new List<EnrolmentField>();
             DateCreated = DateTime.Now;
         }
@@ -24,19 +24,23 @@ namespace SOFA.Models
         }
 
         [Key]
-        public string EnrolmentSectionId { get; set; }
+        public string Id { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public String SectionName { get; set; }
 
+        public String OriginalSectionId { get; set; }
+
         public virtual ICollection<EnrolmentField> EnrolmentFields { get; set; }
 
-        public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
+        //public virtual ICollection<EnrolmentFormSection> EnrolmentFormSections { get; set; }
 
         private void fromSection(Section section)
         {
             SectionName = section.Name;
+            DateCreated = DateTime.Now;
+            OriginalSectionId = section.Id;
             foreach (Field f in section.Fields)
                 EnrolmentFields.Add(new EnrolmentField(f));
         }

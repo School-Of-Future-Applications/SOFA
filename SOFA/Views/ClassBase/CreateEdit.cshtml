@@ -32,21 +32,26 @@
                                               : "Save Class Base");
 }
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li>@Html.ActionLink("Departments", "index", "Department")</li>
         <li>
             @Html.ActionLink(Model.DepartmentName, "Department", "Department"
-                            ,new { departmentId = Model.DepartmentId }, null)
+                            , new { departmentId = Model.DepartmentId }, null)
         </li>
         <li>
             @Html.ActionLink(Model.CourseName, "Index", "Course"
-                            ,new { courseId = Model.CourseID }, null)
+                            , new { courseId = Model.CourseID }, null)
         </li>
         <li class="active">@ViewBag.HeadingTitle</li>
     </ol>
+</div>
 
-    <h2>@ViewBag.HeadingTitle</h2>
+<div class="row">
+    <h2 class="col-sm-12">
+        @ViewBag.HeadingTitle
+    </h2>
 </div>
 
 <div class="row">
@@ -77,8 +82,8 @@
             </div>
 
             <div class="form-group">
-                <div class="col-sm-offset-3 col-sm-9">
-                    <input type="submit" value="@ViewBag.SubmitTxt" class="btn btn-default" />
+                <div class="col-sm-offset-3 col-sm-6">
+                    <input type="submit" value="@ViewBag.SubmitTxt" class="btn btn-success pull-right" />
                 </div>
             </div>
         }

@@ -16,13 +16,14 @@ namespace SOFA.Models.Validation
 
         public static IEnumerable<ValidationResult> ValidateField(EnrolmentField field)
         {
+            
             //Test value against field type
             if (field.FieldType.Equals(Field.TYPE_DATE) &&
                 !IsValidDate(field))
             {
                 yield return new ValidationResult("Not a valid date", new List<String>()
                     {
-                        "FieldType"
+                        "Value"
                     });
             }
             
