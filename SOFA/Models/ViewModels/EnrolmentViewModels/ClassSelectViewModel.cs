@@ -18,11 +18,14 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
     {
         public string LineDisplayName { get; set; }
 
+        public List<LineTime> Times { get; set; }
+
         public List<TimetabledClassDisplayModel> Classes { get; set; }
 
         public LineClassDisplayModel()
         {
             Classes = new List<TimetabledClassDisplayModel>();
+            Times = new List<LineTime>();
         }
     }
 
