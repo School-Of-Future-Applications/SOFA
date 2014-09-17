@@ -4,7 +4,6 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
 using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
@@ -82,6 +81,25 @@ namespace SOFA.Controllers
             Field f = new Field(type);
             f.PromptValue = prompt;
             f.Section = s;
+            FieldOption fo = new FieldOption(FieldOption.OPT_MANDATORY);
+            f.FieldOptions.Add(fo);
+            switch(f.FieldType)
+            {
+                case Field.TYPE_TEXT_MULTI:
+                    break;
+                case Field.TYPE_TEXT_SINGLE:
+                    FieldOption num = new FieldOption(FieldOption.OPT_NUMERIC);
+                    f.FieldOptions.Add(num);
+                    break;
+                case Field.TYPE_FILE:
+                    break;
+                case Field.TYPE_DATE:
+                    break;
+                case Field.TYPE_DROPDOWN:
+                    FieldOption drop = new FieldOption(FieldOption.OPT_RESPONSE);
+                    f.FieldOptions.Add(drop);
+                    break;
+            }
             this.DBCon().Fields.Add(f);
             this.DBCon().SaveChanges();
             return Json(f.Id);
@@ -99,6 +117,14 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult GetFieldOptionsForId(string id)
+        {
+            Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
+            return PartialView("EditFieldValidation", f);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult SetSectionFieldOrder(List<string> FieldIds)
         {
             for(int i = 0;i<FieldIds.Count();i++)
@@ -122,8 +148,70 @@ namespace SOFA.Controllers
             return Json(1);
         }
 
-
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult FieldOptionsSubView(string id)
+        {
+            Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
+            return PartialView("FieldOptionsSubView", f);
+        }
+)]
+        [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult SetFieldValidationOptions(string fieldID, string[] data, string[] names)
+        {
+            var field = this.DBCon().Fields.Where(x => x.Id == fieldID).FirstOrDefault();
+            for(int i = 0;i<names.Length;i++)
+            {
+                var name = names[i];
+                if(name == "Mandatory")
+                {
+                    field.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue = data[i].ToUpper();
+                }
+                else if(name == "Numeric")
+                {
+                    field.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_NUMERIC).FirstOrDefault().OptionValue = data[i].ToUpper();
+                }
+                else if(name == "Responses")
+                {
+                    var responses = data[i].Split(',');
+                    while(field.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_RESPONSE).Count() > 0)
+                    {
+                        field.FieldOptions.Remove(field.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_RESPONSE).FirstOrDefault());
+                    }
+                    foreach (string response in responses)
+                    {
+                        FieldOption fo = new FieldOption(FieldOption.OPT_RESPONSE);
+                        fo.OptionValue = response;
+                        field.FieldOptions.Add(fo);
+                    }
+                }
+            }
+            this.DBCon().SaveChanges();
+            //jsonData
+            /*for (int i = 0; i < FieldIds.Count(); i++)
+            {
+                var fid = FieldIds[i];
+                var usfo = this.DBCon().SectionFieldOrders.Where(sfo => sfo.FieldID == fid).FirstOrDefault();
+                if (usfo != null)
+                {
+                    usfo.Order = i;
+                }
+                else
+                {
+                    usfo = new SectionFieldOrder();
+                    usfo.FieldID = fid;
+                    usfo.Order = i;
+                    usfo.SectionID = this.DBCon().Fields.Where(f => f.Id == fid).FirstOrDefault().Section.Id;
+                    this.DBCon().SectionFieldOrders.Add(usfo);
+                }
+                this.DBCon().SaveChanges();
+            }*/
+            return Json(1);
+        }
+
+
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult Delete(string id)
         {
             DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
