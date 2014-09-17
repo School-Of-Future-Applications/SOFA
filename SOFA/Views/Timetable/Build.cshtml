@@ -18,7 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
-@model SOFA.Models.Timetable
+@using SOFA.Models
+@model Timetable
 
 @{
     ViewBag.Title = "Build";
@@ -84,12 +85,23 @@
     </script>
 }
 
-<div class="col-md-11 col-md-offset-1">
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>@Html.ActionLink("Timetabling", "Index", "Timetable")</li>
+        <li class="active">Build @Model.TimetableIdentifier</li>
+    </ol>
+</div>
 
-    <h2>Build Timetable</h2>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+<div class="row">
+    <div class="col-sm-12">
+        <h2>Build Timetable</h2>
+    </div>
+</div>
+    
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
             <hr />
@@ -193,5 +205,3 @@
     <div>
         @Html.ActionLink("Back to List", "Index")
     </div>
-
-</div>

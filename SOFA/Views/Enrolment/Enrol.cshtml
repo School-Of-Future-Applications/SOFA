@@ -18,12 +18,15 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
-@using SOFA.Models
-@model EnrolmentForm
+@using SOFA.Models.ViewModels.EnrolmentViewModels;
+
+@model EnrolmentSectionViewModel
 
 @{
     Layout = null;
 }
+
+
 
 <!DOCTYPE html>
 
@@ -42,31 +45,55 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/sofa-validation.js"></script>
 
     <title>SOFA Enrolment</title>
 </head>
 <body>
-    <div class="container">
 
+    <div class="container">
         @using (Html.BeginForm("Enrol", "Enrolment", FormMethod.Post
                               ,new { @class = "form-horizontal" }))
         {
-            @Html.HiddenFor(model => model.EnrolmentFormId)
-            foreach(EnrolmentFormSection efSection in Model.EnrolmentFormSections)
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.FormId)
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    @Html.EditorFor(m => m)
+                </div>
+            </div>   
+
+            if (Model.GetType() != typeof(CourseEnrolmentSectionViewModel))
             {
                 <div class="row">
-                    <div class="col-md-8 col-md-offset-2">
-                        @Html.EditorFor(m => efSection)
+                    <div class="col-md-1 col-md-offset-9">
+                        @{
+                            string buttonText;
+                            if (Model.SectionNumber == Model.TotalSections)
+                            {
+                                buttonText = "Submit";
+                            }
+                            else
+                            {
+                                buttonText = "Continue";
+                            }
+                        }
+                        <input type="submit" class="btn btn-primary" value="@buttonText" />
                     </div>
-                </div>   
+                </div>
             }
             
-            <div class="row">
-                <div class="col-md-1 col-md-offset-9">
-                    <input type="submit" class="btn btn-primary" value="Submit" />
-                </div>
-            </div>
         }
     </div>
+
+    <script type="text/javascript">
+        $('div.input-group.date').datetimepicker({
+            format: "DD/MM/YYYY",
+            pickTime: false
+        });
+    </script>
+
 </body>
 </html>

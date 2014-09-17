@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SOFA.Models.Binders;
+using SOFA.Models.ViewModels.EnrolmentViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -13,6 +15,7 @@ namespace SOFA
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            ModelBinders.Binders.Add(typeof(EnrolmentSectionViewModel), new EnrolmentSectionVMBinder());
   
         }
     }

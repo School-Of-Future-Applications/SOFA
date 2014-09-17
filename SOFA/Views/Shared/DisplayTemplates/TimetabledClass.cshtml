@@ -1,0 +1,55 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+
+@model TimetabledClass
+
+<div class="panel panel-orange2">
+    <div class="panel-heading">
+        <h3 class="panel-title">Class Information</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="info-grid" style="display:inline-table;">
+                    <tr>
+                        <td align="right"><strong>Class Id:</strong></td>
+                        <td>@Model.Id</td>
+                    </tr>
+                    <tr>
+                        <td align="right"><strong>Class Name:</strong></td>
+                        <td>@Model.DisplayName</td>
+                    </tr>
+                    <tr>
+                        <td align="right"><strong>Class Base:</strong></td>
+                        <td>@Model.ClassBase.ClassBaseCode - @Model.ClassBase.YearLevel
+                            - @Model.ClassBase.Course.CourseName (@Model.ClassBase.Course.CourseCode)</td>
+                    </tr>
+                    <tr>
+                        <td align="right"><strong>Capacity:</strong></td>
+                        <td>@Model.Capacity</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

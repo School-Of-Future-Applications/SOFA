@@ -14,7 +14,7 @@ namespace SOFA.Controllers
     {
         //
         // GET: /Section/
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Index()
         {
             return View(this.DBCon().Sections.OrderBy(x => x.DateCreated).ToList());
@@ -22,6 +22,7 @@ namespace SOFA.Controllers
 
         //
         // GET: /Section/Create
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult Edit(String sectionID = null)
         {
             SectionEditViewModel sevm = new SectionEditViewModel();
@@ -38,6 +39,7 @@ namespace SOFA.Controllers
         //
         // POST: /Section/Create
         [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult CreateEdit(Section section)
         {
             try
@@ -51,14 +53,14 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult CreateSection()
         {
             return PartialView();
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult CreateSection(Section section)
         {
             if (ModelState.IsValid)
@@ -72,7 +74,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult AddField(string sectionId, string type, string prompt)
         {
             Section s = this.DBCon().Sections.Where(x => x.Id == sectionId).FirstOrDefault();
@@ -104,7 +106,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult EditFieldPrompt(string fieldId, string prompt)
         {
             Field f = this.DBCon().Fields.Where(x => x.Id == fieldId).FirstOrDefault();
@@ -114,7 +116,7 @@ namespace SOFA.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult GetFieldOptionsForId(string id)
         {
             Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
@@ -153,9 +155,9 @@ namespace SOFA.Controllers
             Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
             return PartialView("FieldOptionsSubView", f);
         }
-
+)]
         [HttpPost]
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult SetFieldValidationOptions(string fieldID, string[] data, string[] names)
         {
             var field = this.DBCon().Fields.Where(x => x.Id == fieldID).FirstOrDefault();
@@ -245,7 +247,7 @@ namespace SOFA.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult IndexPartial()
         {
             var sections = this.DBCon().Sections.ToList();

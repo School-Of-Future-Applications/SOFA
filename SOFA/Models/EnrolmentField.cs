@@ -9,14 +9,22 @@ using SOFA.Models.Validation;
 
 namespace SOFA.Models
 {
-    public class EnrolmentField : IValidatableObject
+    public class EnrolmentField 
     {
         [Key]
         public string EnrolmentFieldId { get; set; }
+
+        [Required]
         public String FieldType { get; set; }
+
+        [Required]
         public String PromptValue { get; set; }
+
         public virtual List<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
+
         public String Value { get; set; }
+
+        public String OriginalFieldId { get; set; }
 
         public EnrolmentField()
         {
@@ -29,17 +37,12 @@ namespace SOFA.Models
         {
             FieldType = field.FieldType;
             PromptValue = field.PromptValue;
-
+            OriginalFieldId = field.Id;
             foreach (FieldOption opt in field.FieldOptions)
             {
                 EnrollmentFieldOptions.Add(new EnrolmentFieldOption(opt));                
             }
         }
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            return null;
-           // return EnrolmentValidator.ValidateField(this);
-        }
     }
 }

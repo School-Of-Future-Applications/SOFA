@@ -13,7 +13,7 @@ namespace SOFATests
     public class EnrolmentValidationUnitTest
     {
         [TestMethod]
-        public void DateFieldValidTest()
+        public void Valid_Date_Field_Test()
         {
             EnrolmentField field = new EnrolmentField()
             {
@@ -26,7 +26,7 @@ namespace SOFATests
         }
 
         [TestMethod]
-        public void DateFieldInValidTest()
+        public void Invalid_Culture_Date_Field_Test()
         {
             EnrolmentField field = new EnrolmentField()
             {
@@ -39,7 +39,7 @@ namespace SOFATests
         }
     
         [TestMethod]
-        public void MandFieldValidTest()
+        public void Valid_Mandatory_Field_Test()
         {
             // Test NULL value
             EnrolmentField field = new EnrolmentField()
@@ -54,11 +54,11 @@ namespace SOFATests
             );
             List<ValidationResult> results = EnrolmentValidator.ValidateField(field).ToList();
             var resultExpr = results.Count == 0 || results[0] == ValidationResult.Success;
-            Assert.IsTrue(resultExpr, "Field passed validation but shouldn't have.");
+            Assert.IsTrue(resultExpr, "Field did not pass validation but should have.");
         }
 
         [TestMethod]
-        public void MandFieldInvalidTest()
+        public void Invalid_Mandatory_Field_Test()
         {
             // Test NULL value
             EnrolmentField field = new EnrolmentField()
@@ -71,14 +71,12 @@ namespace SOFATests
                 }
             );
             var results = EnrolmentValidator.ValidateField(field).ToList();
-            var resultExpr = results.Count == 0 || results[0] == ValidationResult.Success;
-            Assert.IsFalse(resultExpr, "Field passed validation but shouldn't have.");
+            Assert.IsFalse(results[0] == ValidationResult.Success, "Field passed validation but shouldn't have.");
 
             //Test whitespace value
             field.Value = "    ";
             results = EnrolmentValidator.ValidateField(field).ToList();
-            resultExpr = results.Count == 0 || results[0] == ValidationResult.Success;
-            Assert.IsFalse(resultExpr, "Field passed validation but shouldn't have.");
+            Assert.IsFalse(results[0] == ValidationResult.Success, "Field passed validation but shouldn't have.");
         }
     
     }

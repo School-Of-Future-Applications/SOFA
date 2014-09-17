@@ -1,0 +1,70 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+
+@model TimetabledClass
+
+@{
+    ViewBag.Title = "TimetabledClass";
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+    </ol>
+</div>
+
+<div class="row">
+    <h2 class="col-sm-12">
+        <strong>Timetabled Class: </strong> @Model.DisplayName
+    </h2>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="info-grid">
+            <tr>
+                <td align="right"><strong>Timetabled Class Id:</strong></td>
+                 <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Dsplay Name:</strong></td>
+                <td>@Model.DisplayName</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Class Base:</strong></td>
+                <td>@Model.ClassBase.ClassBaseCode</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Timetable:</strong></td>
+                <td>@Model.Line.Timetable.TimetableIdentifier</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Line:</strong></td>
+                <td>@Model.Line.Id - @Model.Line.Label</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Capacity:</strong></td>
+                <td>@Model.Capacity</td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -26,8 +26,14 @@
     var validationAttributes = Html.GetUnobtrusiveValidationAttributes("");
 }
 
-@Html.TextBox("", Model
+<div class="input-group date">
+    @Html.TextBox("", Model
              , new RouteValueDictionary(validationAttributes)
              {
-                { "class", "form-control datepicker" }
+                { "class", "form-control" }
+               ,{ "placeholder", "dd/mm/yyyy" }
              })
+    <span class="input-group-addon">
+        <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+</div>

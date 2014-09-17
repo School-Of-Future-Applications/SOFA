@@ -9,7 +9,7 @@ namespace SOFATests.FormViewModels
     public class FieldViewModelTests
     {
         [TestMethod]
-        public void FieldConversionTest()
+        public void EnrolmentField_to_FieldVM_ConversionTest()
         {
             EnrolmentField field = new EnrolmentField()
             {

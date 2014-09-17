@@ -45,6 +45,8 @@ namespace SOFA.Models
 
         public DbSet<Person> Persons { get; set; }
 
+        public DbSet<Student> Students { get; set; }
+
         public DbSet<Timetable> Timetables { get; set; }
 
         public DbSet<TimetabledClass> TimetabledClasses { get; set; }
@@ -80,9 +82,14 @@ namespace SOFA.Models
             return new DBContext();
         }
 
-        public void  OnModelCreating(DbModelBuilder modelBuilder)
+        public new void OnModelCreating(DbModelBuilder modelBuilder)
         {
-           /* modelBuilder.Entity<EnrolmentForm>()
+            
+                
+
+
+                /*
+            modelBuilder.Entity<EnrolmentForm>()
                 .HasKey(eform => eform.EnrolmentFormId);
             modelBuilder.Entity<EnrolmentSection>()
                 .HasKey(eSection => eSection.EnrolmentSectionId);
@@ -97,7 +104,8 @@ namespace SOFA.Models
             modelBuilder.Entity<EnrolmentForm>()
                 .HasMany(eForm => eForm.EnrolmentFormSections)
                 .WithRequired(efSection => efSection.EnrolmentForm)
-                .HasForeignKey(efSection => efSection.EnrolmentFormId);*/
+                .HasForeignKey(efSection => efSection.EnrolmentFormId);
+             */
         }
     }
 }
