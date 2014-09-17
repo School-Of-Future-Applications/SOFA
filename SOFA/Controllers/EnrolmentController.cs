@@ -287,8 +287,40 @@ namespace SOFA.Controllers
         [HttpGet]
         public ActionResult TimetableDisplay(int courseId, string yearLevel)
         {
-            LineClassDisplayModel model = new LineClassDisplayModel();
-            return PartialView(model);
+            List<LineClassDisplayModel> lines = new List<LineClassDisplayModel>();
+            try
+            {
+                var course = this.DBCon().Courses.Single(c => c.Id == courseId);
+                var classbases = course.ClassBases.Where(cb => cb.YearLevel == yearLevel);
+                var classes = classbases.Select(cb => cb.TimetabledClasses);    
+                foreach (var tcList in classes)
+                {
+                    foreach (var tc in tcList)
+                    {
+                        TimetabledClassDisplayModel timetableCDM = new TimetabledClassDisplayModel(tc);
+                        LineClassDisplayModel lcdm = lines.SingleOrDefault(m => m.LineDisplayName == tc.Line.Label);
+                        if (lcdm == null)
+                        {
+                            lcdm = new LineClassDisplayModel()
+                            {
+                                LineDisplayName = tc.Line.Label
+                            };
+                            lines.Add(lcdm);
+                        }
+                        lcdm.Classes.Add(timetableCDM);
+                       
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            ClassSelectViewModel csvm = new ClassSelectViewModel()
+            {
+                Lines = lines
+            };
+            return PartialView("LineClassDisplayModel", csvm);
         }
         
         

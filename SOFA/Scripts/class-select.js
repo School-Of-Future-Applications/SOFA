@@ -54,6 +54,40 @@
     });
 
     $(".yearlevel-select").change(function () {
-        console.log("Year Select");
+        
+    });
+
+    $(".view-timetable").click(function (e) {
+        $(this).attr("clicked", "true");
+    });
+
+    $(".section-form").submit(function (e) {
+        e.preventDefault();
+        //If displaying timetable, ajax it
+        //Else submit as per normal
+        if ($(".view-timetable").attr("clicked") == "true") {
+            //Reset clicked attribute
+            $(".view-timetable").attr("clicked", "false");
+            //Get the data, check if validated
+            if ($(this).valid()) {
+                var courseId = $(".course-select").val();
+                var yearLevel = $(".yearlevel-select").val();
+                 //Get the view and put it in the div
+                $.get(
+                    "/Enrolment/TimetableDisplay",
+                    { courseId: courseId, yearLevel: yearLevel },
+                    function(data)
+                    {
+                        $("#timetable-display").html(data);
+                    }
+                );
+            }
+            
+            return false; //So the page doesn't change
+        } else {
+            console.log("sent from elsewhere");
+        }
+        
+        
     });
 });

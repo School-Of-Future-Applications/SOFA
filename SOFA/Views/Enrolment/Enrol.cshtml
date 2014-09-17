@@ -55,7 +55,7 @@
 
     <div class="container">
         @using (Html.BeginForm("Enrol", "Enrolment", FormMethod.Post
-                              ,new { @class = "form-horizontal" }))
+                              ,new { @class = "form-horizontal section-form" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.FormId)
