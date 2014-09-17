@@ -283,6 +283,13 @@ namespace SOFA.Controllers
         {
             return PartialView("EnrolmentForm", enrolmentForm);
         }
+
+        [HttpGet]
+        public ActionResult TimetableDisplay(int courseId, string yearLevel)
+        {
+            LineClassDisplayModel model = new LineClassDisplayModel();
+            return PartialView(model);
+        }
         
         
 	}
