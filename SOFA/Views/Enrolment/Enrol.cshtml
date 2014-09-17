@@ -64,26 +64,23 @@
                     @Html.EditorFor(m => m)
                 </div>
             </div>   
-
-            if (Model.GetType() != typeof(CourseEnrolmentSectionViewModel))
-            {
-                <div class="row">
-                    <div class="col-md-1 col-md-offset-9">
-                        @{
-                            string buttonText;
-                            if (Model.SectionNumber == Model.TotalSections)
-                            {
-                                buttonText = "Submit";
-                            }
-                            else
-                            {
-                                buttonText = "Continue";
-                            }
+            
+            <div class="row">
+                <div class="col-md-1 col-md-offset-9">
+                    @{
+                        string buttonText;
+                        if (Model.SectionNumber == Model.TotalSections)
+                        {   
+                            buttonText = "Submit";
                         }
-                        <input type="submit" class="btn btn-primary" value="@buttonText" />
-                    </div>
+                        else
+                        {
+                            buttonText = "Continue";
+                        }
+                    }
+                    <input type="submit" class="btn btn-primary" value="@buttonText" />
                 </div>
-            }
+            </div>
             
         }
     </div>

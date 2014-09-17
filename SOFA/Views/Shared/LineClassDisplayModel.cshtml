@@ -42,7 +42,14 @@
                     
             }
         </p>
+        if (Model.Lines.IndexOf(displayModel) == 0)
+        {
+            
+        }
+        <h4>Class</h4>
         <table class="table">
+            
+            
             @foreach (var tc in displayModel.Classes)
             {
                 <tr>
@@ -50,7 +57,7 @@
                         @Html.DisplayFor(x => tc.Name)
                     </td>
                     <td class="text-right">
-                        <button id="@tc.Id" class="btn btn-primary class-select-btn">Select</button>
+                        <button type="button" id="@tc.Id" class="btn btn-primary class-select-btn">Select</button>
                     </td>
                 </tr>
             }

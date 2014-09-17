@@ -59,10 +59,10 @@
 
     $(".view-timetable").click(function (e) {
         $(this).attr("clicked", "true");
+        
     });
 
     $(".section-form").submit(function (e) {
-        e.preventDefault();
         //If displaying timetable, ajax it
         //Else submit as per normal
         if ($(".view-timetable").attr("clicked") == "true") {
@@ -85,9 +85,26 @@
             
             return false; //So the page doesn't change
         } else {
-            console.log("sent from elsewhere");
+            if ($("#SelectedClassId").val() > 0)
+            {
+
+            } else {
+                return false;
+            }
+            
         }
         
         
+    });
+
+    $(document).on("click", ".class-select-btn", function (e) {
+        var cid = $(this).attr("id");
+        $("#SelectedClassId").val(cid);
+        $(".class-select-btn").attr("class", "class-select-btn btn btn-primary");
+        $(".class-select-btn").text("Select");
+        $(this).attr("class", "class-select-btn btn btn-success");
+        $(this).text("Selected");
+        $("tr").attr("class", "");
+        $(this).closest("tr").attr("class", "success");
     });
 });

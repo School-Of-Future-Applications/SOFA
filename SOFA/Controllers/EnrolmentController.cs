@@ -304,7 +304,7 @@ namespace SOFA.Controllers
                             lcdm = new LineClassDisplayModel()
                             {
                                 LineDisplayName = tc.Line.Label,
-                                Times = tc.Line.LineTimes.ToList()
+                                Times = tc.Line.LineTimes.OrderBy(l => l.Day).ToList()
                             };
                             lines.Add(lcdm);
                         }
