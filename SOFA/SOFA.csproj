@@ -374,6 +374,7 @@
     <Content Include="Views\Shared\EditFieldValidation.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
+    <Content Include="Views\Shared\FieldOptionsSubView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

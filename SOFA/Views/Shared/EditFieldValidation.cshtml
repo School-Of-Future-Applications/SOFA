@@ -18,6 +18,8 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *@
 
+@using SOFA.Models;
+
 @model SOFA.Models.Field
 
 
@@ -26,29 +28,69 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Line</h4>
+        <h4>@Html.DisplayFor(model => model.FieldType) - @Html.DisplayFor(model => model.PromptValue)</h4>
         <hr />
         @Html.ValidationSummary(true)
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FieldType, new { @class = "col-md-2" })
-            <div class="col-md-10">
-
+        @if (Model.FieldType == Field.TYPE_TEXT_MULTI)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
             </div>
-        </div>
+        }
+        else if (Model.FieldType == Field.TYPE_TEXT_SINGLE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+                <hr />
+                @Html.Label("Numeric: ")
+                <br />
+                @Html.CheckBox("Numeric", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_NUMERIC).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput"})
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_FILE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_DATE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_DROPDOWN)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+                <hr />
+                @Html.Label("Response Items: ")
+                <br />
+                @{
+            var responses = string.Join(",", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_RESPONSE).Select(x => x.OptionValue).ToList());
+                }
+                @Html.TextBox("Responses", responses, new { @class = "vinput" })
+            </div>
+        }
+       
+
 
         @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
 </div>
 
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>

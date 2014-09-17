@@ -1,0 +1,11 @@
+﻿@using SOFA.Models;
+
+@model SOFA.Models.Field
+     
+@foreach (FieldOption fo in Model.FieldOptions.OrderBy(x => x.OptionType))
+{
+    <span style="float:left;width:10%">@fo.OptionType</span>
+    <span style="float:right;width:10%">@fo.OptionValue</span>
+    <br />
+}
+

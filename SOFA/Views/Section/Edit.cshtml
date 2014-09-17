@@ -29,13 +29,19 @@
 }
 
 <script typeof="text/javascript">
+    function ValidationData(id, data) {
+        this.id = id;
+        this.data = data;
+        return this;
+    }
+
     $(document).ready(function () {
         $(".editPrompt").on("click", function () {
             $(this).parent().parent().parent().addClass("givingPrompt");
             $("#promptmodal").modal("show");
         });
         $(".editOptions").on("click", function () {
-            var post = $(this).data("id");
+            var post = $(this).parent().parent().parent().attr("id");
             $.ajax({
                 type: "POST",
                 url: "/Section/GetFieldOptionsForId",
@@ -43,7 +49,7 @@
                 dataType: "html",
                 traditional: true,
                 success: function (data) {
-                    alert(data);
+                    //alert(data);
                     $("#optioncontent").html(data);
                 },
                 error: function (request, status, error) {
@@ -109,6 +115,72 @@
                 }
             }
         });
+
+        $("#saveoptionprompt").on("click", function (event) {
+            this.prepPost = new Array();
+            var saveoption = this;
+            $("#optionmodal").find(".vinput:checkbox").each(function (i) {
+                //alert("test");
+                saveoption.prepPost.push(new ValidationData($(this).attr("id"), $(this).prop("checked")));
+                //alert($(this).prop("checked"));
+            });
+            $("#optionmodal").find(".vinput:text").each(function (i) {
+
+                saveoption.prepPost.push(new ValidationData($(this).attr("id"), $(this).val()));
+                //alert($(this).val());
+            });
+            //alert(this.prepPost[1].name + ":" + this.prepPost[1].data);
+            var post = [];
+            var fieldID = $(".givingOptions").attr("id");
+            //post.push($(".givingOptions").attr("id"));
+            var validationnames = [];
+            var validationdata = [];
+            post.validations = new Array();
+            for (var i = 0; i < this.prepPost.length;i=i+1)
+            {
+                var name = this.prepPost[i].id;
+                var data = this.prepPost[i].data;
+                validationnames.push(name);
+                validationdata.push(data);
+                //post.validations.push(JSON.parse('{"' + name + '":"' + data + '"}'));
+                //$.extend(post, { "validations": { name: data } });
+            }
+            post = JSON.stringify(post);
+            console.log(post);
+
+            $.ajax({
+                type: "POST",
+                url: "/Section/SetFieldValidationOptions",
+                data: { fieldID : fieldID, names : validationnames, data : validationdata },
+                dataType: "json",
+                traditional: true,
+            }).done(function (msg) {
+                
+                $.ajax({
+                    type: "POST",
+                    url: "/Section/FieldOptionsSubView",
+                    data: { "id": fieldID },
+                    dataType: "html",
+                    traditional: true,
+                    success: function (data) {
+                        //alert(data);
+                        $(".givingOptions").find("#fieldOptions").html(data);
+                        $(".givingOptions").removeClass("givingOptions");
+                        $("#optionmodal").modal("hide");
+                    },
+                    error: function (request, status, error) {
+                        alert(error);
+                    }
+                }).done(function (msg) {
+                    //alert(msg);
+                    //$(this).find(".optioncontent").html(msg);
+
+                });
+                
+            });
+            //print(saveoption);
+        });
+
         $("#saveprompt").on("click", function (event) {
             $(".givingPrompt").data("prompt", $("#prompt").val());
             //$(".givingPrompt").html($(".givingPrompt").data("prompt") + "<br />" + $(".givingPrompt").data("type"))
@@ -179,11 +251,14 @@
         <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
         <div class="panel-body">
             <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
-            @foreach(FieldOption fo in @f.FieldOptions)
-            {
-                <span style="float:left;width:10%">@fo.OptionType</span>
-                <span style="float:right;width:10%">@fo.OptionValue</span>
-            }
+            <div id="fieldOptions">
+                @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
+                {
+                    <span style="float:left;width:10%">@fo.OptionType</span>
+                    <span style="float:right;width:10%">@fo.OptionValue</span>
+                    <br />
+                }
+            </div>
         </div>
         <hr />
         <div class="panel-body">
