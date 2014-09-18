@@ -55,7 +55,7 @@
 
     <div class="container">
         @using (Html.BeginForm("Enrol", "Enrolment", FormMethod.Post
-                              ,new { @class = "form-horizontal" }))
+                              ,new { @class = "form-horizontal section-form" }))
         {
             @Html.AntiForgeryToken()
             @Html.HiddenFor(model => model.FormId)
@@ -64,14 +64,13 @@
                     @Html.EditorFor(m => m)
                 </div>
             </div>   
-
             
             <div class="row">
                 <div class="col-md-1 col-md-offset-9">
                     @{
                         string buttonText;
                         if (Model.SectionNumber == Model.TotalSections)
-                        {
+                        {   
                             buttonText = "Submit";
                         }
                         else
@@ -82,6 +81,7 @@
                     <input type="submit" class="btn btn-primary" value="@buttonText" />
                 </div>
             </div>
+            
         }
     </div>
 

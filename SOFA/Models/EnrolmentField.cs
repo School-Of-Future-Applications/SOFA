@@ -13,10 +13,17 @@ namespace SOFA.Models
     {
         [Key]
         public string EnrolmentFieldId { get; set; }
+
+        [Required]
         public String FieldType { get; set; }
+
+        [Required]
         public String PromptValue { get; set; }
+
         public virtual List<EnrolmentFieldOption> EnrollmentFieldOptions { get; set; }
+
         public String Value { get; set; }
+
         public String OriginalFieldId { get; set; }
 
         public EnrolmentField()

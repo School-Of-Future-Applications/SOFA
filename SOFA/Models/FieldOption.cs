@@ -24,6 +24,7 @@ namespace SOFA.Models
         public const String OPT_UUID = "UUID";
 
         public const String VAL_TRUE = "TRUE";
+        public const String VAL_FALSE = "FALSE";
 
         [Key]
         public string FieldOptionId { get; set; }
@@ -50,7 +51,7 @@ namespace SOFA.Models
             //Set default values, if any
             if (optionType == OPT_MANDATORY || optionType == OPT_NUMERIC)
             {
-                OptionValue = VAL_TRUE;
+                OptionValue = VAL_FALSE;
             }
 
         }
