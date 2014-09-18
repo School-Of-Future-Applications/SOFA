@@ -155,7 +155,7 @@ namespace SOFA.Controllers
             Field f = this.DBCon().Fields.Where(x => x.Id == id).FirstOrDefault();
             return PartialView("FieldOptionsSubView", f);
         }
-)]
+
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult SetFieldValidationOptions(string fieldID, string[] data, string[] names)
