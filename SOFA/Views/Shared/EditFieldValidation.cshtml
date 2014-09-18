@@ -1,0 +1,98 @@
+﻿@*
+ *  School Of Future Applications
+ *
+ *  Copyright (C) 2014  Terminal Coding
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *@
+
+@using SOFA.Models;
+
+@model SOFA.Models.Field
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>@Html.DisplayFor(model => model.FieldType) - @Html.DisplayFor(model => model.PromptValue)</h4>
+        <hr />
+        @Html.ValidationSummary(true)
+        @if (Model.FieldType == Field.TYPE_TEXT_MULTI)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_TEXT_SINGLE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+                <hr />
+                @Html.Label("Numeric: ")
+                <br />
+                @Html.CheckBox("Numeric", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_NUMERIC).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput"})
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_FILE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_DATE)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+            </div>
+        }
+        else if (Model.FieldType == Field.TYPE_DROPDOWN)
+        {
+            <div>
+                @Html.Label("Mandatory: ")
+                <br />
+                @Html.CheckBox("Mandatory", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_MANDATORY).FirstOrDefault().OptionValue == "TRUE" ? true : false, new { @class = "vinput" })
+                <hr />
+                @Html.Label("Response Items: ")
+                <br />
+                @{
+            var responses = string.Join(",", Model.FieldOptions.Where(x => x.OptionType == FieldOption.OPT_RESPONSE).Select(x => x.OptionValue).ToList());
+                }
+                @Html.TextBox("Responses", responses, new { @class = "vinput" })
+            </div>
+        }
+       
+
+
+        @Html.HiddenFor(model => model.Id)
+
+    </div>
+}
+
+<div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>

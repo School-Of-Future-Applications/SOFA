@@ -113,8 +113,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap-datetimepicker.css" />
-    <Content Include="Content\bootstrap-datetimepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -127,8 +125,6 @@
     <Content Include="Content\images\file.png" />
     <Content Include="Content\images\info.png" />
     <Content Include="Content\images\text.png" />
-    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="Content\FormEdit.css" />
     <Content Include="Content\jquery.timepicker.css" />
     <Content Include="Content\login.css" />
     <Content Include="Content\themes\base\images\animated-overlay.gif" />
@@ -200,6 +196,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -243,13 +240,8 @@
     <Content Include="Content\bootstrap\bootstrap.less" />
     <Content Include="Content\bootstrap\badges.less" />
     <Content Include="Content\bootstrap\alerts.less" />
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
-    <Content Include="ClassDiagram3.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Resources\UserActiviationEmail.txt" />
-    <Content Include="Scripts\bootstrap-datetimepicker.js" />
-    <Content Include="Scripts\bootstrap-datetimepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
@@ -268,13 +260,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\less-1.5.1.js" />
-    <Content Include="Scripts\less-1.5.1.min.js" />
-    <Content Include="Scripts\moment-with-locales.js" />
-    <Content Include="Scripts\moment-with-locales.min.js" />
-    <Content Include="Scripts\moment.js" />
-    <Content Include="Scripts\moment.min.js" />
-    <Content Include="Scripts\nav-sidebar.js" />
     <Content Include="Scripts\sofa-validation.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -427,9 +412,9 @@
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FieldViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
@@ -441,9 +426,10 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFormSection.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldDate.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
+    <Content Include="Views\Shared\EditFieldValidation.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
+    <Content Include="Views\Shared\FieldOptionsSubView.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDate.cshtml" />
