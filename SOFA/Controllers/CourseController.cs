@@ -45,8 +45,7 @@ namespace SOFA.Controllers
             }
         }
 
-        [HttpGet]
-        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        [HttpGet]        
         public JsonResult CourseIndex_Json(int departmentId)
         {
             try

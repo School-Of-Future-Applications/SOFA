@@ -97,10 +97,8 @@ namespace SOFA.Controllers
         public ActionResult CreateLine(int id)
         {
             Line l = new Line();
-            var timetable = this.DBCon().Timetables.SingleOrDefault(t => t.Id == id);
-            var timetableLines = timetable.Lines.ToList();
-            l.Label = String.Format("Line {0}", timetableLines.Count + 1);
-            l.Timetable = timetable;
+            this.DBCon().Timetables.Where(t => t.Id == id).FirstOrDefault().Lines.Add(l);
+            l.Timetable = this.DBCon().Timetables.Where(t => t.Id == id).FirstOrDefault();
             this.DBCon().Lines.Add(l);
             this.DBCon().SaveChanges();
             return RedirectToAction("Build", new { id = id });
