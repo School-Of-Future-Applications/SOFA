@@ -173,18 +173,19 @@
     <div class="form-horizontal">
         <h4>@Html.DisplayFor(m => m.FormName)</h4>
         <hr />
-        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "addSectionLink pull-right" })
+        <a href="/Section/IndexPartial" class="addSectionLink btn btn-primary btn-labeled pull-right">
+            <span class="icon btn-label glyphicon glyphicon-plus"></span>
+            Add Section
+        </a>
+           @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.HiddenFor(m => m.Id)
+            </div>
 
 
-        @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.HiddenFor(m => m.Id)
-        </div>
-
-        
-
-    </div>
+</div>
     <div class="alert-danger"></div>
     <div id="accordion" >
         @if (Model.FormSections != null)
