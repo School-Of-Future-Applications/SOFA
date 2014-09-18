@@ -153,31 +153,6 @@ namespace SOFA.Controllers
      
         }
 
-        public JsonResult ClassBaseYearLevels_JSON(int courseId)
-        {
-            try
-            {
-                var allClassBases = this.DBCon().Courses.
-                                    Single(c => c.Id == courseId).ClassBases.
-                                    Where(cb => cb.TimetabledClasses.Count > 0);
-                var currentClassBases = allClassBases.Where(cb => cb.TimetabledClasses.
-                                            Any(tc => tc.Line.Timetable.ActiveDate < DateTime.Now &&
-                                                    tc.Line.Timetable.ExpiryDate > DateTime.Now)).ToList();
-                if (currentClassBases.Count == 0)
-                {
-                    throw new Exception();
-                }
-                return Json(currentClassBases.Select(cb => cb.YearLevel), JsonRequestBehavior.AllowGet);
-            }
-            catch
-            {
-                return Json(new
-                    {
-                        Success = false
-                    }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
 
         [NonAction]
         public override Enum NavProviderTerm()
