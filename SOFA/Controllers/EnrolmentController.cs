@@ -139,7 +139,7 @@ namespace SOFA.Controllers
             {
                 saveSuccessful = SaveStudentDetailsSection(esvm);
             }
-            else if (esvm.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
+            else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
             {
                 saveSuccessful = SaveClassSelectSection(esvm);
             }
@@ -250,33 +250,7 @@ namespace SOFA.Controllers
 
         private bool SaveClassSelectSection(EnrolmentSectionViewModel esvm)
         {
-            CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
-            try
-            {
-                var form = this.DBCon().EnrolmentForms.
-                                Single(f => f.EnrolmentFormId == cesvm.FormId);
-                var section = form.EnrolmentFormSections.
-                                Single(s => s.EnrolmentSection.Id == cesvm.SectionId)
-                                .EnrolmentSection;
-                var enrolledClass = this.DBCon().TimetabledClasses.
-                                Single(c => c.Id == cesvm.SelectedClassId);
-                form.Class = enrolledClass;
-                var field = section.EnrolmentFields.Single(ef => ef.OriginalFieldId == PrefabField.CLASS_SELECT);
-                var course = this.DBCon().Courses.Single(c => c.Id == cesvm.SelectedCourse);
-
-                field.Value = String.Format("{0} {1}", course.CourseName, enrolledClass.DisplayName);
- 
-                //Save
-                this.DBCon().EnrolmentForms.Attach(form);
-                this.DBCon().Entry(form).State = EntityState.Modified;
-
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-            
+            return true;
         }
 
         private bool SavePreqSection(EnrolmentSectionViewModel esvm)
@@ -308,46 +282,6 @@ namespace SOFA.Controllers
         public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm)
         {
             return PartialView("EnrolmentForm", enrolmentForm);
-        }
-
-        [HttpGet]
-        public ActionResult TimetableDisplay(int courseId, string yearLevel)
-        {
-            List<LineClassDisplayModel> lines = new List<LineClassDisplayModel>();
-            try
-            {
-                var course = this.DBCon().Courses.Single(c => c.Id == courseId);
-                var classbases = course.ClassBases.Where(cb => cb.YearLevel == yearLevel);
-                var classes = classbases.Select(cb => cb.TimetabledClasses);    
-                foreach (var tcList in classes)
-                {
-                    foreach (var tc in tcList)
-                    {
-                        TimetabledClassDisplayModel timetableCDM = new TimetabledClassDisplayModel(tc);
-                        LineClassDisplayModel lcdm = lines.SingleOrDefault(m => m.LineDisplayName == tc.Line.Label);
-                        if (lcdm == null)
-                        {
-                            lcdm = new LineClassDisplayModel()
-                            {
-                                LineDisplayName = tc.Line.Label,
-                                Times = tc.Line.LineTimes.OrderBy(l => l.Day).ToList()
-                            };
-                            lines.Add(lcdm);
-                        }
-                        lcdm.Classes.Add(timetableCDM);
-                       
-                    }
-                }
-            }
-            catch
-            {
-                return null;
-            }
-            ClassSelectViewModel csvm = new ClassSelectViewModel()
-            {
-                Lines = lines
-            };
-            return PartialView("LineClassDisplayModel", csvm);
         }
         
         
