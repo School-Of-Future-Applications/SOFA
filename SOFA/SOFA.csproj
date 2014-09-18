@@ -196,11 +196,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-    <Content Include="ClassDiagram1.cd" />
-    <Content Include="ClassDiagram2.cd" />
-    <Content Include="ClassDiagram3.cd" />
-    <Content Include="ClassDiagram4.cd" />
-    <Content Include="ClassDiagram5.cd" />
     <None Include="Scripts\jquery-1.9.1.intellisense.js" />
     <None Include="Resources\UserActiviationEmail.txt" />
     <Content Include="Scripts\bootstrap.js" />
@@ -257,10 +252,6 @@
     <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Infrastructure\UUIDUtil.cs" />
-    <Compile Include="Migrations\201409100709111_test.cs" />
-    <Compile Include="Migrations\201409100709111_test.Designer.cs">
-      <DependentUpon>201409100709111_test.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Binders\EnrolmentSectionVMBinder.cs" />
     <Compile Include="Models\ClassBase.cs" />
@@ -422,9 +413,6 @@
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201409100709111_test.resx">
-      <DependentUpon>201409100709111_test.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
