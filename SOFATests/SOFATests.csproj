@@ -55,6 +55,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Controllers\CourseControllerTests.cs" />
+    <Compile Include="Controllers\ClassBaseControllerTests.cs" />
     <Compile Include="EnrolmentViewModels\EnrolmentSectionViewModelTests.cs" />
     <Compile Include="FormViewModels\FormViewModelTests.cs" />
     <Compile Include="FormViewModels\FormSectionViewModelTests.cs" />
