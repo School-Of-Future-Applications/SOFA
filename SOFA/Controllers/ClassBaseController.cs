@@ -33,10 +33,19 @@ namespace SOFA.Controllers
     
     public class ClassBaseController : DashBoardBaseController
     {
-
+        [Authorize(Roles = SOFARole.AUTH_TEACHER)]
         public ActionResult Index(int classBaseId)
         {
-            return View();
+            ClassBase classBase = null;
+            try
+            {
+                classBase = this.DBCon().ClassBases.Where(x => x.Id == classBaseId).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(classBase);
         }
 
         //
