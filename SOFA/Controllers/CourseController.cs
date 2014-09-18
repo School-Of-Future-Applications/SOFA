@@ -45,6 +45,41 @@ namespace SOFA.Controllers
             }
         }
 
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public JsonResult CourseIndex_Json(int departmentId)
+        {
+            try
+            {
+                var courses = this.DBCon().Departments.
+                                Single(d => d.id == departmentId).
+                                Courses.ToList();
+                if (courses.Count == 0)
+                {
+                    throw new Exception();
+                }
+                var courseIdNameList = new List<object>();
+                foreach (Course c in courses)
+                {
+                    courseIdNameList.Add(new
+                    {
+                        Id = c.Id,
+                        Name = c.CourseName
+                    });
+                }
+                return Json(courseIdNameList, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(new
+                {
+                    Success = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
+
         //
         // GET: /Course/Create
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]

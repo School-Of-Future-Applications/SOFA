@@ -20,6 +20,12 @@ namespace SOFA.Models
         public const String TYPE_DROPDOWN = "DROPDOWN";
         public const String TYPE_INFO = "INFORMATION";
 
+        public readonly String[] TEXT_MULTI_OPTIONS = { FieldOption.OPT_MANDATORY };
+        public readonly String[] TEXT_SINGLE_OPTIONS = { FieldOption.OPT_MANDATORY, FieldOption.OPT_NUMERIC };
+        public readonly String[] FILE_OPTIONS = { FieldOption.OPT_MANDATORY };
+        public readonly String[] DATE_OPTIONS = { FieldOption.OPT_MANDATORY };
+        public readonly String[] DROPDOWN_OPTIONS = { FieldOption.OPT_MANDATORY, FieldOption.OPT_RESPONSE };
+
         public static List<String> FIELD_TYPES = new List<String>()
             {
                  TYPE_TEXT_MULTI

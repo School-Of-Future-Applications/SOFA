@@ -16,6 +16,9 @@ namespace SOFA.Models.Binders
             var originalSectionId = bindingContext.ValueProvider.GetValue("OriginalSectionId").AttemptedValue;
             if (originalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(StudentEnrolmentSectionViewModel));
+            else if (originalSectionId.Equals(PrefabSection.COURSE_SELECT))
+                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(CourseEnrolmentSectionViewModel));
+
             return base.BindModel(controllerContext, bindingContext);
         }
     }
