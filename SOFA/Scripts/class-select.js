@@ -67,9 +67,11 @@
         //Else submit as per normal
         if ($(".view-timetable").attr("clicked") == "true") {
             //Reset clicked attribute
+            
             $(".view-timetable").attr("clicked", "false");
             //Get the data, check if validated
             if ($(this).valid()) {
+                $(".view-timetable").button("loading");
                 var courseId = $(".course-select").val();
                 var yearLevel = $(".yearlevel-select").val();
                  //Get the view and put it in the div
@@ -78,6 +80,7 @@
                     { courseId: courseId, yearLevel: yearLevel },
                     function(data)
                     {
+                        $(".view-timetable").button("reset");
                         $("#timetable-display").html(data);
                     }
                 );

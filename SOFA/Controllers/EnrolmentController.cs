@@ -139,7 +139,7 @@ namespace SOFA.Controllers
             {
                 saveSuccessful = SaveStudentDetailsSection(esvm);
             }
-            else if (esvm.SectionId.Equals(PrefabSection.COURSE_SELECT))
+            else if (esvm.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
             {
                 saveSuccessful = SaveClassSelectSection(esvm);
             }
@@ -250,7 +250,33 @@ namespace SOFA.Controllers
 
         private bool SaveClassSelectSection(EnrolmentSectionViewModel esvm)
         {
-            return true;
+            CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+            try
+            {
+                var form = this.DBCon().EnrolmentForms.
+                                Single(f => f.EnrolmentFormId == cesvm.FormId);
+                var section = form.EnrolmentFormSections.
+                                Single(s => s.EnrolmentSection.Id == cesvm.SectionId)
+                                .EnrolmentSection;
+                var enrolledClass = this.DBCon().TimetabledClasses.
+                                Single(c => c.Id == cesvm.SelectedClassId);
+                form.Class = enrolledClass;
+                var field = section.EnrolmentFields.Single(ef => ef.OriginalFieldId == PrefabField.CLASS_SELECT);
+                var course = this.DBCon().Courses.Single(c => c.Id == cesvm.SelectedCourse);
+
+                field.Value = String.Format("{0} {1}", course.CourseName, enrolledClass.DisplayName);
+ 
+                //Save
+                this.DBCon().EnrolmentForms.Attach(form);
+                this.DBCon().Entry(form).State = EntityState.Modified;
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+            
         }
 
         private bool SavePreqSection(EnrolmentSectionViewModel esvm)

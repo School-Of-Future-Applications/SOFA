@@ -53,7 +53,7 @@
             @Html.DropDownListFor(m => m.SelectedYearLevel, Model.YearLevelSelect, "Select a Year Level", new { @class = "form-control yearlevel-select" })
         </div>
         <div class="col-xs-12  form-group" >
-            <input type="submit"  formtarget="_self" value="Show Timetable" class="view-timetable btn btn-default" formaction="/Enrolment/TimetableDisplay" />
+            <button type="submit" data-loading-text="Loading..." formtarget="_self" value="Show Timetable" class="view-timetable btn btn-default" formaction="/Enrolment/TimetableDisplay">Show Timetable</button>
         </div>
 
         <div id="timetable-display" class=" divider"></div>
