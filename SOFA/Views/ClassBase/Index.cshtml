@@ -33,5 +33,68 @@
 </div>
 
 <div class="row">
+    <h2 class="col-sm-6">
+        @Model.ClassBaseCode
+    </h2>
+</div>
 
+<div class="row">
+    <div class=" col-sm-12">
+        <table class="info-grid">
+            <tr>
+                <td align="right"><strong>Class Base Id:</strong></td>
+                <td>@Model.Id</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Class Base Code:</strong></td>
+                <td>@Model.ClassBaseCode</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Class Base Year level:</strong></td>
+                <td>@Model.YearLevel</td>
+            </tr>
+            <tr>
+                <td align="right"><strong>Timetabled Classes:</strong></td>
+                <td>@Model.TimetabledClasses.Count</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <h3 class="col-sm-6">
+        Timetabled Classes
+    </h3>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Display Name</th>
+                    <th>Line</th>
+                    <th>Capacity</th>
+                    <th>Teacher</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(TimetabledClass tc in Model.TimetabledClasses)
+                {
+                    <tr onclick="location.href='@Url.Action("TimetabledClass", "TimetabledClass"
+                                                           ,new { timetabledClassId = tc.Id })'">
+                        <td>@tc.Id</td>
+                        <td>@tc.DisplayName</td>
+                        <td>@tc.Line.Id - @tc.Line.Label</td>
+                        <td>@tc.Capacity</td>
+                        @if(tc.Teacher != null)
+                        {
+                            <td>@tc.Teacher.FullName()</td>   
+                        }
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -10,12 +10,21 @@ namespace SOFA.Models
 {
     public class EnrolmentForm : IValidatableObject
     {
+        public enum EnrolmentStatus
+        {
+             Pending = 1     /* New enrolment forms that have not been 100% filled out */
+            ,Completed = 2   /* Enrolment forms that have been 100% filled out */
+            ,Approved = 3    /* Enrolment forms that have been improved once completed */
+            ,Disapproved = 4 /* Enrolment forms that have been disapproved */
+        }
+
         public EnrolmentForm()
         {
             EnrolmentFormId = UUIDUtil.NewUUID();
             DateCreated = DateTime.Now;
             EnrolmentFormSections = new List<EnrolmentFormSection>();
             //Student = new Student();
+            Status = EnrolmentStatus.Pending;
             Class = new TimetabledClass();
         }
 
@@ -33,6 +42,9 @@ namespace SOFA.Models
         public DateTime DateCreated { get; set; }
 
         public virtual Student Student { get; set; }
+
+        [Required]
+        public EnrolmentStatus Status { get; set; }
 
         public virtual TimetabledClass Class { get; set; }
 
