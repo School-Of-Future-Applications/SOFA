@@ -28,6 +28,7 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
         [Display(Name = "Year Level")]
         public SelectList YearLevelSelect { get; set; }
 
+        [Required(ErrorMessage = "You must first select a class.")]
         public int SelectedClassId { get; set; }
                 
         public CourseEnrolmentSectionViewModel(): base()
