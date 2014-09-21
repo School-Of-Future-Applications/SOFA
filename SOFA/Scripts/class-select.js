@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
 
-
+ 
     $("#SelectedClassId").val("");
     
     //Select List handlers
