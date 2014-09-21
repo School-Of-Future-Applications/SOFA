@@ -57,7 +57,14 @@
                         @Html.DisplayFor(x => tc.Name)
                     </td>
                     <td class="text-right">
-                        <button type="button" id="@tc.Id" class="btn btn-primary class-select-btn">Select</button>
+                        @if (tc.full)
+                        {
+                            <p>Class Full</p>
+                        } else
+                        {
+                            <button type="button" id="@tc.Id" class="btn btn-primary class-select-btn">Select</button>
+                        }
+                        
                     </td>
                 </tr>
             }
