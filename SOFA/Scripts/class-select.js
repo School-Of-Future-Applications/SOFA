@@ -9,6 +9,8 @@
         $(".yearlevel-select").empty();
         $(".yearlevel-select").append("<option value>Select a Year Level</option>");
         if (deptId != "") {
+            $courseSelect.empty();
+            $courseSelect.append("<option value>Loading courses...</option>");
             //Get courses and append to course select
             $.ajax({
                 url : "/Course/CourseIndex_Json",
@@ -18,14 +20,15 @@
                 contentType: "application/json; charset=utf-8",
                 success :
                 function (data) {
-                    console.log(data);
-                    if (data.Success == null) {
-                        $courseSelect.empty();
+                    $courseSelect.empty();
+                    if (data.Success == null) {                        
                         $courseSelect.append("<option value>Select a Course</option>");
                         $.each(data, function (i, entry) {
                             $courseSelect.append("<option value=\"" + entry.Id + "\">" + entry.Name + "</option>");
                         });
-                    }    
+                    } else {
+                        $courseSelect.append("<option value>No courses available...</option>");
+                    }
                 }
             });
         } 
@@ -34,22 +37,31 @@
     $(".course-select").change(function () {
         var courseId = $(this).val();
         var $yearLevelSelect = $(".yearlevel-select");
-        $yearLevelSelect.empty();
-        $yearLevelSelect.append("<option value>Select a Year Level</option>");
+        
 
         if (courseId != "") {
+            $yearLevelSelect.empty();
+            $yearLevelSelect.append("<option value>Loading Year Levels...</option>");
             //Get year levels and append to select
             $.get(
                 "/ClassBase/ClassBaseYearLevels_JSON",
                 { courseId : courseId},
                 function (data) {
                     $yearLevelSelect.empty();
-                    $yearLevelSelect.append("<option value>Select a Year Level</option>");
-                    $.each(data, function (i, entry) {
-                        $yearLevelSelect.append("<option value=\"" + entry + "\">" + entry + "</option>");
+                    if (data["Success"] == false) {
+                        $yearLevelSelect.append("<option value>No classes available</option>");
+                    } else {                        
+                        $yearLevelSelect.append("<option value>Select a Year Level</option>");
+                        $.each(data, function (i, entry) {
+                            $yearLevelSelect.append("<option value=\"" + entry + "\">" + entry + "</option>");
                     });
+                    }
+                    
                 }
             );
+        } else {
+            $yearLevelSelect.empty();
+            $yearLevelSelect.append("<option value>Select a year level</option>");
         }
     });
 
