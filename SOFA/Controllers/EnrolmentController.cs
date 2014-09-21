@@ -69,23 +69,6 @@ namespace SOFA.Controllers
                                           formId = enrolForm.EnrolmentFormId });
         }
 
-        /* Thoms old Enrol method
-        [HttpGet]
-        public ActionResult Enrol(String enrolmentFormId, string enrolmentSectionId)
-        {
-            EnrolmentForm eForm = null;
-            try
-            {
-                eForm = this.DBCon().EnrolmentForms.Where(x => x.EnrolmentFormId == enrolmentFormId).First();
-            }
-            catch
-            {
-                return new HttpNotFoundResult();
-            }
-            return View(eForm);
-        }
-
-         */
 
         public ActionResult Enrol(string sectionId, string formId)
         {
@@ -134,23 +117,34 @@ namespace SOFA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
-            bool saveSuccessful;
             if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
             {
-                saveSuccessful = SaveStudentDetailsSection(esvm);
+                if (!SaveStudentDetailsSection(esvm))
+                {
+                    return View(esvm);
+                }
             }
             else if (esvm.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
             {
-                saveSuccessful = SaveClassSelectSection(esvm);
+                if (!SaveClassSelectSection(esvm))
+                {
+                    CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+                        List<Department> departments = this.DBCon().Departments.
+                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                        ToList();
+                    cesvm.DepartmentSelect = new SelectList(departments, "id", "DepartmentName");
+                    cesvm.CourseSelect = new SelectList(Enumerable.Empty<SelectListItem>());
+                    cesvm.YearLevelSelect = new SelectList(Enumerable.Empty<SelectListItem>());
+                    return View(cesvm);
+                }
             }
             else
             {
-                saveSuccessful = SaveEnrolmentSection(esvm);
+                if(!SaveEnrolmentSection(esvm))
+                {
+                    return View(esvm);
+                }
             }
-
-            //Save not successful - send model back to view
-            if (!saveSuccessful)
-                return View(esvm);
 
             //Get the next section id
             if (esvm.SectionNumber < esvm.TotalSections)
@@ -260,12 +254,20 @@ namespace SOFA.Controllers
                                 .EnrolmentSection;
                 var enrolledClass = this.DBCon().TimetabledClasses.
                                 Single(c => c.Id == cesvm.SelectedClassId);
+
+                //Check one last time if class is full
+                if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.ClassBaseID == enrolledClass.ClassBaseID).
+                        ToList().Count >= enrolledClass.Capacity)
+                {
+                    ModelState.AddModelError("SelectedClass", "The class is full, please choose another class");
+                    return false;
+                }
                 form.Class = enrolledClass;
                 var field = section.EnrolmentFields.Single(ef => ef.OriginalFieldId == PrefabField.CLASS_SELECT);
                 var course = this.DBCon().Courses.Single(c => c.Id == cesvm.SelectedCourse);
 
                 field.Value = String.Format("{0} {1}", course.CourseName, enrolledClass.DisplayName);
- 
+
                 //Save
                 this.DBCon().EnrolmentForms.Attach(form);
                 this.DBCon().Entry(form).State = EntityState.Modified;
