@@ -113,13 +113,21 @@
     });
 
     $(document).on("click", ".class-select-btn", function (e) {
-        var cid = $(this).attr("id");
-        $("#SelectedClassId").val(cid);
-        $(".class-select-btn").attr("class", "class-select-btn btn btn-primary");
-        $(".class-select-btn").text("Select");
-        $(this).attr("class", "class-select-btn btn btn-success");
-        $(this).text("Selected");
-        $("tr").attr("class", "");
-        $(this).closest("tr").attr("class", "success");
+        if ($(this).text() == "Select") {
+            var cid = $(this).attr("id");
+            $("#SelectedClassId").val(cid);
+            $(".class-select-btn").attr("class", "class-select-btn btn btn-primary");
+            $(".class-select-btn").text("Select");
+            $(this).attr("class", "class-select-btn btn btn-success");
+            $(this).text("Selected");
+            $("tr").attr("class", "");
+            $(this).closest("tr").attr("class", "success");
+        } else if ($(this).text() == "Selected") {
+            $("#SelectedClassId").val("");
+            $(this).text("Select");
+            $(this).attr("class", "class-select-btn btn btn-primary");
+            $(this).closest("tr").attr("class", "");
+        }
+        
     });
 });
