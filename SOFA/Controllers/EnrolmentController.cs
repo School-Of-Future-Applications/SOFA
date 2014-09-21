@@ -256,7 +256,7 @@ namespace SOFA.Controllers
                                 Single(c => c.Id == cesvm.SelectedClassId);
 
                 //Check one last time if class is full
-                if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.ClassBaseID == enrolledClass.ClassBaseID).
+                if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == enrolledClass.Id).
                         ToList().Count >= enrolledClass.Capacity)
                 {
                     ModelState.AddModelError("SelectedClass", "The class is full, please choose another class");
@@ -321,11 +321,19 @@ namespace SOFA.Controllers
                 var course = this.DBCon().Courses.Single(c => c.Id == courseId);
                 var classbases = course.ClassBases.Where(cb => cb.YearLevel == yearLevel);
                 var classes = classbases.Select(cb => cb.TimetabledClasses);    
+                
                 foreach (var tcList in classes)
                 {
                     foreach (var tc in tcList)
                     {
                         TimetabledClassDisplayModel timetableCDM = new TimetabledClassDisplayModel(tc);
+                        //Check if class full - if so set full flag
+                        if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == tc.Id).
+                        ToList().Count >= tc.Capacity)
+                        {
+                            timetableCDM.full = true;
+                        }
+
                         LineClassDisplayModel lcdm = lines.SingleOrDefault(m => m.LineDisplayName == tc.Line.Label);
                         if (lcdm == null)
                         {

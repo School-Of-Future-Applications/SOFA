@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
 
+
+    $("#SelectedClassId").val("");
+    
     //Select List handlers
     $(".department-select").change(function () {
         var deptId = $(this).val();
