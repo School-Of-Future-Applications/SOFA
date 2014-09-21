@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 
 namespace SOFA.Models.Validation
@@ -28,16 +29,26 @@ namespace SOFA.Models.Validation
             }
             
             //Test value against option types
-            var optionTypes = field.EnrollmentFieldOptions.Select(f => f.OptionType).ToList();
+            var optionTypes = field.EnrollmentFieldOptions.ToList();
             foreach (var ot in optionTypes)
             {
-                if (ot.Equals(FieldOption.OPT_MANDATORY) &&
+                if (ot.OptionType.Equals(FieldOption.OPT_MANDATORY) && 
+                    ot.OptionValue.Equals(FieldOption.VAL_TRUE) &&
                     !IsValidMandatory(field))
                 {
                     yield return new ValidationResult("Field is mandatory", new List<String>()
                         {
                             "Value"
                         });
+                }
+                if (ot.OptionType.Equals(FieldOption.OPT_NUMERIC) && 
+                    ot.OptionValue.Equals(FieldOption.VAL_TRUE) &&
+                    !IsValidNumeric(field))
+                {
+                    yield return new ValidationResult("Field must be a number", new List<string>()
+                    {
+                        "Value"
+                    });
                 }
 
             }
@@ -76,6 +87,10 @@ namespace SOFA.Models.Validation
             
         }
 
+        private static Boolean IsValidNumeric(EnrolmentField field)
+        {
+            return Regex.IsMatch(field.Value, @"^\d+$");
+        }
         //TODO IsValid for other option types
 
         #endregion
