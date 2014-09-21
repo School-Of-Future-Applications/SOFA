@@ -89,7 +89,7 @@ namespace SOFA.Models.Validation
 
         private static Boolean IsValidNumeric(EnrolmentField field)
         {
-            return Regex.IsMatch(field.Value, @"^\d+$");
+            return Regex.IsMatch(field.Value, @"^\d[\d.]+$");
         }
         //TODO IsValid for other option types
 
