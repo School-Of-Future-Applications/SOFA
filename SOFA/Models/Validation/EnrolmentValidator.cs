@@ -27,6 +27,11 @@ namespace SOFA.Models.Validation
                         "Value"
                     });
             }
+            if (field.FieldType.Equals(Field.TYPE_DROPDOWN) &&
+                !IsValidDropdown(field))
+            {
+                
+            }
             
             //Test value against option types
             var optionTypes = field.EnrollmentFieldOptions.ToList();
@@ -50,6 +55,7 @@ namespace SOFA.Models.Validation
                         "Value"
                     });
                 }
+                
 
             }
             yield break;
@@ -71,7 +77,14 @@ namespace SOFA.Models.Validation
             }
         }
 
+        private static Boolean IsValidDropdown(EnrolmentField field)
+        {
+            return true;
+        }
+
         #endregion
+
+        
 
         #region Option Validation
 
