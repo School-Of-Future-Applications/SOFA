@@ -30,7 +30,10 @@ namespace SOFA.Models.Validation
             if (field.FieldType.Equals(Field.TYPE_DROPDOWN) &&
                 !IsValidDropdown(field))
             {
-                
+                yield return new ValidationResult("Not a valid response", new List<String>()
+                    {
+                        "Value"
+                    });
             }
             
             //Test value against option types
@@ -79,7 +82,10 @@ namespace SOFA.Models.Validation
 
         private static Boolean IsValidDropdown(EnrolmentField field)
         {
-            return true;
+            var possibleResponses = field.EnrollmentFieldOptions.
+                                        Where(o => o.OptionType.Equals(FieldOption.OPT_RESPONSE)).
+                                        Select(o => o.OptionValue).ToList();
+            return possibleResponses.Contains(field.Value);
         }
 
         #endregion
