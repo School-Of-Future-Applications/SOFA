@@ -116,6 +116,7 @@ namespace SOFA.Migrations
                 Gods_Info.LastName = "Norris";
                 Gods_Info.Position = "Ass Kicker";
                 Gods_Info.Email = "chuck_norris@asskicking.com";
+                Gods_Info.PhoneNumber = "0400000000";
                 Gods_Info.User = God;
 
                 context.Persons.Add(Gods_Info);
@@ -155,6 +156,7 @@ namespace SOFA.Migrations
                 Client_Info.LastName = "Gough";
                 Client_Info.Position = "Client";
                 Client_Info.Email = "kgoug13@eq.edu.au";
+                Client_Info.PhoneNumber = "0400000000";
                 Client_Info.User = Client;
 
                 context.Persons.Add(Client_Info);
