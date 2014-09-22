@@ -58,6 +58,7 @@ namespace SOFA.Models
         [StringLength(25)]
         public String MobileNumber { get; set; }
 
+        [Required]
         [DisplayName("Phone")]
         [StringLength(25)]
         public String PhoneNumber { get; set; }
