@@ -196,7 +196,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -447,7 +446,7 @@
     <Content Include="Views\ClassBase\Index.cshtml" />
     <Content Include="Views\Shared\LineClassDisplayModel.cshtml" />
     <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
-
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
