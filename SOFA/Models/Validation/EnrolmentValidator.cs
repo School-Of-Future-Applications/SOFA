@@ -66,7 +66,7 @@ namespace SOFA.Models.Validation
 
         #region Data Type Validation
 
-        private static Boolean IsValidDate(EnrolmentField field)
+        public static Boolean IsValidDate(EnrolmentField field)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace SOFA.Models.Validation
             }
         }
 
-        private static Boolean IsValidDropdown(EnrolmentField field)
+        public static Boolean IsValidDropdown(EnrolmentField field)
         {
             var possibleResponses = field.EnrollmentFieldOptions.
                                         Where(o => o.OptionType.Equals(FieldOption.OPT_RESPONSE)).
@@ -94,19 +94,12 @@ namespace SOFA.Models.Validation
 
         #region Option Validation
 
-        private static Boolean IsValidMandatory(EnrolmentField field)
+        public static Boolean IsValidMandatory(EnrolmentField field)
         {
-            if (field.Value != null &&
-                field.Value.Trim().Count() > 0)
-            {
-                return true;
-            }
-
-            return false;
-            
+            return !String.IsNullOrWhiteSpace(field.Value);                      
         }
 
-        private static Boolean IsValidNumeric(EnrolmentField field)
+        public static Boolean IsValidNumeric(EnrolmentField field)
         {
             return Regex.IsMatch(field.Value, @"^\d[\d.]+$");
         }
