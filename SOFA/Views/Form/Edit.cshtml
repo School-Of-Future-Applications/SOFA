@@ -56,7 +56,7 @@
                     $dialog.dialog('open');
                 });
             });
-
+            /*
             var $removeDialog = $("#removeSectionDialog").dialog({
                 autoOpen: false,
                 width: 350,
@@ -92,7 +92,7 @@
                         $removeDialog.dialog("close");
                     }
                 }
-            });
+            }); */
 
             $(document).on("click", ".removeSectionLink", function (event) {
                 event.preventDefault();
@@ -192,7 +192,7 @@
     </div>
 }
 @Html.Partial("AddSectionToFormModal")
-
+@Html.Partial("DeleteConfirmationModal")
 
 <div id="removeSectionDialog">
     <p><span class="glyphicon glyphicon-warning-sign" > </span> Are you sure you want to remove this section from the form?</p>

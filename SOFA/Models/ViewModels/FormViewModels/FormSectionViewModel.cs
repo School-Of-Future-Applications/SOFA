@@ -7,6 +7,8 @@ namespace SOFA.Models.ViewModels.FormViewModels
 {
     public class FormSectionViewModel
     {
+        public string formId { get; set; }
+
         public SectionViewModel Section { get; set; }
 
         public SectionViewModel BelowOf { get; set; }
@@ -18,6 +20,7 @@ namespace SOFA.Models.ViewModels.FormViewModels
 
         public FormSectionViewModel(FormSection formsection) : this()
         {
+            formId = formsection.FormId;
             Section = new SectionViewModel(formsection.Section);
             BelowOf = new SectionViewModel(formsection.BelowOf);
         }
