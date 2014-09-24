@@ -7,6 +7,7 @@
 
     <script>
         $(document).ready(function () {
+            /*
             var $dialog = $("#addSectionDialog").dialog({
                 autoOpen: false,
                 width: 600,
@@ -48,7 +49,7 @@
                     }
                 }
             });
-
+            */
             $(".addSectionLink").on("click", function (event) {
                 event.preventDefault();
                 $dialog.load(this.href, function () {
@@ -169,7 +170,7 @@
     <div class="form-horizontal">
         <h4>@Html.DisplayFor(m => m.FormName)</h4>
         <hr />
-        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "addSectionLink pull-right" })
+        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "add-section-link pull-right" })
 
 
         @Html.ValidationSummary(true)
@@ -190,10 +191,8 @@
         
     </div>
 }
+@Html.Partial("AddSectionToFormModal")
 
-<div id="addSectionDialog">
-    @Html.Action("IndexPartial", "Section")
-</div>
 
 <div id="removeSectionDialog">
     <p><span class="glyphicon glyphicon-warning-sign" > </span> Are you sure you want to remove this section from the form?</p>

@@ -426,10 +426,8 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditFieldValidation.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
     <Content Include="Views\Shared\FieldOptionsSubView.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDate.cshtml" />
     <Content Include="Views\Department\PendingEnrolments.cshtml" />
@@ -447,7 +445,8 @@
     <Content Include="Views\Shared\LineClassDisplayModel.cshtml" />
     <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
-    <Content Include="Views\Section\AddSectionToFormModal.cshtml" />
+    <Content Include="Views\Shared\AddSectionToFormModal.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -19,24 +19,45 @@
 *@
 
 
-<div id="delete-modal" class="modal fade" role="dialog" aria-hidden="true">
+<div id="add-section-modal" class="modal fade" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content" id="delete-modal-content"></div>
+        <div class="modal-content" id="add-section-modal-content">
+            @Html.Action("IndexPartial", "Section")
+        </div>
     </div>
 </div>
 
 <script>
-    $(".delete-link").click(function (e) {
-        e.preventDefault();
-        $("#delete-modal-content").load(this.href, function () {
-            $("#delete-modal").modal({
+    $(document).ready(function() {
+        $(".add-section-link").click(function (e) {
+            e.preventDefault();
+            $("#add-section-modal").modal({
                 backdrop: 'static',
                 keyboard: true
             }, 'show');
             return false;
+        });
 
+        $(".add-submit").click(function() {
+            var SectionId = $("#SelectedSectionId").val();
+            var formid = $("#Id").val();
+            $.post(
+                "AddSection",
+                {
+                    SectionId: SectionId,
+                    FormId: formid
+                }, function (data) {
+                    if (data.Success === "True") {
+                        location.reload();
+                    }
+                });
+            location.reload();
         });
     });
+    
+    
+    
 
 
 </script>
+
