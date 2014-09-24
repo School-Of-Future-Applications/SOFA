@@ -447,6 +447,7 @@
     <Content Include="Views\Shared\LineClassDisplayModel.cshtml" />
     <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
+    <Content Include="Views\Section\AddSectionToFormModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
