@@ -32,8 +32,7 @@
                                             SectionId: SectionId
                                         },
                                         function (data) {
-                                            $accordion.append(data);
-                                            $accordion.accordion("refresh");
+                                            location.reload();
                                         }
                                     );
                                 } else {
@@ -81,10 +80,7 @@
                                 SectionId: $sectid
                             },
                             function (data) {
-                                if (data.Success === "True") {
-                                    $($activeDiv).remove();
-                                    $accordion.accordion("refresh");
-                                }
+                                location.reload();
 
                             }
                         );
