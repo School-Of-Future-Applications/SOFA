@@ -35,6 +35,8 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 
         public string Name { get; set; }
 
+        public bool full { get; set; }
+
         public TimetabledClassDisplayModel(TimetabledClass c)
         {
             Id = c.Id;

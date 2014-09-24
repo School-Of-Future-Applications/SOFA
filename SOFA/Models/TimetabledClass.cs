@@ -34,6 +34,7 @@ namespace SOFA.Models
         public virtual ClassBase ClassBase { get; set; }
         
         public int? ClassBaseID { get; set; }
+
         public virtual Line Line { get; set; }
 
         public Int32 Capacity { get; set; }
@@ -41,6 +42,7 @@ namespace SOFA.Models
         public virtual Person Teacher { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Display Name")]
         public String DisplayName { get; set; }
 
         public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }

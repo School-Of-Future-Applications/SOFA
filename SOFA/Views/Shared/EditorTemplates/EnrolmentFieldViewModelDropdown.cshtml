@@ -19,28 +19,28 @@
 *@
 
 @using SOFA.Models
-@using SOFA.Models.ViewModels.FormViewModels
+@using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model SOFA.Models.ViewModels.FormViewModels.FormSectionViewModel
-          
-<div class="accordion-div panel panel-primary">
-    @Html.HiddenFor(m => m.Section.Id, new { @class = "sectionId" })
-    
-    <h3 class="panel-heading">@Html.DisplayFor(m => m.Section.Name)</h3>
-    <div class="panel-body">
-        <div class="pull-right margin-bottom">
+@model EnrolmentFieldViewModel
 
-        @if(!Section.DEFAULT_SECTION_IDS.Contains(Model.Section.Id))
-        {
-            @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)   
-        }        
-        @Html.ActionLink("Remove", "RemoveSection", "Form", new { formId = Model.formId, sectionId = Model.Section.Id }, new { @class = "delete-link" })
-            
-        
-        </div>
-        <div>
-            @Html.DisplayFor(m => m.Section)
-        </div>
-    </div>
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+
+
+
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+
+<div class="col-xs-10">
+    @{
+        var responses = Model.EnrollmentFieldOptions.
+                            Where(fo => fo.OptionType.Equals(FieldOption.OPT_RESPONSE)).
+                            Select(fo => fo.OptionValue);
+        var dropdown = new SelectList(responses);
+    }
+    @Html.DropDownListFor(m => m.Value, dropdown, new { @class = "form-control col-xs-10" })
+    @Html.ValidationMessageFor(m => m.Value)
+
 
 </div>

@@ -196,7 +196,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -412,9 +411,6 @@
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
@@ -427,10 +423,8 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditFieldValidation.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
     <Content Include="Views\Shared\FieldOptionsSubView.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDate.cshtml" />
     <Content Include="Views\Department\PendingEnrolments.cshtml" />
@@ -447,7 +441,11 @@
     <Content Include="Views\ClassBase\Index.cshtml" />
     <Content Include="Views\Shared\LineClassDisplayModel.cshtml" />
     <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
-
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
+    <Content Include="Views\Shared\AddSectionToFormModal.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

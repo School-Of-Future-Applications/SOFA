@@ -54,8 +54,10 @@
         </div>
         <div class="col-xs-12  form-group" >
             <button type="submit" data-loading-text="Loading..." formtarget="_self" value="Show Timetable" class="view-timetable btn btn-default" formaction="/Enrolment/TimetableDisplay">Show Timetable</button>
+            @Html.ValidationMessage("SelectedClass", new { @class = "alert-danger" })
+            @Html.ValidationMessageFor(m => m.SelectedClassId)
         </div>
-
+        
         <div id="timetable-display" class=" divider"></div>
 
     </div>
