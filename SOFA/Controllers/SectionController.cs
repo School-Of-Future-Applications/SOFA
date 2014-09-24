@@ -251,7 +251,7 @@ namespace SOFA.Controllers
         public ActionResult IndexPartial()
         {
             var sections = this.DBCon().Sections.ToList();
-            return View(new SectionSelectViewModel(sections));
+            return PartialView(new SectionSelectViewModel(sections));
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]

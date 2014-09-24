@@ -34,7 +34,7 @@
         {
             @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)   
         }        
-        <a href="#" class="removeSectionLink">Remove</a>
+        @Html.ActionLink("Remove", "RemoveSection", "Form", new { formId = Model.formId, sectionId = Model.Section.Id }, new { @class = "delete-link" })
             
         
         </div>

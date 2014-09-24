@@ -7,101 +7,6 @@
 
     <script>
         $(document).ready(function () {
-            var $dialog = $("#addSectionDialog").dialog({
-                autoOpen: false,
-                width: 600,
-                modal: true,
-                resizeable: true,
-                title: "Add Section",
-                buttons: {
-                    "Add to form": function () {
-                        var SectionId = $("#SelectedSectionId").val();
-                        var formid = $("#Id").val();
-                        $.post(
-                            "AddSection",
-                            {
-                                SectionId: SectionId,
-                                FormId: formid
-                            },
-                            function (data) {
-                                if (data.Success === "True") {
-                                    $.get(
-                                        "FormSection",
-                                        {
-                                            FormId: formid,
-                                            SectionId: SectionId
-                                        },
-                                        function (data) {
-                                            $accordion.append(data);
-                                            $accordion.accordion("refresh");
-                                        }
-                                    );
-                                } else {
-                                    console.log(data.Message);
-                                }
-
-                            }
-                        );
-                        $dialog.dialog("close");
-                    },
-                    Cancel: function () {
-                        $dialog.dialog("close");
-                    }
-                }
-            });
-
-            $(".addSectionLink").on("click", function (event) {
-                event.preventDefault();
-                $dialog.load(this.href, function () {
-                    $dialog.dialog('open');
-                });
-            });
-
-            var $removeDialog = $("#removeSectionDialog").dialog({
-                autoOpen: false,
-                width: 350,
-                modal: true,
-                title: "Remove Section",
-                buttons: {
-                    "Remove": function () {
-                        var $accLength = $accordion.children("div").size();
-                        var $activeIndex = $accordion.accordion("option", "active");
-                        if ($accLength == 1 && $activeIndex == 1) {
-                            $activeIndex = 0;
-                        }
-                        var $activeDiv = $(".accordion-div").eq($activeIndex);
-                        var $sectid = $activeDiv.find(".sectionId").val();
-
-                        var $formid = $("#Id").val();
-                        console.log($sectid);
-                        $.post(
-                            "RemoveSection",
-                            {
-                                FormId: $formid,
-                                SectionId: $sectid
-                            },
-                            function (data) {
-                                if (data.Success === "True") {
-                                    $($activeDiv).remove();
-                                    $accordion.accordion("refresh");
-                                }
-
-                            }
-                        );
-                        $removeDialog.dialog("close");
-
-                    },
-                    Cancel: function () {
-                        $removeDialog.dialog("close");
-                    }
-                }
-            });
-
-            $(document).on("click", ".removeSectionLink", function (event) {
-                event.preventDefault();
-                $removeDialog.dialog('open');
-            });
-
             var prev_sect_update = new Array();
             var $accordion = $("#accordion").accordion(
                 {
@@ -173,7 +78,7 @@
     <div class="form-horizontal">
         <h4>@Html.DisplayFor(m => m.FormName)</h4>
         <hr />
-        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "addSectionLink pull-right" })
+        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "add-section-link btn btn-primary pull-right" })
 
 
         @Html.ValidationSummary(true)
@@ -194,11 +99,8 @@
         
     </div>
 }
-
-<div id="addSectionDialog"></div>
-<div id="removeSectionDialog">
-    <p><span class="glyphicon glyphicon-warning-sign" > </span> Are you sure you want to remove this section from the form?</p>
-</div>
+@Html.Partial("AddSectionToFormModal")
+@Html.Partial("DeleteConfirmationModal")
 
 <div>
     @Html.ActionLink("Back to List", "Index")
