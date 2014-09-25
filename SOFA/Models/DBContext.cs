@@ -75,6 +75,8 @@ namespace SOFA.Models
 
         public DbSet<EnrolmentFieldOption> EnrolmentFieldOptions { get; set; }
 
+        public DbSet<File> Files { get; set; }
+
         #endregion
 
         public static DBContext Create()
