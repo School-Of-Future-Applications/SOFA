@@ -22,6 +22,7 @@
 <div id="add-section-modal" class="modal fade" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" id="add-section-modal-content">
+            
             @Html.Action("IndexPartial", "Section")
         </div>
     </div>
@@ -38,7 +39,8 @@
             return false;
         });
 
-        $(".add-submit").click(function() {
+        $(".add-submit").click(function () {
+            $("#message").attr("class", "hidden");
             var SectionId = $("#SelectedSectionId").val();
             var formid = $("#Id").val();
             $.post(
@@ -49,6 +51,12 @@
                 }, function (data) {
                     if (data.Success === "True") {
                         location.reload();
+                    } else {
+                        $("#message").attr("class", "alert-danger");
+                        $("#message").text(data.Message);
+                        setTimeout(function () {
+                            $("#message").text("");
+                        }, 4000);
                     }
                 });
             
