@@ -49,7 +49,8 @@ namespace SOFATests
             };
             field.EnrollmentFieldOptions.Add(new EnrolmentFieldOption
                 {
-                    OptionType = FieldOption.OPT_MANDATORY
+                    OptionType = FieldOption.OPT_MANDATORY,
+                    OptionValue = FieldOption.VAL_TRUE
                 }
             );
             List<ValidationResult> results = EnrolmentValidator.ValidateField(field).ToList();
@@ -67,7 +68,8 @@ namespace SOFATests
             };
             field.EnrollmentFieldOptions.Add(new EnrolmentFieldOption
                 {
-                    OptionType = FieldOption.OPT_MANDATORY
+                    OptionType = FieldOption.OPT_MANDATORY,
+                    OptionValue = FieldOption.VAL_TRUE
                 }
             );
             var results = EnrolmentValidator.ValidateField(field).ToList();
@@ -77,6 +79,32 @@ namespace SOFATests
             field.Value = "    ";
             results = EnrolmentValidator.ValidateField(field).ToList();
             Assert.IsFalse(results[0] == ValidationResult.Success, "Field passed validation but shouldn't have.");
+        }
+
+        [TestMethod]
+        public void Valid_Numeric_Field_Test()
+        {
+            EnrolmentField field = new EnrolmentField()
+            {
+                FieldType = Field.TYPE_TEXT_SINGLE,
+                Value = "1234.56"
+            };
+
+            //Test
+            Assert.IsTrue(EnrolmentValidator.IsValidNumeric(field));
+        }
+
+        [TestMethod]
+        public void Invalid_Numeric_Field_Test()
+        {
+            EnrolmentField field = new EnrolmentField()
+            {
+                FieldType = Field.TYPE_TEXT_SINGLE,
+                Value = null
+            };
+
+            //Test
+            Assert.IsFalse(EnrolmentValidator.IsValidNumeric(field));
         }
     
     }
