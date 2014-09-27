@@ -236,13 +236,15 @@ namespace SOFA.Controllers
             {
                 if (!Section.DEFAULT_SECTION_IDS.Contains(id))
                 {
-                    sec = this.DBCon().Sections.Where(x => x.Id == id).First();
+                    sec = this.DBCon().Sections.Single(x => x.Id == id);
+                    this.DBCon().Sections.Remove(sec);
                     this.DBCon().Entry(sec).State = EntityState.Deleted;
                     this.DBCon().SaveChanges();
                 }
             }
-            catch
+            catch (Exception)
             {
+                return null; //Temporary
             }
             return RedirectToAction("Index");
         }

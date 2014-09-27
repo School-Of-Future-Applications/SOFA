@@ -30,7 +30,7 @@ namespace SOFA.Models
 {
     public class DBContext : IdentityDbContext<SOFAUser>
     {
-        public DBContext() : base("DefaultConnection")
+        public DBContext() : base("DefaultConnection",throwIfV1Schema:false)
         { }
 
         public DbSet<Department> Departments { get; set; }
@@ -74,6 +74,8 @@ namespace SOFA.Models
         public DbSet<EnrolmentField> EnrolmentFields { get; set; }
 
         public DbSet<EnrolmentFieldOption> EnrolmentFieldOptions { get; set; }
+
+        public DbSet<File> Files { get; set; }
 
         #endregion
 
