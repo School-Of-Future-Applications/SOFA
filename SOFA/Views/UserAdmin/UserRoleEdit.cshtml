@@ -40,10 +40,11 @@
     <div class="form-group">
         @Html.LabelFor(model => model.AvailableRoles, "New Role"
                       ,new { @class = "col-sm-3" })
-        <div class="col-sm-9">
+        <div class="col-sm-3">
             @Html.DropDownListFor(model => model.SelectedRoleId
-                                 ,new SelectList(Model.AvailableRoles, "Id"
-                                                ,"Name", Model.CurrentRoleId))
+                                 , new SelectList(Model.AvailableRoles, "Id"
+                                                , "Name", Model.CurrentRoleId),
+                                                new { @class = "form-control" })
         </div>
     </div>
     
