@@ -246,12 +246,12 @@ namespace SOFA.Controllers
                 form.updateModified();
                 this.DBCon().Forms.Attach(form);
                 this.DBCon().Entry(form).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().Entry(removeFormSection).State = EntityState.Deleted;
                 this.DBCon().SaveChanges();
                 
             }
             catch
             {
-
             }
 
             return RedirectToAction("Edit", new { formId = FormId });
