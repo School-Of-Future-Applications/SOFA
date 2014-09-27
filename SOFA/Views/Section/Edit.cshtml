@@ -82,13 +82,37 @@
                     //ui.item.append(ui.item.data("type"));
                     ui.item.html("");
                     ui.item.append("<div class='panel-heading' style='cursor: pointer;'><center>" + ui.item.data("type") + "</center></div>");
-                    ui.item.append("<div class='panel-body'></div>");
+                    ui.item.append("<div class='panel-body'><center><span class='editOptions'><a href='#'>Edit Options</a></span></center><div id='fieldOptions'></div>");
                     ui.item.append("<hr>")
                     ui.item.append("<div class='panel-body'><span style='float:left;width:10%'>Prompt:</span><span id='promptValue'></span>\
                                     <span style='float:right;width:10%'><span class='editPrompt'><a href='#'>Edit Prompt</a></span></span></div>");
                     $(".editPrompt").on("click", function () {
                         $(this).parent().parent().parent().addClass("givingPrompt");
                         $("#promptmodal").modal("show");
+                    });
+                    $(".editOptions").on("click", function () {
+                        var post = $(this).parent().parent().parent().attr("id");
+                        $.ajax({
+                            type: "POST",
+                            url: "/Section/GetFieldOptionsForId",
+                            data: { "id": post },
+                            dataType: "html",
+                            traditional: true,
+                            success: function (data) {
+                                //alert(data);
+                                $("#optioncontent").html(data);
+                            },
+                            error: function (request, status, error) {
+                                alert(error);
+                            }
+                        }).done(function (msg) {
+                            //alert(msg);
+                            //$(this).find(".optioncontent").html(msg);
+
+                        });
+                        $(this).find(".optioncontent").html();
+                        $(this).parent().parent().parent().addClass("givingOptions");
+                        $("#optionmodal").modal("show");
                     });
                     $("#promptmodal").modal("show");
                 }
@@ -155,7 +179,7 @@
                 dataType: "json",
                 traditional: true,
             }).done(function (msg) {
-                
+
                 $.ajax({
                     type: "POST",
                     url: "/Section/FieldOptionsSubView",
@@ -176,7 +200,7 @@
                     //$(this).find(".optioncontent").html(msg);
 
                 });
-                
+
             });
             //print(saveoption);
         });
@@ -240,37 +264,37 @@
         <li class="active">Edit</li>
     </ol>
     <h2>Edit Section</h2>
-   
+
 </div>
 <div class="panel panel-primary" style="float:left;width:80%">
     <div class="panel-heading">@Model.Section.Name</div>
     <div id="sortablebodymain" class="panel-body">
         @foreach (Field f in Model.OrderedFields)
-{
-    <div class="sdelement panel panel-primary" id=@f.Id>
-        <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
-        <div class="panel-body">
-            <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
-            <div id="fieldOptions">
-                @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
-                {
-                    <span style="float:left;width:10%">@fo.OptionType</span>
-                    <span style="float:right;width:10%">@fo.OptionValue</span>
-                    <br />
-                }
-            </div>
-        </div>
-        <hr />
-        <div class="panel-body">
-            <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
-            <span style="float:right;width:10%"><span class="editPrompt"><a href="#">Edit Prompt</a></span></span>
-            <script typeof="text/javascript">
+        {
+            <div class="sdelement panel panel-primary" id=@f.Id>
+                <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
+                <div class="panel-body">
+                    <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
+                    <div id="fieldOptions">
+                        @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
+                        {
+                            <span style="float:left;width:10%">@fo.OptionType</span>
+                            <span style="float:right;width:10%">@fo.OptionValue</span>
+                            <br />
+                        }
+                    </div>
+                </div>
+                <hr />
+                <div class="panel-body">
+                    <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
+                    <span style="float:right;width:10%"><span class="editPrompt"><a href="#">Edit Prompt</a></span></span>
+                    <script typeof="text/javascript">
                 $('#@f.Id').data("prompt", "@f.PromptValue");
                 $('#@f.Id').data("type", "@f.FieldType");
-            </script>
-        </div>
-    </div>
-}
+                    </script>
+                </div>
+            </div>
+        }
     </div>
 </div>
 <style>
@@ -282,10 +306,11 @@
         margin-bottom: -1px;
         cursor: pointer;
     }
-    .delement img {
-        height: 16px;
-        width: 16px;
-    }
+
+        .delement img {
+            height: 16px;
+            width: 16px;
+        }
 </style>
 <div id="designer" style="float:right;width:18%;text-align:left">
     <div class="delement" id="TEXT_MULTI"><img src="~/Content/images/text.png" /> Multi Line Text<span class="elType" style="display:none">TEXT_MULTI</span></div>

@@ -72,6 +72,9 @@
             @Html.Partial("~/Views/Shared/EditorTemplates/EnrolmentFieldViewModelDropdown.cshtml", Model) 
             break;        
            
+        case Field.TYPE_FILE:
+            @Html.Partial("~/Views/Shared/EditorTemplates/FileViewModel.cshtml", Model) 
+            break;
         default:
             <div class="col-xs-12">
                 Not Implemented
