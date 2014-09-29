@@ -48,13 +48,18 @@
     </div>
     
     <div class="modal-footer">
-        <button class="btn btn-danger"  type="submit">
-            <span class="glyphicon glyphicon-trash"></span> Delete
-        </button>
+
+                <button class="btn btn-danger" @if (Model.DeleteInvalid) 
+                                               { @:disabled 
+                                               } >             
+                        
+      
+                        <span class="glyphicon glyphicon-trash"></span> Delete
+                    </button>
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
                             
     </div>
 
-    
+}    
 
-}
+

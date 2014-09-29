@@ -27,7 +27,7 @@ namespace SOFA.Controllers
         {
             SectionEditViewModel sevm = new SectionEditViewModel();
             sevm.Section = this.DBCon().Sections.Where(s => s.Id == sectionID).FirstOrDefault();
-            var ofids = this.DBCon().SectionFieldOrders.Where(sfo => sfo.Section.Id == sevm.Section.Id).OrderBy(sfo => sfo.Order).Select(x => x.Field.Id).ToList();
+            var ofids = this.DBCon().SectionFieldOrders.Where(sfo => sfo.Field.Section.Id == sectionID).OrderBy(sfo => sfo.Order).Select(x => x.Field.Id).ToList();
             sevm.OrderedFields = new List<Field>();
             foreach(string id in ofids)
             {
@@ -140,7 +140,7 @@ namespace SOFA.Controllers
                     usfo = new SectionFieldOrder();
                     usfo.FieldID = fid;
                     usfo.Order = i;
-                    usfo.SectionID = this.DBCon().Fields.Where(f => f.Id == fid).FirstOrDefault().Section.Id;
+                    //usfo.SectionID = this.DBCon().Fields.Where(f => f.Id == fid).FirstOrDefault().Section.Id;
                     this.DBCon().SectionFieldOrders.Add(usfo);
                 }
                 this.DBCon().SaveChanges();
@@ -217,11 +217,21 @@ namespace SOFA.Controllers
             DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
             {
                 DeleteAction = "Delete",
-                DeleteController = "Section",
-                HeaderText = "Confirm Section Deletion",
-                ConfirmationText = "Are you sure you wish to delete this Section?"
+                DeleteController = "Section"                
             };
             dcvm.RouteValues.Add("id", id);
+            if (this.DBCon().FormSections.Where(fs => fs.SectionId == id).
+                            Count() > 0)
+            {
+                dcvm.DeleteInvalid = true;
+                dcvm.HeaderText = "Cannot delete section";
+                dcvm.ConfirmationText = "You cannot delete a section that is still attached to a form";
+            }
+            else
+            {
+                dcvm.HeaderText = "Confirm section deletion";
+                dcvm.ConfirmationText = "Are you sure you want to delete this section?";
+            }
 
             return PartialView("DeleteConfirmationViewModel", dcvm); 
         }
@@ -236,15 +246,20 @@ namespace SOFA.Controllers
             {
                 if (!Section.DEFAULT_SECTION_IDS.Contains(id))
                 {
-                    sec = this.DBCon().Sections.Single(x => x.Id == id);
-                    this.DBCon().Sections.Remove(sec);
-                    this.DBCon().Entry(sec).State = EntityState.Deleted;
-                    this.DBCon().SaveChanges();
+                    //Check if section not present on form
+                    if (this.DBCon().FormSections.Where(fs => fs.SectionId == id).
+                            Count() == 0)
+                    {
+                            sec = this.DBCon().Sections.Single(x => x.Id == id);
+                            this.DBCon().Sections.Remove(sec);
+                            this.DBCon().Entry(sec).State = EntityState.Deleted;
+                            this.DBCon().SaveChanges();
+                    }
+                    
                 }
             }
             catch (Exception)
             {
-                return null; //Temporary
             }
             return RedirectToAction("Index");
         }

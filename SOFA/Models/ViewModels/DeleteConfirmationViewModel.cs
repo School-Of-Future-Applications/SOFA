@@ -64,6 +64,8 @@ namespace SOFA.Models.ViewModels
         //The confirmation message displayed 
         public string ConfirmationText { get; set; }
 
+        //Is the delete operation invalid?
+        public bool DeleteInvalid { get; set; }
 
         public DeleteConfirmationViewModel()
         {
