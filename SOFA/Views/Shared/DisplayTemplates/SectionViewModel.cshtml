@@ -23,11 +23,11 @@
 @model SOFA.Models.ViewModels.FormViewModels.SectionViewModel
 
 <div class="">
-    @foreach(FieldViewModel field in Model.Fields)
+    @foreach(var field in Model.Fields)
         {
         <div class="row">
             <div class="col-xs-12 margin-bottom">                
-                @Html.DisplayFor(m => field)
+                @Html.EditorFor(m => field)
             </div>
         </div>
         }
