@@ -56,6 +56,22 @@
         @Html.LabelFor(model => model.PromptValue, Model.PromptValue
                              , new { @class = "col-xs-12 control-label" })
             break;
+        
+        case Field.TYPE_DROPDOWN:
+        @Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+
+        <div class="col-xs-10">
+            @{
+                var responses = Model.FieldOptions.
+                                    Where(fo => fo.OptionType.Equals(FieldOption.OPT_RESPONSE)).
+                                    Select(fo => fo.OptionValue);
+                var dropdown = new SelectList(responses);
+            }
+            @Html.DropDownListFor(m => m.Value, dropdown, new { @class = "form-control col-xs-10" })
+            @Html.ValidationMessageFor(m => m.Value)
+        </div>
+            break;
 
         default:
         <div class="col-xs-12">
