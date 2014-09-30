@@ -53,15 +53,16 @@
 </head>
 <body>
     <div class="container">
-        @foreach (var section in Model.Sections)
-        {
-            <div class="row">
-                <div class="col-md-8 col-md-offset-2">
-                    @Html.EditorFor(m => section)
+        <div class="form-horizontal section-form" >
+            @foreach (var section in Model.Sections)
+            {
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2">
+                        @Html.EditorFor(m => section)
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
-
 </body>
 </html>
