@@ -172,7 +172,7 @@ namespace SOFA.Controllers
             else
             {
                 //TODO Form Completion
-                return new HttpNotFoundResult();
+                return RedirectToAction("EnrolmentReview", new { formId = esvm.FormId });
             }
             
         }
@@ -310,6 +310,34 @@ namespace SOFA.Controllers
         public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm)
         {
             return PartialView("EnrolmentForm", enrolmentForm);
+        }
+
+        [HttpGet]
+        public ActionResult EnrolmentReview(string formId)
+        {
+            try
+            {
+                var form = this.DBCon().EnrolmentForms.
+                                Single(f => f.EnrolmentFormId == formId);
+                var sections = form.EnrolmentFormSections.
+                                Select(fs => fs.EnrolmentSection);
+                //Convert to view models
+                var sectionViewModels = new List<EnrolmentSectionViewModel>();
+                foreach (var s in sections)
+                {
+                    sectionViewModels.Add(new EnrolmentSectionViewModel(s));
+                }
+                var enrolmentReviewModel = new EnrolmentReviewViewModel()
+                {
+                    Sections = sectionViewModels
+                };
+
+                return View(enrolmentReviewModel);
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
         }
 
         [HttpGet]

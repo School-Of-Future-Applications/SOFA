@@ -343,6 +343,7 @@
     <Compile Include="Models\ViewModels\EnrolmentViewModels\ClassSelectViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\CourseEnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentFieldViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentReviewViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\StudentEnrolmentSectionViewModel.cs" />
@@ -453,6 +454,7 @@
     <Content Include="Views\Shared\EditorTemplates\FileViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FieldViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
+    <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
