@@ -7,6 +7,6 @@ namespace SOFA.Models.ViewModels.EnrolmentViewModels
 {
     public class EnrolmentReviewViewModel
     {
-        public List<EnrolmentSectionViewModel> Sections { get; set; }
+        public List<EnrolmentSection> Sections { get; set; }
     }
 }

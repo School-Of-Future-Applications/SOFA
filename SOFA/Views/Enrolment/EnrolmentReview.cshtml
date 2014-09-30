@@ -52,13 +52,19 @@
     <title>SOFA Enrolment</title>
 </head>
 <body>
+
     <div class="container">
+        <div class="text-center">
+            <h1 class="text-center">Enrolment Complete!</h1>
+            <p>Print a copy of this form using your browser's print button.</p>
+        </div>
+        
         <div class="form-horizontal section-form" >
             @foreach (var section in Model.Sections)
             {
                 <div class="row">
                     <div class="col-md-8 col-md-offset-2">
-                        @Html.EditorFor(m => section)
+                        @Html.DisplayFor(m => section)
                     </div>
                 </div>
             }

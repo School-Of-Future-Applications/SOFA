@@ -452,8 +452,6 @@
     <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\FileViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FieldViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FieldViewModelDate.cshtml" />
     <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

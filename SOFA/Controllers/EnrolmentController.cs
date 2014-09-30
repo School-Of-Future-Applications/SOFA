@@ -322,14 +322,10 @@ namespace SOFA.Controllers
                 var sections = form.EnrolmentFormSections.
                                 Select(fs => fs.EnrolmentSection);
                 //Convert to view models
-                var sectionViewModels = new List<EnrolmentSectionViewModel>();
-                foreach (var s in sections)
-                {
-                    sectionViewModels.Add(new EnrolmentSectionViewModel(s));
-                }
+                
                 var enrolmentReviewModel = new EnrolmentReviewViewModel()
                 {
-                    Sections = sectionViewModels
+                    Sections = sections.ToList()
                 };
 
                 return View(enrolmentReviewModel);
