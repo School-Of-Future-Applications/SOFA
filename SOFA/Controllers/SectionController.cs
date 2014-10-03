@@ -251,6 +251,13 @@ namespace SOFA.Controllers
                             Count() == 0)
                     {
                             sec = this.DBCon().Sections.Single(x => x.Id == id);
+                            foreach(Field f in sec.Fields)
+                            {
+                                SectionFieldOrder sfo = this.DBCon().SectionFieldOrders.Where(y => y.FieldID == f.Id).FirstOrDefault();
+                                if(sfo != null)
+                                    this.DBCon().SectionFieldOrders.Remove(sfo);
+
+                            }
                             this.DBCon().Sections.Remove(sec);
                             this.DBCon().Entry(sec).State = EntityState.Deleted;
                             this.DBCon().SaveChanges();
@@ -258,8 +265,9 @@ namespace SOFA.Controllers
                     
                 }
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                
             }
             return RedirectToAction("Index");
         }
