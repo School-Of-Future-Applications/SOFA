@@ -60,6 +60,7 @@ namespace SOFA.Controllers
                 {
                     person.User.Active = active;
                     person.User.EmailConfirmed = false;
+                    this.UserManager().UpdateSecurityStamp(person.User.Id);
                     result = this.UserManager().Update(person.User);
                     if (!result.Succeeded)
                         throw new InvalidOperationException();
@@ -81,6 +82,7 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        
         public ActionResult NewUser(Person p)
         {
             SOFAUser newUser = null;

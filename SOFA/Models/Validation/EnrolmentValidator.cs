@@ -85,7 +85,12 @@ namespace SOFA.Models.Validation
             var possibleResponses = field.EnrollmentFieldOptions.
                                         Where(o => o.OptionType.Equals(FieldOption.OPT_RESPONSE)).
                                         Select(o => o.OptionValue).ToList();
-            return possibleResponses.Contains(field.Value);
+            List<String> trimmedPossResponses = new List<string>();
+            foreach (var res in possibleResponses)
+            {
+                trimmedPossResponses.Add(res.Trim());
+            }
+            return trimmedPossResponses.Contains(field.Value.Trim());
         }
 
         #endregion
