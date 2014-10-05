@@ -85,6 +85,9 @@ namespace SOFA.Models.Validation
             var possibleResponses = field.EnrollmentFieldOptions.
                                         Where(o => o.OptionType.Equals(FieldOption.OPT_RESPONSE)).
                                         Select(o => o.OptionValue).ToList();
+            if (possibleResponses.Count == 0 && String.IsNullOrWhiteSpace(field.Value))
+                return true; //No responses set by staff
+                
             List<String> trimmedPossResponses = new List<string>();
             foreach (var res in possibleResponses)
             {

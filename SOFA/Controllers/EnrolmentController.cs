@@ -390,7 +390,7 @@ namespace SOFA.Controllers
             {
                 var form = this.DBCon().EnrolmentForms.
                                 Single(f => f.EnrolmentFormId == formId);
-                var sections = form.EnrolmentFormSections.
+                var sections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                 Select(fs => fs.EnrolmentSection);
                 //Convert to view models
                 
