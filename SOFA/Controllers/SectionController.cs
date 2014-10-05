@@ -220,6 +220,8 @@ namespace SOFA.Controllers
                 DeleteController = "Section"                
             };
             dcvm.RouteValues.Add("id", id);
+
+            //Check if section is on form
             if (this.DBCon().FormSections.Where(fs => fs.SectionId == id).
                             Count() > 0)
             {

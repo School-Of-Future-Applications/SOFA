@@ -81,6 +81,12 @@ namespace SOFA.Controllers
                 EnrolmentFormSection formSection = form.EnrolmentFormSections
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
+                //Order fields
+                var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
+                var sectionFOs = this.DBCon().SectionFieldOrders.
+                                Where(sfo => origfieldIds.Contains(sfo.FieldID));
+                var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
+                section.EnrolmentFields = orderedFields.ToList();
                 if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
