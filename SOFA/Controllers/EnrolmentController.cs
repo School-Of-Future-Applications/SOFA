@@ -137,6 +137,17 @@ namespace SOFA.Controllers
                     cesvm.YearLevelSelect = new SelectList(Enumerable.Empty<SelectListItem>());
                     return View(cesvm);
                 }
+                else
+                {
+                    //Check for prereqs
+                    CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+                    var selectedClassabase = this.DBCon().TimetabledClasses.
+                                                Single(tc => tc.Id == cesvm.SelectedClassId).ClassBase;
+                    if (selectedClassabase.PreRequisites.Count > 0)
+                    {
+                        return RedirectToAction("RequestPrequisite", new { formId = cesvm.FormId });
+                    }
+                }
             }
             else
             {
@@ -271,7 +282,7 @@ namespace SOFA.Controllers
                 //Save
                 this.DBCon().EnrolmentForms.Attach(form);
                 this.DBCon().Entry(form).State = EntityState.Modified;
-
+                this.DBCon().SaveChanges();
                 return true;
             }
             catch
@@ -286,6 +297,66 @@ namespace SOFA.Controllers
             return true;
         }
 
+        [HttpGet]
+        public ActionResult RequestPrequisite(string formId)
+        {
+            try
+            {
+
+            
+                //Get class 
+                var form = this.DBCon().EnrolmentForms.
+                                        Single(ef => ef.EnrolmentFormId == formId);
+                ClassBase cb = form.Class.ClassBase;
+                //Double check pre-req is needed
+                if (cb == null || cb.PreRequisites.Count == 0)
+                    throw new ArgumentOutOfRangeException("No prequisite for this class");
+                //Get the needed prereq sections for the class
+                List<EnrolmentSection> prereqs = new List<EnrolmentSection>();
+                foreach (Section pr in cb.PreRequisites)
+                {
+                    prereqs.Add(new EnrolmentSection(pr));
+                }
+                // Get the class select section and its index 
+                var classSelectSection = form.EnrolmentFormSections.
+                                            Single(ef => ef.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT).
+                                            EnrolmentSection;
+                //Insert each pre-reqsection into form under class select section
+                List<EnrolmentFormSection> efSections = new List<EnrolmentFormSection>();
+                for (int i = 0; i < prereqs.Count; i++)
+                {
+                    EnrolmentFormSection efs = new EnrolmentFormSection()
+                    {
+                        EnrolmentSection = prereqs.ElementAt(i)
+                    };
+                    if (i == 0)
+                        efs.BelowOf = classSelectSection;
+                    else
+                        efs.BelowOf = prereqs.ElementAt(i - 1);
+                    efSections.Add(efs);
+                }
+                var formSections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).ToList();
+                int insertIndex = formSections.IndexOf(formSections.
+                                        Single(efs => efs.EnrolmentSection == classSelectSection)) + 1;
+                formSections.InsertRange(insertIndex, efSections);
+                var nextSectionAfterInsert = formSections.SingleOrDefault(efs => efs.BelowOf == classSelectSection);
+                if (nextSectionAfterInsert != null)
+                    nextSectionAfterInsert.BelowOf = prereqs.ElementAt(prereqs.Count - 1);
+                //Redirect back to enrolment
+                form.EnrolmentFormSections = formSections;
+                this.DBCon().Entry(form).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                return RedirectToAction("Enrol", new { sectionId = prereqs[0].Id, formId = formId });
+            }
+            catch 
+            {
+                return new HttpNotFoundResult("No pre-requisite found for this class");
+            }
+            
+        }
+        
+        
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EnrolmentFormId(string enrolmentFormId)

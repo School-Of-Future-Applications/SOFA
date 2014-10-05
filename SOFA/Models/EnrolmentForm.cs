@@ -5,6 +5,8 @@ using System.Web;
 using System.ComponentModel.DataAnnotations;
 
 using SOFA.Infrastructure;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace SOFA.Models
 {
@@ -23,9 +25,7 @@ namespace SOFA.Models
             EnrolmentFormId = UUIDUtil.NewUUID();
             DateCreated = DateTime.Now;
             EnrolmentFormSections = new List<EnrolmentFormSection>();
-            //Student = new Student();
             Status = EnrolmentStatus.Pending;
-            Class = new TimetabledClass();
         }
 
         public EnrolmentForm(Form form)
@@ -45,6 +45,7 @@ namespace SOFA.Models
 
         [Required]
         public EnrolmentStatus Status { get; set; }
+
 
         public virtual TimetabledClass Class { get; set; }
 
