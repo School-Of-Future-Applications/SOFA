@@ -315,7 +315,9 @@ namespace SOFA.Controllers
                 List<EnrolmentSection> prereqs = new List<EnrolmentSection>();
                 foreach (Section pr in cb.PreRequisites)
                 {
-                    prereqs.Add(new EnrolmentSection(pr));
+                    if (form.EnrolmentFormSections.SingleOrDefault(ef => ef.EnrolmentSection.OriginalSectionId == pr.Id)
+                            == null)
+                        prereqs.Add(new EnrolmentSection(pr));
                 }
                 // Get the class select section and its index 
                 var classSelectSection = form.EnrolmentFormSections.
@@ -347,7 +349,8 @@ namespace SOFA.Controllers
                 this.DBCon().Entry(form).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
 
-                return RedirectToAction("Enrol", new { sectionId = prereqs[0].Id, formId = formId });
+                return RedirectToAction("Enrol", new { sectionId = formSections[insertIndex].EnrolmentSection.Id, 
+                                            formId = formId });
             }
             catch 
             {
