@@ -32,6 +32,7 @@ using SOFA.Models;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
 using SOFA.Models.Prefab;
 
+
 namespace SOFA.Controllers
 {
     public class EnrolmentController : HttpsBaseController
@@ -82,11 +83,20 @@ namespace SOFA.Controllers
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
                 //Order fields
-                var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
-                var sectionFOs = this.DBCon().SectionFieldOrders.
+                
+                try
+                {
+                    var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
+                    var sectionFOs = this.DBCon().SectionFieldOrders.
                                 Where(sfo => origfieldIds.Contains(sfo.FieldID));
-                var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
-                section.EnrolmentFields = orderedFields.ToList();
+                    var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
+                    section.EnrolmentFields = orderedFields.ToList();
+                }
+                catch
+                {
+
+                }
+                
                 if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
@@ -318,44 +328,23 @@ namespace SOFA.Controllers
                 if (cb == null || cb.PreRequisites.Count == 0)
                     throw new ArgumentOutOfRangeException("No prequisite for this class");
                 //Get the needed prereq sections for the class
-                List<EnrolmentSection> prereqs = new List<EnrolmentSection>();
-                foreach (Section pr in cb.PreRequisites)
-                {
-                    if (form.EnrolmentFormSections.SingleOrDefault(ef => ef.EnrolmentSection.OriginalSectionId == pr.Id)
-                            == null)
-                        prereqs.Add(new EnrolmentSection(pr));
-                }
-                // Get the class select section and its index 
-                var classSelectSection = form.EnrolmentFormSections.
-                                            Single(ef => ef.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT).
-                                            EnrolmentSection;
-                //Insert each pre-reqsection into form under class select section
-                List<EnrolmentFormSection> efSections = new List<EnrolmentFormSection>();
-                for (int i = 0; i < prereqs.Count; i++)
-                {
-                    EnrolmentFormSection efs = new EnrolmentFormSection()
-                    {
-                        EnrolmentSection = prereqs.ElementAt(i)
-                    };
-                    if (i == 0)
-                        efs.BelowOf = classSelectSection;
-                    else
-                        efs.BelowOf = prereqs.ElementAt(i - 1);
-                    efSections.Add(efs);
-                }
-                var formSections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).ToList();
-                int insertIndex = formSections.IndexOf(formSections.
-                                        Single(efs => efs.EnrolmentSection == classSelectSection)) + 1;
-                formSections.InsertRange(insertIndex, efSections);
-                var nextSectionAfterInsert = formSections.SingleOrDefault(efs => efs.BelowOf == classSelectSection);
-                if (nextSectionAfterInsert != null)
-                    nextSectionAfterInsert.BelowOf = prereqs.ElementAt(prereqs.Count - 1);
+                var formSections = form.EnrolmentFormSections.ToList();
+                PrereqUtil preReqUtil = new PrereqUtil(this.DBCon());
+
+
+                formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
+
                 //Redirect back to enrolment
                 form.EnrolmentFormSections = formSections;
                 this.DBCon().Entry(form).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
 
-                return RedirectToAction("Enrol", new { sectionId = formSections[insertIndex].EnrolmentSection.Id, 
+                //Get the next section
+                var previousFormSection = formSections.First(efs => efs.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT);
+                int index = formSections.IndexOf(previousFormSection);
+                if (index == formSections.Count - 1)
+                    throw new ArgumentOutOfRangeException();
+                return RedirectToAction("Enrol", new { sectionId = formSections[index + 1].EnrolmentSection.Id, 
                                             formId = formId });
             }
             catch 
@@ -366,6 +355,7 @@ namespace SOFA.Controllers
         }
         
         
+
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EnrolmentFormId(string enrolmentFormId)
