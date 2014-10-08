@@ -29,7 +29,7 @@
             <span class="glyphicon glyphicon-plus"></span>
             Add Existing
         </a>
-        <a class="pull-right btn btn-success btn-labeled addSection" href="#">
+        <a class="pull-right btn btn-success btn-labeled createPrereq" href="@Url.Action("CreatePrerequisite", "ClassBase", new { classBaseId = Model.Id })">
             <span class="glyphicon glyphicon-pencil"></span>
             Create New
         </a>
@@ -55,20 +55,20 @@
         </table>
     </div>
 </div>
-<div id="addsection-dialog"></div>
+<div id="createPrereq-dialog"></div>
 <script type="text/javascript">
     $(document).ready(function () {
 
-        $('#addsection-dialog').dialog({
+        $('#createPrereq-dialog').dialog({
             autoOpen: false,
             width: 600,
             resizable: true,
             modal: true
         });
 
-        $(".addsection").click(function (event) {
+        $(".createPrereq").click(function (event) {
             event.preventDefault();
-            $('#addsection-dialog').load(this.href, function () {
+            $('#createPrereq-dialog').load(this.href, function () {
                 $(this).dialog('open');
             });
         });

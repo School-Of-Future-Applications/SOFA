@@ -31,12 +31,12 @@
 {
     if (Model != null)
     {
-        @Html.HiddenFor(model => model.classBaseId)
+        @Html.HiddenFor(model => model.ClassBaseId)
         @Html.HiddenFor(model => model.Prerequisite.DateCreated)
     }
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Prerequisite.Name, new { @class = "control-label" })
+        @Html.LabelFor(model => model.Prerequisite.Name, "Pre-requisite Name" , new { @class = "control-label" })
         @Html.EditorFor(model => model.Prerequisite.Name)
         @Html.ValidationMessageFor(model => model.Prerequisite.Name)
     </div>

@@ -180,9 +180,14 @@ namespace SOFA.Controllers
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
-        public ActionResult CreatePrerequisite()
+        public ActionResult CreatePrerequisite(int classBaseId)
         {
-            return PartialView();
+            CreatePrerequisiteViewModel viewModel = new CreatePrerequisiteViewModel()
+            {
+                ClassBaseId = classBaseId
+            };
+
+            return PartialView(viewModel);
         }
 
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
