@@ -317,9 +317,7 @@ namespace SOFA.Controllers
         public ActionResult RequestPrequisite(string formId)
         {
             try
-            {
-
-            
+            {            
                 //Get class 
                 var form = this.DBCon().EnrolmentForms.
                                         Single(ef => ef.EnrolmentFormId == formId);
@@ -329,9 +327,8 @@ namespace SOFA.Controllers
                     throw new ArgumentOutOfRangeException("No prequisite for this class");
                 //Get the needed prereq sections for the class
                 var formSections = form.EnrolmentFormSections.ToList();
-                PrereqUtil preReqUtil = new PrereqUtil(this.DBCon());
-
-
+                PrereqUtil preReqUtil = new PrereqUtil();
+                formSections = preReqUtil.RemoveAllPrerequisiteSections(formSections, this.DBCon());
                 formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
 
                 //Redirect back to enrolment

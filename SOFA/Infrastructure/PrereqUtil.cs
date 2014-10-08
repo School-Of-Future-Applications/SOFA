@@ -15,11 +15,6 @@ namespace SOFA.Infrastructure
     {
         public DBContext context { get; set; }
 
-        public PrereqUtil(DBContext context)
-        {
-            this.context = context;
-        }
-
         public List<EnrolmentFormSection> CollectAndAppendPrerequisiteSections(List<EnrolmentFormSection> formSections, ClassBase cb)
         {
             List<EnrolmentSection> prereqs = new List<EnrolmentSection>();
@@ -61,7 +56,26 @@ namespace SOFA.Infrastructure
 
         public List<EnrolmentFormSection> RemoveAllPrerequisiteSections(List<EnrolmentFormSection> formSections, DBContext context)
         {
-            return new List<EnrolmentFormSection>();
+            var listsOfPrereqs = context.ClassBases.Select(cb => cb.PreRequisites).ToList();
+            List<String> prereqSectionids = new List<string>();
+            foreach (List<Section> sections in listsOfPrereqs)
+            {
+                foreach (Section sec in sections)
+                {
+                    prereqSectionids.Add(sec.Id);
+                }
+            }
+            formSections.
+                RemoveAll(efs => prereqSectionids.Contains(efs.EnrolmentSection.OriginalSectionId));
+                foreach (var fs in formSections)
+                {
+                    if (fs == formSections.First())
+                        fs.BelowOf = null;
+                    else
+                        fs.BelowOf = formSections[formSections.IndexOf(fs) - 1].EnrolmentSection;
+                }
+                formSections = EnrolmentFormSection.Sort(formSections).ToList();
+            return formSections;
         }
     
         
