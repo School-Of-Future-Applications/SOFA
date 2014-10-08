@@ -1,0 +1,50 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models.ViewModels
+@model CreatePrerequisiteViewModel
+
+@{
+    string submitText = (Model == null ? "Save" : "Add Section");
+}
+
+@Html.ValidationSummary()
+
+@using (Html.BeginForm())
+{
+    if (Model != null)
+    {
+        @Html.HiddenFor(model => model.ClassBaseId)
+        @Html.HiddenFor(model => model.Prerequisite.DateCreated)
+    }
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Prerequisite.Name, "Pre-requisite Name" , new { @class = "control-label" })
+        @Html.EditorFor(model => model.Prerequisite.Name)
+        @Html.ValidationMessageFor(model => model.Prerequisite.Name)
+    </div>
+    <input type="submit" class="btn btn-default pull-right" value="@submitText" />
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($(this));
+    });
+</script>

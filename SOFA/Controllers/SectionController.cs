@@ -277,8 +277,10 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult IndexPartial()
         {
-            var sections = this.DBCon().Sections.ToList();
-            return PartialView(new SectionSelectViewModel(sections));
+            var sections = this.DBCon().Sections;
+            var preReqSections = this.DBCon().ClassBases.SelectMany(cb => cb.PreRequisites);
+            var validSections = sections.Except(preReqSections).ToList();
+            return PartialView(new SectionSelectViewModel(validSections));
         }
 
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
@@ -286,6 +288,7 @@ namespace SOFA.Controllers
         {
             return View();
         }
+
 
 
         public override Enum NavProviderTerm()

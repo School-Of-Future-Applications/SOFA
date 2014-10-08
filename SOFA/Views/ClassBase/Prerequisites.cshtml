@@ -24,11 +24,17 @@
 
 <div class="row">
     <h3 class="col-sm-6">Pre-requisites</h3>
-    <div class="col-sm-12">
-        <a class="pull-right btn btn-primary btn-labeled" href="">
+    <div class="btn-toolbar col-sm-12  ">
+        <a class="pull-right btn btn-primary btn-labeled" href="#">
             <span class="glyphicon glyphicon-plus"></span>
-            Add Pre-requisite
+            Add Existing
         </a>
+        <a class="pull-right btn btn-success btn-labeled createPrereq" href="@Url.Action("CreatePrerequisite", "ClassBase", new { classBaseId = Model.Id })">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Create New
+        </a>
+
+        
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -40,11 +46,31 @@
                 <tr>
                     <td>@Html.DisplayFor(x => s.Name)</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }) |
-                        @Html.ActionLink("Remove", "RemovePrereq", "ClassBase", new { classBaseId = Model.Id, sectionId = s.Id })
+                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }, null) |
+                        @Html.ActionLink("Remove", "RemovePrerequisite", "ClassBase", new { classBaseId = Model.Id, sectionId = s.Id },
+                                                                                new { @class = "delete-link" })
                     </td>
                 </tr>
             }
         </table>
     </div>
 </div>
+<div id="createPrereq-dialog"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#createPrereq-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+
+        $(".createPrereq").click(function (event) {
+            event.preventDefault();
+            $('#createPrereq-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>

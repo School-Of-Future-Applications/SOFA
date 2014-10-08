@@ -178,6 +178,96 @@ namespace SOFA.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult CreatePrerequisite(int classBaseId)
+        {
+            CreatePrerequisiteViewModel viewModel = new CreatePrerequisiteViewModel()
+            {
+                ClassBaseId = classBaseId
+            };
+
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult CreatePrerequisite(CreatePrerequisiteViewModel viewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var classBase = this.DBCon().ClassBases.
+                                        Single(cb => cb.Id == viewModel.ClassBaseId);
+                    var section = this.DBCon().Sections.Add(viewModel.Prerequisite);
+                    classBase.PreRequisites.Add(section);
+
+                    this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;
+                    this.DBCon().SaveChanges();
+                }
+            }               
+            catch
+            {
+
+            }
+
+            return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
+        }
+
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult RemovePrerequisite(int classBaseId, string sectionId )
+        {
+            DeleteConfirmationViewModel dcvm = new DeleteConfirmationViewModel()
+            {
+                DeleteAction = "RemovePrerequisite",
+                DeleteController = "ClassBase",
+                ConfirmationText = "Are you sure you want to remove this pre-requisite from the class base?",
+                HeaderText = "Confirm Pre-requisite Removal"
+            };
+            try 
+	        {   
+                var classBase = this.DBCon().ClassBases.
+                                    SingleOrDefault(cb => cb.Id == classBaseId);
+                var prereq = classBase.PreRequisites.First(pr => pr.Id == sectionId);
+                classBase.PreRequisites.Remove(prereq);
+
+                //No exceptions - set route values and continue
+                dcvm.RouteValues.Add("classBaseId", classBaseId);
+                dcvm.RouteValues.Add("sectionId", sectionId);
+	        }
+            catch (Exception)
+            {
+                dcvm.DeleteInvalid = true;
+                dcvm.ConfirmationText = "You cannot remove this pre-requisite";
+                dcvm.HeaderText = "Error removing pre-requisite";
+            }
+
+            return PartialView("DeleteConfirmationViewModel", dcvm);
+        }
+
+        [HttpPost]
+        [ActionName("RemovePrerequisite")]
+        public ActionResult RemovePrerequisitePost(int classBaseId, string sectionId)
+        {
+            try
+            {
+                var classBase = this.DBCon().ClassBases.
+                                    SingleOrDefault(cb => cb.Id == classBaseId);
+                var prereq = classBase.PreRequisites.First(pr => pr.Id == sectionId);
+                classBase.PreRequisites.Remove(prereq);
+
+                this.DBCon().ClassBases.Attach(classBase);
+                this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+
+            }
+
+            return RedirectToAction("Index", new { classBaseId = classBaseId });
+        }
 
         [NonAction]
         public override Enum NavProviderTerm()

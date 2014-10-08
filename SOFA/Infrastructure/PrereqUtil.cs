@@ -46,7 +46,7 @@ namespace SOFA.Infrastructure
             int insertIndex = formSections.IndexOf(formSections.
                                     Single(efs => efs.EnrolmentSection == classSelectSection)) + 1;
             formSections.InsertRange(insertIndex, efSections);
-            var nextSectionAfterInsert = formSections.SingleOrDefault(efs => efs.BelowOf == classSelectSection);
+            var nextSectionAfterInsert = formSections.LastOrDefault(efs => efs.BelowOf == classSelectSection);
             if (nextSectionAfterInsert != null)
                 nextSectionAfterInsert.BelowOf = prereqs.ElementAt(prereqs.Count - 1);
 
