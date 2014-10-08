@@ -44,7 +44,8 @@ namespace SOFA.Migrations
         protected override void Seed(DBContext context)
         {
             FormSeed(context); 
-            UserSeed(context);            
+            UserSeed(context);
+            DepartmentSeed(context);
                        
         }
 
@@ -173,7 +174,47 @@ namespace SOFA.Migrations
             }
         }
 
-        
+        private void DepartmentSeed(DBContext context)
+        {
+            // Create new dept, course, classbase
+            Department lote = new Department()
+            {
+                DepartmentName = "LOTE"
+            };
+            Course chinese = new Course()
+            {
+                CourseCode = "CHI",
+                CourseName = "Chinese"
+            };
+            ClassBase classBase = new ClassBase()
+            {
+                ClassBaseCode = "CHI10",
+                YearLevel = "10"
+            };
+
+            // Create new section for prereq
+            Section prereq = new Section()
+            {
+                Name = "Chinese Prequisite"
+            };
+            prereq.Fields.Add(new Field()
+                {
+                    PromptValue = "Information about the prerequisite",
+                    FieldType = Field.TYPE_INFO
+                });
+            prereq.Fields.Add(new Field()
+            {
+                PromptValue = "Report Card",
+                FieldType = Field.TYPE_DROPDOWN
+            });
+            classBase.PreRequisites.Add(prereq);
+            //Link up classbase > course > dept
+            chinese.ClassBases.Add(classBase);
+            lote.Courses.Add(chinese);
+            //Save
+            context.Departments.Add(lote);
+            context.SaveChanges();
+        }
     }
 
  

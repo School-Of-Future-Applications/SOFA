@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -31,9 +32,11 @@ namespace SOFA.Models
         [Key]
         public int Id { get; set; }
 
+        public int? ClassBaseID { get; set; }
+        [ForeignKey("ClassBaseID")]
         public virtual ClassBase ClassBase { get; set; }
         
-        public int? ClassBaseID { get; set; }
+        
 
         public virtual Line Line { get; set; }
 
@@ -45,6 +48,6 @@ namespace SOFA.Models
         [Display(Name = "Display Name")]
         public String DisplayName { get; set; }
 
-        public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
+        //public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
     }
 }

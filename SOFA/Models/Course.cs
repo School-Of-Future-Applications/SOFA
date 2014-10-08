@@ -50,5 +50,10 @@ namespace SOFA.Models
         public bool Deleted { get; set; }
 
         public virtual Department Department { get; set; }
+
+        public Course()
+        {
+            ClassBases = new List<ClassBase>();
+        }
     }
 }

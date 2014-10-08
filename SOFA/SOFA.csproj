@@ -294,6 +294,7 @@
     <Compile Include="Infrastructure\IdentityEmail.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
+    <Compile Include="Infrastructure\PrereqUtil.cs" />
     <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Infrastructure\UUIDUtil.cs" />
@@ -453,6 +454,7 @@
     <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\FileViewModel.cshtml" />
     <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
+    <Content Include="Views\ClassBase\Prerequisites.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -32,6 +32,7 @@ using SOFA.Models;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
 using SOFA.Models.Prefab;
 
+
 namespace SOFA.Controllers
 {
     public class EnrolmentController : HttpsBaseController
@@ -81,6 +82,21 @@ namespace SOFA.Controllers
                 EnrolmentFormSection formSection = form.EnrolmentFormSections
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
+                //Order fields
+                
+                try
+                {
+                    var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
+                    var sectionFOs = this.DBCon().SectionFieldOrders.
+                                Where(sfo => origfieldIds.Contains(sfo.FieldID));
+                    var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
+                    section.EnrolmentFields = orderedFields.ToList();
+                }
+                catch
+                {
+
+                }
+                
                 if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
@@ -136,6 +152,17 @@ namespace SOFA.Controllers
                     cesvm.CourseSelect = new SelectList(Enumerable.Empty<SelectListItem>());
                     cesvm.YearLevelSelect = new SelectList(Enumerable.Empty<SelectListItem>());
                     return View(cesvm);
+                }
+                else
+                {
+                    //Check for prereqs
+                    CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+                    var selectedClassabase = this.DBCon().TimetabledClasses.
+                                                Single(tc => tc.Id == cesvm.SelectedClassId).ClassBase;
+                    if (selectedClassabase.PreRequisites.Count > 0)
+                    {
+                        return RedirectToAction("RequestPrequisite", new { formId = cesvm.FormId });
+                    }
                 }
             }
             else
@@ -271,7 +298,7 @@ namespace SOFA.Controllers
                 //Save
                 this.DBCon().EnrolmentForms.Attach(form);
                 this.DBCon().Entry(form).State = EntityState.Modified;
-
+                this.DBCon().SaveChanges();
                 return true;
             }
             catch
@@ -285,6 +312,46 @@ namespace SOFA.Controllers
         {
             return true;
         }
+
+        [HttpGet]
+        public ActionResult RequestPrequisite(string formId)
+        {
+            try
+            {            
+                //Get class 
+                var form = this.DBCon().EnrolmentForms.
+                                        Single(ef => ef.EnrolmentFormId == formId);
+                ClassBase cb = form.Class.ClassBase;
+                //Double check pre-req is needed
+                if (cb == null || cb.PreRequisites.Count == 0)
+                    throw new ArgumentOutOfRangeException("No prequisite for this class");
+                //Get the needed prereq sections for the class
+                var formSections = form.EnrolmentFormSections.ToList();
+                PrereqUtil preReqUtil = new PrereqUtil();
+                formSections = preReqUtil.RemoveAllPrerequisiteSections(formSections, this.DBCon());
+                formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
+
+                //Redirect back to enrolment
+                form.EnrolmentFormSections = formSections;
+                this.DBCon().Entry(form).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                //Get the next section
+                var previousFormSection = formSections.First(efs => efs.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT);
+                int index = formSections.IndexOf(previousFormSection);
+                if (index == formSections.Count - 1)
+                    throw new ArgumentOutOfRangeException();
+                return RedirectToAction("Enrol", new { sectionId = formSections[index + 1].EnrolmentSection.Id, 
+                                            formId = formId });
+            }
+            catch 
+            {
+                return new HttpNotFoundResult("No pre-requisite found for this class");
+            }
+            
+        }
+        
+        
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
@@ -319,7 +386,7 @@ namespace SOFA.Controllers
             {
                 var form = this.DBCon().EnrolmentForms.
                                 Single(f => f.EnrolmentFormId == formId);
-                var sections = form.EnrolmentFormSections.
+                var sections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                 Select(fs => fs.EnrolmentSection);
                 //Convert to view models
                 
