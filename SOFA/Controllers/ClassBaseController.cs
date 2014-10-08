@@ -190,6 +190,31 @@ namespace SOFA.Controllers
             return PartialView(viewModel);
         }
 
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult CreatePrerequisite(CreatePrerequisiteViewModel viewModel)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    var classBase = this.DBCon().ClassBases.
+                                        Single(cb => cb.Id == viewModel.ClassBaseId);
+                    var section = this.DBCon().Sections.Add(viewModel.Prerequisite);
+                    classBase.PreRequisites.Add(section);
+
+                    this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;
+                    this.DBCon().SaveChanges();
+                }
+            }               
+            catch
+            {
+
+            }
+
+            return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
+        }
+
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult RemovePrerequisite(int classBaseId, string sectionId )
         {

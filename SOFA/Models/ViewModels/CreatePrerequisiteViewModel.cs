@@ -10,5 +10,11 @@ namespace SOFA.Models.ViewModels
         public int ClassBaseId { get; set; }
 
         public Section Prerequisite { get; set; }
+    
+        
+        public CreatePrerequisiteViewModel()
+        {
+            Prerequisite = new Section();
+        }
     }
 }
