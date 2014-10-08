@@ -290,6 +290,7 @@ namespace SOFA.Controllers
         }
 
 
+
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.Sections;
