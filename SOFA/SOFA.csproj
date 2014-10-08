@@ -454,6 +454,7 @@
     <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\FileViewModel.cshtml" />
     <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
+    <Content Include="Views\ClassBase\Prerequisites.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
