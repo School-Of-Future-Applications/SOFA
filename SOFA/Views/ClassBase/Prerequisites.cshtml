@@ -46,7 +46,7 @@
                 <tr>
                     <td>@Html.DisplayFor(x => s.Name)</td>
                     <td>
-                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }) |
+                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }, null) |
                         @Html.ActionLink("Remove", "RemovePrerequisite", "ClassBase", new { classBaseId = Model.Id, sectionId = s.Id },
                                                                                 new { @class = "delete-link" })
                     </td>
