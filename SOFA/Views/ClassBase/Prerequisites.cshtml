@@ -29,7 +29,7 @@
             <span class="glyphicon glyphicon-plus"></span>
             Add Existing
         </a>
-        <a class="pull-right btn btn-success btn-labeled" href="#">
+        <a class="pull-right btn btn-success btn-labeled addSection" href="#">
             <span class="glyphicon glyphicon-pencil"></span>
             Create New
         </a>
@@ -55,3 +55,22 @@
         </table>
     </div>
 </div>
+<div id="addsection-dialog"></div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#addsection-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+
+        $(".addsection").click(function (event) {
+            event.preventDefault();
+            $('#addsection-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>

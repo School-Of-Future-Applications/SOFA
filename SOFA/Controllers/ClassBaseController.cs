@@ -178,6 +178,13 @@ namespace SOFA.Controllers
             }
         }
 
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult CreatePrerequisite()
+        {
+            return PartialView();
+        }
+
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult RemovePrerequisite(int classBaseId, string sectionId )
         {
