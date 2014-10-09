@@ -58,13 +58,23 @@
     }
 </style>
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li class="active">Forms</li>
     </ol>
-    <h2>Forms</h2>
-    @Html.ActionLink("New Form", "CreateForm", null
-                    ,new { @class = "btn btn-default addform" })
+</div>
+
+<div class="row">
+    <h2 class="col-sm-6">
+        Forms
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("CreateForm")" class="btn btn-primary btn-labeled pull-right">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            New Form
+        </a>
+    </h2>
 </div>
 
 <div class="row">
