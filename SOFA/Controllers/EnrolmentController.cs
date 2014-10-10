@@ -105,7 +105,7 @@ namespace SOFA.Controllers
                 {
                     //Get all departments where
                     List<Department> departments = this.DBCon().Departments.
-                                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                                        Where(d => !d.Deleted && d.Courses.Any(c => c.ClassBases.Count > 0)).
                                         ToList();
                     esvm = new CourseEnrolmentSectionViewModel(section, departments);
                 }
