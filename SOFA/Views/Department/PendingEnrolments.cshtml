@@ -39,6 +39,7 @@
                 <tr>
                     <th>Date Created</th>
                     <th>Enrolment Form</th>
+                    <th>Student</th>
                     <th>Course</th>
                     <th>Class Base</th>
                     <th>Class</th>
@@ -54,6 +55,7 @@
                                                                 , enrolmentFormId = ef.EnrolmentFormId })'" >
                         <td>@ef.DateCreated</td>
                         <td>@ef.Name</td>
+                        <td>@ef.Student.FullName()</td>
                         <td>@ef.Class.ClassBase.Course.CourseCode / @ef.Class.ClassBase.Course.CourseName</td>
                         <td>@ef.Class.ClassBase.ClassBaseCode</td>
                         <td>@ef.Class.DisplayName</td>
