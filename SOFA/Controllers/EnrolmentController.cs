@@ -330,7 +330,7 @@ namespace SOFA.Controllers
                 PrereqUtil preReqUtil = new PrereqUtil();
                 formSections = preReqUtil.RemoveAllPrerequisiteSections(formSections, this.DBCon());
                 formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
-
+                formSections = EnrolmentFormSection.Sort(formSections).ToList();
                 //Redirect back to enrolment
                 form.EnrolmentFormSections = formSections;
                 this.DBCon().Entry(form).State = EntityState.Modified;
