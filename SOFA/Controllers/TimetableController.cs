@@ -142,7 +142,7 @@ namespace SOFA.Controllers
             TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
             TimetabledClass tclass = new TimetabledClass();
             tclassmodel.TimetabledClass = tclass;
-            tclassmodel.ClassBases = this.DBCon().ClassBases;
+            tclassmodel.ClassBases = this.DBCon().ClassBases.Where(cb => cb.Course.Deleted != true);
             Line l = this.DBCon().Lines.Where(x => x.Id == id).FirstOrDefault();
             tclassmodel.LineID = l.Id;
             return PartialView("TimetabledClassCreate", tclassmodel);

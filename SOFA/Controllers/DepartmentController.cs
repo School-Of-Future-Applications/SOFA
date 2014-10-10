@@ -96,6 +96,10 @@ namespace SOFA.Controllers
             {
                 dep = this.DBCon().Departments.Where(x => x.id == departmentId).First();
                 dep.Deleted = true;
+                foreach (Course c in dep.Courses)
+                {
+                    c.Deleted = true;
+                }
                 this.DBCon().Entry(dep).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
                 return RedirectToAction("Index");
