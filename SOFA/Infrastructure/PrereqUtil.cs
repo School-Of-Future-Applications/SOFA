@@ -13,7 +13,6 @@ namespace SOFA.Infrastructure
     /// </summary>
     public class PrereqUtil
     {
-        public DBContext context { get; set; }
 
         public List<EnrolmentFormSection> CollectAndAppendPrerequisiteSections(List<EnrolmentFormSection> formSections, ClassBase cb)
         {
@@ -43,9 +42,10 @@ namespace SOFA.Infrastructure
                 efSections.Add(efs);
             }
             formSections = EnrolmentFormSection.Sort(formSections).ToList();
-            int insertIndex = formSections.IndexOf(formSections.
+            int insertIndex = formSections.IndexOf(formSections. 
                                     Single(efs => efs.EnrolmentSection == classSelectSection)) + 1;
             formSections.InsertRange(insertIndex, efSections);
+            //Get the previous next section and link it to the last prereq
             var nextSectionAfterInsert = formSections.LastOrDefault(efs => efs.BelowOf == classSelectSection);
             if (nextSectionAfterInsert != null)
                 nextSectionAfterInsert.BelowOf = prereqs.ElementAt(prereqs.Count - 1);

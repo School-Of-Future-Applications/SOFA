@@ -206,7 +206,9 @@ namespace SOFA.Controllers
         {
             TimetabledClass tc = this.DBCon().TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
             int timetableid = tc.Line.Timetable.Id;
-            this.DBCon().TimetabledClasses.Remove(this.DBCon().TimetabledClasses.Where(x => x.Id == id).FirstOrDefault());
+            tc.EnrolmentForms.Clear();
+            this.DBCon().TimetabledClasses.Remove(tc);
+            this.DBCon().Entry(tc).State = System.Data.Entity.EntityState.Deleted;
             this.DBCon().SaveChanges();
             return RedirectToAction("Build", new { id = timetableid });
         }
