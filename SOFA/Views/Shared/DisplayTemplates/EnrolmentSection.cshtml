@@ -25,11 +25,34 @@
 @{
 }
 
+<style>
+
+
+
+    td.value {
+        padding-left: 5px;
+    }
+</style>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="panel-title">@Model.SectionName</h3>
     </div>
     <div class="panel-body">
+        <div class="col-sm-12">
+            <table class="info-grid">
+                <tbody>
 
+                    @foreach(EnrolmentField f in Model.EnrolmentFields)
+                    {
+                        <tr class="field_row">
+                            <td align="right" class="prompt"><strong>@f.PromptValue:</strong></td>
+                            <td class="value">@f.Value</td>
+                        </tr>    
+                    }
+
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
