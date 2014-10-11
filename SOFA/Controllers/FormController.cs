@@ -32,6 +32,22 @@ namespace SOFA.Controllers
             {
                 var form = this.DBCon().Forms.Single(f => f.Id == FormID);
                 form.FormSections = SOFA.Models.FormSection.Sort(form.FormSections);
+                foreach (FormSection fs in form.FormSections)
+                {
+                    List<Field> fields = fs.Section.Fields.ToList();
+                    List<SectionFieldOrder> orders = FieldOrderUtil.
+                                                    GetOrderForFields(fields, this.DBCon());
+                    try
+                    {                        
+                        fields = fields.Sort(orders);
+                        fs.Section.Fields = fields;
+                    }
+                    catch
+                    {
+                        
+                    }
+                    
+                }
                 var viewModel = new FormViewModel(form);
                 return View(viewModel);
             }
