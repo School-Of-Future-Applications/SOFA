@@ -48,6 +48,6 @@ namespace SOFA.Models
         [Display(Name = "Display Name")]
         public String DisplayName { get; set; }
 
-        //public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
+        public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
     }
 }

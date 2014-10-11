@@ -86,11 +86,12 @@ namespace SOFA.Controllers
                 
                 try
                 {
-                    var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
-                    var sectionFOs = this.DBCon().SectionFieldOrders.
-                                Where(sfo => origfieldIds.Contains(sfo.FieldID));
-                    var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
-                    section.EnrolmentFields = orderedFields.ToList();
+                    var enrolmentFields = section.EnrolmentFields.ToList();
+                    var sectionFieldOrders = FieldOrderUtil.
+                                                GetOrderForEnrolmentFields(enrolmentFields, 
+                                                                            this.DBCon());
+
+                    section.EnrolmentFields = enrolmentFields.Sort(sectionFieldOrders);
                 }
                 catch
                 {
@@ -105,7 +106,7 @@ namespace SOFA.Controllers
                 {
                     //Get all departments where
                     List<Department> departments = this.DBCon().Departments.
-                                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                                        Where(d => !d.Deleted && d.Courses.Any(c => c.ClassBases.Count > 0)).
                                         ToList();
                     esvm = new CourseEnrolmentSectionViewModel(section, departments);
                 }
@@ -212,8 +213,13 @@ namespace SOFA.Controllers
             if (ModelState.IsValid)
             {
                 EnrolmentSection eSection = esvm.toEnrolmentSection();
+
                 this.DBCon().EnrolmentSections.Attach(eSection);
                 this.DBCon().Entry(eSection).State = EntityState.Modified;
+                foreach (var f in eSection.EnrolmentFields)
+                {
+                    this.DBCon().Entry(f).State = EntityState.Modified;
+                }
                 this.DBCon().SaveChanges();
 
                 return true;
@@ -308,10 +314,6 @@ namespace SOFA.Controllers
             
         }
 
-        private bool SavePreqSection(EnrolmentSectionViewModel esvm)
-        {
-            return true;
-        }
 
         [HttpGet]
         public ActionResult RequestPrequisite(string formId)
@@ -330,7 +332,7 @@ namespace SOFA.Controllers
                 PrereqUtil preReqUtil = new PrereqUtil();
                 formSections = preReqUtil.RemoveAllPrerequisiteSections(formSections, this.DBCon());
                 formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
-
+                formSections = EnrolmentFormSection.Sort(formSections).ToList();
                 //Redirect back to enrolment
                 form.EnrolmentFormSections = formSections;
                 this.DBCon().Entry(form).State = EntityState.Modified;
@@ -388,6 +390,22 @@ namespace SOFA.Controllers
                                 Single(f => f.EnrolmentFormId == formId);
                 var sections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                 Select(fs => fs.EnrolmentSection);
+                //Order fields
+                foreach (var sect in sections)
+                {
+                    List<EnrolmentField> fields = sect.EnrolmentFields.ToList();
+
+                    try
+                    {
+                        List<SectionFieldOrder> orders = FieldOrderUtil.GetOrderForEnrolmentFields(fields, this.DBCon());
+                        fields = fields.Sort(orders);
+                        sect.EnrolmentFields = fields;
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
                 //Convert to view models
                 
                 var enrolmentReviewModel = new EnrolmentReviewViewModel()
