@@ -6,6 +6,9 @@ using System.Web;
 
 namespace SOFA.Infrastructure
 {
+    /// <summary>
+    /// Utility class for ordering of EnrolmentFields and Fields
+    /// </summary>
     public static class FieldOrderUtil
     {
         public static List<Field> Sort(this List<Field> @this, List<SectionFieldOrder> order)
@@ -13,9 +16,17 @@ namespace SOFA.Infrastructure
             return new List<Field>();
         }
 
-        public static List<EnrolmentField> Sort(this List<EnrolmentField> @this, List<SectionFieldOrder> order)
+        public static List<EnrolmentField> Sort(this List<EnrolmentField> @this, List<SectionFieldOrder> order) 
         {
-            return new List<EnrolmentField>();
+            if (@this.Count > order.Count)
+                throw new ArgumentException("The EnrolmentField list contains more elements than the order list.");
+            else if (@this.Count < order.Count)
+                throw new ArgumentException("The EnrolmentField list contains less elements than the order list.");
+            else
+            {
+                @this.OrderBy(ef => order.Single(sfo => sfo.FieldID == ef.OriginalFieldId).Order);
+                return @this;
+            }
         }
 
         public static List<SectionFieldOrder> GetOrderForFields(List<Field> fields, DBContext context)
@@ -31,7 +42,7 @@ namespace SOFA.Infrastructure
 
         }
 
-        private static List<SectionFieldOrder> GetOrderForFieldIds(List<String> ids, DBContext context)
+        public static List<SectionFieldOrder> GetOrderForFieldIds(List<String> ids, DBContext context)
         {
             return context.SectionFieldOrders.
                         Where(sfo => ids.Contains(sfo.FieldID)).
