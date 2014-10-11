@@ -390,6 +390,22 @@ namespace SOFA.Controllers
                                 Single(f => f.EnrolmentFormId == formId);
                 var sections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
                                 Select(fs => fs.EnrolmentSection);
+                //Order fields
+                foreach (var sect in sections)
+                {
+                    List<EnrolmentField> fields = sect.EnrolmentFields.ToList();
+
+                    try
+                    {
+                        List<SectionFieldOrder> orders = FieldOrderUtil.GetOrderForEnrolmentFields(fields, this.DBCon());
+                        fields = fields.Sort(orders);
+                        sect.EnrolmentFields = fields;
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
                 //Convert to view models
                 
                 var enrolmentReviewModel = new EnrolmentReviewViewModel()
