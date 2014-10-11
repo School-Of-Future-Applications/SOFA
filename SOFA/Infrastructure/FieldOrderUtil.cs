@@ -24,7 +24,8 @@ namespace SOFA.Infrastructure
                 throw new ArgumentException("The EnrolmentField list contains less elements than the order list.");
             else
             {
-                @this.OrderBy(ef => order.Single(sfo => sfo.FieldID == ef.OriginalFieldId).Order);
+                @this = @this.OrderBy(ef => order.Single(sfo => sfo.FieldID == ef.OriginalFieldId).
+                                            Order).ToList();
                 return @this;
             }
         }
