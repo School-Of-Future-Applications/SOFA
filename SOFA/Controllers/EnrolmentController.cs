@@ -308,10 +308,6 @@ namespace SOFA.Controllers
             
         }
 
-        private bool SavePreqSection(EnrolmentSectionViewModel esvm)
-        {
-            return true;
-        }
 
         [HttpGet]
         public ActionResult RequestPrequisite(string formId)
