@@ -86,11 +86,12 @@ namespace SOFA.Controllers
                 
                 try
                 {
-                    var origfieldIds = section.EnrolmentFields.Select(ef => ef.OriginalFieldId);
-                    var sectionFOs = this.DBCon().SectionFieldOrders.
-                                Where(sfo => origfieldIds.Contains(sfo.FieldID));
-                    var orderedFields = section.EnrolmentFields.OrderBy(f => sectionFOs.Single(sfo => sfo.FieldID == f.OriginalFieldId).Order);
-                    section.EnrolmentFields = orderedFields.ToList();
+                    var enrolmentFields = section.EnrolmentFields.ToList();
+                    var sectionFieldOrders = FieldOrderUtil.
+                                                GetOrderForEnrolmentFields(enrolmentFields, 
+                                                                            this.DBCon());
+
+                    section.EnrolmentFields = enrolmentFields.Sort(sectionFieldOrders);
                 }
                 catch
                 {
