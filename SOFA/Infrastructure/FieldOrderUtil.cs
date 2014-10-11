@@ -1,11 +1,21 @@
-﻿using System;
+﻿using SOFA.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
 namespace SOFA.Infrastructure
 {
-    public class FieldOrderUtil
+    public static class FieldOrderUtil
     {
+        public static List<Field> Sort(this List<Field> @this, DBContext context)
+        {
+            return new List<Field>();
+        }
+
+        public static List<EnrolmentField> Sort(this List<Field> @this, DBContext context)
+        {
+            return new List<EnrolmentField>();
+        }
     }
 }
