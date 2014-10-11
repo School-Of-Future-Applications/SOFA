@@ -13,7 +13,16 @@ namespace SOFA.Infrastructure
     {
         public static List<Field> Sort(this List<Field> @this, List<SectionFieldOrder> order)
         {
-            return new List<Field>();
+            if (@this.Count > order.Count)
+                throw new ArgumentException("The EnrolmentField list contains more elements than the order list.");
+            else if (@this.Count < order.Count)
+                throw new ArgumentException("The EnrolmentField list contains less elements than the order list.");
+            else
+            {
+                return @this.OrderBy(f => order.Single(sfo => sfo.FieldID == f.Id).
+                                            Order).ToList();
+                 
+            }
         }
 
         public static List<EnrolmentField> Sort(this List<EnrolmentField> @this, List<SectionFieldOrder> order) 

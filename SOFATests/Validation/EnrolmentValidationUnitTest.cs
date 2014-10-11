@@ -95,7 +95,7 @@ namespace SOFATests
         }
 
         [TestMethod]
-        public void Invalid_Numeric_Field_Test()
+        public void Null_Valid_Numeric_Field_Test()
         {
             EnrolmentField field = new EnrolmentField()
             {
@@ -104,7 +104,7 @@ namespace SOFATests
             };
 
             //Test
-            Assert.IsFalse(EnrolmentValidator.IsValidNumeric(field));
+            Assert.IsTrue(EnrolmentValidator.IsValidNumeric(field));
         }
     
     }
