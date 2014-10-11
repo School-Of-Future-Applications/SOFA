@@ -67,6 +67,46 @@ namespace SOFATests.Util
             Assert.IsTrue(fields[2].Id == orders[2].FieldID);
         }
 
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void FieldList_Smaller_Than_OrderList_Throws_Exception_Test()
+        {
+            List<SectionFieldOrder> orders = CreateDummySectionFieldOrders();
+            orders.RemoveAt(0);
+            List<Field> fields = new List<Field>();
+            fields.Add(new Field
+            {
+                Id = orders[1].FieldID,
+            });
+            fields.Add(new Field
+            {
+                Id = orders[1].FieldID
+            });
+            fields.Add(new Field
+            {
+                Id = orders[0].FieldID
+            });
+            fields = fields.Sort(orders);
+        }
+
+        [ExpectedException(typeof(ArgumentException))]
+        [TestMethod]
+        public void FieldList_Greater_Than_OrderList_Throws_Exception_Test()
+        {
+            List<SectionFieldOrder> orders = CreateDummySectionFieldOrders();
+            List<Field> fields = new List<Field>();
+            fields.Add(new Field
+            {
+                Id = orders[2].FieldID,
+            });
+            fields.Add(new Field
+            {
+                Id = orders[1].FieldID
+            });
+
+            fields = fields.Sort(orders);
+        }
+
         public List<SectionFieldOrder> CreateDummySectionFieldOrders()
         {
             List<SectionFieldOrder> orders = new List<SectionFieldOrder>();
