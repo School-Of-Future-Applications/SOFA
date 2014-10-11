@@ -212,8 +212,13 @@ namespace SOFA.Controllers
             if (ModelState.IsValid)
             {
                 EnrolmentSection eSection = esvm.toEnrolmentSection();
+
                 this.DBCon().EnrolmentSections.Attach(eSection);
                 this.DBCon().Entry(eSection).State = EntityState.Modified;
+                foreach (var f in eSection.EnrolmentFields)
+                {
+                    this.DBCon().Entry(f).State = EntityState.Modified;
+                }
                 this.DBCon().SaveChanges();
 
                 return true;
