@@ -199,7 +199,8 @@ namespace SOFA.Controllers
             }
             else
             {
-                //TODO Form Completion
+                var form = this.DBCon().EnrolmentForms.Single(f => f.EnrolmentFormId == esvm.FormId);
+                form.Status = Models.EnrolmentForm.EnrolmentStatus.Completed;
                 return RedirectToAction("EnrolmentReview", new { formId = esvm.FormId });
             }
             
