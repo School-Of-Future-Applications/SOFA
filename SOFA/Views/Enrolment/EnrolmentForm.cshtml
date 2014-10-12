@@ -23,12 +23,46 @@
 @model EnrolmentForm
 
 @{
+    var headingColor = "";
+    var headingText = "";
+    switch (Model.Status)
+    {
+        case EnrolmentForm.EnrolmentStatus.Approved:
+            headingColor = "#8fc344";
+            headingText = "APPROVED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Completed:
+            headingColor = "#8eb5c4";
+            headingText = "COMPLETED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Disapproved:
+            headingColor = "#b9554a";
+            headingText = "DISAPPROVED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Pending:
+            headingColor = "#dcb046";
+            headingText = "PENDING";
+            break;
+            
+        default:
+            break;
+    }
 }
 
+<style>
+    .status-font {
+        color: #958888;
+        font-size: x-large;
+    }
+</style>
+
 <div class="row">
-    <div class="col-sm-12">
-        <span style="background-color: blue;">
-            ff
+    <div class="col-sm-12" style="background-color: @headingColor;">
+        <span class="status-font">
+            @headingText
         </span>
     </div>
 </div>
