@@ -202,6 +202,7 @@ namespace SOFA.Controllers
                 var form = this.DBCon().EnrolmentForms.Single(f => f.EnrolmentFormId == esvm.FormId);
                 form.Status = Models.EnrolmentForm.EnrolmentStatus.Completed;
                 this.DBCon().EnrolmentForms.Attach(form);
+                this.DBCon().Entry(form).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
                 return RedirectToAction("EnrolmentReview", new { formId = esvm.FormId });
             }
