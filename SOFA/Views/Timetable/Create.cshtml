@@ -21,8 +21,18 @@
 @model SOFA.Models.Timetable
 
 @{
-    ViewBag.HeadingTitle = "New Timetable";
-    ViewBag.Title = "Create";
+    if (Model == null)
+    {
+        ViewBag.HeadingTitle = "New Timetable";
+        ViewBag.Title = "Create";
+    }
+    else
+    {
+        ViewBag.HeadingTitle = "Edit Timetable";
+        ViewBag.Title = "Edit";
+    }
+    
+    
 }
 
 <script src="~/Scripts/moment.min.js"></script>
@@ -51,7 +61,10 @@
                               ,new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
-
+            @if (Model != null)
+            {
+                @Html.HiddenFor(m => m.Id)
+            }
             <div class="form-group">
                 @Html.LabelFor(model => model.TimetableCode, new { @class = "control-label col-sm-3" })
                 <div class="col-sm-6">

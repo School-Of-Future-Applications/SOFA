@@ -52,9 +52,15 @@ namespace SOFA.Controllers
         //
         // GET: /Timetable/Create
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
-            return View();
+            if (id < 1)
+                return View();
+            else
+            {
+                Timetable t = this.DBCon().Timetables.Single(tim => tim.Id == id);
+                return View(t);
+            }
         }
 
         //
@@ -67,7 +73,15 @@ namespace SOFA.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    this.DBCon().Timetables.Add(t);
+                    if (t.Id == 0)
+                    {
+                        this.DBCon().Timetables.Add(t);
+                    }
+                    else
+                    {
+                        this.DBCon().Timetables.Attach(t);
+                        this.DBCon().Entry(t).State = System.Data.Entity.EntityState.Modified;
+                    }
                     this.DBCon().SaveChanges();
                     return RedirectToAction("Index");
                 }
