@@ -19,6 +19,7 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.Prefab
 
 @model EnrolmentForm
 
@@ -102,8 +103,8 @@
 
         @foreach(EnrolmentFormSection efs in Model.EnrolmentFormSections)
         {
-            if(efs.EnrolmentSection.OriginalSectionId != Section.COURSE_SECTION_ID &&
-                efs.EnrolmentSection.OriginalSectionId != Section.STUDENT_SECTION_ID)
+            if(efs.EnrolmentSection.OriginalSectionId != PrefabSection.COURSE_SELECT &&
+                efs.EnrolmentSection.OriginalSectionId != PrefabSection.STUDENT_DETAILS)
             {
                 @Html.DisplayFor(model => efs.EnrolmentSection)  
             }

@@ -12,17 +12,7 @@ namespace SOFA.Models
 {
     public class Section
     {
-        public const string COURSE_SECTION_ID = "a9bd91b1-29b5-11e4-8c21-0800200c9a66";
-        public const string COURSE_SECTION_NAME = "Course Select";
-        public const string STUDENT_SECTION_ID = "a9bd91b0-29b5-11e4-8c21-0800200c9a66";
-        public const string STUDENT_SECTION_NAME = "Student Information";
-
-        public static List<string> DEFAULT_SECTION_IDS = new List<string>()
-            {
-                 COURSE_SECTION_ID
-                ,STUDENT_SECTION_ID
-            };
-
+        
         public Section()
         {
             Id = UUIDUtil.NewUUID();
