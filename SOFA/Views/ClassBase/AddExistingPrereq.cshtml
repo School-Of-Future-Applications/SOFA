@@ -27,9 +27,9 @@
 </div>
 
 
-
-
-<div class="modal-body">
+@using (@Html.BeginForm("AddExistingPrerequisite", "ClassBase", FormMethod.Post))
+{
+    <div class="modal-body">
 
             @Html.HiddenFor(m => m.ClassBaseId)
             <div class="form-group">
@@ -41,12 +41,15 @@
             </div>
 
     
-</div>
+    </div>
 
-<div class="modal-footer">
-    <button class="btn btn-success add-submit" type="submit">
-        <span class="glyphicon glyphicon-plus"></span> Add
-    </button>
-    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    <div class="modal-footer">
+        <button class="btn btn-success add-submit" type="submit">
+            <span class="glyphicon glyphicon-plus"></span> Add
+        </button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
 
-</div>
+    </div>
+}
+
+

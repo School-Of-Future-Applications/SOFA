@@ -10,6 +10,9 @@ namespace SOFA.Models.ViewModels
     {
         public int ClassBaseId { get; set; }
 
+        public AddExistingPreReqViewModel() : base()
+        { }
+
         public AddExistingPreReqViewModel(int ClassBaseId, List<Section> sections) : base(sections)
         {
             this.ClassBaseId = ClassBaseId;

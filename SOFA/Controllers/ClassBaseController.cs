@@ -219,7 +219,7 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult AddExistingPrerequisite(int classBaseId)
         {
-            var Allprereqs = this.DBCon().ClassBases.SelectMany(cb => cb.PreRequisites);
+            var Allprereqs = this.DBCon().ClassBases.SelectMany(cb => cb.PreRequisites).ToList();
             var classBasePreReqs = this.DBCon().ClassBases.
                                     Single(cb => cb.Id == classBaseId).
                                     PreRequisites;
