@@ -375,14 +375,66 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return EnrolmentForm(ef);
+            return EnrolmentForm(ef, null, null, null);
         }
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm)
+        public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm
+                                         ,string reController
+                                         ,string reAction
+                                         ,object reArgs)
         {
+            ViewBag.reController = reController;
+            ViewBag.reAction = reAction;
+            ViewBag.reArgs = reArgs;
             return PartialView("EnrolmentForm", enrolmentForm);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormApprove(string enrolmentFormId)
+        {
+            EnrolmentForm ef = null;
+
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == enrolmentFormId).First();
+                ef.Status = Models.EnrolmentForm.EnrolmentStatus.Approved;
+                this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormDelete(string enrolmentFormId
+                                                ,string controller
+                                                ,string action
+                                                ,object args)
+        {
+            EnrolmentForm ef = null;
+
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == enrolmentFormId)
+                    .Include(x => x.Student).First();
+                this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().EnrolmentForms.Remove(ef);
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return RedirectToAction(action, controller, args);
         }
 
         [HttpGet]
