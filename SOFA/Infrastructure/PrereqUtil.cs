@@ -13,10 +13,10 @@ namespace SOFA.Infrastructure
     /// </summary>
     public class PrereqUtil
     {
-        public DBContext context { get; set; }
 
         public List<EnrolmentFormSection> CollectAndAppendPrerequisiteSections(List<EnrolmentFormSection> formSections, ClassBase cb)
         {
+            
             List<EnrolmentSection> prereqs = new List<EnrolmentSection>();
             foreach (Section pr in cb.PreRequisites)
             {
@@ -28,6 +28,7 @@ namespace SOFA.Infrastructure
             var classSelectSection = formSections.
                                         Single(ef => ef.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT).
                                         EnrolmentSection;
+            EnrolmentFormSection nextSectionAfterInsert = formSections.SingleOrDefault(fs => fs.BelowOf == classSelectSection);
             //Insert each pre-reqsection into form under class select section
             List<EnrolmentFormSection> efSections = new List<EnrolmentFormSection>();
             for (int i = 0; i < prereqs.Count; i++)
@@ -43,10 +44,10 @@ namespace SOFA.Infrastructure
                 efSections.Add(efs);
             }
             formSections = EnrolmentFormSection.Sort(formSections).ToList();
-            int insertIndex = formSections.IndexOf(formSections.
+            int insertIndex = formSections.IndexOf(formSections. 
                                     Single(efs => efs.EnrolmentSection == classSelectSection)) + 1;
             formSections.InsertRange(insertIndex, efSections);
-            var nextSectionAfterInsert = formSections.LastOrDefault(efs => efs.BelowOf == classSelectSection);
+            //Get the previous next section and link it to the last prereq
             if (nextSectionAfterInsert != null)
                 nextSectionAfterInsert.BelowOf = prereqs.ElementAt(prereqs.Count - 1);
 
@@ -56,6 +57,7 @@ namespace SOFA.Infrastructure
 
         public List<EnrolmentFormSection> RemoveAllPrerequisiteSections(List<EnrolmentFormSection> formSections, DBContext context)
         {
+            formSections = EnrolmentFormSection.Sort(formSections).ToList();
             var listsOfPrereqs = context.ClassBases.Select(cb => cb.PreRequisites).ToList();
             List<String> prereqSectionids = new List<string>();
             foreach (List<Section> sections in listsOfPrereqs)

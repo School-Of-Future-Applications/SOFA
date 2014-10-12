@@ -289,6 +289,7 @@
     <Compile Include="Infrastructure\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\DBContextUtil.cs" />
     <Compile Include="Infrastructure\EnrolmentUtil.cs" />
+    <Compile Include="Infrastructure\FieldOrderUtil.cs" />
     <Compile Include="Infrastructure\FileManager.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\IdentityEmail.cs" />
