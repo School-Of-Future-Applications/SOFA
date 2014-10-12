@@ -219,11 +219,11 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult AddExistingPrerequisite(int classBaseId)
         {
-            var Allprereqs = this.DBCon().ClassBases.SelectMany(cb => cb.PreRequisites).ToList();
+            var selectableSections = this.DBCon().Sections.ToList();
             var classBasePreReqs = this.DBCon().ClassBases.
                                     Single(cb => cb.Id == classBaseId).
                                     PreRequisites;
-            var selectablePreReqs = Allprereqs.Except(classBasePreReqs).ToList();
+            var selectablePreReqs = selectableSections.Except(classBasePreReqs).ToList();
             AddExistingPreReqViewModel viewModel = new AddExistingPreReqViewModel(classBaseId, selectablePreReqs);
             return PartialView("AddExistingPrereq", viewModel);
         }
