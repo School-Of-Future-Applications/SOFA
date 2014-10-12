@@ -215,6 +215,26 @@ namespace SOFA.Controllers
             return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
         }
 
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult AddExistingPrerequisite(int classBaseId)
+        {
+            var Allprereqs = this.DBCon().ClassBases.SelectMany(cb => cb.PreRequisites);
+            var classBasePreReqs = this.DBCon().ClassBases.
+                                    Single(cb => cb.Id == classBaseId).
+                                    PreRequisites;
+            var selectablePreReqs = Allprereqs.Except(classBasePreReqs).ToList();
+            SectionSelectViewModel viewModel = new SectionSelectViewModel(selectablePreReqs);
+            return PartialView("Views/Section/IndexPartial", viewModel);
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult AddExistingPrerequisite(AddExistingPreReqViewModel viewModel)
+        {
+            return RedirectToAction("Index", )
+        }
+
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult RemovePrerequisite(int classBaseId, string sectionId )
         {
