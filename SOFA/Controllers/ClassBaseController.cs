@@ -232,6 +232,15 @@ namespace SOFA.Controllers
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult AddExistingPrerequisite(AddExistingPreReqViewModel viewModel)
         {
+            var addedPrereq = this.DBCon().Sections.Single(s => s.Id == viewModel.SelectedSectionId);
+            var classBase = this.DBCon().ClassBases.Single(cb => cb.Id == viewModel.ClassBaseId);
+            if (!classBase.PreRequisites.Contains(addedPrereq))
+            {
+                classBase.PreRequisites.Add(addedPrereq);
+                this.DBCon().ClassBases.Attach(classBase);
+                this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().SaveChanges();
+            }
             return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
         }
 
