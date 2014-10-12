@@ -20,3 +20,35 @@
 
 @using SOFA.Models.ViewModels
 @model AddExistingPreReqViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4>Add Section</h4>
+</div>
+
+
+
+
+<div class="modal-body">
+    @using (@Html.BeginForm("AddExistingPrereq", "ClassBase", FormMethod.Post, new { @class = "form-group" }))
+    {
+        @Html.HiddenFor(m => m.ClassBaseId)
+        <div class="form-group">
+            @Html.LabelFor(m => m.SectionItems, new { @class = "col-md-2 text-right" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.SelectedSectionId, Model.SectionItems, new { @class = "form-control col-md-8" })
+                <p id="message" class="fade alert-info hidden"></p>
+            </div>
+        </div>
+
+    }
+    
+</div>
+
+<div class="modal-footer">
+    <button class="btn btn-success add-submit" type="submit">
+        <span class="glyphicon glyphicon-plus"></span> Add
+    </button>
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+</div>
