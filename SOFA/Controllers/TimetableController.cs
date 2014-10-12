@@ -86,8 +86,6 @@ namespace SOFA.Controllers
                     return RedirectToAction("Index");
                 }
                 return View();
-     
-                
             }
             catch
             {
@@ -95,6 +93,11 @@ namespace SOFA.Controllers
             }
         }
 
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult Edit(int id)
+        {
+            return RedirectToAction("Create", new { id = id });
+        }
 
         //
         // GET: /Timetable/Build/5

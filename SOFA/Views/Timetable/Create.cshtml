@@ -61,7 +61,7 @@
                               ,new { @class = "form-horizontal" }))
         {
             @Html.AntiForgeryToken()
-            @if (Model != null)
+            if (Model != null)
             {
                 @Html.HiddenFor(m => m.Id)
             }
@@ -99,7 +99,14 @@
 
             <div class="form-group">
                 <div class="col-sm-offset-3 col-md-6">
-                    <input type="submit" value="Create Timetable" class="btn btn-success pull-right" />
+                    @if (Model == null)
+                    {
+                        <input type="submit" value="Create Timetable" class="btn btn-success pull-right" />
+                    }
+                    else
+                    {
+                        <input type="submit" value="Save" class="btn btn-success pull-right" />
+                    }
                 </div>
             </div>
         }
