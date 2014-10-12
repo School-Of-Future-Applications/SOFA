@@ -339,6 +339,7 @@
     <Compile Include="Models\Validation\AfterDate.cs" />
     <Compile Include="Models\Validation\EnrolmentValidator.cs" />
     <Compile Include="Models\Validation\FormValidator.cs" />
+    <Compile Include="Models\ViewModels\AddExistingPreReqViewModel.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\DeleteConfirmationViewModel.cs" />
@@ -458,6 +459,8 @@
     <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
     <Content Include="Views\ClassBase\Prerequisites.cshtml" />
     <Content Include="Views\ClassBase\CreatePrerequisite.cshtml" />
+    <Content Include="Views\ClassBase\AddExistingPrereq.cshtml" />
+    <Content Include="Views\Shared\AddExistingPrereqModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

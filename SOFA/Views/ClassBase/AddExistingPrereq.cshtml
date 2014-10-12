@@ -1,0 +1,55 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models.ViewModels
+@model AddExistingPreReqViewModel
+
+<div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4>Add Pre-requisite Section</h4>
+</div>
+
+
+@using (@Html.BeginForm("AddExistingPrerequisite", "ClassBase", FormMethod.Post))
+{
+    <div class="modal-body">
+
+            @Html.HiddenFor(m => m.ClassBaseId)
+            <div class="form-group">
+                @Html.LabelFor(m => m.SectionItems, new { @class = "col-md-2 text-right" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(m => m.SelectedSectionId, Model.SectionItems, new { @class = "form-control col-md-8" })
+                    <p id="message" class="fade alert-info hidden"></p>
+                </div>
+            </div>
+
+    
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-success add-submit" type="submit">
+            <span class="glyphicon glyphicon-plus"></span> Add
+        </button>
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
+
+    </div>
+}
+
+

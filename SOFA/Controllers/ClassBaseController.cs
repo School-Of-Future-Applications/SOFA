@@ -215,6 +215,35 @@ namespace SOFA.Controllers
             return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
         }
 
+        [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult AddExistingPrerequisite(int classBaseId)
+        {
+            var selectableSections = this.DBCon().Sections.ToList();
+            var classBasePreReqs = this.DBCon().ClassBases.
+                                    Single(cb => cb.Id == classBaseId).
+                                    PreRequisites;
+            var selectablePreReqs = selectableSections.Except(classBasePreReqs).ToList();
+            AddExistingPreReqViewModel viewModel = new AddExistingPreReqViewModel(classBaseId, selectablePreReqs);
+            return PartialView("AddExistingPrereq", viewModel);
+        }
+        
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
+        public ActionResult AddExistingPrerequisite(AddExistingPreReqViewModel viewModel)
+        {
+            var addedPrereq = this.DBCon().Sections.Single(s => s.Id == viewModel.SelectedSectionId);
+            var classBase = this.DBCon().ClassBases.Single(cb => cb.Id == viewModel.ClassBaseId);
+            if (!classBase.PreRequisites.Contains(addedPrereq))
+            {
+                classBase.PreRequisites.Add(addedPrereq);
+                this.DBCon().ClassBases.Attach(classBase);
+                this.DBCon().Entry(classBase).State = System.Data.Entity.EntityState.Modified;
+                this.DBCon().SaveChanges();
+            }
+            return RedirectToAction("Index", new { classBaseId = viewModel.ClassBaseId });
+        }
+
         [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult RemovePrerequisite(int classBaseId, string sectionId )
         {
