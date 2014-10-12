@@ -460,7 +460,7 @@
     <Content Include="Views\ClassBase\Prerequisites.cshtml" />
     <Content Include="Views\ClassBase\CreatePrerequisite.cshtml" />
     <Content Include="Views\ClassBase\AddExistingPrereq.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\AddExistingPrereqModal.cshtml" />
+    <Content Include="Views\Shared\AddExistingPrereqModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -18,24 +18,24 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
-@using SOFA.Models.ViewModels
+@using SOFA.Models
 
-@model AddExistingPreReqViewModel
+@model ClassBase 
 
-<div id="add-section-modal" class="modal fade" role="dialog" aria-hidden="true">
+<div id="add-prereq-modal" class="modal fade" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content" id="add-section-modal-content">
 
-            @Html.Action("AddExistingPrereq", "ClassBase", new { classBaseId = Model.ClassBaseId })
+            @Html.Action("AddExistingPrerequisite", "ClassBase", new { classBaseId = Model.Id })
         </div>
     </div>
 </div>
 
 <script>
     $(document).ready(function () {
-        $(".add-section-link").click(function (e) {
+        $(".add-prereq-link").click(function (e) {
             e.preventDefault();
-            $("#add-section-modal").modal({
+            $("#add-prereq-modal").modal({
                 backdrop: 'static',
                 keyboard: true
             }, 'show');
