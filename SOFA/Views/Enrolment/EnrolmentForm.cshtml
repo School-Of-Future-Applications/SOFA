@@ -89,13 +89,26 @@
     <div class="col-sm-12">
        <div class="btn-toolbar" role="toolbar">
            <div class="btn-group">
-               <button type="button" class="btn btn-default">Left</button>
-               <button type="button" class="btn btn-default">Middle</button>
-               <button type="button" class="btn btn-default">Right</button>
+               <button type="button" class="btn btn-info">Print</button>
+               @Html.ActionLink("Delete", "EnrolmentFormDelete", "Enrolment"
+                               ,new { enrolmentFormId = Model.EnrolmentFormId,
+                                      controller = ViewBag.reController,
+                                      action = ViewBag.reAction,
+                                      args = ViewBag.reArgs },
+                                new { @class = "btn btn-danger" })
+           </div>
+           <div class="btn-group">
+                @Html.ActionLink("Approve", "EnrolmentFormApprove", "Enrolment"
+                                ,new { enrolmentFormId = Model.EnrolmentFormId}
+                                ,new { @class = "btn btn-success"})
+               <button type="button" class="btn btn-danger">Disapprove</button>
            </div>
        </div>
     </div>
 </div>
+
+@ViewBag.reController
+@ViewBag.reAction
 
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">

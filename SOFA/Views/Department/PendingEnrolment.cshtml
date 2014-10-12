@@ -35,4 +35,7 @@
     </ol>
 </div>
 
-@Html.Action("EnrolmentForm", "Enrolment", Model.EnrolmentForm )
+@Html.Action("EnrolmentForm", "Enrolment", new { enrolmentForm = Model.EnrolmentForm,
+                                                 reController = "Department",
+                                                 reAction = "Department",
+                                                 reArgs = new { departmentId = Model.Department.id }})
