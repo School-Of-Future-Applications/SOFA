@@ -43,7 +43,7 @@
         @Html.Editor("FileDisplay", new { @class = "form-control", placeholder = "Upload File" })
         @Html.HiddenFor(model => model.Value, new { @class = "form-control", placeholder = "", id=fid })
         <span class="input-group-btn">
-            <button class="browse btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i> Browse</button>
+            <button class="browse btn btn-primary" type="button" style="font-size:14px"><i class="glyphicon glyphicon-search"></i> Browse</button>
         </span>
     </div>
     @Html.ValidationMessageFor(m => m.Value)
