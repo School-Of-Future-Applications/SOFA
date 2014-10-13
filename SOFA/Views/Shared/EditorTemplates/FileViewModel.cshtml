@@ -56,7 +56,7 @@
         var data = new FormData();
         data.append("file", document.getElementById("@dfid").files[0]);
         $.ajax({
-            url: "/Upload/UploadFile",
+            url: "/File/UploadFile",
             type: "POST",
             data: data,
             enctype: 'multipart/form-data',
