@@ -19,34 +19,29 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model EnrolmentSection
+@model EnrolmentFieldViewModel
 
-@{
-}
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+@Html.HiddenFor(m => m.OriginalFieldId)
 
-<style>
 
 
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
 
-    td.value {
-        padding-left: 5px;
-    }
-</style>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">@Model.SectionName</h3>
+<div class="col-xs-10">
+    <div class="input-group date">
+        
+        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy"})
+        <span class="input-group-addon">
+            <span class="glyphicon glyphicon-calendar"></span>
+        </span>
     </div>
-    <div class="panel-body">
-        <div class="col-sm-12">
-            <table class="info-grid">
-                <tbody>
+    @Html.ValidationMessageFor(m => m.Value)
 
-                    @Html.DisplayFor(m => m.EnrolmentFields)
 
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
