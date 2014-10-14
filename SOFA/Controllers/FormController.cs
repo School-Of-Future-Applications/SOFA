@@ -249,7 +249,11 @@ namespace SOFA.Controllers
                 {
                     if (removeIndex == 0)
                     {
-                        formSections[removeIndex + 1].BelowOf = null;                    
+                        FormSection newFirstFS = new FormSection()
+                        {
+                            Section = formSections[removeIndex + 1].Section
+                        };
+                        formSections[removeIndex + 1] = newFirstFS;                  
                     }
                     else  //Not the last section
                     {

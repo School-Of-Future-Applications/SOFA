@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using SOFA.Infrastructure;
 using SOFA.Models;
 using SOFA.Models.ViewModels;
+using SOFA.Models.Prefab;
 
 namespace SOFA.Controllers
 {
@@ -246,7 +247,7 @@ namespace SOFA.Controllers
             Section sec = null;
             try
             {
-                if (!Section.DEFAULT_SECTION_IDS.Contains(id))
+                if (!PrefabSection.GetAllPrefabSectionIds().Contains(id))
                 {
                     //Check if section not present on form
                     if (this.DBCon().FormSections.Where(fs => fs.SectionId == id).

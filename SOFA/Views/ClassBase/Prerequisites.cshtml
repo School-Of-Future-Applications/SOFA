@@ -25,7 +25,7 @@
 <div class="row">
     <h3 class="col-sm-6">Pre-requisites</h3>
     <div class="btn-toolbar col-sm-12  ">
-        <a class="pull-right btn btn-primary btn-labeled" href="#">
+        <a class="pull-right add-prereq-link btn btn-primary btn-labeled">
             <span class="glyphicon glyphicon-plus"></span>
             Add Existing
         </a>
@@ -55,7 +55,11 @@
         </table>
     </div>
 </div>
+
 <div id="createPrereq-dialog"></div>
+<div id="addExisting-dialog">
+    @Html.Partial("AddExistingPrereqModal", Model)
+</div>
 <script type="text/javascript">
     $(document).ready(function () {
 

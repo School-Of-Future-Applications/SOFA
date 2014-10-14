@@ -13,6 +13,14 @@ namespace SOFA.Models.Prefab
         public const string COURSE_SELECT = "a9bd91b1-29b5-11e4-8c21-0800200c9a66";
         public const string STANDARD_SECTION = "Standard-Section-Id";
 
+        public static List<String> GetAllPrefabSectionIds()
+        {
+            return new List<String>()
+            {
+                STUDENT_DETAILS,
+                COURSE_SELECT
+            };
+        }
 
         protected string Id;
         protected string Name;
