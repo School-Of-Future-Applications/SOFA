@@ -89,23 +89,40 @@
 
 <div class="row">
     <div class="col-sm-12">
-       <div class="btn-toolbar" role="toolbar">
-           <div class="btn-group">
-               <button type="button" class="btn btn-info">Print</button>
-               @Html.ActionLink("Delete", "EnrolmentFormDelete", "Enrolment"
-                               ,new { enrolmentFormId = Model.EnrolmentForm.EnrolmentFormId,
-                                      controller = Model.DeleteController,
-                                      action = Model.DeleteAction,
-                                      args = Model.DeleteArgs },
-                                new { @class = "btn btn-danger" })
+       <div class="" role="toolbar">
+           <div class="">
+               <button  type="button" class="btn btn-info">Print</button>
+               
+               @using (@Html.BeginForm("EnrolmentFormDelete", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
+               {
+                   <input style="margin-left: 5px"class=" btn btn-danger" type="submit" value="Delete" />
+                   <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
+                   @Html.HiddenFor(m => m.DeleteAction)
+                   @Html.HiddenFor(m => m.DeleteController)
+                   foreach (var k in Model.DeleteArgs.Keys)
+                   {                       
+                       @Html.HiddenFor(m => m.DeleteArgs[k])
+                   }
+
+               }
+               
+
+               
            </div>
            <div class="btn-group">
-                @Html.ActionLink("Approve", "EnrolmentFormApprove", "Enrolment"
-                                ,new { enrolmentFormId = Model.EnrolmentForm.EnrolmentFormId,
-                                       toController = Model.ApproveController,
-                                       toAction = Model.ApproveAction,
-                                       toArgs = Model.ApproveArgs }
-                                ,new { @class = "btn btn-success"})
+               @using (@Html.BeginForm("EnrolmentFormApprove", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
+               {
+                   <input style="margin-left: 5px" class=" btn btn-success" type="submit" value="Approve" />
+                   <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
+                   @Html.HiddenFor(m => m.ApproveAction)
+                   @Html.HiddenFor(m => m.ApproveController)
+                   foreach (var k in Model.ApproveArgs.Keys)
+                   {
+                       @Html.HiddenFor(m => m.ApproveArgs[k])
+                   }
+
+               }
+                
                <button type="button" class="btn btn-danger">Disapprove</button>
            </div>
        </div>

@@ -27,14 +27,12 @@
     vm.EnrolmentForm = Model.EnrolmentForm;
     vm.DeleteAction = "Department";
     vm.DeleteController = "Department";
-    vm.DeleteArgs = new { departmentId = Model.Department.id };
+    vm.DeleteArgs.Add("departmentId", Model.Department.id.ToString());
     vm.ApproveAction = "PendingEnrolment";
     vm.ApproveController = "Department";
-    vm.ApproveArgs = new
-    {
-        departmentId = Model.Department.id,
-        enrolmentFormId = Model.EnrolmentForm.EnrolmentFormId
-    };
+    vm.ApproveArgs.Add("departmentId", Model.Department.id.ToString());
+    vm.ApproveArgs.Add("enrolmentFormId", Model.EnrolmentForm.EnrolmentFormId.ToString());
+
 }
 
 <div class="row">
