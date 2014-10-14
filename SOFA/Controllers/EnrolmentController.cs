@@ -493,7 +493,8 @@ namespace SOFA.Controllers
                     {
                         TimetabledClassDisplayModel timetableCDM = new TimetabledClassDisplayModel(tc);
                         //Check if class full - if so set full flag
-                        if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == tc.Id).
+                        if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == tc.Id && 
+                                                ef.Status != Models.EnrolmentForm.EnrolmentStatus.Disapproved).
                         ToList().Count >= tc.Capacity)
                         {
                             timetableCDM.full = true;
