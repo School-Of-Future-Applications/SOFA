@@ -389,44 +389,55 @@ namespace SOFA.Controllers
             return PartialView("EnrolmentForm", vm);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentFormApprove(string enrolmentFormId
-                                                ,string toController
-                                                ,string toAction
-                                                ,object toArgs)
+        public ActionResult EnrolmentFormApprove(string EnrolmentFormId
+                                                ,string ApproveController
+                                                ,string ApproveAction
+                                                ,Dictionary<String, String> ApproveArgs)
         {
             EnrolmentForm ef = null;
-
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in ApproveArgs.Keys)
+            {
+                routeValues.Add(key, ApproveArgs[key]);
+            }
             try
             {
                 ef = this.DBCon().EnrolmentForms
-                    .Where(x => x.EnrolmentFormId == enrolmentFormId).First();
+                    .Where(x => x.EnrolmentFormId == EnrolmentFormId).First();
                 ef.Status = Models.EnrolmentForm.EnrolmentStatus.Approved;
                 this.DBCon().EnrolmentForms.Attach(ef);
                 this.DBCon().Entry(ef).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
+
+                
             }
             catch
             {
                 return new HttpNotFoundResult();
             }
-            return RedirectToAction(toAction, toController, (object)toArgs);
+            return RedirectToAction(ApproveAction, ApproveController, routeValues);
         }
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentFormDelete(string enrolmentFormId
-                                                ,string controller
-                                                ,string action
-                                                ,object args)
+        public ActionResult EnrolmentFormDelete(string EnrolmentFormId
+                                                ,string DeleteController
+                                                ,string DeleteAction
+                                                ,Dictionary<string, string> DeleteArgs)
         {
             EnrolmentForm ef = null;
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in DeleteArgs.Keys)
+            {
+                routeValues.Add(key, DeleteArgs[key]);
+            }
 
             try
             {
                 ef = this.DBCon().EnrolmentForms
-                    .Where(x => x.EnrolmentFormId == enrolmentFormId)
+                    .Where(x => x.EnrolmentFormId == EnrolmentFormId)
                     .Include(x => x.Student).First();
                 this.DBCon().EnrolmentForms.Attach(ef);
                 this.DBCon().EnrolmentForms.Remove(ef);
@@ -436,7 +447,8 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return RedirectToAction(action, controller, args);
+            
+            return RedirectToAction(DeleteAction, DeleteController, routeValues);
         }
 
         [HttpGet]
