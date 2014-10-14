@@ -19,14 +19,15 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.ViewModels
 @using SOFA.Models.Prefab
 
-@model EnrolmentForm
+@model EnrolmentFormViewModel
 
 @{
     var headingColor = "";
     var headingText = "";
-    switch (Model.Status)
+    switch (Model.EnrolmentForm.Status)
     {
         case EnrolmentForm.EnrolmentStatus.Approved:
             headingColor = "#8fc344";
@@ -70,19 +71,19 @@
 
 <div class="row">
     <h2 class="col-sm-6">
-        Enrolment Form For @Model.Student.FullName()
+        Enrolment Form For @Model.EnrolmentForm.Student.FullName()
     </h2>
 </div>
 
 <div class="row">
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model)
+        @Html.DisplayFor(model => model.EnrolmentForm)
     </div>
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model.Class)
+        @Html.DisplayFor(model => model.EnrolmentForm.Class)
     </div>
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model.Student)
+        @Html.DisplayFor(model => model.EnrolmentForm.Student)
     </div>
 </div>
 
@@ -92,15 +93,18 @@
            <div class="btn-group">
                <button type="button" class="btn btn-info">Print</button>
                @Html.ActionLink("Delete", "EnrolmentFormDelete", "Enrolment"
-                               ,new { enrolmentFormId = Model.EnrolmentFormId,
-                                      controller = ViewBag.reController,
-                                      action = ViewBag.reAction,
-                                      args = ViewBag.reArgs },
+                               ,new { enrolmentFormId = Model.EnrolmentForm.EnrolmentFormId,
+                                      controller = Model.DeleteController,
+                                      action = Model.DeleteAction,
+                                      args = Model.DeleteArgs },
                                 new { @class = "btn btn-danger" })
            </div>
            <div class="btn-group">
                 @Html.ActionLink("Approve", "EnrolmentFormApprove", "Enrolment"
-                                ,new { enrolmentFormId = Model.EnrolmentFormId}
+                                ,new { enrolmentFormId = Model.EnrolmentForm.EnrolmentFormId,
+                                       toController = Model.ApproveController,
+                                       toAction = Model.ApproveAction,
+                                       toArgs = Model.ApproveArgs }
                                 ,new { @class = "btn btn-success"})
                <button type="button" class="btn btn-danger">Disapprove</button>
            </div>
@@ -108,13 +112,12 @@
     </div>
 </div>
 
-@ViewBag.reController
-@ViewBag.reAction
+@Model.ApproveController
 
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
 
-        @foreach(EnrolmentFormSection efs in Model.EnrolmentFormSections)
+        @foreach(EnrolmentFormSection efs in Model.EnrolmentForm.EnrolmentFormSections)
         {
             if(efs.EnrolmentSection.OriginalSectionId != PrefabSection.COURSE_SELECT &&
                 efs.EnrolmentSection.OriginalSectionId != PrefabSection.STUDENT_DETAILS)
