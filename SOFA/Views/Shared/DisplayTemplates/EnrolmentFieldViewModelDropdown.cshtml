@@ -19,34 +19,29 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model EnrolmentSection
+@model EnrolmentFieldViewModel
 
-@{
-}
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+@Html.HiddenFor(m => m.OriginalFieldId)
 
-<style>
 
 
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
 
-    td.value {
-        padding-left: 5px;
+<div class="col-xs-10">
+    @{
+        var responses = Model.EnrollmentFieldOptions.
+                            Where(fo => fo.OptionType.Equals(FieldOption.OPT_RESPONSE)).
+                            Select(fo => fo.OptionValue);
+        var dropdown = new SelectList(responses);
     }
-</style>
+    @Html.DropDownListFor(m => m.Value, dropdown, new { @class = "form-control col-xs-10" })
+    @Html.ValidationMessageFor(m => m.Value)
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">@Model.SectionName</h3>
-    </div>
-    <div class="panel-body">
-        <div class="col-sm-12">
-            <table class="info-grid">
-                <tbody>
 
-                    @Html.DisplayFor(m => m.EnrolmentFields)
-
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>

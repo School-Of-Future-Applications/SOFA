@@ -20,33 +20,8 @@
 
 @using SOFA.Models
 
-@model EnrolmentSection
+@model EnrolmentFieldOption
 
-@{
-}
-
-<style>
-
-
-
-    td.value {
-        padding-left: 5px;
-    }
-</style>
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3 class="panel-title">@Model.SectionName</h3>
-    </div>
-    <div class="panel-body">
-        <div class="col-sm-12">
-            <table class="info-grid">
-                <tbody>
-
-                    @Html.DisplayFor(m => m.EnrolmentFields)
-
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+@Html.HiddenFor(m => m.EnrolmentFieldOptionId)
+@Html.HiddenFor(m => m.OptionType)
+@Html.HiddenFor(m => m.OptionValue)

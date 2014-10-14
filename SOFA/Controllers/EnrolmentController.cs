@@ -26,9 +26,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
 using SOFA.Models.Prefab;
 
@@ -364,6 +366,7 @@ namespace SOFA.Controllers
         public ActionResult EnrolmentFormId(string enrolmentFormId)
         {
             EnrolmentForm ef = null;
+            EnrolmentFormViewModel vm = new EnrolmentFormViewModel();
 
             try
             {
@@ -375,25 +378,23 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return EnrolmentForm(ef, null, null, null);
+            vm.EnrolmentForm = ef;
+            return EnrolmentForm(vm);
         }
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm
-                                         ,string reController
-                                         ,string reAction
-                                         ,object reArgs)
+        public ActionResult EnrolmentForm(EnrolmentFormViewModel vm)
         {
-            ViewBag.reController = reController;
-            ViewBag.reAction = reAction;
-            ViewBag.reArgs = reArgs;
-            return PartialView("EnrolmentForm", enrolmentForm);
+            return PartialView("EnrolmentForm", vm);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentFormApprove(string enrolmentFormId)
+        public ActionResult EnrolmentFormApprove(string enrolmentFormId
+                                                ,string toController
+                                                ,string toAction
+                                                ,object toArgs)
         {
             EnrolmentForm ef = null;
 
@@ -403,13 +404,14 @@ namespace SOFA.Controllers
                     .Where(x => x.EnrolmentFormId == enrolmentFormId).First();
                 ef.Status = Models.EnrolmentForm.EnrolmentStatus.Approved;
                 this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().Entry(ef).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
             }
             catch
             {
                 return new HttpNotFoundResult();
             }
-            return View();
+            return RedirectToAction(toAction, toController, (object)toArgs);
         }
 
         [HttpPost]
