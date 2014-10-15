@@ -90,7 +90,7 @@
 <div class="row">
     <div class="col-sm-12">
        <div class="" role="toolbar">
-           <div class="">
+           <div class="btn-group">
                <button  type="button" class="btn btn-info">Print</button>
                
                @using (@Html.BeginForm("EnrolmentFormDelete", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
@@ -99,6 +99,7 @@
                    <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
                    @Html.HiddenFor(m => m.DeleteAction)
                    @Html.HiddenFor(m => m.DeleteController)
+                   @Html.HiddenFor(m => m.DeleteArgs)
                    foreach (var k in Model.DeleteArgs.Keys)
                    {                       
                        @Html.HiddenFor(m => m.DeleteArgs[k])
@@ -116,6 +117,7 @@
                    <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
                    @Html.HiddenFor(m => m.ApproveAction)
                    @Html.HiddenFor(m => m.ApproveController)
+                   
                    foreach (var k in Model.ApproveArgs.Keys)
                    {
                        @Html.HiddenFor(m => m.ApproveArgs[k])
@@ -128,8 +130,6 @@
        </div>
     </div>
 </div>
-
-@Model.ApproveController
 
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
