@@ -274,6 +274,8 @@
             <div class="sdelement panel panel-primary" id=@f.Id>
                 <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
                 <div class="panel-body">
+                    @if(f.FieldType != Field.TYPE_INFO)
+                    { 
                     <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
                     <div id="fieldOptions">
                         @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
@@ -283,6 +285,7 @@
                             <br />
                         }
                     </div>
+                    }
                 </div>
                 <hr />
                 <div class="panel-body">
