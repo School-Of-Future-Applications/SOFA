@@ -18,23 +18,23 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
+@using SOFA.Models
+@using SOFA.Models.ViewModels
 
-<div id="delete-modal" class="modal fade" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content" id="delete-modal-content"></div>
-    </div>
+@model EnrolmentForm
+
+@{
+    ViewBag.Title = "TimetabledClassEnrolmentForm";
+
+    EnrolmentFormViewModel vm = new EnrolmentFormViewModel();
+    vm.EnrolmentForm = Model;
+}
+
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>Enrolment Form For @Model.Student.FullName()</li>
+    </ol>
 </div>
 
-<script>
-    $(".delete-link").click(function (e) {
-        e.preventDefault();
-        $("#delete-modal-content").load(this.href, function () {
-            $("#delete-modal").modal({
-                backdrop: 'static',
-                keyboard: true
-            }, 'show');
-            return false;
-        });
-    });
-
-</script>
+@Html.Action("EnrolmentForm", "Enrolment", vm)
