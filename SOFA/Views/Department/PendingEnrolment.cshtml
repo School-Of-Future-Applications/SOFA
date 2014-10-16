@@ -32,7 +32,10 @@
     vm.ApproveController = "Department";
     vm.ApproveArgs.Add("departmentId", Model.Department.id.ToString());
     vm.ApproveArgs.Add("enrolmentFormId", Model.EnrolmentForm.EnrolmentFormId.ToString());
-
+    vm.DisapproveAction = "PendingEnrolment";
+    vm.DisapproveController = "Department";
+    vm.DisapproveArgs.Add("departmentId", Model.Department.id.ToString());
+    vm.DisapproveArgs.Add("enrolmentFormId", Model.EnrolmentForm.EnrolmentFormId.ToString());
 }
 
 <div class="row">

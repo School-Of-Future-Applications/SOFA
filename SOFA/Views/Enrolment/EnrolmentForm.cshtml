@@ -91,7 +91,6 @@
     <div class="col-sm-12">
        <div class="" role="toolbar">
            <div class="btn-group">
-               <button  type="button" class="btn btn-info">Print</button>
                
                @using (@Html.BeginForm("EnrolmentFormDelete", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
                {
@@ -99,15 +98,12 @@
                    <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
                    @Html.HiddenFor(m => m.DeleteAction)
                    @Html.HiddenFor(m => m.DeleteController)
-                   @Html.HiddenFor(m => m.DeleteArgs)
+ 
                    foreach (var k in Model.DeleteArgs.Keys)
                    {                       
                        @Html.HiddenFor(m => m.DeleteArgs[k])
                    }
-
                }
-               
-
                
            </div>
            <div class="btn-group">
@@ -122,10 +118,20 @@
                    {
                        @Html.HiddenFor(m => m.ApproveArgs[k])
                    }
-
                }
                 
-               <button type="button" class="btn btn-danger">Disapprove</button>
+               @using (@Html.BeginForm("EnrolmentFormDisapprove", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
+               {
+                   <input style="margin-left: 5px" class=" btn btn-danger" type="submit" value="Disapprove" />
+                   <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
+                   @Html.HiddenFor(m => m.DisapproveAction)
+                   @Html.HiddenFor(m => m.DisapproveController)
+
+                   foreach (var k in Model.DisapproveArgs.Keys)
+                   {
+                       @Html.HiddenFor(m => m.DisapproveArgs[k])
+                   }        
+               }
            </div>
        </div>
     </div>

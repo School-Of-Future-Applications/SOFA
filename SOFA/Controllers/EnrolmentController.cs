@@ -422,6 +422,37 @@ namespace SOFA.Controllers
 
         [HttpPost]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormDisapprove(string EnrolmentFormId
+                                                , string DisapproveController
+                                                , string DisapproveAction
+                                                , Dictionary<String, String> DisapproveArgs)
+        {
+            EnrolmentForm ef = null;
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in DisapproveArgs.Keys)
+            {
+                routeValues.Add(key, DisapproveArgs[key]);
+            }
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == EnrolmentFormId).First();
+                ef.Status = Models.EnrolmentForm.EnrolmentStatus.Disapproved;
+                this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().Entry(ef).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return RedirectToAction(DisapproveAction, DisapproveController, routeValues);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EnrolmentFormDelete(string EnrolmentFormId
                                                 ,string DeleteController
                                                 ,string DeleteAction
