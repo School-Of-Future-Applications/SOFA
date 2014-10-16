@@ -18,10 +18,8 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
-@using SOFA.Models.ViewModels.FormViewModels
-@using SOFA.Models;
-
-@model SOFA.Models.ViewModels.FormViewModels.FieldViewModel
+@using SOFA.Models
+@model EnrolmentField
 
 <style>
     .label-align {
@@ -29,27 +27,21 @@
     }
 </style>
 
-<div class="form-group">
+<tr class="field_row">
     @switch (Model.FieldType)
     {
         case Field.TYPE_TEXT_SINGLE:
-            @Html.LabelFor(model => model.Value, Model.PromptValue
-                          , new { @class = "control-label col-xs-2 label-align" })
-            <div class="col-xs-10">
-                @Html.EditorFor(model => model.Value, new { @class = "form-control" })
-            </div>
+            <td align="right" class="prompt"><strong>@Model.PromptValue:</strong></td>
+            <td class="value">@Model.Value</td>
             break;
 
         case Field.TYPE_TEXT_MULTI:
-        @Html.LabelFor(model => model.Value, Model.PromptValue
-                           , new { @class = "control-label col-xs-2 label-align" })
-        <div class="col-xs-10">
-            @Html.TextAreaFor(model => model.Value, new { @class = "form-control" })
-        </div>
+            <td align="right" class="prompt"><strong>@Model.PromptValue:</strong></td>
+            <td class="value">@Model.Value</td>
             break;
 
         case Field.TYPE_DATE:
-        @Html.Partial("~/Views/Shared/DisplayTemplates/FieldViewModelDate.cshtml", Model)
+        @Html.Partial("~/Views/Shared/DisplayTemplates/EnrolmentFieldDate.cshtml", Model)
             break;
 
         case Field.TYPE_INFO:
@@ -57,10 +49,11 @@
                              , new { @class = "col-xs-12 control-label" })
             break;
 
+        case Field.TYPE_FILE:
+        @Html.Partial("~/Views/Shared/DisplayTemplates/FileViewModel.cshtml", Model)
+            break;
         default:
-        <div class="col-xs-12">
-            Not Implemented
-        </div>
+            @Html.Display("Not Implemented")
             break;
     }
-</div>
+</tr> 

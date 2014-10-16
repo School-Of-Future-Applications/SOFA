@@ -26,9 +26,62 @@
     ViewBag.Title = "TimetabledClass";
 }
 
+<script type="text/javascript">
+
+    var selectedForms = function () {
+        var selected = {
+            enrolmentFormIds: []
+        };
+
+        $(".enrolled-row input:checked").each(function (index) {
+            var enrolmentFormId = $(this).parent().siblings("#enrolmentId-data").text();
+            selected.enrolmentFormIds.push(enrolmentFormId);
+        });
+        
+        return selected;
+    };
+
+    $(document).ready(function () {
+        $.ajaxSetup({
+            traditional:true    
+        });
+
+        $("#actions").hide();
+
+        $(".enrolled-row input:checkbox").click(function (event) {
+            event.stopPropagation();
+            selectedForms();
+            if ($(".enrolled-row input:checked").length > 0) {
+                $("#actions").show();
+            }
+            else {
+                $("#actions").hide();
+            }
+        });
+
+        $("#student-class-move-button").click(function (e) {
+            e.preventDefault();
+            var data = {
+                ids: selectedForms().enrolmentFormIds
+            };
+            $("#student-class-move-content").load(this.href, $.param(data), function () {
+                $("#student-class-move-dialog").modal({
+                    backdrop: 'static',
+                    keyboard: true,
+                    show: true
+                });
+                return false;
+            });
+        });
+    });
+
+</script>
+
 <div class="row">
     <ol class="breadcrumb">
         You are here:
+        <li>@Html.ActionLink("Timetabling", "Index", "Timetable")</li>
+        <li>@Html.ActionLink(@Model.Line.Timetable.TimetableIdentifier, "Build", "Timetable", new { id = @Model.Line.Timetable.Id }, null)</li>
     </ol>
 </div>
 
@@ -70,8 +123,22 @@
 </div>
 
 <div class="row">
+    <div class="col-sm-12 col-md-6">
+        <h3>
+            Enrolled Students
+
+            <div id="actions" class="btn-group">
+                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a id="student-class-move-button" href="@Url.Action("StudentMove")">Move Selected Students</a></li>
+                </ul>
+            </div>
+        </h3>
+    </div>
     <h3 class="col-sm-12 col-md-6">
-        Enrolled Students
+        Enrolments Waiting For Approval
     </h3>
 </div>
 
@@ -80,16 +147,18 @@
         <table class="table table-hover">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Enrolment Id</th>
                     <th>Enrolment Name</th>
                     <th>Student</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach(EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved))
+                @foreach (EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved))
                 {
-                    <tr>
-                        <td>@ef.EnrolmentFormId</td>
+                    <tr class="enrolled-row" onclick="location.href='@Url.Action("TimetabledClassEnrolmentForm", "TimetabledClass", new { enrolmentFormId = ef.EnrolmentFormId })'">
+                        <td>@Html.CheckBox(" ")</td>
+                        <td id="enrolmentId-data">@ef.EnrolmentFormId</td>
                         <td>@ef.Name</td>
                         <td>@ef.Student.FullName()</td>
                     </tr>
@@ -110,7 +179,7 @@
             <tbody>
                 @foreach (EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Completed))
                 {
-                    <tr>
+                    <tr onclick="location.href='@Url.Action("TimetabledClassEnrolmentForm", "TimetabledClass", new { enrolmentFormId = ef.EnrolmentFormId })'">
                         <td>@ef.EnrolmentFormId</td>
                         <td>@ef.Name</td>
                         <td>@ef.Student.FullName()</td>
@@ -120,4 +189,35 @@
         </table>
     </div>
 
+    <h3 class="col-sm-12 col-md-6 col-md-offset-6">
+        Disapproved Enrolments
+    </h3>
+
+    <div class="col-sm-12 col-md-6 col-md-offset-6">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Enrolment Id</th>
+                    <th>Enrolment Name</th>
+                    <th>Student</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Completed))
+                {
+                    <tr onclick="location.href='@Url.Action("TimetabledClassEnrolmentForm", "TimetabledClass", new { enrolmentFormId = ef.EnrolmentFormId })'">
+                        <td>@ef.EnrolmentFormId</td>
+                        <td>@ef.Name</td>
+                        <td>@ef.Student.FullName()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="student-class-move-dialog" class="modal fade" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" id="student-class-move-content"></div>
+    </div>
 </div>

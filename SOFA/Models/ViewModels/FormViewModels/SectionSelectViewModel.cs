@@ -15,7 +15,10 @@ namespace SOFA.Models.ViewModels
         public IEnumerable<SelectListItem> SectionItems { get; set; }
 
         
-        public SectionSelectViewModel(List<Section> Sections)
+        public SectionSelectViewModel()
+        { }
+
+        public SectionSelectViewModel(List<Section> Sections) : this()
         {
             SectionItems = new SelectList(Sections, "Id", "Name");
         }

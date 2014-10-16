@@ -30,7 +30,7 @@ namespace SOFA.Models
 {
     public class DBContext : IdentityDbContext<SOFAUser>
     {
-        public DBContext() : base("DefaultConnection")
+        public DBContext() : base("DefaultConnection",throwIfV1Schema:false)
         { }
 
         public DbSet<Department> Departments { get; set; }
@@ -75,6 +75,8 @@ namespace SOFA.Models
 
         public DbSet<EnrolmentFieldOption> EnrolmentFieldOptions { get; set; }
 
+        public DbSet<File> Files { get; set; }
+
         #endregion
 
         public static DBContext Create()
@@ -82,30 +84,22 @@ namespace SOFA.Models
             return new DBContext();
         }
 
-        public new void OnModelCreating(DbModelBuilder modelBuilder)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Section>().
+                HasMany(s => s.Fields).
+                WithOptional(f => f.Section).
+                WillCascadeOnDelete(true);
+            modelBuilder.Entity<Field>().
+                HasMany(f => f.FieldOptions).
+                WithOptional(fo => fo.Field).
+                WillCascadeOnDelete(true);
+
+
+          
             
-                
-
-
-                /*
-            modelBuilder.Entity<EnrolmentForm>()
-                .HasKey(eform => eform.EnrolmentFormId);
-            modelBuilder.Entity<EnrolmentSection>()
-                .HasKey(eSection => eSection.EnrolmentSectionId);
-            modelBuilder.Entity<EnrolmentFormSection>()
-                .HasKey(efSection => new { efSection.EnrolmentFormId
-                                         , efSection.EnrolmentSectionId });
-
-            modelBuilder.Entity<EnrolmentSection>()
-                .HasMany(eSection => eSection.EnrolmentFormSections)
-                .WithRequired(efSection => efSection.EnrolmentSection)
-                .HasForeignKey(efSection => efSection.EnrolmentSectionId);
-            modelBuilder.Entity<EnrolmentForm>()
-                .HasMany(eForm => eForm.EnrolmentFormSections)
-                .WithRequired(efSection => efSection.EnrolmentForm)
-                .HasForeignKey(efSection => efSection.EnrolmentFormId);
-             */
         }
     }
 }

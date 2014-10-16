@@ -1,0 +1,77 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+@using SOFA.Models.ViewModels.EnrolmentViewModels
+@using SOFA.Infrastructure;
+
+@model EnrolmentFieldViewModel
+
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+@Html.HiddenFor(m => m.OriginalFieldId)
+
+
+@Html.LabelFor(model => model.Value, Model.PromptValue
+                           , new { @class = "control-label col-xs-2 label-align" })
+@{
+    var dfid = UUIDUtil.NewUUID();
+    var fid = UUIDUtil.NewUUID();
+}
+
+<div class="col-xs-10">
+    <div class="input-group">
+        <input id = "@dfid"type="file" name="file" class="file" style="display:none" >
+        @Html.Editor("FileDisplay", new { @class = "form-control", placeholder = "Upload File" })
+        @Html.HiddenFor(model => model.Value, new { @class = "form-control", placeholder = "", id=fid })
+        <span class="input-group-btn">
+            <button class="browse btn btn-primary" type="button" style="font-size:14px"><i class="glyphicon glyphicon-search"></i> Browse</button>
+        </span>
+    </div>
+    @Html.ValidationMessageFor(m => m.Value)
+
+
+</div>
+
+<script type="text/javascript">
+    function submitFile(file) {
+        var data = new FormData();
+        data.append("file", document.getElementById("@dfid").files[0]);
+        $.ajax({
+            url: "/File/UploadFile",
+            type: "POST",
+            data: data,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+        }).done(function (d) {
+            document.getElementById("@fid").value = d;
+        });
+    }
+    $(document).on('click', '.browse', function () {
+        var file = $(this).parent().parent().parent().find('.file');
+        file.trigger('click');
+    });
+    $(document).on('change', '.file', function () {
+        $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+        submitFile(this.files[0]);
+    });
+</script>

@@ -1,0 +1,38 @@
+﻿
+@using SOFA.Models.ViewModels
+
+@model StudentMoveViewModel
+
+<div class="modal-header">
+    <h4 class="modal-title">Move Students</h4>
+</div>
+
+@using (@Html.BeginForm("StudentMove", "TimetabledClass", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="modal-body">
+        @Html.HiddenFor(m => m.CurrentTimetabledClassId)
+        @for (int i = 0; i < Model.EnrolmentFormIds.Count; i++)
+        {
+            @Html.HiddenFor(m => Model.EnrolmentFormIds[i])
+        }
+        @Html.LabelFor(m => m.NewTimetabledClassId, "Class")
+        <div class="form-group">
+
+            <div class="col-md-12 text-center ">
+                @Html.DropDownListFor(m => m.NewTimetabledClassId, Model.TimetabledClasses, "Move to Class...", new { @class = "form-control " })
+            </div>
+        </div>
+    
+    </div>
+
+
+    <div class="modal-footer">
+        <input type="submit" class="btn btn-success" value="Move" />
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div> 
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($(this));
+    });
+</script>

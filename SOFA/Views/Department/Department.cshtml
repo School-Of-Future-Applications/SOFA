@@ -61,7 +61,10 @@
             <li>
                 <a href="#penrolments" role="tab" data-toggle="tab">
                     Pending Enrolments
-                    <span class="badge">10</span>
+                    @if (@ViewBag.PendingEnrolmentCount != 0)
+                    {
+                        <span class="badge">@ViewBag.PendingEnrolmentCount</span>   
+                    }
                 </a>
             </li>
         </ul>

@@ -19,6 +19,7 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.Prefab
 @using SOFA.Models.ViewModels.FormViewModels
 
 @model SOFA.Models.ViewModels.FormViewModels.FormSectionViewModel
@@ -27,20 +28,20 @@
     @Html.HiddenFor(m => m.Section.Id, new { @class = "sectionId" })
     
     <h3 class="panel-heading">@Html.DisplayFor(m => m.Section.Name)</h3>
-    <div class="panel-body">
+    <div>
         <div class="pull-right margin-bottom">
-
-        @if(!Section.DEFAULT_SECTION_IDS.Contains(Model.Section.Id))
-        {
-            @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)   
-        }        
-        <a href="#" class="removeSectionLink">Remove</a>
-            
-        
+            @if (!PrefabSection.GetAllPrefabSectionIds().Contains(Model.Section.Id))
+            {
+                @Html.ActionLink("Edit", "Edit", "Section", new { SectionId = Model.Section.Id }, null)
+            }
+            @Html.ActionLink("Remove", "RemoveSection", "Form", new { formId = Model.formId, sectionId = Model.Section.Id }, new { @class = "delete-link" })
         </div>
-        <div>
+        <div class="panel-body">
             @Html.DisplayFor(m => m.Section)
         </div>
     </div>
+    
+    
+    
 
 </div>

@@ -48,9 +48,12 @@ namespace SOFA.Models
         
         public virtual List<TimetabledClass> TimetabledClasses{ get; set; }
 
+        public virtual List<Section> PreRequisites { get; set; }
+
         public ClassBase()
         {
             this.TimetabledClasses = new List<TimetabledClass>();
+            this.PreRequisites = new List<Section>();
         }
     }
 }

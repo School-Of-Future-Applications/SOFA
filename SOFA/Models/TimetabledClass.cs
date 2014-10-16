@@ -21,6 +21,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -28,12 +29,17 @@ namespace SOFA.Models
 {
     public class TimetabledClass
     {
+        public const double THRESHOLD_PERCANTAGE = 60;
+
         [Key]
         public int Id { get; set; }
 
+        public int? ClassBaseID { get; set; }
+        [ForeignKey("ClassBaseID")]
         public virtual ClassBase ClassBase { get; set; }
         
-        public int? ClassBaseID { get; set; }
+        
+
         public virtual Line Line { get; set; }
 
         public Int32 Capacity { get; set; }
@@ -41,8 +47,34 @@ namespace SOFA.Models
         public virtual Person Teacher { get; set; }
 
         [StringLength(100)]
+        [Display(Name = "Display Name")]
         public String DisplayName { get; set; }
 
         public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
+
+        public double fillPercantage()
+        {
+            int enrolledCount = validEnrolmentCount();
+            return ((double)enrolledCount / (double)Capacity * 100);
+        }
+
+        public bool isAlmostFull()
+        {
+            double fill = fillPercantage();
+            return fillPercantage() >= THRESHOLD_PERCANTAGE;
+        }
+
+        public bool isFull()
+        {
+            int enrolledCount = EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved ||
+                                                     x.Status == EnrolmentForm.EnrolmentStatus.Completed).Count();
+            return enrolledCount >= Capacity;
+        }
+
+        public int validEnrolmentCount()
+        {
+            return EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved ||
+                                                     x.Status == EnrolmentForm.EnrolmentStatus.Completed).Count();
+        }
     }
 }

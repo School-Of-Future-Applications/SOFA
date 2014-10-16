@@ -41,5 +41,10 @@ namespace SOFA.Models
         public String DepartmentName { get; set; }
 
         public virtual ICollection<Course> Courses { get; set; }
+
+        public Department()
+        {
+            Courses = new List<Course>();
+        }
     }
 }

@@ -26,11 +26,14 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 using SOFA.Models.ViewModels.EnrolmentViewModels;
 using SOFA.Models.Prefab;
+
 
 namespace SOFA.Controllers
 {
@@ -69,23 +72,6 @@ namespace SOFA.Controllers
                                           formId = enrolForm.EnrolmentFormId });
         }
 
-        /* Thoms old Enrol method
-        [HttpGet]
-        public ActionResult Enrol(String enrolmentFormId, string enrolmentSectionId)
-        {
-            EnrolmentForm eForm = null;
-            try
-            {
-                eForm = this.DBCon().EnrolmentForms.Where(x => x.EnrolmentFormId == enrolmentFormId).First();
-            }
-            catch
-            {
-                return new HttpNotFoundResult();
-            }
-            return View(eForm);
-        }
-
-         */
 
         public ActionResult Enrol(string sectionId, string formId)
         {
@@ -98,6 +84,22 @@ namespace SOFA.Controllers
                 EnrolmentFormSection formSection = form.EnrolmentFormSections
                                             .Single(efs => efs.EnrolmentSectionId == sectionId);
                 EnrolmentSection section = formSection.EnrolmentSection;
+                //Order fields
+                
+                try
+                {
+                    var enrolmentFields = section.EnrolmentFields.ToList();
+                    var sectionFieldOrders = FieldOrderUtil.
+                                                GetOrderForEnrolmentFields(enrolmentFields, 
+                                                                            this.DBCon());
+
+                    section.EnrolmentFields = enrolmentFields.Sort(sectionFieldOrders);
+                }
+                catch
+                {
+
+                }
+                
                 if (section.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
                 {
                     esvm = new StudentEnrolmentSectionViewModel(section);
@@ -106,7 +108,7 @@ namespace SOFA.Controllers
                 {
                     //Get all departments where
                     List<Department> departments = this.DBCon().Departments.
-                                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                                        Where(d => !d.Deleted && d.Courses.Any(c => c.ClassBases.Count > 0)).
                                         ToList();
                     esvm = new CourseEnrolmentSectionViewModel(section, departments);
                 }
@@ -134,23 +136,45 @@ namespace SOFA.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Enrol(EnrolmentSectionViewModel esvm)
         {
-            bool saveSuccessful;
             if (esvm.OriginalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
             {
-                saveSuccessful = SaveStudentDetailsSection(esvm);
+                if (!SaveStudentDetailsSection(esvm))
+                {
+                    return View(esvm);
+                }
             }
             else if (esvm.OriginalSectionId.Equals(PrefabSection.COURSE_SELECT))
             {
-                saveSuccessful = SaveClassSelectSection(esvm);
+                if (!SaveClassSelectSection(esvm))
+                {
+                    CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+                        List<Department> departments = this.DBCon().Departments.
+                        Where(d => d.Courses.Any(c => c.ClassBases.Count > 0)).
+                        ToList();
+                    cesvm.DepartmentSelect = new SelectList(departments, "id", "DepartmentName");
+                    cesvm.CourseSelect = new SelectList(Enumerable.Empty<SelectListItem>());
+                    cesvm.YearLevelSelect = new SelectList(Enumerable.Empty<SelectListItem>());
+                    return View(cesvm);
+                }
+                else
+                {
+                    //Check for prereqs
+                    CourseEnrolmentSectionViewModel cesvm = esvm as CourseEnrolmentSectionViewModel;
+                    var selectedClassabase = this.DBCon().TimetabledClasses.
+                                                Single(tc => tc.Id == cesvm.SelectedClassId).ClassBase;
+                    if (selectedClassabase.PreRequisites.Count > 0)
+                    {
+                        return RedirectToAction("RequestPrequisite", new { formId = cesvm.FormId });
+                    }
+                }
             }
             else
             {
-                saveSuccessful = SaveEnrolmentSection(esvm);
+                if(!SaveEnrolmentSection(esvm))
+                {
+                    return View(esvm);
+                }
             }
-
-            //Save not successful - send model back to view
-            if (!saveSuccessful)
-                return View(esvm);
 
             //Get the next section id
             if (esvm.SectionNumber < esvm.TotalSections)
@@ -177,8 +201,12 @@ namespace SOFA.Controllers
             }
             else
             {
-                //TODO Form Completion
-                return new HttpNotFoundResult();
+                var form = this.DBCon().EnrolmentForms.Single(f => f.EnrolmentFormId == esvm.FormId);
+                form.Status = Models.EnrolmentForm.EnrolmentStatus.Completed;
+                this.DBCon().EnrolmentForms.Attach(form);
+                this.DBCon().Entry(form).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+                return RedirectToAction("EnrolmentReview", new { formId = esvm.FormId });
             }
             
         }
@@ -191,8 +219,13 @@ namespace SOFA.Controllers
             if (ModelState.IsValid)
             {
                 EnrolmentSection eSection = esvm.toEnrolmentSection();
+
                 this.DBCon().EnrolmentSections.Attach(eSection);
                 this.DBCon().Entry(eSection).State = EntityState.Modified;
+                foreach (var f in eSection.EnrolmentFields)
+                {
+                    this.DBCon().Entry(f).State = EntityState.Modified;
+                }
                 this.DBCon().SaveChanges();
 
                 return true;
@@ -260,16 +293,24 @@ namespace SOFA.Controllers
                                 .EnrolmentSection;
                 var enrolledClass = this.DBCon().TimetabledClasses.
                                 Single(c => c.Id == cesvm.SelectedClassId);
+
+                //Check one last time if class is full
+                if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == enrolledClass.Id).
+                        ToList().Count >= enrolledClass.Capacity)
+                {
+                    ModelState.AddModelError("SelectedClass", "The class is full, please choose another class");
+                    return false;
+                }
                 form.Class = enrolledClass;
                 var field = section.EnrolmentFields.Single(ef => ef.OriginalFieldId == PrefabField.CLASS_SELECT);
                 var course = this.DBCon().Courses.Single(c => c.Id == cesvm.SelectedCourse);
 
                 field.Value = String.Format("{0} {1}", course.CourseName, enrolledClass.DisplayName);
- 
+
                 //Save
                 this.DBCon().EnrolmentForms.Attach(form);
                 this.DBCon().Entry(form).State = EntityState.Modified;
-
+                this.DBCon().SaveChanges();
                 return true;
             }
             catch
@@ -279,16 +320,53 @@ namespace SOFA.Controllers
             
         }
 
-        private bool SavePreqSection(EnrolmentSectionViewModel esvm)
+
+        [HttpGet]
+        public ActionResult RequestPrequisite(string formId)
         {
-            return true;
+            try
+            {            
+                //Get class 
+                var form = this.DBCon().EnrolmentForms.
+                                        Single(ef => ef.EnrolmentFormId == formId);
+                ClassBase cb = form.Class.ClassBase;
+                //Double check pre-req is needed
+                if (cb == null || cb.PreRequisites.Count == 0)
+                    throw new ArgumentOutOfRangeException("No prequisite for this class");
+                //Get the needed prereq sections for the class
+                var formSections = form.EnrolmentFormSections.ToList();
+                PrereqUtil preReqUtil = new PrereqUtil();
+                formSections = preReqUtil.RemoveAllPrerequisiteSections(formSections, this.DBCon());
+                formSections = preReqUtil.CollectAndAppendPrerequisiteSections(formSections, cb);
+                formSections = EnrolmentFormSection.Sort(formSections).ToList();
+                //Redirect back to enrolment
+                form.EnrolmentFormSections = formSections;
+                this.DBCon().Entry(form).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                //Get the next section
+                var previousFormSection = formSections.First(efs => efs.EnrolmentSection.OriginalSectionId == PrefabSection.COURSE_SELECT);
+                int index = formSections.IndexOf(previousFormSection);
+                if (index == formSections.Count - 1)
+                    throw new ArgumentOutOfRangeException();
+                return RedirectToAction("Enrol", new { sectionId = formSections[index + 1].EnrolmentSection.Id, 
+                                            formId = formId });
+            }
+            catch 
+            {
+                return new HttpNotFoundResult("No pre-requisite found for this class");
+            }
+            
         }
+        
+        
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult EnrolmentFormId(string enrolmentFormId)
         {
             EnrolmentForm ef = null;
+            EnrolmentFormViewModel vm = new EnrolmentFormViewModel();
 
             try
             {
@@ -300,14 +378,117 @@ namespace SOFA.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            return EnrolmentForm(ef);
+            vm.EnrolmentForm = ef;
+            return EnrolmentForm(vm);
         }
 
         [HttpGet]
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult EnrolmentForm(EnrolmentForm enrolmentForm)
+        public ActionResult EnrolmentForm(EnrolmentFormViewModel vm)
         {
-            return PartialView("EnrolmentForm", enrolmentForm);
+            return PartialView("EnrolmentForm", vm);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormApprove(string EnrolmentFormId
+                                                ,string ApproveController
+                                                ,string ApproveAction
+                                                ,Dictionary<String, String> ApproveArgs)
+        {
+            EnrolmentForm ef = null;
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in ApproveArgs.Keys)
+            {
+                routeValues.Add(key, ApproveArgs[key]);
+            }
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == EnrolmentFormId).First();
+                ef.Status = Models.EnrolmentForm.EnrolmentStatus.Approved;
+                this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().Entry(ef).State = EntityState.Modified;
+                this.DBCon().SaveChanges();
+
+                
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return RedirectToAction(ApproveAction, ApproveController, routeValues);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult EnrolmentFormDelete(string EnrolmentFormId
+                                                ,string DeleteController
+                                                ,string DeleteAction
+                                                ,Dictionary<string, string> DeleteArgs)
+        {
+            EnrolmentForm ef = null;
+            var routeValues = new RouteValueDictionary();
+            foreach (var key in DeleteArgs.Keys)
+            {
+                routeValues.Add(key, DeleteArgs[key]);
+            }
+
+            try
+            {
+                ef = this.DBCon().EnrolmentForms
+                    .Where(x => x.EnrolmentFormId == EnrolmentFormId)
+                    .Include(x => x.Student).First();
+                this.DBCon().EnrolmentForms.Attach(ef);
+                this.DBCon().EnrolmentForms.Remove(ef);
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            
+            return RedirectToAction(DeleteAction, DeleteController, routeValues);
+        }
+
+        [HttpGet]
+        public ActionResult EnrolmentReview(string formId)
+        {
+            try
+            {
+                var form = this.DBCon().EnrolmentForms.
+                                Single(f => f.EnrolmentFormId == formId);
+                var sections = EnrolmentFormSection.Sort(form.EnrolmentFormSections).
+                                Select(fs => fs.EnrolmentSection);
+                //Order fields
+                foreach (var sect in sections)
+                {
+                    List<EnrolmentField> fields = sect.EnrolmentFields.ToList();
+
+                    try
+                    {
+                        List<SectionFieldOrder> orders = FieldOrderUtil.GetOrderForEnrolmentFields(fields, this.DBCon());
+                        fields = fields.Sort(orders);
+                        sect.EnrolmentFields = fields;
+                    }
+                    catch
+                    {
+                        
+                    }
+                }
+                //Convert to view models
+                
+                var enrolmentReviewModel = new EnrolmentReviewViewModel()
+                {
+                    Sections = sections.ToList()
+                };
+
+                return View(enrolmentReviewModel);
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
         }
 
         [HttpGet]
@@ -319,11 +500,21 @@ namespace SOFA.Controllers
                 var course = this.DBCon().Courses.Single(c => c.Id == courseId);
                 var classbases = course.ClassBases.Where(cb => cb.YearLevel == yearLevel);
                 var classes = classbases.Select(cb => cb.TimetabledClasses);    
+                
                 foreach (var tcList in classes)
                 {
                     foreach (var tc in tcList)
                     {
                         TimetabledClassDisplayModel timetableCDM = new TimetabledClassDisplayModel(tc);
+                        //Check if class full - if so set full flag
+                        if (this.DBCon().EnrolmentForms.Where(ef => ef.Class.Id == tc.Id && 
+                                                (ef.Status == Models.EnrolmentForm.EnrolmentStatus.Approved ||
+                                                ef.Status == Models.EnrolmentForm.EnrolmentStatus.Completed)).
+                                                ToList().Count >= tc.Capacity)
+                        {
+                            timetableCDM.full = true;
+                        }
+
                         LineClassDisplayModel lcdm = lines.SingleOrDefault(m => m.LineDisplayName == tc.Line.Label);
                         if (lcdm == null)
                         {

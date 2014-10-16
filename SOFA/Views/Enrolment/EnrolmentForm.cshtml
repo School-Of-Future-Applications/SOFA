@@ -19,37 +19,113 @@
 *@
 
 @using SOFA.Models
+@using SOFA.Models.ViewModels
+@using SOFA.Models.Prefab
 
-@model EnrolmentForm
+@model EnrolmentFormViewModel
 
 @{
+    var headingColor = "";
+    var headingText = "";
+    switch (Model.EnrolmentForm.Status)
+    {
+        case EnrolmentForm.EnrolmentStatus.Approved:
+            headingColor = "#8fc344";
+            headingText = "APPROVED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Completed:
+            headingColor = "#8eb5c4";
+            headingText = "COMPLETED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Disapproved:
+            headingColor = "#b9554a";
+            headingText = "DISAPPROVED";
+            break;
+            
+        case EnrolmentForm.EnrolmentStatus.Pending:
+            headingColor = "#dcb046";
+            headingText = "PENDING";
+            break;
+            
+        default:
+            break;
+    }
 }
+
+<style>
+    .status-font {
+        color: #958888;
+        font-size: x-large;
+    }
+</style>
+
+<div class="row">
+    <div class="col-sm-12" style="background-color: @headingColor;">
+        <span class="status-font">
+            @headingText
+        </span>
+    </div>
+</div>
 
 <div class="row">
     <h2 class="col-sm-6">
-        Enrolment Form For @Model.Student.FullName()
+        Enrolment Form For @Model.EnrolmentForm.Student.FullName()
     </h2>
 </div>
 
 <div class="row">
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model)
+        @Html.DisplayFor(model => model.EnrolmentForm)
     </div>
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model.Class)
+        @Html.DisplayFor(model => model.EnrolmentForm.Class)
     </div>
     <div class="col-sm-4">
-        @Html.DisplayFor(model => model.Student)
+        @Html.DisplayFor(model => model.EnrolmentForm.Student)
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12">
-       <div class="btn-toolbar" role="toolbar">
+       <div class="" role="toolbar">
            <div class="btn-group">
-               <button type="button" class="btn btn-default">Left</button>
-               <button type="button" class="btn btn-default">Middle</button>
-               <button type="button" class="btn btn-default">Right</button>
+               <button  type="button" class="btn btn-info">Print</button>
+               
+               @using (@Html.BeginForm("EnrolmentFormDelete", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
+               {
+                   <input style="margin-left: 5px"class=" btn btn-danger" type="submit" value="Delete" />
+                   <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
+                   @Html.HiddenFor(m => m.DeleteAction)
+                   @Html.HiddenFor(m => m.DeleteController)
+                   @Html.HiddenFor(m => m.DeleteArgs)
+                   foreach (var k in Model.DeleteArgs.Keys)
+                   {                       
+                       @Html.HiddenFor(m => m.DeleteArgs[k])
+                   }
+
+               }
+               
+
+               
+           </div>
+           <div class="btn-group">
+               @using (@Html.BeginForm("EnrolmentFormApprove", "Enrolment", FormMethod.Post, new { @style = "display:inline!important" }))
+               {
+                   <input style="margin-left: 5px" class=" btn btn-success" type="submit" value="Approve" />
+                   <input type="hidden" name="EnrolmentFormId" value="@Model.EnrolmentForm.EnrolmentFormId" />
+                   @Html.HiddenFor(m => m.ApproveAction)
+                   @Html.HiddenFor(m => m.ApproveController)
+                   
+                   foreach (var k in Model.ApproveArgs.Keys)
+                   {
+                       @Html.HiddenFor(m => m.ApproveArgs[k])
+                   }
+
+               }
+                
+               <button type="button" class="btn btn-danger">Disapprove</button>
            </div>
        </div>
     </div>
@@ -58,9 +134,13 @@
 <div class="row">
     <div class="col-sm-offset-3 col-sm-6">
 
-        @foreach(EnrolmentFormSection efs in Model.EnrolmentFormSections)
+        @foreach(EnrolmentFormSection efs in Model.EnrolmentForm.EnrolmentFormSections)
         {
-            @Html.DisplayFor(model => efs.EnrolmentSection)
+            if(efs.EnrolmentSection.OriginalSectionId != PrefabSection.COURSE_SELECT &&
+                efs.EnrolmentSection.OriginalSectionId != PrefabSection.STUDENT_DETAILS)
+            {
+                @Html.DisplayFor(model => efs.EnrolmentSection)  
+            }
         }
 
     </div>

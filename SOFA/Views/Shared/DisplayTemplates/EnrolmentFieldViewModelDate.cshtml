@@ -18,27 +18,30 @@
     * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 *@
 
-@using SOFA.Models.ViewModels.FormViewModels
+@using SOFA.Models
+@using SOFA.Models.ViewModels.EnrolmentViewModels
 
-@model FieldViewModel
+@model EnrolmentFieldViewModel
+
+@Html.HiddenFor(m => m.EnrolmentFieldId)
+@Html.HiddenFor(m => m.FieldType)
+@Html.HiddenFor(m => m.PromptValue)
+@Html.HiddenFor(m => m.OriginalFieldId)
+
+
 
 @Html.LabelFor(model => model.Value, Model.PromptValue
                            , new { @class = "control-label col-xs-2 label-align" })
 
 <div class="col-xs-10">
-    <div class="input-group date" id="@Model.FieldId">
-        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder = "dd/mm/yyyy" })
+    <div class="input-group date">
+        
+        @Html.EditorFor(model => model.Value, new { @class = "form-control", placeholder="dd/mm/yyyy"})
         <span class="input-group-addon">
             <span class="glyphicon glyphicon-calendar"></span>
         </span>
     </div>
-</div>
+    @Html.ValidationMessageFor(m => m.Value)
 
-<script type="text/javascript">
-    
-        console.log("Herrow");
-        $('#@Model.FieldId').datetimepicker({
-            pickTime: false
-        });
-    
-</script>
+
+</div>

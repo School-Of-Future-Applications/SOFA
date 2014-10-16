@@ -57,12 +57,14 @@
   <ItemGroup>
     <Compile Include="Controllers\CourseControllerTests.cs" />
     <Compile Include="Controllers\ClassBaseControllerTests.cs" />
+    <Compile Include="Controllers\SectionControllerTests.cs" />
     <Compile Include="EnrolmentViewModels\EnrolmentSectionViewModelTests.cs" />
     <Compile Include="FormViewModels\FormViewModelTests.cs" />
     <Compile Include="FormViewModels\FormSectionViewModelTests.cs" />
     <Compile Include="FormViewModels\SectionViewModelTests.cs" />
     <Compile Include="FormViewModels\FieldViewModelTests.cs" />
     <Compile Include="ModelBinders\EnrolmentSectionVMBinderTests.cs" />
+    <Compile Include="Util\FieldOrderUtilTests.cs" />
     <Compile Include="Validation\EnrolmentValidationUnitTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

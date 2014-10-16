@@ -1,0 +1,80 @@
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models
+
+@model ClassBase
+
+<div class="row">
+    <h3 class="col-sm-6">Pre-requisites</h3>
+    <div class="btn-toolbar col-sm-12  ">
+        <a class="pull-right add-prereq-link btn btn-primary btn-labeled">
+            <span class="glyphicon glyphicon-plus"></span>
+            Add Existing
+        </a>
+        <a class="pull-right btn btn-success btn-labeled createPrereq" href="@Url.Action("CreatePrerequisite", "ClassBase", new { classBaseId = Model.Id })">
+            <span class="glyphicon glyphicon-pencil"></span>
+            Create New
+        </a>
+
+        
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            @foreach (Section s in Model.PreRequisites)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(x => s.Name)</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Section", new { sectionId = s.Id }, null) |
+                        @Html.ActionLink("Remove", "RemovePrerequisite", "ClassBase", new { classBaseId = Model.Id, sectionId = s.Id },
+                                                                                new { @class = "delete-link" })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+<div id="createPrereq-dialog"></div>
+<div id="addExisting-dialog">
+    @Html.Partial("AddExistingPrereqModal", Model)
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#createPrereq-dialog').dialog({
+            autoOpen: false,
+            width: 600,
+            resizable: true,
+            modal: true
+        });
+
+        $(".createPrereq").click(function (event) {
+            event.preventDefault();
+            $('#createPrereq-dialog').load(this.href, function () {
+                $(this).dialog('open');
+            });
+        });
+    });
+</script>

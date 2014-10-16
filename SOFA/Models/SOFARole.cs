@@ -26,11 +26,11 @@ namespace SOFA.Models
 {
     public class SOFARole : IdentityRole
     {
-        public const String MODERATOR_ROLE = "moderator";
-        public const String NONE_ROLE = "none";
-        public const String SOFAADMIN_ROLE = "sofaadmin";
-        public const String SYSADMIN_ROLE = "sysadmin";
-        public const String TEACHER_ROLE = "teacher";
+        public const String MODERATOR_ROLE = "Moderator";
+        public const String NONE_ROLE = "None";
+        public const String SOFAADMIN_ROLE = "SOFA Administrator";
+        public const String SYSADMIN_ROLE = "System Administrator";
+        public const String TEACHER_ROLE = "Teacher";
 
         public const String AUTH_TEACHER = TEACHER_ROLE + "," +
                                            MODERATOR_ROLE + "," +

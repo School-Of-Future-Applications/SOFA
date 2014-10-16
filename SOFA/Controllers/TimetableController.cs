@@ -52,9 +52,15 @@ namespace SOFA.Controllers
         //
         // GET: /Timetable/Create
         [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
-            return View();
+            if (id < 1)
+                return View();
+            else
+            {
+                Timetable t = this.DBCon().Timetables.Single(tim => tim.Id == id);
+                return View(t);
+            }
         }
 
         //
@@ -67,13 +73,19 @@ namespace SOFA.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    this.DBCon().Timetables.Add(t);
+                    if (t.Id == 0)
+                    {
+                        this.DBCon().Timetables.Add(t);
+                    }
+                    else
+                    {
+                        this.DBCon().Timetables.Attach(t);
+                        this.DBCon().Entry(t).State = System.Data.Entity.EntityState.Modified;
+                    }
                     this.DBCon().SaveChanges();
                     return RedirectToAction("Index");
                 }
                 return View();
-     
-                
             }
             catch
             {
@@ -81,6 +93,11 @@ namespace SOFA.Controllers
             }
         }
 
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult Edit(int id)
+        {
+            return RedirectToAction("Create", new { id = id });
+        }
 
         //
         // GET: /Timetable/Build/5
@@ -142,7 +159,7 @@ namespace SOFA.Controllers
             TimetabledClassCreateEditViewModel tclassmodel = new TimetabledClassCreateEditViewModel();
             TimetabledClass tclass = new TimetabledClass();
             tclassmodel.TimetabledClass = tclass;
-            tclassmodel.ClassBases = this.DBCon().ClassBases;
+            tclassmodel.ClassBases = this.DBCon().ClassBases.Where(cb => cb.Course.Deleted != true);
             Line l = this.DBCon().Lines.Where(x => x.Id == id).FirstOrDefault();
             tclassmodel.LineID = l.Id;
             return PartialView("TimetabledClassCreate", tclassmodel);
@@ -206,7 +223,9 @@ namespace SOFA.Controllers
         {
             TimetabledClass tc = this.DBCon().TimetabledClasses.Where(x => x.Id == id).FirstOrDefault();
             int timetableid = tc.Line.Timetable.Id;
-            this.DBCon().TimetabledClasses.Remove(this.DBCon().TimetabledClasses.Where(x => x.Id == id).FirstOrDefault());
+            tc.EnrolmentForms.Clear();
+            this.DBCon().TimetabledClasses.Remove(tc);
+            this.DBCon().Entry(tc).State = System.Data.Entity.EntityState.Deleted;
             this.DBCon().SaveChanges();
             return RedirectToAction("Build", new { id = timetableid });
         }

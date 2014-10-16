@@ -20,6 +20,7 @@
 
 @using System.Collections.Generic
 @using SOFA.Models
+@using SOFA.Models.Prefab
 
 @model List<Section>
 
@@ -46,20 +47,29 @@
     });
 </script>
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
+        You are here:
         <li class="active">Sections</li>
     </ol>
-    <h2>Sections</h2>
-    @Html.ActionLink("New Section", "CreateSection", null
-                    ,new { @class = "btn btn-default addsection" })
-   
+</div>
+
+<div class="row">
+    <h2 class="col-sm-6">
+        Sections
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("CreateSection")" class="btn btn-primary btn-labeled pull-right addsection">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            New Section
+        </a>
+    </h2>
 </div>
 
 <div class="row">
     @foreach(Section s in Model)
     {
-        bool isDefault = Section.DEFAULT_SECTION_IDS.Contains(s.Id);
+        bool isDefault = PrefabSection.GetAllPrefabSectionIds().Contains(s.Id);
         <div class="col-md-3 col-sm-5">
             <div class="panel @(isDefault ? "panel-success" : "panel-primary")">
                 <div class="panel-heading">@s.Name</div>

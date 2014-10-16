@@ -23,6 +23,16 @@
 @model PendingEnrolmentViewModel
 
 @{
+    EnrolmentFormViewModel vm = new EnrolmentFormViewModel();
+    vm.EnrolmentForm = Model.EnrolmentForm;
+    vm.DeleteAction = "Department";
+    vm.DeleteController = "Department";
+    vm.DeleteArgs.Add("departmentId", Model.Department.id.ToString());
+    vm.ApproveAction = "PendingEnrolment";
+    vm.ApproveController = "Department";
+    vm.ApproveArgs.Add("departmentId", Model.Department.id.ToString());
+    vm.ApproveArgs.Add("enrolmentFormId", Model.EnrolmentForm.EnrolmentFormId.ToString());
+
 }
 
 <div class="row">
@@ -35,4 +45,4 @@
     </ol>
 </div>
 
-@Html.Action("EnrolmentForm", "Enrolment", Model.EnrolmentForm )
+@Html.Action("EnrolmentForm", "Enrolment", vm)

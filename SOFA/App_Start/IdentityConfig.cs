@@ -41,6 +41,11 @@ namespace SOFA.App_Start
                 {
                     AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie
                    ,LoginPath = new PathString("/Login/UserLogin")
+                   ,
+                    Provider = new CookieAuthenticationProvider
+                    {      
+                        OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<SOFAUserManager,SOFAUser>(System.TimeSpan.FromMinutes(1),regenerateIdentity: (manager,user) => user.GenerateUserIdentityAsync(manager))          
+                    } 
                 });
         }
     }

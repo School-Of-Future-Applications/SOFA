@@ -96,6 +96,10 @@ namespace SOFA.Controllers
             {
                 dep = this.DBCon().Departments.Where(x => x.id == departmentId).First();
                 dep.Deleted = true;
+                foreach (Course c in dep.Courses)
+                {
+                    c.Deleted = true;
+                }
                 this.DBCon().Entry(dep).State = EntityState.Modified;
                 this.DBCon().SaveChanges();
                 return RedirectToAction("Index");
@@ -114,7 +118,9 @@ namespace SOFA.Controllers
 
             Department dep = this.DBCon().Departments.Where(x => x.id == departmentId)
                             .FirstOrDefault();
-            ViewBag.DepartmentId = dep.id;
+            ViewBag.PendingEnrolmentCount = this.DBCon().EnrolmentForms
+                .Where(x => x.Class.ClassBase.Course.Department.id == departmentId
+                       && x.Status == EnrolmentForm.EnrolmentStatus.Completed).Count();
             return View(dep);
         }
 
@@ -147,7 +153,8 @@ namespace SOFA.Controllers
             try
             {
                 pendingEnrolments = this.DBCon().EnrolmentForms
-                    .Where(x => x.Class.ClassBase.Course.Department.id == departmentId)
+                    .Where(x => x.Class.ClassBase.Course.Department.id == departmentId
+                           && x.Status == EnrolmentForm.EnrolmentStatus.Completed)
                     .Include(x => x.Class.ClassBase.Course).ToList();
             }
             catch

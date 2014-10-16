@@ -117,6 +117,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\class-capacity.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\dialog.css" />
     <Content Include="Content\enrolment.css" />
@@ -196,7 +197,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
-
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
@@ -273,6 +273,7 @@
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EnrolmentController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FormController.cs" />
     <Compile Include="Controllers\LineTimeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -289,10 +290,13 @@
     <Compile Include="Infrastructure\DateTimeUtil.cs" />
     <Compile Include="Infrastructure\DBContextUtil.cs" />
     <Compile Include="Infrastructure\EnrolmentUtil.cs" />
+    <Compile Include="Infrastructure\FieldOrderUtil.cs" />
+    <Compile Include="Infrastructure\FileManager.cs" />
     <Compile Include="Infrastructure\HttpsBaseController.cs" />
     <Compile Include="Infrastructure\IdentityEmail.cs" />
     <Compile Include="Infrastructure\IdentityUtil.cs" />
     <Compile Include="Infrastructure\NavUtil.cs" />
+    <Compile Include="Infrastructure\PrereqUtil.cs" />
     <Compile Include="Infrastructure\Users\SOFARoleManager.cs" />
     <Compile Include="Infrastructure\Users\SOFAUserManager.cs" />
     <Compile Include="Infrastructure\UUIDUtil.cs" />
@@ -310,6 +314,7 @@
     <Compile Include="Models\EnrolmentForm.cs" />
     <Compile Include="Models\Field.cs" />
     <Compile Include="Models\FieldOption.cs" />
+    <Compile Include="Models\File.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormSection.cs" />
     <Compile Include="Models\Line.cs" />
@@ -335,13 +340,17 @@
     <Compile Include="Models\Validation\AfterDate.cs" />
     <Compile Include="Models\Validation\EnrolmentValidator.cs" />
     <Compile Include="Models\Validation\FormValidator.cs" />
+    <Compile Include="Models\ViewModels\AddExistingPreReqViewModel.cs" />
     <Compile Include="Models\ViewModels\ClassBaseViewModel.cs" />
     <Compile Include="Models\ViewModels\CourseCreateViewModel.cs" />
     <Compile Include="Models\ViewModels\DeleteConfirmationViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentFormViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\ClassSelectViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\CourseEnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentFieldViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentReviewViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\EnrolmentSectionViewModel.cs" />
+    <Compile Include="Models\ViewModels\EnrolmentViewModels\FileViewModel.cs" />
     <Compile Include="Models\ViewModels\EnrolmentViewModels\StudentEnrolmentSectionViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FieldViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\FormSectionOrderViewModel.cs" />
@@ -350,7 +359,9 @@
     <Compile Include="Models\ViewModels\FormViewModels\SectionSelectViewModel.cs" />
     <Compile Include="Models\ViewModels\FormViewModels\SectionViewModel.cs" />
     <Compile Include="Models\ViewModels\PendingEnrolmentViewModel.cs" />
+    <Compile Include="Models\ViewModels\CreatePrerequisiteViewModel.cs" />
     <Compile Include="Models\ViewModels\SectionEditViewModel.cs" />
+    <Compile Include="Models\ViewModels\StudentMoveViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
     <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
     <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />
@@ -412,9 +423,6 @@
     </Content>
     <Content Include="Views\Form\Index.cshtml" />
     <Content Include="Views\Section\Index.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\FormSection.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Section.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Field.cshtml" />
     <Content Include="Views\Form\Edit.cshtml" />
     <Content Include="Views\Section\CreateEdit.cshtml" />
     <Content Include="Views\Shared\SetLineLabel.cshtml" />
@@ -427,10 +435,8 @@
     <Content Include="Views\Shared\EditorTemplates\EnrolmentSectionViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentField.cshtml" />
     <Content Include="Views\Shared\EditFieldValidation.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\DeleteConfirmationViewModel.cshtml" />
     <Content Include="Views\Shared\FieldOptionsSubView.cshtml" />
-    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModel.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDate.cshtml" />
     <Content Include="Views\Department\PendingEnrolments.cshtml" />
@@ -447,7 +453,26 @@
     <Content Include="Views\ClassBase\Index.cshtml" />
     <Content Include="Views\Shared\LineClassDisplayModel.cshtml" />
     <Content Include="Views\TimetabledClass\TimetabledClass.cshtml" />
-
+    <Content Include="Views\Shared\EditorTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
+    <Content Include="Views\Shared\AddSectionToFormModal.cshtml" />
+    <Content Include="Views\Shared\DeleteConfirmationModal.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FormSectionViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\SectionViewModel.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FileViewModel.cshtml" />
+    <Content Include="Views\Enrolment\EnrolmentReview.cshtml" />
+    <Content Include="Views\ClassBase\Prerequisites.cshtml" />
+    <Content Include="Views\ClassBase\CreatePrerequisite.cshtml" />
+    <Content Include="Views\ClassBase\AddExistingPrereq.cshtml" />
+    <Content Include="Views\Shared\AddExistingPrereqModal.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentField.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldDate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldOption.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldViewModelDate.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\FileViewModel.cshtml" />
+    <Content Include="Views\TimetabledClass\StudentMove.cshtml" />
+    <Content Include="Views\TimetabledClass\TimetabledClassEnrolmentForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -457,6 +482,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
+    <Folder Include="Views\FileManager\" />
     <Folder Include="Views\LineTime\" />
   </ItemGroup>
   <ItemGroup>

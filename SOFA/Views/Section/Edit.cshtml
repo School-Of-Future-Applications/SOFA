@@ -45,7 +45,7 @@
             $.ajax({
                 type: "POST",
                 url: "/Section/GetFieldOptionsForId",
-                data: {"id": post},
+                data: { "id": post },
                 dataType: "html",
                 traditional: true,
                 success: function (data) {
@@ -74,21 +74,45 @@
         $("#designer").disableSelection();
         $("#sortablebodymain").sortable({
             beforeStop: function (event, ui) {
-                if (ui.item.attr("id") == undefined)
-                {
+                if (ui.item.attr("id") == undefined) {
                     ui.item.addClass("panel panel-primary").removeClass("ui-widget-content");
                     ui.item.addClass("givingPrompt").removeClass("ui-draggable");
                     ui.item.data("type", ui.item.find(".elType").html());
                     //ui.item.append(ui.item.data("type"));
                     ui.item.html("");
-                    ui.item.append("<div class='panel-heading' style='cursor: pointer;'><center>" + ui.item.data("type") + "</center></div>");
-                    ui.item.append("<div class='panel-body'></div>");
+                    //ui.item.append("<div class='panel-heading' style='cursor: pointer;'><center>" + ui.item.data("type") + "</center>Test</div>");
+                    ui.item.append("<div class='panel-heading' style='cursor: pointer; display: inline-block; width: 100%; text-align: center;'><div style='width:50px;display:block;float:left'>&nbsp;</div><div style='display:inline'>"+ui.item.data("type")+"</div><div class='btn btn-danger btn-block'  style='padding: 1px 0px; width: 50px; display: inline-block; float: right'><span class='dbutton' id='dbutton'>Delete</span></div></div>")
+                    ui.item.append("<div class='panel-body'><center><span class='editOptions'><a href='#'>Edit Options</a></span></center><div id='fieldOptions'></div>");
                     ui.item.append("<hr>")
                     ui.item.append("<div class='panel-body'><span style='float:left;width:10%'>Prompt:</span><span id='promptValue'></span>\
                                     <span style='float:right;width:10%'><span class='editPrompt'><a href='#'>Edit Prompt</a></span></span></div>");
                     $(".editPrompt").on("click", function () {
                         $(this).parent().parent().parent().addClass("givingPrompt");
                         $("#promptmodal").modal("show");
+                    });
+                    $(".editOptions").on("click", function () {
+                        var post = $(this).parent().parent().parent().attr("id");
+                        $.ajax({
+                            type: "POST",
+                            url: "/Section/GetFieldOptionsForId",
+                            data: { "id": post },
+                            dataType: "html",
+                            traditional: true,
+                            success: function (data) {
+                                //alert(data);
+                                $("#optioncontent").html(data);
+                            },
+                            error: function (request, status, error) {
+                                alert(error);
+                            }
+                        }).done(function (msg) {
+                            //alert(msg);
+                            //$(this).find(".optioncontent").html(msg);
+
+                        });
+                        $(this).find(".optioncontent").html();
+                        $(this).parent().parent().parent().addClass("givingOptions");
+                        $("#optionmodal").modal("show");
                     });
                     $("#promptmodal").modal("show");
                 }
@@ -136,8 +160,7 @@
             var validationnames = [];
             var validationdata = [];
             post.validations = new Array();
-            for (var i = 0; i < this.prepPost.length;i=i+1)
-            {
+            for (var i = 0; i < this.prepPost.length; i = i + 1) {
                 var name = this.prepPost[i].id;
                 var data = this.prepPost[i].data;
                 validationnames.push(name);
@@ -151,11 +174,11 @@
             $.ajax({
                 type: "POST",
                 url: "/Section/SetFieldValidationOptions",
-                data: { fieldID : fieldID, names : validationnames, data : validationdata },
+                data: { fieldID: fieldID, names: validationnames, data: validationdata },
                 dataType: "json",
                 traditional: true,
             }).done(function (msg) {
-                
+
                 $.ajax({
                     type: "POST",
                     url: "/Section/FieldOptionsSubView",
@@ -176,7 +199,7 @@
                     //$(this).find(".optioncontent").html(msg);
 
                 });
-                
+
             });
             //print(saveoption);
         });
@@ -191,31 +214,41 @@
                     url: "/Section/AddField",
                     data: {
                         "sectionId": '@Model.Section.Id',
-                    "type": $(".givingPrompt").data("type"),
-                    "prompt": $("#prompt").val()
-                },
-            }).done(function (msg) {
-                $(".givingPrompt").removeClass("givingPrompt").attr("id", msg).removeClass("delement").addClass("sdelement");
-                var sfos = [];
-                $(".sdelement").each(function () {
-                    var sfo = $(this).attr("id");
-                    sfos.push(sfo);
-                });
-                var post = { FieldIds: sfos };
-                $.ajax({
-                    type: "POST",
-                    url: "/Section/SetSectionFieldOrder",
-                    data: post,
-                    dataType: "json",
-                    traditional: true,
+                        "type": $(".givingPrompt").data("type"),
+                        "prompt": $("#prompt").val()
+                    },
                 }).done(function (msg) {
-                    //alert("set");
+                    $(".givingPrompt").removeClass("givingPrompt").attr("id", msg).removeClass("delement").addClass("sdelement").find("#dbutton").html("<a href='/Section/DeleteField/" + msg +"' style='color:white' class='delete-link' >Delete</a>");
+                    $(".delete-link").click(function (e) {
+                        e.preventDefault();
+                        $("#delete-modal-content").load(this.href, function () {
+                            $("#delete-modal").modal({
+                                backdrop: 'static',
+                                keyboard: true
+                            }, 'show');
+                            return false;
 
+                        });
+                    });
+                    var sfos = [];
+                    $(".sdelement").each(function () {
+                        var sfo = $(this).attr("id");
+                        sfos.push(sfo);
+                    });
+                    var post = { FieldIds: sfos };
+                    $.ajax({
+                        type: "POST",
+                        url: "/Section/SetSectionFieldOrder",
+                        data: post,
+                        dataType: "json",
+                        traditional: true,
+                    }).done(function (msg) {
+                        //alert("set");
+
+                    });
                 });
-            });
             }
-            else
-            {
+            else {
                 $.ajax({
                     type: "POST",
                     url: "/Section/EditFieldPrompt",
@@ -240,37 +273,40 @@
         <li class="active">Edit</li>
     </ol>
     <h2>Edit Section</h2>
-   
+
 </div>
 <div class="panel panel-primary" style="float:left;width:80%">
     <div class="panel-heading">@Model.Section.Name</div>
     <div id="sortablebodymain" class="panel-body">
         @foreach (Field f in Model.OrderedFields)
-{
-    <div class="sdelement panel panel-primary" id=@f.Id>
-        <div class="panel-heading" style="cursor:pointer"><center>@f.FieldType</center></div>
-        <div class="panel-body">
-            <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
-            <div id="fieldOptions">
-                @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
-                {
-                    <span style="float:left;width:10%">@fo.OptionType</span>
-                    <span style="float:right;width:10%">@fo.OptionValue</span>
-                    <br />
-                }
-            </div>
-        </div>
-        <hr />
-        <div class="panel-body">
-            <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
-            <span style="float:right;width:10%"><span class="editPrompt"><a href="#">Edit Prompt</a></span></span>
-            <script typeof="text/javascript">
+        {
+            <div class="sdelement panel panel-primary" id=@f.Id>
+                <div class="panel-heading" style="cursor: pointer; display: inline-block; width: 100%; text-align: center;"><div style="width:50px;display:block;float:left">&nbsp;</div><div style="display:inline">@f.FieldType</div><div class="btn btn-danger btn-block"  style="padding: 1px 0px; width: 50px; display: inline-block; float: right">@Html.ActionLink("Delete", "DeleteField", new { id = f.Id }, new { @style = "color:white", @class = "delete-link" })</div></div>
+                <div class="panel-body">
+                    @if(f.FieldType != Field.TYPE_INFO)
+                    { 
+                    <center><span class="editOptions"><a href="#">Edit Options</a></span></center>
+                    <div id="fieldOptions">
+                        @foreach (FieldOption fo in @f.FieldOptions.OrderBy(x => x.OptionType))
+                        {
+                            <span style="float:left;width:10%">@fo.OptionType</span>
+                            <span style="float:right;width:10%">@fo.OptionValue</span>
+                            <br />
+                        }
+                    </div>
+                    }
+                </div>
+                <hr />
+                <div class="panel-body">
+                    <span style="float:left;width:10%">Prompt:</span><span id="promptValue">@f.PromptValue</span>
+                    <span style="float:right;width:10%"><span class="editPrompt"><a href="#">Edit Prompt</a></span></span>
+                    <script typeof="text/javascript">
                 $('#@f.Id').data("prompt", "@f.PromptValue");
                 $('#@f.Id').data("type", "@f.FieldType");
-            </script>
-        </div>
-    </div>
-}
+                    </script>
+                </div>
+            </div>
+        }
     </div>
 </div>
 <style>
@@ -282,10 +318,11 @@
         margin-bottom: -1px;
         cursor: pointer;
     }
-    .delement img {
-        height: 16px;
-        width: 16px;
-    }
+
+        .delement img {
+            height: 16px;
+            width: 16px;
+        }
 </style>
 <div id="designer" style="float:right;width:18%;text-align:left">
     <div class="delement" id="TEXT_MULTI"><img src="~/Content/images/text.png" /> Multi Line Text<span class="elType" style="display:none">TEXT_MULTI</span></div>
@@ -317,3 +354,5 @@
         </div>
     </div>
 </div>
+
+@Html.Partial("DeleteConfirmationModal")

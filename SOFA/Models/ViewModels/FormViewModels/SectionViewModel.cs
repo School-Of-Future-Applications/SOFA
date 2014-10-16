@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SOFA.Models.ViewModels.EnrolmentViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,11 +12,11 @@ namespace SOFA.Models.ViewModels.FormViewModels
 
         public string Name { get; set; }
 
-        public List<FieldViewModel> Fields { get; set; }
+        public List<EnrolmentFieldViewModel> Fields { get; set; }
 
         public SectionViewModel()
         {
-            Fields = new List<FieldViewModel>();
+            Fields = new List<EnrolmentFieldViewModel>();
         }
 
         public SectionViewModel(Section section) : this()
@@ -27,7 +28,7 @@ namespace SOFA.Models.ViewModels.FormViewModels
                 foreach (var f in section.Fields)
                 {
                     var ef = new EnrolmentField(f);
-                    Fields.Add(new FieldViewModel(ef));
+                    Fields.Add(new EnrolmentFieldViewModel(ef));
                 }
             }
 
