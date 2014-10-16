@@ -69,7 +69,7 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
-        public ActionResult StudentMove()
+        public ActionResult StudentMove(List<String> Ids)
         {
             return PartialView();
         }
