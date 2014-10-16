@@ -26,6 +26,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -71,7 +72,24 @@ namespace SOFA.Controllers
         [HttpGet]
         public ActionResult StudentMove(List<String> Ids)
         {
-            return PartialView();
+            //Error checking
+            if (Ids.Count == 0)
+                throw new ArgumentOutOfRangeException("List parameter cannot be empty");
+            //Get current timetabledClassId
+            String firstId = Ids[0];
+            var tc = this.DBCon().EnrolmentForms.
+                                    Single(ef => ef.EnrolmentFormId == firstId)
+                                    .Class;
+            //Get all timetabled  in course classes except current
+            var course = tc.ClassBase.Course;
+            List<TimetabledClass> availableClasses = course.ClassBases.
+                                                        SelectMany(cb => cb.TimetabledClasses).
+                                                        Where(t => t.Id != tc.Id).ToList();
+            //Create view model
+            StudentMoveViewModel viewModel = new StudentMoveViewModel(availableClasses);
+            viewModel.EnrolmentFormIds = Ids;
+            viewModel.CurrentTimetabledClassId = tc.Id;
+            return PartialView(viewModel);
         }
 	}
 }

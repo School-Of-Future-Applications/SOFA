@@ -1,14 +1,37 @@
 ﻿
+@using SOFA.Models.ViewModels
+
+@model StudentMoveViewModel
 
 <div class="modal-header">
     <h4 class="modal-title">Move Students</h4>
 </div>
 
-<div class="modal-body">
-    <h3>Herrow</h3>
-</div>
+@using (@Html.BeginForm())
+{
+    <div class="modal-body">
+        @Html.HiddenFor(m => m.CurrentTimetabledClassId)
+        @foreach (string id in Model.EnrolmentFormIds)
+        {
+            @Html.HiddenFor(m => id)
+        }
+               
 
-<div class="modal-footer">
-    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Move</button>
-    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
-</div>
+        <div class="form-group">
+            
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.NewTimetabledClassId, Model.TimetabledClasses, "Move to Class...", new { @class = "form-control" })
+            </div>
+        </div>
+
+    </div>
+    
+    
+    
+
+    <div class="modal-footer">
+        <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Move</button>
+        <button class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</button>
+    </div> 
+}
+

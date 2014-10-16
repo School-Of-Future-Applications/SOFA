@@ -360,6 +360,7 @@
     <Compile Include="Models\ViewModels\PendingEnrolmentViewModel.cs" />
     <Compile Include="Models\ViewModels\CreatePrerequisiteViewModel.cs" />
     <Compile Include="Models\ViewModels\SectionEditViewModel.cs" />
+    <Compile Include="Models\ViewModels\StudentMoveViewModel.cs" />
     <Compile Include="Models\ViewModels\UserRoleEditViewModel.cs" />
     <Compile Include="Models\ViewModels\UserActivationViewModel.cs" />
     <Compile Include="Models\ViewModels\UserLoginViewModel.cs" />
