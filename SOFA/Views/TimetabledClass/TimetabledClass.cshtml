@@ -34,14 +34,22 @@
         };
 
         $(".enrolled-row input:checked").each(function (index) {
-            console.log($($(this).parentNode).children());
+            var enrolmentFormId = $(this).parent().siblings("#enrolmentId-data").text();
+            selected.enrolmentFormIds.push(enrolmentFormId);
         });
+        
+        return selected;
     };
 
     $(document).ready(function () {
+        $.ajaxSetup({
+            traditional:true    
+        });
+
         $("#actions").hide();
 
-        $(".enrolled-row input:checkbox").click(function () {
+        $(".enrolled-row input:checkbox").click(function (event) {
+            event.stopPropagation();
             selectedForms();
             if ($(".enrolled-row input:checked").length > 0) {
                 $("#actions").show();
@@ -52,9 +60,11 @@
         });
 
         $("#student-class-move-button").click(function (e) {
-            console.log("clicks");
             e.preventDefault();
-            $("#student-class-move-content").load(this.href, function () {
+            var data = {
+                ids: selectedForms().enrolmentFormIds
+            };
+            $("#student-class-move-content").load(this.href, $.param(data), function () {
                 $("#student-class-move-dialog").modal({
                     backdrop: 'static',
                     keyboard: true,

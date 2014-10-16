@@ -26,6 +26,7 @@ using System.Web.Mvc;
 
 using SOFA.Infrastructure;
 using SOFA.Models;
+using SOFA.Models.ViewModels;
 
 namespace SOFA.Controllers
 {
@@ -47,6 +48,7 @@ namespace SOFA.Controllers
             return View(tc);
         }
 
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult TimetabledClassEnrolmentForm(string enrolmentFormId)
         {
             EnrolmentForm ef = null;
@@ -69,9 +71,53 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
-        public ActionResult StudentMove()
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult StudentMove(List<String> Ids)
         {
-            return PartialView();
+            //Error checking
+            if (Ids.Count == 0)
+                throw new ArgumentOutOfRangeException("List parameter cannot be empty");
+            //Get current timetabledClassId
+            String firstId = Ids[0];
+            var tc = this.DBCon().EnrolmentForms.
+                                    Single(ef => ef.EnrolmentFormId == firstId)
+                                    .Class;
+            //Get all timetabled  in course classes except current
+            var course = tc.ClassBase.Course;
+            List<TimetabledClass> availableClasses = course.ClassBases.
+                                                        SelectMany(cb => cb.TimetabledClasses).
+                                                        Where(t => t.Id != tc.Id).ToList();
+            //Create view model
+            StudentMoveViewModel viewModel = new StudentMoveViewModel(availableClasses);
+            viewModel.EnrolmentFormIds = Ids;
+            viewModel.CurrentTimetabledClassId = tc.Id;
+            return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult StudentMove(StudentMoveViewModel viewModel)
+        {
+            try
+            {
+                var enrolmentForms = this.DBCon().EnrolmentForms.
+                                        Where(ef => viewModel.EnrolmentFormIds.Contains(ef.EnrolmentFormId));
+                var timetabledClass = this.DBCon().TimetabledClasses.
+                                        Single(tc => tc.Id == viewModel.NewTimetabledClassId);
+                foreach (var eform in enrolmentForms)
+                {
+                    eform.Class = timetabledClass;
+                    this.DBCon().EnrolmentForms.Attach(eform);
+                    this.DBCon().Entry(eform).State = System.Data.Entity.EntityState.Modified;
+                }
+                this.DBCon().SaveChanges();
+            }
+            catch
+            {
+
+            }
+            return RedirectToAction("TimetabledClass",
+                    new { timetabledClassId = viewModel.CurrentTimetabledClassId });    
         }
 	}
 }
