@@ -15,13 +15,16 @@
         {
             @Html.HiddenFor(m => Model.EnrolmentFormIds[i])
         }
-        <div class="form-group">            
-            <div class="col-md-10">
-                @Html.DropDownListFor(m => m.NewTimetabledClassId, Model.TimetabledClasses, "Move to Class...", new { @class = "form-control" })
+        @Html.LabelFor(m => m.NewTimetabledClassId, "Class")
+        <div class="form-group">
+
+            <div class="col-md-12 text-center ">
+                @Html.DropDownListFor(m => m.NewTimetabledClassId, Model.TimetabledClasses, "Move to Class...", new { @class = "form-control " })
             </div>
         </div>
+    
     </div>
-        
+
 
     <div class="modal-footer">
         <input type="submit" class="btn btn-success" value="Move" />
