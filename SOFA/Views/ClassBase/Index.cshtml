@@ -25,6 +25,14 @@
     ViewBag.Title = "Index";
 }
 
+<link rel="stylesheet" href="~/Content/class-capacity.css" />
+
+<style>
+    .almost-full {
+        background-color: red;
+    }
+</style>
+
 <div class="row">
     <ol class="breadcrumb">
         You are here:
@@ -80,21 +88,39 @@
                             <th>Display Name</th>
                             <th>Line</th>
                             <th>Capacity</th>
+                            <th>Enrolled</th>
+                            <th>Filled %</th>
                             <th>Teacher</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (TimetabledClass tc in Model.TimetabledClasses)
                         {
+                            string rowClass = "";
+                            if (tc.isFull())
+                            {
+                                rowClass = "";
+                            }
+                            else if (tc.isAlmostFull())
+                            {
+                                rowClass = "";
+                            }
                             <tr onclick="location.href='@Url.Action("TimetabledClass", "TimetabledClass"
-                                                           ,new { timetabledClassId = tc.Id })'">
+                                                           ,new { timetabledClassId = tc.Id })'"
+                                class="@rowClass">
                                 <td>@tc.Id</td>
                                 <td>@tc.DisplayName</td>
                                 <td>@tc.Line.Id - @tc.Line.Label</td>
                                 <td>@tc.Capacity</td>
+                                <td>@tc.validEnrolmentCount()</td>
+                                <td>@Math.Round(tc.fillPercantage(), 2)%</td>
                                 @if (tc.Teacher != null)
                                 {
                                     <td>@tc.Teacher.FullName()</td>
+                                }
+                                else
+                                {
+                                    <td></td>
                                 }
                             </tr>
                         }

@@ -29,6 +29,8 @@ namespace SOFA.Models
 {
     public class TimetabledClass
     {
+        public const double THRESHOLD_PERCANTAGE = 60;
+
         [Key]
         public int Id { get; set; }
 
@@ -49,5 +51,30 @@ namespace SOFA.Models
         public String DisplayName { get; set; }
 
         public virtual ICollection<EnrolmentForm> EnrolmentForms { get; set; }
+
+        public double fillPercantage()
+        {
+            int enrolledCount = validEnrolmentCount();
+            return ((double)enrolledCount / (double)Capacity * 100);
+        }
+
+        public bool isAlmostFull()
+        {
+            double fill = fillPercantage();
+            return fillPercantage() >= THRESHOLD_PERCANTAGE;
+        }
+
+        public bool isFull()
+        {
+            int enrolledCount = EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved ||
+                                                     x.Status == EnrolmentForm.EnrolmentStatus.Completed).Count();
+            return enrolledCount >= Capacity;
+        }
+
+        public int validEnrolmentCount()
+        {
+            return EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Approved ||
+                                                     x.Status == EnrolmentForm.EnrolmentStatus.Completed).Count();
+        }
     }
 }
