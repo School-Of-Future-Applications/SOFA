@@ -17,6 +17,8 @@ namespace SOFA.Infrastructure
             f.FileID = UUIDUtil.NewUUID();
             f.Filename = file.FileName;
             f.Location = HttpContext.Current.Server.MapPath("~/Uploads/" + file.FileName);
+            if(!System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Uploads/")))
+                System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Uploads/"));
             file.SaveAs(f.Location);
             dbCon.Files.Add(f);
             dbCon.SaveChanges();
