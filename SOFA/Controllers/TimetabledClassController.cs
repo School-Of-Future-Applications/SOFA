@@ -47,10 +47,31 @@ namespace SOFA.Controllers
             return View(tc);
         }
 
+        public ActionResult TimetabledClassEnrolmentForm(string enrolmentFormId)
+        {
+            EnrolmentForm ef = null;
+
+            try
+            {
+                ef = this.DBCon().EnrolmentForms.Where(x => x.EnrolmentFormId == enrolmentFormId).First();
+            }
+            catch
+            {
+                return new HttpNotFoundResult();
+            }
+            return View(ef);
+        }
+
         [NonAction]
         public override Enum NavProviderTerm()
         {
             return DashboardNavTerms.Timetabling;
+        }
+
+        [HttpGet]
+        public ActionResult StudentMove()
+        {
+            return PartialView();
         }
 	}
 }

@@ -191,7 +191,8 @@
 
                             <td>
                                 @Html.ActionLink("Edit Class", "EditTimetabledClass", new { id = tclass.Id }, new { @class = "addclass" }) |
-                                @Html.ActionLink("Delete Class", "DeleteTimetabledClass", new { id = tclass.Id })
+                                @Html.ActionLink("Delete Class", "DeleteTimetabledClass", new { id = tclass.Id }) |
+                                @Html.ActionLink("View Class", "TimetabledClass", "TimetabledClass", new { timetabledClassId = tclass.Id }, null)
                             </td>
                         </tr>
                     }

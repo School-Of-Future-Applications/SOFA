@@ -469,6 +469,8 @@
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldViewModelDate.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\EnrolmentFieldViewModelDropdown.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\FileViewModel.cshtml" />
+    <Content Include="Views\TimetabledClass\StudentMove.cshtml" />
+    <Content Include="Views\TimetabledClass\TimetabledClassEnrolmentForm.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
