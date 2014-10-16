@@ -100,7 +100,17 @@ namespace SOFA.Controllers
         {
             try
             {
-
+                var enrolmentForms = this.DBCon().EnrolmentForms.
+                                        Where(ef => viewModel.EnrolmentFormIds.Contains(ef.EnrolmentFormId));
+                var timetabledClass = this.DBCon().TimetabledClasses.
+                                        Single(tc => tc.Id == viewModel.NewTimetabledClassId);
+                foreach (var eform in enrolmentForms)
+                {
+                    eform.Class = timetabledClass;
+                    this.DBCon().EnrolmentForms.Attach(eform);
+                    this.DBCon().Entry(eform).State = System.Data.Entity.EntityState.Modified;
+                }
+                this.DBCon().SaveChanges();
             }
             catch
             {
