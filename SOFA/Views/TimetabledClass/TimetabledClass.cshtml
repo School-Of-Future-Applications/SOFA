@@ -41,7 +41,8 @@
     $(document).ready(function () {
         $("#actions").hide();
 
-        $(".enrolled-row input:checkbox").click(function () {
+        $(".enrolled-row input:checkbox").click(function (event) {
+            event.stopPropagation();
             selectedForms();
             if ($(".enrolled-row input:checked").length > 0) {
                 $("#actions").show();
