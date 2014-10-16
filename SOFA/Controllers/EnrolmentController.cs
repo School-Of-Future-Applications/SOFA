@@ -571,6 +571,66 @@ namespace SOFA.Controllers
             };
             return PartialView("LineClassDisplayModel", csvm);
         }
+
+
+        public JsonResult ClassBaseYearLevels_JSON(int courseId)
+        {
+            try
+            {
+                var allClassBases = this.DBCon().Courses.
+                                    Single(c => c.Id == courseId).ClassBases.
+                                    Where(cb => cb.TimetabledClasses.Count > 0);
+                var currentClassBases = allClassBases.Where(cb => cb.TimetabledClasses.
+                                            Any(tc => tc.Line.Timetable.ActiveDate <= DateTime.Now &&
+                                                    tc.Line.Timetable.ExpiryDate > DateTime.Now)).ToList();
+                if (currentClassBases.Count == 0)
+                {
+                    throw new Exception();
+                }
+                return Json(currentClassBases.Select(cb => cb.YearLevel), JsonRequestBehavior.AllowGet);
+            }
+            catch
+            {
+                return Json(new
+                {
+                    Success = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpGet]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
+        public JsonResult CourseIndex_Json(int departmentId)
+        {
+            try
+            {
+                var courses = this.DBCon().Departments.
+                                Single(d => d.id == departmentId).
+                                Courses.ToList();
+                if (courses.Count == 0)
+                {
+                    throw new Exception();
+                }
+                var courseIdNameList = new List<object>();
+                foreach (Course c in courses)
+                {
+                    courseIdNameList.Add(new
+                    {
+                        Id = c.Id,
+                        Name = c.CourseName
+                    });
+                }
+                return Json(courseIdNameList, JsonRequestBehavior.AllowGet);
+
+            }
+            catch
+            {
+                return Json(new
+                {
+                    Success = false
+                }, JsonRequestBehavior.AllowGet);
+            }
+        }
         
         
 	}

@@ -16,7 +16,7 @@
             $courseSelect.append("<option value>Loading courses...</option>");
             //Get courses and append to course select
             $.ajax({
-                url : "/Course/CourseIndex_Json",
+                url : "/Enrolment/CourseIndex_Json",
                 data: { departmentId: deptId },
                 type : "GET",
                 dataType: "json",
@@ -47,7 +47,7 @@
             $yearLevelSelect.append("<option value>Loading Year Levels...</option>");
             //Get year levels and append to select
             $.get(
-                "/ClassBase/ClassBaseYearLevels_JSON",
+                "/Enrolment/ClassBaseYearLevels_JSON",
                 { courseId : courseId},
                 function (data) {
                     $yearLevelSelect.empty();

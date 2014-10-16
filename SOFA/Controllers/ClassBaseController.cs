@@ -161,7 +161,7 @@ namespace SOFA.Controllers
                                     Single(c => c.Id == courseId).ClassBases.
                                     Where(cb => cb.TimetabledClasses.Count > 0);
                 var currentClassBases = allClassBases.Where(cb => cb.TimetabledClasses.
-                                            Any(tc => tc.Line.Timetable.ActiveDate < DateTime.Now &&
+                                            Any(tc => tc.Line.Timetable.ActiveDate <= DateTime.Now &&
                                                     tc.Line.Timetable.ExpiryDate > DateTime.Now)).ToList();
                 if (currentClassBases.Count == 0)
                 {
