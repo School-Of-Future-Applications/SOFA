@@ -203,7 +203,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach (EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Completed))
+                @foreach (EnrolmentForm ef in Model.EnrolmentForms.Where(x => x.Status == EnrolmentForm.EnrolmentStatus.Disapproved))
                 {
                     <tr onclick="location.href='@Url.Action("TimetabledClassEnrolmentForm", "TimetabledClass", new { enrolmentFormId = ef.EnrolmentFormId })'">
                         <td>@ef.EnrolmentFormId</td>

@@ -28,6 +28,15 @@
 
     EnrolmentFormViewModel vm = new EnrolmentFormViewModel();
     vm.EnrolmentForm = Model;
+    vm.ApproveAction = "TimetabledClassEnrolmentForm";
+    vm.ApproveController = "TimetabledClass";
+    vm.ApproveArgs.Add("enrolmentFormId", Model.EnrolmentFormId);
+    vm.DeleteAction = "TimetabledClass";
+    vm.DeleteController = "TimetabledClass";
+    vm.DeleteArgs.Add("timetabledClassId", Model.Class.Id.ToString());
+    vm.DisapproveAction = "TimetabledClassEnrolmentForm";
+    vm.DisapproveController = "TimetabledClass";
+    vm.DisapproveArgs.Add("enrolmentFormId", Model.EnrolmentFormId);
 }
 
 <div class="row">
