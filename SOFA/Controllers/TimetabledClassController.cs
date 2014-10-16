@@ -48,6 +48,7 @@ namespace SOFA.Controllers
             return View(tc);
         }
 
+        [Authorize(Roles = SOFARole.AUTH_SOFAADMIN)]
         public ActionResult TimetabledClassEnrolmentForm(string enrolmentFormId)
         {
             EnrolmentForm ef = null;
@@ -70,6 +71,7 @@ namespace SOFA.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
         public ActionResult StudentMove(List<String> Ids)
         {
             //Error checking
@@ -90,6 +92,22 @@ namespace SOFA.Controllers
             viewModel.EnrolmentFormIds = Ids;
             viewModel.CurrentTimetabledClassId = tc.Id;
             return PartialView(viewModel);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = SOFARole.AUTH_MODERATOR)]
+        public ActionResult StudentMove(StudentMoveViewModel viewModel)
+        {
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
+            return RedirectToAction("TimetabledClass",
+                    new { timetabledClassId = viewModel.CurrentTimetabledClassId });    
         }
 	}
 }

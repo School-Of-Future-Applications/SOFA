@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +13,7 @@ namespace SOFA.Models.ViewModels
 
         public List<String> EnrolmentFormIds { get; set; }
 
+        [Required]
         public int NewTimetabledClassId { get; set; }
 
         public SelectList TimetabledClasses { get; set; }
