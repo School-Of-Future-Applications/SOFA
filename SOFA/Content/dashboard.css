@@ -57,6 +57,10 @@ body {
     padding-right: 0px;
 }
 
+.nav-sidebar > li.ni-hidden {
+    display: none;
+}
+
 .nav-sidebar > li.ni > a {
     color: #808b9c;
     font-size: 13px;
