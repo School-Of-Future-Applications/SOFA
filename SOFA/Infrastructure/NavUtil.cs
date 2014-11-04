@@ -237,6 +237,8 @@ namespace SOFA.Infrastructure
                     liTag = new TagBuilder("li");
 
                     liTag.AddCssClass("ni");
+                    if (section.sectionName != null)
+                        liTag.AddCssClass("ni-hidden");
                     if (provider != null)
                         if (provider.NavProviderTerm().CompareTo(k.Key) == 0)
                             liTag.AddCssClass("active");
