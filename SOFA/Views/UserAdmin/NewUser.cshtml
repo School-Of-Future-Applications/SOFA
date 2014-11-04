@@ -23,14 +23,23 @@
 @model Person
 
 @{
+    ViewBag.Title = "New User";
 }
 
-<div class="page-header">
-    <h2>New User</h2>
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>@Html.ActionLink("User Administration", "Index")</li>
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</div>
+
+<div class="col-sm-12">
+    <h2>@ViewBag.Title</h2>
 </div>
 
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-sm-6 col-sm-offset-3">
         @Html.ValidationSummary()
 
         @using (Html.BeginForm("NewUser", "UserAdmin", FormMethod.Post
@@ -38,11 +47,11 @@
         {
             @Html.Partial("PersonFormComponents", Model)
             
-            <div class="form-group">
-                <div class="col-sm-9 col-sm-offset-3">
-                    <input type="submit" class="btn btn-default" value="Add User" />
-                </div>
-            </div>        
+                <div class="form-group">
+                    <div class="col-sm-3 col-sm-offset-6">
+                        <input type="submit" class="btn btn-success pull-right" value="Add User" />
+                    </div>
+                </div>      
         }
     </div>
 </div>

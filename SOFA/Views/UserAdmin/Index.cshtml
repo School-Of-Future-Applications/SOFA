@@ -24,33 +24,36 @@
 @model List<Person>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "User Administration";
 }
 
-<div class="page-header">
-    <h2>
-        User Administration
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li class="active">@ViewBag.Title</li>
+    </ol>
+</div>
 
-        <span class="btn-group pull-right">
-            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                <span class="glyphicon glyphicon-wrench"></span>  <span class="caret"></span>
-            </button>
-        </span>
+<div class="row">
+    <h2 class="col-sm-6">
+        @ViewBag.Title
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("NewUser")" class="btn btn-primary btn-labeled pull-right">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            Add New User
+        </a>
     </h2>
 </div>
  
-<div class="">
-        <div class="pull-left btn-group-vertical btn-group-vertical-max-width">
-            @Html.ActionLink("Add New User", "NewUser", null, new { @class = "btn btn-default" })
-        </div>
-    
-    <div class="col-md-10">
+<div class="row">
+    <div class="col-sm-12">
         <table class="table table-hover">
             <thead>
                 <tr>
                     <th>User Id</th>
-                    <th>User Name</th>
                     <th>Full Name</th>
+                    <th>User Name</th>
                     <th>Position</th>
                 </tr>
             </thead>
@@ -61,8 +64,8 @@
                                                            ,new { personId = p.Id })'"
                         class=@(!p.User.Active ? "danger" : "")>
                         <td>@p.User.Id</td>
-                        <td>@p.User.UserName</td>
                         <td>@p.FullName()</td>
+                        <td>@p.User.UserName</td>
                         <td>@p.Position</td>
                     </tr>
                 }

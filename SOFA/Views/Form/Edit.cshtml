@@ -87,19 +87,31 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>@Html.ActionLink("Forms", "Index")</li>
+        <li class="active">Edit Form - @Model.FormName</li>
+    </ol>
+</div>
 
-
-<h2 class="r">Edit Form</h2>
+<div class="col-sm-12">
+    <h2 class="col-sm-6">
+        Edit Form - @Model.FormName
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("IndexPartial", "Section")" class="btn btn-primary btn-labeled pull-right add-section-link">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            Add Section
+        </a>
+    </h2>
+</div>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
         
     <div class="form-horizontal">
-        <h4>@Html.DisplayFor(m => m.FormName)</h4>
-        <hr />
-        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "add-section-link btn btn-primary pull-right" })
-
 
         @Html.ValidationSummary(true)
 
@@ -122,6 +134,3 @@
 @Html.Partial("AddSectionToFormModal")
 @Html.Partial("DeleteConfirmationModal")
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
