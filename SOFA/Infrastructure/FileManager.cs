@@ -35,8 +35,8 @@ namespace SOFA.Infrastructure
             DBContext dbCon = new DBContext();
             File f = new File();
             f.FileID = UUIDUtil.NewUUID();
-            f.Filename = file.FileName;
-            f.Location = HttpContext.Current.Server.MapPath("~/Uploads/" + file.FileName);
+            f.Filename = f.FileID + System.IO.Path.GetExtension(file.FileName);
+            f.Location = HttpContext.Current.Server.MapPath("~/Uploads/" + f.Filename);
             if(!System.IO.File.Exists(HttpContext.Current.Server.MapPath("~/Uploads/")))
                 System.IO.Directory.CreateDirectory(HttpContext.Current.Server.MapPath("~/Uploads/"));
             file.SaveAs(f.Location);
@@ -47,7 +47,7 @@ namespace SOFA.Infrastructure
 
         public static byte[] GetFile(string id)
         {
-            DBContext dbCon = new DBContext();
+            DBContext dbCon = new DBContext();  
             var file = dbCon.Files.Where(x => x.FileID == id).FirstOrDefault();
             return System.IO.File.ReadAllBytes(file.Location);
             /*
