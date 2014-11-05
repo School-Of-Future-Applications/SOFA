@@ -109,7 +109,7 @@ namespace SOFA.Models.Validation
 
         public static Boolean IsValidNumeric(EnrolmentField field)
         {
-            return String.IsNullOrWhiteSpace(field.Value) || Regex.IsMatch(field.Value, @"^\d[\d.]+$");
+            return String.IsNullOrWhiteSpace(field.Value) || Regex.IsMatch(field.Value, @"^\d[\d.]?$");
         }
         //TODO IsValid for other option types
 
