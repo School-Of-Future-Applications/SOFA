@@ -45,7 +45,7 @@ namespace SOFA.Migrations
         {
             FormSeed(context); 
             UserSeed(context);
-            DepartmentSeed(context);
+            //DepartmentSeed(context);
                        
         }
 
