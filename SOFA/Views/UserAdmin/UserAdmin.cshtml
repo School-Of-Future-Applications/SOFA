@@ -25,11 +25,18 @@
 
 @{
     SOFAUser currentUser = Html.CurrentUser();
-    ViewBag.Title = "UserAdmin";
+    ViewBag.Title = "User Profile";
 }
 
-<div class="page-header">
-    <h2>User Profile</h2>
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>@ViewBag.Title</li>
+    </ol>
+</div>
+
+<div class="col-sm-12">
+    <h2>@ViewBag.Title</h2>
 </div>
 
 <div class="row">

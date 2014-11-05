@@ -272,6 +272,7 @@
     <Compile Include="Controllers\CourseController.cs" />
     <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
+    <Compile Include="Controllers\EmailSettingsController.cs" />
     <Compile Include="Controllers\EnrolmentController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FormController.cs" />
@@ -279,7 +280,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
     <Compile Include="Controllers\SectionController.cs" />
-    <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\SMTPSettingsController.cs" />
     <Compile Include="Controllers\TimetableController.cs" />
     <Compile Include="Controllers\TimetabledClassController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
@@ -404,12 +405,10 @@
     <Content Include="Views\Shared\EditorTemplates\DateTime.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\EmailAddress.cshtml" />
     <Content Include="Views\Login\UserLogin.cshtml" />
-    <Content Include="Views\Settings\Index.cshtml" />
-    <Content Include="Views\_SettingsLayout.cshtml" />
-    <Content Include="Views\Settings\EditSMTPSettings.cshtml" />
+    <Content Include="Views\SMTPSettings\EditSMTPSettings.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Int32.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Password.cshtml" />
-    <Content Include="Views\Settings\EditEmailSettings.cshtml" />
+    <Content Include="Views\EmailSettings\EditEmailSettings.cshtml" />
     <Content Include="Views\UserAdmin\UserAdmin.cshtml" />
     <Content Include="Views\Person\EditPerson.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Boolean.cshtml" />

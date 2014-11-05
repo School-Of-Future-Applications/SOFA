@@ -1,4 +1,24 @@
-﻿@using SOFA.Models.ViewModels.FormViewModels
+﻿@*
+    *  School Of Future Applications
+    *
+    *  Copyright (C) 2014  Terminal Coding
+    *
+    * This program is free software; you can redistribute it and/or
+    * modify it under the terms of the GNU General Public License
+    * as published by the Free Software Foundation; either version 2
+    * of the License, or (at your option) any later version.
+    *
+    * This program is distributed in the hope that it will be useful,
+    * but WITHOUT ANY WARRANTY; without even the implied warranty of
+    * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    * GNU General Public License for more details.
+    *
+    * You should have received a copy of the GNU General Public License
+    * along with this program; if not, write to the Free Software
+    * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+*@
+
+@using SOFA.Models.ViewModels.FormViewModels
 @model SOFA.Models.ViewModels.FormViewModels.FormViewModel
 
 @{
@@ -67,19 +87,31 @@
     <script src="~/Scripts/moment.min.js"></script>
     <script src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
 
+<div class="row">
+    <ol class="breadcrumb">
+        You are here:
+        <li>@Html.ActionLink("Forms", "Index")</li>
+        <li class="active">Edit Form - @Model.FormName</li>
+    </ol>
+</div>
 
-
-<h2 class="r">Edit Form</h2>
+<div class="col-sm-12">
+    <h2 class="col-sm-6">
+        Edit Form - @Model.FormName
+    </h2>
+    <h2 class="col-sm-6">
+        <a href="@Url.Action("IndexPartial", "Section")" class="btn btn-primary btn-labeled pull-right add-section-link">
+            <span class="btn-label icon glyphicon glyphicon-plus"></span>
+            Add Section
+        </a>
+    </h2>
+</div>
 
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
         
     <div class="form-horizontal">
-        <h4>@Html.DisplayFor(m => m.FormName)</h4>
-        <hr />
-        @Html.ActionLink("Add Section", "IndexPartial", "Section", new { }, new { @class = "add-section-link btn btn-primary pull-right" })
-
 
         @Html.ValidationSummary(true)
 
@@ -102,6 +134,3 @@
 @Html.Partial("AddSectionToFormModal")
 @Html.Partial("DeleteConfirmationModal")
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

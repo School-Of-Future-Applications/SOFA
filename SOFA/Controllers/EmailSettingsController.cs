@@ -29,16 +29,8 @@ using SOFA.Models;
 
 namespace SOFA.Controllers
 {
-    [Authorize(Roles = SOFARole.AUTH_SYSADMIN)]
-    public class SettingsController : DashBoardBaseController
+    public class EmailSettingsController : DashBoardBaseController
     {
-        //
-        // GET: /Settings/
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         [HttpGet]
         public ActionResult EditEmailSettings()
         {
@@ -51,34 +43,14 @@ namespace SOFA.Controllers
             if (ModelState.IsValid)
             {
                 EmailSettings.SaveEmailSettings(emailSettings);
-                return RedirectToAction("Index");
             }
-            else
-                return View();
-        }
-
-        [HttpGet]
-        public ActionResult EditSMTPSettings()
-        {
-            return View(SMTPSettings.FetchSMTPSettings());
-        }
-
-        [HttpPost]
-        public ActionResult EditSMTPSettings(SMTPSettings smtpSettings)
-        {
-            if (ModelState.IsValid)
-            {
-                SMTPSettings.SaveSMTPSettings(smtpSettings);
-                return RedirectToAction("Index");
-            }
-            else
-                return View();
+            return View();
         }
 
         [NonAction]
         public override Enum NavProviderTerm()
         {
-            return DashboardNavTerms.SystemConfig;
+            return DashboardNavTerms.EmailSettings;
         }
 	}
 }

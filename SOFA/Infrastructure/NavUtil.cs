@@ -58,10 +58,11 @@ namespace SOFA.Infrastructure
     {
         Dashboard
        ,DepartmentCourse
+       ,EmailSettings
        ,Forms
        ,None
        ,Sections
-       ,SystemConfig
+       ,SMTPSettings
        ,Timetabling
        ,UserAdmin
     }
@@ -160,11 +161,17 @@ namespace SOFA.Infrastructure
                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN
                     ,navItems = new Dictionary<Enum,NavInfo>
                     {
-                        {DashboardNavTerms.SystemConfig
-                        ,new NavInfo {actionName = "Index"
-                                     ,controllerName = "Settings"
+                        {DashboardNavTerms.EmailSettings
+                        ,new NavInfo {actionName = "EditEmailSettings"
+                                     ,controllerName = "EmailSettings"
                                      ,glyphicon = null
-                                     ,displayName = "System Settings"
+                                     ,displayName = "Email Settings"
+                                    ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN}},
+                        {DashboardNavTerms.SMTPSettings
+                        ,new NavInfo {actionName = "EditSMTPSettings"
+                                     ,controllerName = "SMTPSettings"
+                                     ,glyphicon = null
+                                     ,displayName = "SMTP Settings"
                                     ,requiredAuth = SOFA.Models.SOFARole.AUTH_SYSADMIN}}
                     }
                 }
@@ -230,6 +237,8 @@ namespace SOFA.Infrastructure
                     liTag = new TagBuilder("li");
 
                     liTag.AddCssClass("ni");
+                    if (section.sectionName != null)
+                        liTag.AddCssClass("ni-hidden");
                     if (provider != null)
                         if (provider.NavProviderTerm().CompareTo(k.Key) == 0)
                             liTag.AddCssClass("active");

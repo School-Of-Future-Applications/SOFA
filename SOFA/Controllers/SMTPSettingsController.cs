@@ -18,28 +18,39 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-using SOFA.Models.ViewModels.EnrolmentViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.ComponentModel;
-using SOFA.Models.Prefab;
 
-namespace SOFA.Models.Binders
+using SOFA.Infrastructure;
+using SOFA.Models;
+
+namespace SOFA.Controllers
 {
-    public class EnrolmentSectionVMBinder : DefaultModelBinder
+    public class SMTPSettingsController : DashBoardBaseController
     {
-        public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
+        [HttpGet]
+        public ActionResult EditSMTPSettings()
         {
-            var originalSectionId = bindingContext.ValueProvider.GetValue("OriginalSectionId").AttemptedValue;
-            if (originalSectionId.Equals(PrefabSection.STUDENT_DETAILS))
-                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(StudentEnrolmentSectionViewModel));
-            else if (originalSectionId.Equals(PrefabSection.COURSE_SELECT))
-                bindingContext.ModelMetadata = ModelMetadataProviders.Current.GetMetadataForType(null, typeof(CourseEnrolmentSectionViewModel));
-
-            return base.BindModel(controllerContext, bindingContext);
+            return View(SMTPSettings.FetchSMTPSettings());
         }
-    }
+
+        [HttpPost]
+        public ActionResult EditSMTPSettings(SMTPSettings smtpSettings)
+        {
+            if (ModelState.IsValid)
+            {
+                SMTPSettings.SaveSMTPSettings(smtpSettings);
+            }
+            return View();
+        }
+
+        [NonAction]
+        public override Enum NavProviderTerm()
+        {
+            return DashboardNavTerms.SMTPSettings;
+        }
+	}
 }

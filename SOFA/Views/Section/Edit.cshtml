@@ -267,14 +267,16 @@
     });
 </script>
 
-<div class="page-header">
+<div class="row">
     <ol class="breadcrumb">
-        <li class="active">Sections</li>
-        <li class="active">Edit</li>
+        You are here:
+        <li>@Html.ActionLink("Sections", "Index")</li>
+        <li class="active">Edit Section - @Model.Section.Name</li>
     </ol>
-    <h2>Edit Section</h2>
-
 </div>
+
+<h2></h2>
+
 <div class="panel panel-primary" style="float:left;width:80%">
     <div class="panel-heading">@Model.Section.Name</div>
     <div id="sortablebodymain" class="panel-body">
